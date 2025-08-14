@@ -16,40 +16,60 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // === Periodic unlock scan every 15m (existing) ===
-        val unlockReq = PeriodicWorkRequestBuilder<UnlockWorker>(15, TimeUnit.MINUTES).build()
+        // 1) Periodic unlock scan every 15m (existing)
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "unlock_worker",
             ExistingPeriodicWorkPolicy.KEEP,
-            unlockReq
+            PeriodicWorkRequestBuilder<UnlockWorker>(15, TimeUnit.MINUTES).build()
         )
 
-        // === Fast-path USER_PRESENT while process is alive (existing) ===
+        // 2) Fast-path USER_PRESENT while process is alive (existing)
         userPresentReceiver = UnlockReceiver().also {
             val filter = IntentFilter(Intent.ACTION_USER_PRESENT)
             registerReceiver(it, filter)
         }
 
-        // === Daily DistanceSummaryWorker (runs ~23:55 local time) ===
-        val distanceDelayMs = millisUntil(23, 55)
-        val distanceReq = PeriodicWorkRequestBuilder<DistanceSummaryWorker>(1, TimeUnit.DAYS)
-            .setInitialDelay(distanceDelayMs, TimeUnit.MILLISECONDS)
-            .build()
+        // 3) Daily DistanceSummaryWorker (~23:55 local)
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "distance_summary_daily",
             ExistingPeriodicWorkPolicy.UPDATE,
-            distanceReq
+            PeriodicWorkRequestBuilder<DistanceSummaryWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 55), TimeUnit.MILLISECONDS)
+                .build()
         )
 
-        // === Daily CallTotalsWorker (runs ~23:56 local time) ===
-        val callDelayMs = millisUntil(23, 56)
-        val callReq = PeriodicWorkRequestBuilder<CallTotalsWorker>(1, TimeUnit.DAYS)
-            .setInitialDelay(callDelayMs, TimeUnit.MILLISECONDS)
-            .build()
+        // 4) Daily CallTotalsWorker (~23:56 local)
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "call_totals_daily",
             ExistingPeriodicWorkPolicy.UPDATE,
-            callReq
+            PeriodicWorkRequestBuilder<CallTotalsWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 56), TimeUnit.MILLISECONDS)
+                .build()
+        )
+
+        // 5) Daily RecoveryVisitsWorker (~23:57 local)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "recovery_visits_daily",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<RecoveryVisitsWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 57), TimeUnit.MILLISECONDS)
+                .build()
+        )
+
+        // 6) Accelerometer sampling every 15m for movement intensity
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "movement_sample_15m",
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicWorkRequestBuilder<SensorSampleWorker>(15, TimeUnit.MINUTES).build()
+        )
+
+        // 7) Roll-up job once per day (~23:58 local)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "movement_intensity_daily",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<MovementIntensityWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 58), TimeUnit.MILLISECONDS)
+                .build()
         )
     }
 
@@ -59,7 +79,7 @@ class MainApplication : Application() {
         userPresentReceiver = null
     }
 
-    /** Compute ms from "now" until the next occurrence of [hour:minute] local time. */
+    /** ms from now until [hour:minute] local time tomorrow/tonight */
     private fun millisUntil(hour: Int, minute: Int): Long {
         val now = Calendar.getInstance()
         val target = Calendar.getInstance().apply {
@@ -68,9 +88,7 @@ class MainApplication : Application() {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        if (!target.after(now)) {
-            target.add(Calendar.DAY_OF_YEAR, 1)
-        }
+        if (!target.after(now)) target.add(Calendar.DAY_OF_YEAR, 1)
         return target.timeInMillis - now.timeInMillis
     }
 }
