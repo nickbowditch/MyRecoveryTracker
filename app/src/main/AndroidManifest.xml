@@ -1,0 +1,104 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Keep only what we use now -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- No location FGS needed now that BT is disabled -->
+    <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" /> -->
+
+    <!-- Usage stats -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Calls (SMS removed earlier) -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+
+    <!-- Android 13+ notifications runtime -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- BOOT_COMPLETED for lifecycle logging -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyRecoveryTracker">
+
+        <!-- Screen unlock logging -->
+        <receiver
+            android:name=".UnlockReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Dev test triggers (Bluetooth actions removed) -->
+        <receiver
+            android:name=".TestWorkersReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nick.myrecoverytracker.TEST_CALL_TOTALS" />
+                <action android:name="com.nick.myrecoverytracker.TEST_DISTANCE_SUMMARY" />
+                <action android:name="com.nick.myrecoverytracker.TEST_LOCATION_SAMPLE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Dropout / lifecycle receiver -->
+        <receiver
+            android:name=".DropoutReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.nick.myrecoverytracker.TEST_DROPOUT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Main activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Placeholder (kept; referenced by MainActivity/notifications) -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
+
+        <!-- ClassicBtService intentionally NOT registered while feature is paused -->
+
+        <!-- Notification listener -->
+        <service
+            android:name=".NotificationListener"
+            android:label="MyRecoveryTracker Notification Access"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- FileProvider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+</manifest>
