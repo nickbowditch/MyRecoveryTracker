@@ -13,3 +13,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# --- Dev artifacts / logs (do not version) ---
+*.csv
+*.txt
+
+# --- Build outputs ---
+/**/build/
+app/release/

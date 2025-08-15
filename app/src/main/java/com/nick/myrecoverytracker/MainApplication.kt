@@ -71,6 +71,15 @@ class MainApplication : Application() {
                 .setInitialDelay(millisUntil(23, 58), TimeUnit.MILLISECONDS)
                 .build()
         )
+
+        // 8) NEW: Daily AppUsageCategoryWorker (~23:59 local)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "app_usage_daily",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<AppUsageCategoryWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 59), TimeUnit.MILLISECONDS)
+                .build()
+        )
     }
 
     override fun onTerminate() {

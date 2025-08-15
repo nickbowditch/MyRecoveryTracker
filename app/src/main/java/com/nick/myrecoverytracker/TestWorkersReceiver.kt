@@ -60,11 +60,37 @@ class TestWorkersReceiver : BroadcastReceiver() {
                 )
             }
 
-            // NEW: take a 10s accelerometer sample now
             ACTION_TEST_SENSOR_SAMPLE -> {
                 Log.i(TAG, "▶️ Enqueue SensorSampleWorker (now)")
                 WorkManager.getInstance(context).enqueue(
                     OneTimeWorkRequestBuilder<SensorSampleWorker>().build()
+                )
+            }
+
+            ACTION_TEST_APP_USAGE_CATEGORY -> {
+                Log.i(TAG, "▶️ Enqueue AppUsageCategoryWorker (expedited)")
+                WorkManager.getInstance(context).enqueue(
+                    OneTimeWorkRequestBuilder<AppUsageCategoryWorker>()
+                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                        .build()
+                )
+            }
+
+            ACTION_TEST_MESSAGES_SENT -> {
+                Log.i(TAG, "▶️ Enqueue MessagesSentWorker (expedited)")
+                WorkManager.getInstance(context).enqueue(
+                    OneTimeWorkRequestBuilder<MessagesSentWorker>()
+                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                        .build()
+                )
+            }
+
+            ACTION_TEST_MESSAGES_RECEIVED -> {
+                Log.i(TAG, "▶️ Enqueue MessagesReceivedWorker (expedited)")
+                WorkManager.getInstance(context).enqueue(
+                    OneTimeWorkRequestBuilder<MessagesReceivedWorker>()
+                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                        .build()
                 )
             }
 
@@ -80,5 +106,8 @@ class TestWorkersReceiver : BroadcastReceiver() {
         const val ACTION_TEST_RECOVERY_VISITS = "com.nick.myrecoverytracker.TEST_RECOVERY_VISITS"
         const val ACTION_TEST_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.TEST_MOVEMENT_INTENSITY"
         const val ACTION_TEST_SENSOR_SAMPLE = "com.nick.myrecoverytracker.TEST_SENSOR_SAMPLE"
+        const val ACTION_TEST_APP_USAGE_CATEGORY = "com.nick.myrecoverytracker.TEST_APP_USAGE_CATEGORY"
+        const val ACTION_TEST_MESSAGES_SENT = "com.nick.myrecoverytracker.TEST_MESSAGES_SENT"
+        const val ACTION_TEST_MESSAGES_RECEIVED = "com.nick.myrecoverytracker.TEST_MESSAGES_RECEIVED"
     }
 }

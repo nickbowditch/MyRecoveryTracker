@@ -1,0 +1,27 @@
+{
+  "recovery": [
+    "au.org.aa.meetings",
+    "com.sobergrid",
+    "com.aa.bigbook",
+    "com.ias.recoverybox",
+    "com.addicaid.app",
+    "org.intherooms.intherooms"
+  ],
+  "social": [
+    "com.whatsapp",
+    "com.facebook.katana",
+    "com.instagram.android",
+    "com.snapchat.android",
+    "org.telegram.messenger",
+    "com.twitter.android",
+    "com.reddit.frontpage",
+    "com.discord"
+  ],
+  "entertainment": [
+    "com.google.android.youtube",
+    "com.netflix.mediaclient",
+    "com.spotify.music",
+    "com.amazon.avod.thirdpartyclient",
+    "com.tiktok.android"
+  ]
+}
