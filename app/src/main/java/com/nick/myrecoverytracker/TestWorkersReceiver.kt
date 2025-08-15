@@ -67,15 +67,6 @@ class TestWorkersReceiver : BroadcastReceiver() {
                 )
             }
 
-            ACTION_TEST_APP_USAGE_CATEGORY -> {
-                Log.i(TAG, "▶️ Enqueue AppUsageCategoryWorker (expedited)")
-                WorkManager.getInstance(context).enqueue(
-                    OneTimeWorkRequestBuilder<AppUsageCategoryWorker>()
-                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                        .build()
-                )
-            }
-
             ACTION_TEST_MESSAGES_SENT -> {
                 Log.i(TAG, "▶️ Enqueue MessagesSentWorker (expedited)")
                 WorkManager.getInstance(context).enqueue(
@@ -94,6 +85,24 @@ class TestWorkersReceiver : BroadcastReceiver() {
                 )
             }
 
+            ACTION_TEST_APP_USAGE_CATEGORY -> {
+                Log.i(TAG, "▶️ Enqueue AppUsageCategoryWorker (expedited)")
+                WorkManager.getInstance(context).enqueue(
+                    OneTimeWorkRequestBuilder<AppUsageCategoryWorker>()
+                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                        .build()
+                )
+            }
+
+            ACTION_TEST_LATE_NIGHT -> {
+                Log.i(TAG, "▶️ Enqueue LateNightScreenUsageWorker (expedited)")
+                WorkManager.getInstance(context).enqueue(
+                    OneTimeWorkRequestBuilder<LateNightScreenUsageWorker>()
+                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                        .build()
+                )
+            }
+
             else -> Log.w(TAG, "Unknown action: ${intent.action}")
         }
     }
@@ -106,8 +115,9 @@ class TestWorkersReceiver : BroadcastReceiver() {
         const val ACTION_TEST_RECOVERY_VISITS = "com.nick.myrecoverytracker.TEST_RECOVERY_VISITS"
         const val ACTION_TEST_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.TEST_MOVEMENT_INTENSITY"
         const val ACTION_TEST_SENSOR_SAMPLE = "com.nick.myrecoverytracker.TEST_SENSOR_SAMPLE"
-        const val ACTION_TEST_APP_USAGE_CATEGORY = "com.nick.myrecoverytracker.TEST_APP_USAGE_CATEGORY"
         const val ACTION_TEST_MESSAGES_SENT = "com.nick.myrecoverytracker.TEST_MESSAGES_SENT"
         const val ACTION_TEST_MESSAGES_RECEIVED = "com.nick.myrecoverytracker.TEST_MESSAGES_RECEIVED"
+        const val ACTION_TEST_APP_USAGE_CATEGORY = "com.nick.myrecoverytracker.TEST_APP_USAGE_CATEGORY"
+        const val ACTION_TEST_LATE_NIGHT = "com.nick.myrecoverytracker.TEST_LATE_NIGHT"
     }
 }
