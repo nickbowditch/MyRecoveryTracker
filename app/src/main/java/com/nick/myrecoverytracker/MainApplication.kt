@@ -72,9 +72,35 @@ class MainApplication : Application() {
                 .build()
         )
 
-        // 8) NEW: Daily AppUsageCategoryWorker (~23:59 local)
+        // 8) NEW: late-night screen usage rollup (run ~05:10 local)
+        // This checks unlocks between 00:00–05:00 of *today* and writes Y/N.
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "app_usage_daily",
+            "late_night_usage_daily",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<LateNightScreenUsageWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(5, 10), TimeUnit.MILLISECONDS)
+                .build()
+        )
+
+        // 9) Daily SMS (sent/received) around 23:59 (already wired earlier)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "messages_sent_daily",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<MessagesSentWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 59), TimeUnit.MILLISECONDS)
+                .build()
+        )
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "messages_received_daily",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<MessagesReceivedWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(millisUntil(23, 59), TimeUnit.MILLISECONDS)
+                .build()
+        )
+
+        // 10) App usage categories daily (~23:59)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "app_usage_category_daily",
             ExistingPeriodicWorkPolicy.UPDATE,
             PeriodicWorkRequestBuilder<AppUsageCategoryWorker>(1, TimeUnit.DAYS)
                 .setInitialDelay(millisUntil(23, 59), TimeUnit.MILLISECONDS)

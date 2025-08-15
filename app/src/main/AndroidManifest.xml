@@ -53,8 +53,9 @@
                 <action android:name="com.nick.myrecoverytracker.TEST_MOVEMENT_INTENSITY" />
                 <action android:name="com.nick.myrecoverytracker.TEST_MESSAGES_SENT" />
                 <action android:name="com.nick.myrecoverytracker.TEST_MESSAGES_RECEIVED" />
-                <!-- NEW: app usage categories -->
                 <action android:name="com.nick.myrecoverytracker.TEST_APP_USAGE_CATEGORY" />
+                <!-- NEW -->
+                <action android:name="com.nick.myrecoverytracker.TEST_LATE_NIGHT" />
             </intent-filter>
         </receiver>
 
