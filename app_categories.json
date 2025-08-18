@@ -23,5 +23,16 @@
     "com.spotify.music",
     "com.amazon.avod.thirdpartyclient",
     "com.tiktok.android"
+  ],
+  "dating": [
+    "com.tinder",
+    "com.bumble.app",
+    "co.hinge.app",
+    "com.grindrapp.android",
+    "com.okcupid.okcupid",
+    "com.pof.android",
+    "com.ftw_and_co.happn",
+    "com.match.android",
+    "com.badoo.mobile"
   ]
 }
