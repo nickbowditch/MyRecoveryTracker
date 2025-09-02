@@ -1,27 +1,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Keep only what we use now -->
+    <!-- Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- Network -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Foreground services -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <!-- Notifications (required on 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- Usage stats -->
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
-    <!-- Calls -->
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <!-- Activity recognition -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
-    <!-- 💬 SMS read for sent/received counts -->
-    <uses-permission android:name="android.permission.READ_SMS" />
-
-    <!-- Android 13+ notifications runtime -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <!-- BOOT_COMPLETED for lifecycle logging -->
+    <!-- Boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -29,48 +34,19 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyRecoveryTracker">
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.MyRecoveryAssistant">
 
-        <!-- Screen unlock logging -->
-        <receiver
-            android:name=".UnlockReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Dev test triggers -->
-        <receiver
-            android:name=".TestWorkersReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.nick.myrecoverytracker.TEST_CALL_TOTALS" />
-                <action android:name="com.nick.myrecoverytracker.TEST_DISTANCE_SUMMARY" />
-                <action android:name="com.nick.myrecoverytracker.TEST_LOCATION_SAMPLE" />
-                <action android:name="com.nick.myrecoverytracker.TEST_RECOVERY_VISITS" />
-                <action android:name="com.nick.myrecoverytracker.TEST_SENSOR_SAMPLE" />
-                <action android:name="com.nick.myrecoverytracker.TEST_MOVEMENT_INTENSITY" />
-                <action android:name="com.nick.myrecoverytracker.TEST_MESSAGES_SENT" />
-                <action android:name="com.nick.myrecoverytracker.TEST_MESSAGES_RECEIVED" />
-                <action android:name="com.nick.myrecoverytracker.TEST_APP_USAGE_CATEGORY" />
-                <!-- NEW -->
-                <action android:name="com.nick.myrecoverytracker.TEST_LATE_NIGHT" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Dropout / lifecycle receiver -->
         <receiver
             android:name=".DropoutReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.nick.myrecoverytracker.TEST_DROPOUT" />
             </intent-filter>
         </receiver>
 
-        <!-- Main activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -80,18 +56,14 @@
             </intent-filter>
         </activity>
 
-        <!-- Placeholder (referenced by MainActivity/notifications) -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
 
-        <!-- ClassicBtService intentionally NOT registered while feature is paused -->
-
-        <!-- Notification listener -->
         <service
             android:name=".NotificationListener"
-            android:label="MyRecoveryTracker Notification Access"
+            android:label="MyRecoveryAssistant Notification Access"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:exported="true">
             <intent-filter>
@@ -99,7 +71,16 @@
             </intent-filter>
         </service>
 
-        <!-- FileProvider -->
+        <service
+            android:name=".ForegroundUnlockService"
+            android:exported="false"
+            android:foregroundServiceType="location|dataSync" />
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="location|dataSync" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -109,5 +90,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <receiver
+            android:name=".TriggerReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>
