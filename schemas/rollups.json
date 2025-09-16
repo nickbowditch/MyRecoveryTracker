@@ -1,0 +1,49 @@
+{
+  "daily_unlocks.csv": {
+    "schema_version": 1,
+    "header": ["date", "unlocks"],
+    "types": {
+      "date": "date",
+      "unlocks": "int"
+    },
+    "constraints": {
+      "unlocks_min": 0,
+      "unlocks_max": 2000
+    }
+  },
+  "sleep_summary": {
+    "file": "daily_sleep_summary.csv",
+    "header": ["date", "sleep_time", "wake_time", "duration_hours"],
+    "types": ["date", "time", "time", "float"],
+    "dateFormat": "yyyy-MM-dd",
+    "timeFormat": "HH:mm:ss"
+  },
+  "sleep_duration": {
+    "file": "daily_sleep_duration.csv",
+    "header": ["date", "hours"],
+    "types": ["date", "float"],
+    "range": { "hours": [0.0, 24.0] },
+    "dateFormat": "yyyy-MM-dd"
+  },
+  "sleep_quality": {
+    "file": "daily_sleep_quality.csv",
+    "header": ["date", "quality"],
+    "types": ["date", "string"],
+    "nonEmpty": ["quality"],
+    "dateFormat": "yyyy-MM-dd"
+  },
+  "sleep_time": {
+    "file": "daily_sleep_time.csv",
+    "header": ["date", "HH:MM:SS"],
+    "types": ["date", "time"],
+    "timeFormat": "HH:mm:ss",
+    "dateFormat": "yyyy-MM-dd"
+  },
+  "sleep_wake_time": {
+    "file": "daily_wake_time.csv",
+    "header": ["date", "HH:MM:SS"],
+    "types": ["date", "time"],
+    "timeFormat": "HH:mm:ss",
+    "dateFormat": "yyyy-MM-dd"
+  }
+}
