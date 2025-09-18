@@ -22,8 +22,8 @@ printf '%s,UNLOCK\n%s,UNLOCK\n%s,UNLOCK\n%s,UNLOCK\n' \
 "
 
 for i in 1 2; do
-  adb shell am broadcast -a "$PKG".ACTION_RUN_UNLOCK_ROLLUP -n "$PKG"/.TriggerReceiver >/dev/null
-  sleep 2
+adb shell am broadcast -a "$PKG".ACTION_RUN_UNLOCK_ROLLUP -n "$PKG"/.TriggerReceiver >/dev/null
+sleep 2
 done
 
 CSV2="$(adb exec-out run-as "$PKG" cat files/daily_unlocks.csv 2>/dev/null || printf "")"
@@ -36,10 +36,10 @@ DT=$((C_T_AFTER - C_T_BEFORE))
 echo "TC-2 EXPECT +2 EACH — Y:$D_YEST before=$C_Y_BEFORE after=$C_Y_AFTER delta=$DY ; T:$D_TODAY before=$C_T_BEFORE after=$C_T_AFTER delta=$DT"
 
 if [ "$DY" -eq 2 ] && [ "$DT" -eq 2 ]; then
-  echo "TC-2 RESULT=PASS"
-  exit 0
+echo "TC-2 RESULT=PASS"
+exit 0
 else
-  echo "TC-2 RESULT=FAIL"
-  printf "%s\n" "$CSV2" | tail -n 20
-  exit 1
+echo "TC-2 RESULT=FAIL"
+printf "%s\n" "$CSV2" | tail -n 20
+exit 1
 fi
