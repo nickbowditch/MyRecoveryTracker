@@ -21,3 +21,7 @@ local.properties
 # --- Build outputs ---
 /**/build/
 app/release/
+!evidence/
+!evidence/v6.0/
+!evidence/v6.0/**
+!evidence/v6.0/**/*.txt
