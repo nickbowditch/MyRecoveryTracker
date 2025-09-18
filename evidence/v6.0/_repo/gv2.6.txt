@@ -1,0 +1,9 @@
+
+> Task :app:qaCheck
+==> tools/checks/at1_v6.0.1.sh
+AT-1 RESULT=FAIL
+TODAY=2025-09-18 before=27 after=27 delta=0
+
+> Task :app:qaCheck FAILED
+1 actionable task: 1 executed
+GV-2 RESULT=FAIL (:app:qaCheck failed)

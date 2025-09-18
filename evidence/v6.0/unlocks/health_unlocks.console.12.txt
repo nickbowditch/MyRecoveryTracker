@@ -1,0 +1,15 @@
+==> 2025-09-19 08:08:52 RUN tools/fixtures/fix_daily_unlocks_header_v6.0.5.sh
+--> 2025-09-19 08:10:22 PASS tools/fixtures/fix_daily_unlocks_header_v6.0.5.sh
+==> 2025-09-19 08:10:22 RUN tools/checks/ee1_sleep_v6.0.sh
+--> 2025-09-19 08:11:52 PASS tools/checks/ee1_sleep_v6.0.sh
+==> 2025-09-19 08:11:52 RUN tools/checks/ee1_v6.0.sh
+--> 2025-09-19 08:13:22 PASS tools/checks/ee1_v6.0.sh
+==> 2025-09-19 08:13:22 RUN tools/checks/ee2_sleep_v6.0.1.sh
+--> 2025-09-19 08:14:52 PASS tools/checks/ee2_sleep_v6.0.1.sh
+==> 2025-09-19 08:14:52 RUN tools/checks/ee2_v6.0.1.sh
+--> 2025-09-19 08:16:22 PASS tools/checks/ee2_v6.0.1.sh
+==> 2025-09-19 08:16:22 RUN tools/checks/ee3_sleep_v6.0.1.sh
+--> 2025-09-19 08:17:52 PASS tools/checks/ee3_sleep_v6.0.1.sh
+==> 2025-09-19 08:17:52 RUN tools/checks/ee3_v6.0.1.sh
+--> 2025-09-19 08:19:22 PASS tools/checks/ee3_v6.0.1.sh
+==> 2025-09-19 08:19:22 RUN tools/checks/tc1_v6.0.2.sh

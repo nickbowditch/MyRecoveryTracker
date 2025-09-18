@@ -1,2 +1,2 @@
-TC-2 EXPECT +2 EACH — Y:2025-09-17 before=39 after=41 delta=2 ; T:2025-09-18 before=23 after=25 delta=2
+TC-2 EXPECT +2 EACH — Y:2025-09-17 before=55 after=57 delta=2 ; T:2025-09-18 before=95 after=97 delta=2
 TC-2 RESULT=PASS

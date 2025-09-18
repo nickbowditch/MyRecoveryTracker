@@ -1,0 +1,60 @@
+==> 2025-09-18 17:08:08 RUN tools/checks/ee1_v6.0.sh
+--> 2025-09-18 17:09:08 PASS tools/checks/ee1_v6.0.sh
+==> 2025-09-18 17:09:08 RUN tools/checks/ee2_v6.0.1.sh
+--> 2025-09-18 17:10:08 PASS tools/checks/ee2_v6.0.1.sh
+==> 2025-09-18 17:10:08 RUN tools/checks/ee3_v6.0.1.sh
+--> 2025-09-18 17:11:08 PASS tools/checks/ee3_v6.0.1.sh
+==> 2025-09-18 17:11:08 RUN tools/checks/tc1_v6.0.2.sh
+--> 2025-09-18 17:12:08 PASS tools/checks/tc1_v6.0.2.sh
+==> 2025-09-18 17:12:08 RUN tools/checks/tc2_v6.0.14.sh
+--> 2025-09-18 17:13:08 PASS tools/checks/tc2_v6.0.14.sh
+==> 2025-09-18 17:13:09 RUN tools/checks/tc3_v6.0.1.sh
+--> 2025-09-18 17:14:09 PASS tools/checks/tc3_v6.0.1.sh
+==> 2025-09-18 17:14:09 RUN tools/checks/tc4_v6.0.2.sh
+--> 2025-09-18 17:15:09 PASS tools/checks/tc4_v6.0.2.sh
+==> 2025-09-18 17:15:09 RUN tools/checks/di1_v6.0.5.sh
+--> 2025-09-18 17:16:09 FAIL tools/checks/di1_v6.0.5.sh (rc=1)
+==> 2025-09-18 17:16:09 RUN tools/checks/di2_v6.0.1.sh
+--> 2025-09-18 17:17:09 PASS tools/checks/di2_v6.0.1.sh
+==> 2025-09-18 17:17:09 RUN tools/checks/di3_v6.0.3.sh
+--> 2025-09-18 17:18:09 PASS tools/checks/di3_v6.0.3.sh
+==> 2025-09-18 17:18:09 RUN tools/checks/di4_v6.0.1.sh
+--> 2025-09-18 17:19:09 PASS tools/checks/di4_v6.0.1.sh
+==> 2025-09-18 17:19:09 RUN tools/checks/at1_v6.0.2.sh
+--> 2025-09-18 17:20:09 PASS tools/checks/at1_v6.0.2.sh
+==> 2025-09-18 17:20:09 RUN tools/checks/at2_v6.0.1.sh
+--> 2025-09-18 17:21:09 PASS tools/checks/at2_v6.0.1.sh
+==> 2025-09-18 17:21:09 RUN tools/checks/at3_v6.0.1.sh
+--> 2025-09-18 17:22:09 PASS tools/checks/at3_v6.0.1.sh
+==> 2025-09-18 17:22:09 RUN tools/checks/gv1_v6.0.2.sh
+--> 2025-09-18 17:23:09 PASS tools/checks/gv1_v6.0.2.sh
+==> 2025-09-18 17:23:09 RUN tools/checks/gv2_v6.0.14.sh
+--> 2025-09-18 17:24:09 PASS tools/checks/gv2_v6.0.14.sh
+==> 2025-09-18 17:24:10 RUN tools/checks/gv3_v6.0.1.sh
+--> 2025-09-18 17:25:10 PASS tools/checks/gv3_v6.0.1.sh
+==> 2025-09-18 17:25:10 RUN tools/checks/gv4_v6.0.1.sh
+--> 2025-09-18 17:26:10 PASS tools/checks/gv4_v6.0.1.sh
+==> 2025-09-18 17:26:10 RUN tools/checks/gv5_v6.0.1.sh
+--> 2025-09-18 17:27:10 PASS tools/checks/gv5_v6.0.1.sh
+===== SUMMARY =====
+EE-1 RESULT=PASS
+EE-2 RESULT=PASS
+EE-3 RESULT=PASS
+DI-1 RESULT=FAIL
+DI-1-FIX RESULT=UNKNOWN
+DI-2 RESULT=PASS
+DI-3 RESULT=PASS
+DI-4 RESULT=PASS
+TC-1 RESULT=PASS
+TC-2 RESULT=PASS
+TC-3 RESULT=PASS
+TC-4 RESULT=PASS
+AT-1 RESULT=PASS
+AT-2 RESULT=PASS
+AT-3 RESULT=PASS
+GV-1 RESULT=PASS
+GV-2 RESULT=PASS
+GV-3 RESULT=PASS
+GV-4 RESULT=PASS
+GV-5 RESULT=PASS
+UNLOCKS-HEALTH RESULT=FAIL

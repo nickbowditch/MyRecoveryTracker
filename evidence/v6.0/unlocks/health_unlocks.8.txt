@@ -1,0 +1,16 @@
+==> 2025-09-18 16:55:55 RUN tools/checks/ee1_v6.0.sh
+EE-1 USAGE_STATS: DECLARED=yes MODE=allow
+EE-1 ACTIVITY_RECOGNITION: DECLARED=yes GRANTED=yes
+EE-1 RESULT: PASS
+--> 2025-09-18 16:57:54 PASS tools/checks/ee1_v6.0.sh
+==> 2025-09-18 16:57:54 RUN tools/checks/ee2_v6.0.1.sh
+--> 2025-09-18 16:57:55 FAIL tools/checks/ee2_v6.0.1.sh (rc=129)
+==> 2025-09-18 16:57:55 RUN tools/checks/ee3_v6.0.1.sh
+--> 2025-09-18 16:57:56 FAIL tools/checks/ee3_v6.0.1.sh (rc=129)
+==> 2025-09-18 16:57:56 RUN tools/checks/tc1_v6.0.2.sh
+TC-1 RESULT=FAIL (no device)
+--> 2025-09-18 16:57:59 FAIL tools/checks/tc1_v6.0.2.sh (rc=2)
+==> 2025-09-18 16:57:59 RUN tools/checks/tc2_v6.0.14.sh
+--> 2025-09-18 16:58:00 FAIL tools/checks/tc2_v6.0.14.sh (rc=129)
+==> 2025-09-18 16:58:00 RUN tools/checks/tc3_v6.0.1.sh
+TC-3 RESULT=PASS
