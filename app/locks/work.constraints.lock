@@ -1,0 +1,2 @@
+# worker/name     requiresBatteryNotLow  requiresCharging  requiresDeviceIdle  networkType
+UNLOCK_ROLLUP     false                  false             false               NOT_REQUIRED
