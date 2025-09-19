@@ -1,1 +1,1 @@
-DI-1-FIX RESULT=PASS (sealed)
+DI-1-FIX RESULT=PASS (already sealed)
