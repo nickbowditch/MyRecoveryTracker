@@ -644,3 +644,94 @@ TC-1 RESULT=FAIL
 2025-09-16,v6.0,47
 2025-09-17,v6.0,67
 2025-09-18,v6.0,114
+--> 2025-09-19 08:20:52 FAIL tools/checks/tc1_v6.0.2.sh (rc=1)
+==> 2025-09-19 08:20:52 RUN tools/checks/tc2_v6.0.14.sh
+TC-2 EXPECT +2 EACH — Y:2025-09-18 before=114 after=0 delta=-114 ; T:2025-09-19 before=0 after=2 delta=2
+TC-2 RESULT=FAIL
+2025-08-28,1
+2025-08-29,1
+2025-08-30,1
+2025-08-31,1
+2025-09-01,1
+2025-09-02,1
+2025-09-03,1
+2025-09-04,1
+2025-09-05,1
+2025-09-06,25
+2025-09-07,41
+2025-09-08,34
+2025-09-11,2
+2025-09-12,35
+2025-09-13,3
+2025-09-14,0
+2025-09-15,21
+2025-09-16,47
+2025-09-17,67
+2025-09-19,2
+--> 2025-09-19 08:22:22 FAIL tools/checks/tc2_v6.0.14.sh (rc=1)
+==> 2025-09-19 08:22:23 RUN tools/checks/tc3_v6.0.1.sh
+TC-3 RESULT=PASS
+--> 2025-09-19 08:23:53 PASS tools/checks/tc3_v6.0.1.sh
+==> 2025-09-19 08:23:53 RUN tools/checks/tc4_v6.0.2.sh
+TC-4 RESULT=PASS
+--> 2025-09-19 08:25:23 PASS tools/checks/tc4_v6.0.2.sh
+==> 2025-09-19 08:25:23 RUN tools/checks/di1_v6.0.5.sh
+DI-1 RESULT=FAIL
+LOCK=date,feature_schema_version,daily_unlocks
+HEAD=date,unlocks
+--> 2025-09-19 08:26:53 FAIL tools/checks/di1_v6.0.5.sh (rc=1)
+==> 2025-09-19 08:26:53 RUN tools/checks/di2_v6.0.1.sh
+DI-2 RESULT=PASS
+--> 2025-09-19 08:28:23 PASS tools/checks/di2_v6.0.1.sh
+==> 2025-09-19 08:28:23 RUN tools/checks/di3_v6.0.3.sh
+DI-3 RESULT=PASS
+--> 2025-09-19 08:29:53 PASS tools/checks/di3_v6.0.3.sh
+==> 2025-09-19 08:29:53 RUN tools/checks/di4_v6.0.1.sh
+DI-4 RESULT=PASS
+--> 2025-09-19 08:31:23 PASS tools/checks/di4_v6.0.1.sh
+==> 2025-09-19 08:31:23 RUN tools/checks/at1_v6.0.2.sh
+AT-1 RESULT=PASS
+--> 2025-09-19 08:32:53 PASS tools/checks/at1_v6.0.2.sh
+==> 2025-09-19 08:32:53 RUN tools/checks/at2_v6.0.1.sh
+2025-09-18,135,
+--> 2025-09-19 08:34:23 FAIL tools/checks/at2_v6.0.1.sh (rc=1)
+==> 2025-09-19 08:34:23 RUN tools/checks/at3_v6.0.1.sh
+AT-3 RESULT=PASS
+--> 2025-09-19 08:35:53 PASS tools/checks/at3_v6.0.1.sh
+==> 2025-09-19 08:35:53 RUN tools/checks/gv1_v6.0.2.sh
+GV-1 RESULT=PASS
+--> 2025-09-19 08:37:23 PASS tools/checks/gv1_v6.0.2.sh
+==> 2025-09-19 08:37:23 RUN tools/checks/gv2_v6.0.14.sh
+GV-2 RESULT=PASS
+--> 2025-09-19 08:38:53 PASS tools/checks/gv2_v6.0.14.sh
+==> 2025-09-19 08:38:54 RUN tools/checks/gv3_v6.0.1.sh
+GV-3 RESULT=PASS (must re-run all checks on version bump)
+--> 2025-09-19 08:40:24 PASS tools/checks/gv3_v6.0.1.sh
+==> 2025-09-19 08:40:24 RUN tools/checks/gv4_v6.0.1.sh
+GV-4 RESULT=PASS
+--> 2025-09-19 08:41:54 PASS tools/checks/gv4_v6.0.1.sh
+==> 2025-09-19 08:41:54 RUN tools/checks/gv5_v6.0.1.sh
+GV-5 RESULT=PASS
+--> 2025-09-19 08:43:24 PASS tools/checks/gv5_v6.0.1.sh
+===== SUMMARY =====
+EE-1 RESULT=PASS
+EE-2 RESULT=PASS
+EE-3 RESULT=PASS
+DI-1 RESULT=FAIL
+DI-1-FIX RESULT=PASS
+DI-2 RESULT=PASS
+DI-3 RESULT=PASS
+DI-4 RESULT=PASS
+TC-1 RESULT=FAIL
+TC-2 RESULT=FAIL
+TC-3 RESULT=PASS
+TC-4 RESULT=PASS
+AT-1 RESULT=PASS
+AT-2 RESULT=UNKNOWN
+AT-3 RESULT=PASS
+GV-1 RESULT=PASS
+GV-2 RESULT=PASS
+GV-3 RESULT=PASS
+GV-4 RESULT=PASS
+GV-5 RESULT=PASS
+UNLOCKS-HEALTH RESULT=FAIL

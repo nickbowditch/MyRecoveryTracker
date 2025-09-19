@@ -1,0 +1,10 @@
+#!/bin/bash
+PKG="com.nick.myrecoverytracker"
+D="$(adb shell 'date +%F' | tr -d '\r')"
+CSV1="$(adb shell am broadcast -a "$PKG".ACTION_RUN_UNLOCK_ROLLUP -n "$PKG"/.TriggerReceiver >/dev/null; sleep 3; adb exec-out run-as "$PKG" cat files/daily_unlocks.csv 2>/dev/null || printf "")"
+V1="$(awk -F, -v d="$D" 'NR>1&&$1==d{print $2; exit}' <<<"$CSV1")"
+N1="$(awk -F, -v d="$D" 'NR>1&&$1==d{c++} END{print c+0}' <<<"$CSV1")"
+CSV2="$(adb shell am broadcast -a "$PKG".ACTION_RUN_UNLOCK_ROLLUP -n "$PKG"/.TriggerReceiver >/dev/null; sleep 3; adb exec-out run-as "$PKG" cat files/daily_unlocks.csv 2>/dev/null || printf "")"
+V2="$(awk -F, -v d="$D" 'NR>1&&$1==d{print $2; exit}' <<<"$CSV2")"
+N2="$(awk -F, -v d="$D" 'NR>1&&$1==d{c++} END{print c+0}' <<<"$CSV2")"
+test "$N1" -eq 1 -a "$N2" -eq 1 -a -n "$V1" -a "$V1" = "$V2"

@@ -1,36 +1,28 @@
+<!-- app/src/main/AndroidManifest.xml -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
-    <!-- Network -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Foreground services -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
-    <!-- Notifications (required on 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- Usage stats -->
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
-    <!-- Activity recognition -->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
-
-    <!-- Boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".MainApplication"
+        android:name=".CrashReporter"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -39,11 +31,12 @@
         android:theme="@style/Theme.MyRecoveryAssistant">
 
         <receiver
-            android:name=".DropoutReceiver"
+            android:name=".BootReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 
@@ -74,12 +67,20 @@
         <service
             android:name=".ForegroundUnlockService"
             android:exported="false"
-            android:foregroundServiceType="location|dataSync" />
+            android:stopWithTask="false"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".ForegroundSleepService"
+            android:exported="false"
+            android:stopWithTask="false"
+            android:foregroundServiceType="dataSync" />
 
         <service
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:exported="false"
-            android:foregroundServiceType="location|dataSync" />
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -91,11 +92,36 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- TriggerReceiver now declares ACTION_RUN_UNLOCK_ROLLUP so adb can find it -->
         <receiver
             android:name=".TriggerReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".MovementARReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".UnlockReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
 

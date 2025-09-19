@@ -1,0 +1,7 @@
+==> 2025-09-19 10:22:54 RUN tools/fixtures/fix_daily_unlocks_header_v6.0.5.sh
+--> 2025-09-19 10:23:14 PASS tools/fixtures/fix_daily_unlocks_header_v6.0.5.sh
+==> 2025-09-19 10:23:14 RUN tools/checks/ee1_sleep_v6.0.sh
+--> 2025-09-19 10:23:34 PASS tools/checks/ee1_sleep_v6.0.sh
+==> 2025-09-19 10:23:34 RUN tools/checks/ee1_v6.0.sh
+--> 2025-09-19 10:23:54 PASS tools/checks/ee1_v6.0.sh
+==> 2025-09-19 10:23:54 RUN tools/checks/ee2_sleep_v6.0.1.sh

@@ -1,0 +1,286 @@
+// app/build.gradle.kts
+import java.io.ByteArrayOutputStream
+import java.security.MessageDigest
+
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = "com.nick.myrecoverytracker"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "com.nick.myrecoverytracker"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String","REDCAP_URL","\"https://redcap.une.edu.au/api/\"")
+        buildConfigField("String","REDCAP_TOKEN","\"B717098DF6799DBE0406F0DE0080CDA8\"")
+    }
+
+    buildFeatures { buildConfig = true }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/nickbowditch/keys/mrt-release.jks")
+            storePassword = "Bowdo1904!!"
+            keyAlias = "mrt_release"
+            keyPassword = "Bowdo1904!!"
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            buildConfigField("String","REDCAP_URL","\"https://redcap.une.edu.au/api/\"")
+            buildConfigField("String","REDCAP_TOKEN","\"B717098DF6799DBE0406F0DE0080CDA8\"")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions { jvmTarget = "11" }
+}
+
+dependencies {
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+}
+
+/* ---------- helpers ---------- */
+fun sha256(s: String): String {
+    val md = MessageDigest.getInstance("SHA-256")
+    return md.digest(s.toByteArray()).joinToString("") { "%02x".format(it) }
+}
+fun adbOut(vararg args: String): String {
+    val out = ByteArrayOutputStream()
+    exec {
+        commandLine("adb", *args)
+        standardOutput = out
+        isIgnoreExitValue = true
+    }
+    return out.toString().trim()
+}
+
+/* ---------- QA: device checks for unlocks ---------- */
+tasks.register("qaCheck") {
+    group = "verification"
+    description = "Validate daily_unlocks.csv on device (header/dupes/range)"
+    doLast {
+        val pkg = "com.nick.myrecoverytracker"
+
+        val header = adbOut(
+            "exec-out","run-as", pkg, "sh","-c",
+            "head -n1 files/daily_unlocks.csv 2>/dev/null | tr -d '\\r'"
+        )
+        if (header != "date,unlocks") throw GradleException("BAD_HEADER:$header")
+
+        val dupCount = adbOut(
+            "exec-out","run-as", pkg, "sh","-c",
+            "tail -n +2 files/daily_unlocks.csv 2>/dev/null | cut -d, -f1 | sort | uniq -d | wc -l"
+        ).trim().toIntOrNull() ?: 0
+        if (dupCount > 0) throw GradleException("DUP_DATES:$dupCount")
+
+        val badRange = adbOut(
+            "exec-out","run-as", pkg, "sh","-c",
+            "awk -F, 'NR>1 && ($1!~/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ || $2!~/^[0-9]+$/ || $2<0 || $2>2000){c++} END{print c+0}' files/daily_unlocks.csv 2>/dev/null"
+        ).trim().toIntOrNull() ?: 0
+        if (badRange > 0) throw GradleException("OUT_OF_RANGE_OR_FMT:$badRange")
+
+        println("qaCheck PASS")
+    }
+}
+
+/* ---------- QA: seal + verify locks for unlocks ---------- */
+tasks.register("qaSealUnlocks") {
+    group = "verification"
+    description = "Write locks/unlocks.lock (schema signature)"
+    dependsOn("qaCheck")
+    doLast {
+        val sig = sha256("date,unlocks|min=0|max=2000")
+        val lockFile = file("locks/unlocks.lock")
+        lockFile.parentFile.mkdirs()
+        lockFile.writeText(sig + "\n")
+        println("sealed:${lockFile.absolutePath}")
+    }
+}
+
+tasks.register("qaVerifyUnlocks") {
+    group = "verification"
+    description = "Verify lock + run qaCheck"
+    dependsOn("qaCheck")
+    doLast {
+        val lockFile = file("locks/unlocks.lock")
+        if (!lockFile.exists()) throw GradleException("LOCK_MISSING")
+        val saved = lockFile.readText().trim()
+        val expect = sha256("date,unlocks|min=0|max=2000")
+        if (saved != expect) throw GradleException("LOCK_MISMATCH")
+        println("lock OK")
+    }
+}
+
+/* ---------- Governance: writer guard (single-writer rule) ---------- */
+tasks.register("writerGuardUnlocks") {
+    group = "verification"
+    description = "Fail if any non-whitelisted file writes daily_unlocks.csv"
+    doLast {
+        val target = "daily_unlocks.csv"
+        val writeRegex = Regex("""\b(writeText|FileOutputStream|openFileOutput|renameTo|writeAtomic)\b""")
+        val window = 8
+
+        val whitelist = setOf(
+            "app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt",
+            "app/src/main/java/com/nick/myrecoverytracker/CsvUtils.kt"
+        )
+
+        val srcRoot = file("app/src/main/java")
+        val offenders = mutableListOf<String>()
+
+        srcRoot.walkTopDown()
+            .filter { it.isFile && it.extension in listOf("kt","java") }
+            .forEach { f ->
+                val rel = f.relativeTo(project.projectDir).path.replace(File.separatorChar, '/')
+                val text = f.readText()
+                if (!text.contains(target)) return@forEach
+
+                val lines = text.lines()
+                val targetLines = lines.mapIndexedNotNull { idx, line ->
+                    if (line.contains(target)) idx else null
+                }
+                if (targetLines.isEmpty()) return@forEach
+
+                var writesNear = false
+                for (idx in targetLines) {
+                    val from = (idx - window).coerceAtLeast(0)
+                    val to = (idx + window).coerceAtMost(lines.lastIndex)
+                    val slice = lines.subList(from, to + 1).joinToString("\n")
+                    if (writeRegex.containsMatchIn(slice)) { writesNear = true; break }
+                }
+
+                if (writesNear && !whitelist.contains(rel)) {
+                    offenders += rel
+                }
+            }
+
+        if (offenders.isNotEmpty()) {
+            offenders.forEach { println("Writer guard FAIL: $it writes $target") }
+            throw GradleException("WRITER_GUARD_FAIL")
+        } else {
+            println("Writer guard PASS")
+        }
+    }
+}
+
+/* ---------- Governance: daily_metrics guard (GV-4) ---------- */
+tasks.register("qaMetricsCheck") {
+    group = "verification"
+    description = "Validate daily_metrics.csv header presence and required columns"
+    doLast {
+        val pkg = "com.nick.myrecoverytracker"
+        val hdr = adbOut(
+            "exec-out","run-as", pkg, "sh","-c",
+            "head -n1 files/daily_metrics.csv 2>/dev/null | tr -d '\\r'"
+        )
+        if (hdr.isBlank()) throw GradleException("METRICS_HEADER_MISSING")
+        val cols = hdr.split(',').map { it.trim() }.filter { it.isNotEmpty() }.toSet()
+        val must = setOf("date","feature_schema_version","daily_unlocks")
+        if (!cols.containsAll(must)) {
+            throw GradleException("METRICS_MISSING_COLS:" + (must - cols).joinToString(","))
+        }
+        println("metrics OK")
+    }
+}
+
+tasks.register("qaSealMetrics") {
+    group = "verification"
+    description = "Seal daily_metrics header to locks/daily_metrics.header"
+    dependsOn("qaMetricsCheck")
+    doLast {
+        val pkg = "com.nick.myrecoverytracker"
+        val hdr = adbOut(
+            "exec-out","run-as", pkg, "sh","-c",
+            "head -n1 files/daily_metrics.csv 2>/dev/null | tr -d '\\r'"
+        )
+        val lock = file("locks/daily_metrics.header")
+        lock.parentFile.mkdirs()
+        lock.writeText(hdr + "\n")
+        println("sealed:${lock.absolutePath}")
+    }
+}
+
+tasks.register("qaVerifyMetrics") {
+    group = "verification"
+    description = "Verify sealed header matches current device header"
+    dependsOn("qaMetricsCheck")
+    doLast {
+        val pkg = "com.nick.myrecoverytracker"
+        val lock = file("locks/daily_metrics.header")
+        if (!lock.exists()) throw GradleException("METRICS_LOCK_MISSING")
+        val saved = lock.readText().trim()
+        val hdr = adbOut(
+            "exec-out","run-as", pkg, "sh","-c",
+            "head -n1 files/daily_metrics.csv 2>/dev/null | tr -d '\\r'"
+        ).trim()
+        if (hdr != saved) throw GradleException("METRICS_LOCK_MISMATCH")
+        println("metrics lock OK")
+    }
+}
+
+/* ---------- convenience aggregator ---------- */
+tasks.register("qaAll") {
+    group = "verification"
+    description = "qaCheck + writerGuardUnlocks + qaVerifyUnlocks + qaVerifyMetrics"
+    dependsOn("qaCheck", "writerGuardUnlocks", "qaVerifyUnlocks", "qaVerifyMetrics")
+tasks.register<Exec>("qaVerifyWriterGuardLateScreen") {
+    group = "qa"
+    description = "Fails if non-whitelisted sources reference daily_late_screen.csv"
+    commandLine("bash", "tools/qa/verify_latescreen_writers.sh")
+}
+tasks.register<Exec>("qaSealMetrics") {
+    group = "qa"
+    description = "Seals current on-device daily_metrics.csv header to app/locks/daily_metrics.header"
+    commandLine("bash", "tools/qa/metrics_seal.sh")
+}
+tasks.register<Exec>("qaVerifyMetricsLateScreen") {
+    group = "qa"
+    description = "Verifies daily_metrics exists, has minimum cols (including late_night_screen_minutes), and matches sealed header"
+    commandLine("bash", "tools/qa/metrics_verify.sh")
+}
+tasks.register("qaGovernanceLateScreen") {
+    group = "qa"
+    description = "Runs schema + writer + metrics governance checks for late-night screen usage"
+    dependsOn("qaCheckLateScreen", "qaVerifyWriterGuardLateScreen", "qaVerifyMetricsLateScreen")
+}
+
+apply(from = "qa-tasks.gradle.kts")
+
+
+apply(from = "qa-latescreen.gradle.kts")
+apply(from = "qa-core.gradle.kts")
