@@ -3,7 +3,6 @@ package com.nick.myrecoverytracker
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
@@ -11,198 +10,159 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-/**
- * Rolls up daily app usage minutes by category.
- *
- * Input config: files/app_categories.json
- *   {
- *     "recovery": ["au.org.aa.meetings", ...],
- *     "social": ["com.whatsapp", ...],
- *     "entertainment": ["com.google.android.youtube", ...],
- *     "dating": ["com.tinder", "com.bumble.app", ...]   // NEW
- *   }
- *
- * Output CSV: files/daily_app_usage_minutes.csv
- *   Header (new): date,total_min,recovery_min,social_min,entertainment_min,dating_min,other_min
- *   Row:          YYYY-MM-DD,*,*,*,*,*,*
- *
- * Backward compatibility: if an older CSV without dating_min is present,
- * this worker upgrades it in-place by inserting dating_min=0 for prior rows.
- */
 class AppUsageCategoryWorker(
     appContext: Context,
     params: WorkerParameters
 ) : CoroutineWorker(appContext, params) {
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        val ctx = applicationContext
+    private val TAG = "AppUsageCategoryWorker"
 
-        if (!UsagePermissionHelper.isGranted(ctx)) {
-            Log.w(TAG, "Usage access not granted; skipping.")
-            return@withContext Result.success()
-        }
+    override suspend fun doWork(): Result = withContext(Dispatchers.Default) {
+        try {
+            val now = System.currentTimeMillis()
+            val day = dayString(now)
+            val (startOfDay, endOfDay) = dayBounds(now)
 
-        val day = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+            val usm = applicationContext.getSystemService(UsageStatsManager::class.java)
+            val stats: List<UsageStats> =
+                usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startOfDay, endOfDay)
+                    ?: emptyList()
 
-        val categories = readCategories(File(ctx.filesDir, "app_categories.json"))
-        val catRecovery = categories["recovery"] ?: emptySet()
-        val catSocial = categories["social"] ?: emptySet()
-        val catEntertainment = categories["entertainment"] ?: emptySet()
-        val catDating = categories["dating"] ?: emptySet() // NEW
+            val pkgToCat = loadCategoryMap(applicationContext)
 
-        val usm = ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-        val end = System.currentTimeMillis()
-        val start = end - ONE_DAY_MS
+            val buckets = mutableMapOf(
+                "recovery" to 0f,
+                "social" to 0f,
+                "entertainment" to 0f,
+                "dating" to 0f,
+                "other" to 0f
+            )
 
-        val raw: List<UsageStats> = usm.queryUsageStats(
-            UsageStatsManager.INTERVAL_DAILY, start, end
-        ) ?: emptyList()
+            for (s in stats) {
+                val pkg = s.packageName ?: continue
+                val mins = (s.totalTimeInForeground / 60000f)
+                if (mins <= 0f) continue
 
-        if (raw.isEmpty()) {
-            Log.w(TAG, "No UsageStats in last 24h (no activity or OEM quirk).")
-            writeRow(day, 0, 0, 0, 0, 0, 0)
-            return@withContext Result.success()
-        }
-
-        // Aggregate per package
-        val perPackageMillis = HashMap<String, Long>()
-        for (u in raw) {
-            val pkg = u.packageName ?: continue
-            val t = u.totalTimeInForeground.coerceAtLeast(0L)
-            if (t > 0L) {
-                perPackageMillis[pkg] = (perPackageMillis[pkg] ?: 0L) + t
+                val cat = pkgToCat[pkg.lowercase(Locale.ROOT)] ?: "other"
+                buckets[cat] = buckets.getValue(cat) + mins
             }
+
+            writeCategoryDaily(day, buckets)
+
+            Result.success()
+        } catch (t: Throwable) {
+            android.util.Log.e(TAG, "Failed: ${t.message}", t)
+            Result.retry()
         }
-
-        var totalMs = 0L
-        var recMs = 0L
-        var socMs = 0L
-        var entMs = 0L
-        var datMs = 0L
-
-        for ((pkg, ms) in perPackageMillis) {
-            totalMs += ms
-            when {
-                pkg in catRecovery -> recMs += ms
-                pkg in catSocial -> socMs += ms
-                pkg in catEntertainment -> entMs += ms
-                pkg in catDating -> datMs += ms
-            }
-        }
-
-        val otherMs = (totalMs - recMs - socMs - entMs - datMs).coerceAtLeast(0L)
-
-        val totalMin = (totalMs / 60000L).toInt()
-        val recMin = (recMs / 60000L).toInt()
-        val socMin = (socMs / 60000L).toInt()
-        val entMin = (entMs / 60000L).toInt()
-        val datMin = (datMs / 60000L).toInt()
-        val othMin = (otherMs / 60000L).toInt()
-
-        writeRow(day, totalMin, recMin, socMin, entMin, datMin, othMin)
-        Log.i(
-            TAG,
-            "AppUsage $day: total=$totalMin, recovery=$recMin, social=$socMin, entertainment=$entMin, dating=$datMin, other=$othMin (pkgs=${perPackageMillis.size})"
-        )
-
-        Result.success()
     }
 
-    private fun writeRow(
-        day: String,
-        total: Int,
-        rec: Int,
-        soc: Int,
-        ent: Int,
-        dat: Int,
-        oth: Int
-    ) {
-        val out = File(applicationContext.filesDir, "daily_app_usage_minutes.csv")
-        val newHeader = "date,total_min,recovery_min,social_min,entertainment_min,dating_min,other_min"
-        val oldHeader = "date,total_min,recovery_min,social_min,entertainment_min,other_min"
-
-        val lines: MutableList<String> = if (out.exists()) {
-            val existing = out.readLines().toMutableList()
-            if (existing.isNotEmpty() && existing[0].trim() == oldHeader) {
-                // Upgrade old file to include dating_min column (insert 0 before other)
-                val upgraded = mutableListOf<String>()
-                upgraded += newHeader
-                for (i in 1 until existing.size) {
-                    val row = existing[i].trim()
-                    if (row.isEmpty()) continue
-                    val parts = row.split(",")
-                    if (parts.size == 6) {
-                        // date, total, rec, soc, ent, other -> insert dating=0 at index 5
-                        val withDating = listOf(
-                            parts[0], parts[1], parts[2], parts[3], parts[4], "0", parts[5]
-                        ).joinToString(",")
-                        upgraded += withDating
-                    } else {
-                        // Unexpected; keep as-is to avoid data loss
-                        upgraded += row
-                    }
-                }
-                upgraded
-            } else {
-                // Already new header or something custom; ensure header line is correct
-                if (existing.isEmpty() || existing[0].trim() != newHeader) {
-                    // Replace/insert header safely
-                    val rest = if (existing.isNotEmpty()) existing.drop(1) else emptyList()
-                    mutableListOf<String>().apply {
-                        add(newHeader)
-                        addAll(rest)
-                    }
-                } else {
-                    existing
-                }
-            }.toMutableList()
-        } else {
-            mutableListOf(newHeader)
-        }
-
-        // De-dup today's line then append fresh row
-        val filtered = lines.filterNot { it.startsWith("$day,") }.toMutableList()
-        filtered.add("$day,$total,$rec,$soc,$ent,$dat,$oth")
-        out.writeText(filtered.joinToString("\n") + "\n")
+    private fun dayString(ts: Long): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date(ts))
     }
 
-    private fun readCategories(file: File): Map<String, Set<String>> {
-        if (!file.exists()) {
-            Log.w(TAG, "No app_categories.json found; all time will land in 'other'.")
+    private fun dayBounds(now: Long): Pair<Long, Long> {
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = now
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
+        val start = cal.timeInMillis
+        val end = start + 24L * 60L * 60L * 1000L
+        return start to end
+    }
+
+    private fun loadCategoryMap(ctx: Context): Map<String, String> {
+        val f = File(ctx.filesDir, "app_categories.json")
+        val text: String? = try {
+            if (f.exists()) f.readText() else null
+        } catch (_: Throwable) { null }
+
+        val json = text ?: defaultCategoriesJson()
+        val map = mutableMapOf<String, String>()
+
+        try {
+            val obj = JSONObject(json)
+
+            fun addAll(cat: String) {
+                if (!obj.has(cat)) return
+                val arr = obj.getJSONArray(cat)
+                for (i in 0 until arr.length()) {
+                    val pkg = arr.optString(i)?.trim()?.lowercase(Locale.ROOT)
+                    if (!pkg.isNullOrEmpty()) map[pkg] = cat
+                }
+            }
+
+            addAll("recovery")
+            addAll("social")
+            addAll("entertainment")
+            addAll("dating")
+
+            val extras = listOf(
+                "com.facebook.orca" to "social",
+                "com.facebook.lite" to "social",
+                "com.whatsapp.w4b" to "social"
+            )
+            for ((pkg, cat) in extras) map.putIfAbsent(pkg, cat)
+        } catch (_: Throwable) {
             return emptyMap()
         }
-        return try {
-            val text = file.readText()
-            val root = JSONObject(text)
 
-            fun arrToSet(key: String): Set<String> {
-                if (!root.has(key)) return emptySet()
-                val arr = root.getJSONArray(key)
-                val s = HashSet<String>(arr.length())
-                for (i in 0 until arr.length()) {
-                    val v = arr.optString(i, "")
-                    if (v.isNotEmpty()) s.add(v)
-                }
-                return s
-            }
-
-            mapOf(
-                "recovery" to arrToSet("recovery"),
-                "social" to arrToSet("social"),
-                "entertainment" to arrToSet("entertainment"),
-                "dating" to arrToSet("dating") // NEW
-            )
-        } catch (t: Throwable) {
-            Log.e(TAG, "Failed to parse app_categories.json", t)
-            emptyMap()
-        }
+        return map
     }
 
-    companion object {
-        private const val TAG = "AppUsageCategoryWorker"
-        private const val ONE_DAY_MS = 24L * 60L * 60L * 1000L
+    private fun defaultCategoriesJson(): String = """
+        {
+          "recovery": [
+            "au.org.aa.meetings",
+            "com.sobergrid",
+            "com.aa.bigbook",
+            "com.ias.recoverybox",
+            "com.addicaid.app",
+            "org.intherooms.intherooms"
+          ],
+          "social": [
+            "com.whatsapp",
+            "com.facebook.katana",
+            "com.instagram.android",
+            "com.snapchat.android",
+            "org.telegram.messenger",
+            "com.twitter.android",
+            "com.reddit.frontpage",
+            "com.discord"
+          ],
+          "entertainment": [
+            "com.google.android.youtube",
+            "com.netflix.mediaclient",
+            "com.spotify.music",
+            "com.amazon.avod.thirdpartyclient",
+            "com.tiktok.android"
+          ],
+          "dating": [
+            "com.tinder",
+            "com.bumble.app",
+            "co.hinge.app",
+            "com.grindrapp.android",
+            "com.okcupid.okcupid",
+            "com.pof.android",
+            "com.ftw_and_co.happn",
+            "com.match.android",
+            "com.badoo.mobile"
+          ]
+        }
+    """.trimIndent()
+
+    private fun writeCategoryDaily(day: String, buckets: Map<String, Float>) {
+        val file = File(applicationContext.filesDir, "app_category_daily.csv")
+        val sb = StringBuilder()
+        for (cat in listOf("recovery", "social", "entertainment", "dating", "other")) {
+            val mins = buckets[cat] ?: 0f
+            sb.append("$day,$cat,${"%.1f".format(mins)}\n")
+        }
+        file.appendText(sb.toString())
     }
 }

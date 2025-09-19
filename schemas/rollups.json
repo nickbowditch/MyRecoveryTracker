@@ -1,7 +1,10 @@
 {
   "daily_unlocks.csv": {
     "schema_version": 1,
-    "header": ["date", "unlocks"],
+    "header": [
+      "date",
+      "unlocks"
+    ],
     "types": {
       "date": "date",
       "unlocks": "int"
@@ -13,37 +16,104 @@
   },
   "sleep_summary": {
     "file": "daily_sleep_summary.csv",
-    "header": ["date", "sleep_time", "wake_time", "duration_hours"],
-    "types": ["date", "time", "time", "float"],
+    "header": [
+      "date",
+      "sleep_time",
+      "wake_time",
+      "duration_hours"
+    ],
+    "types": [
+      "date",
+      "time",
+      "time",
+      "float"
+    ],
     "dateFormat": "yyyy-MM-dd",
-    "timeFormat": "HH:mm:ss"
+    "timeFormat": "HH:mm:ss",
+    "schema_version": 1
   },
   "sleep_duration": {
     "file": "daily_sleep_duration.csv",
-    "header": ["date", "hours"],
-    "types": ["date", "float"],
-    "range": { "hours": [0.0, 24.0] },
+    "header": [
+      "date",
+      "hours"
+    ],
+    "types": [
+      "date",
+      "float"
+    ],
+    "range": {
+      "hours": [
+        0.0,
+        24.0
+      ]
+    },
     "dateFormat": "yyyy-MM-dd"
   },
   "sleep_quality": {
     "file": "daily_sleep_quality.csv",
-    "header": ["date", "quality"],
-    "types": ["date", "string"],
-    "nonEmpty": ["quality"],
+    "header": [
+      "date",
+      "quality"
+    ],
+    "types": [
+      "date",
+      "string"
+    ],
+    "nonEmpty": [
+      "quality"
+    ],
     "dateFormat": "yyyy-MM-dd"
   },
   "sleep_time": {
     "file": "daily_sleep_time.csv",
-    "header": ["date", "HH:MM:SS"],
-    "types": ["date", "time"],
+    "header": [
+      "date",
+      "HH:MM:SS"
+    ],
+    "types": [
+      "date",
+      "time"
+    ],
     "timeFormat": "HH:mm:ss",
     "dateFormat": "yyyy-MM-dd"
   },
   "sleep_wake_time": {
     "file": "daily_wake_time.csv",
-    "header": ["date", "HH:MM:SS"],
-    "types": ["date", "time"],
+    "header": [
+      "date",
+      "HH:MM:SS"
+    ],
+    "types": [
+      "date",
+      "time"
+    ],
     "timeFormat": "HH:mm:ss",
     "dateFormat": "yyyy-MM-dd"
+  },
+  "daily_late_screen.csv": {
+    "schema_version": 1,
+    "header": [
+      "date",
+      "late_night_screen_minutes"
+    ],
+    "types": {
+      "date": "date",
+      "late_night_screen_minutes": "int"
+    },
+    "constraints": {
+      "late_night_screen_minutes_min": 0,
+      "late_night_screen_minutes_max": 1440
+    },
+    "dateFormat": "yyyy-MM-dd"
+  },
+  "daily_metrics.csv": {
+    "schema_version": 1,
+    "header_minimum": [
+      "date",
+      "feature_schema_version",
+      "daily_unlocks"
+    ],
+    "notes": "Exact full header is sealed in app/locks/daily_metrics.header"
   }
 }

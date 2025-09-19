@@ -5,15 +5,14 @@ plugins {
 
 android {
     namespace = "com.nick.myrecoverytracker"
-    compileSdk = 36 // ✅ Keeps your androidx dependencies happy
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.nick.myrecoverytracker"
         minSdk = 24
-        targetSdk = 34 // ✅ Critical: drops out of Android 14 FGS enforcement
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,7 +30,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -49,4 +47,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+apply(from = "qa-core.gradle.kts")
+
+tasks.named<org.gradle.api.tasks.Exec>("qaCheck") {
+    group = "verification"
+    description = "Run all v6.0 unlocks + sleep evidence checks"
+    commandLine(
+        "bash", "-lc",
+        """set -e; for f in tools/checks/{unlocks,sleep}_*_v6.0*.sh; do bash "${'$'}f"; done"""
+    )
 }
