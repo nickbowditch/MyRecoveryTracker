@@ -1,0 +1,2 @@
+DI-1 RESULT=FAIL (missing lock header)
+DI-1 RESULT=PASS
