@@ -11,12 +11,12 @@ CSV="$(adb exec-out run-as "$PKG" sh -c 'cat files/daily_sleep.csv 2>/dev/null' 
 DUPS="$(awk -F, 'NR>1{c[$1]++} END{for(d in c) if(c[d]>1) print d":"c[d]}' <<<"$CSV")"
 
 if [ -z "$DUPS" ]; then
-  echo "DI-2 RESULT=PASS" | tee "$OUT"
-  exit 0
+echo "DI-2 RESULT=PASS" | tee "$OUT"
+exit 0
 else
-  {
-    echo "DI-2 RESULT=FAIL"
-    printf "%s\n" "$DUPS"
-  } | tee "$OUT"
-  exit 1
+{
+echo "DI-2 RESULT=FAIL"
+printf "%s\n" "$DUPS"
+} | tee "$OUT"
+exit 1
 fi

@@ -4,9 +4,9 @@ S=0
 
 adb kill-server >/dev/null 2>&1; adb start-server >/dev/null 2>&1
 for i in {1..30}; do
-  st="$(adb get-state 2>/dev/null | tr -d $'\r')"
-  [ "$st" = "device" ] && break
-  sleep 1
+st="$(adb get-state 2>/dev/null | tr -d $'\r')"
+[ "$st" = "device" ] && break
+sleep 1
 done
 [ "$st" = "device" ] || { echo "TC-5 RESULT: FAIL (no device/emulator)"; exit 2; }
 adb shell pm path "$PKG" >/dev/null 2>&1 || { echo "TC-5 RESULT: FAIL (app not installed)"; exit 3; }
@@ -22,9 +22,9 @@ MAX=300
 echo "TC-5 HOST_EPOCH=$HOST_EPOCH DEV_EPOCH=$DEV_EPOCH DIFF_SECS=$D"
 
 if [ $D -le $MAX ]; then
-  echo "TC-5 RESULT: PASS"
-  exit 0
+echo "TC-5 RESULT: PASS"
+exit 0
 else
-  echo "TC-5 RESULT: FAIL (clock drift > ${MAX}s)"
-  exit 1
+echo "TC-5 RESULT: FAIL (clock drift > ${MAX}s)"
+exit 1
 fi
