@@ -1,0 +1,14 @@
+RUN:PRE_PUSH_GUARD
+HOOKS_DIR:.git/hooks
+PRE_PUSH:present+executable
+PRE_PUSH_SHA256:f87fa7f4f3213aa0fba6c2c19f94add5df77fde004840335b265202fd471084d
+GIT-PRE-PUSH-GUARD RESULT=PASS
+RUN:PUSH_MAIN_AND_TAG
+VERIFY_LOCAL_TAG_BEGIN
+LOCAL_TAG:present
+VERIFY_LOCAL_TAG_END
+PUSH_MAIN_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_MAIN_FAIL
+GIT-PUSH-MAIN-AND-TAG RESULT=FAIL

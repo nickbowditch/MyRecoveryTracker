@@ -15,7 +15,7 @@ d=substr($1,1,10)
 if (d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) rc[d]++
 next
 }
-FNR==1 { next }                        # skip header of DAILY
+FNR==1 { next }                        
 FNR>1 {
 d=$1
 c = ($2 ~ /^v[0-9.]+$/ && NF>=3) ? $3 : $2

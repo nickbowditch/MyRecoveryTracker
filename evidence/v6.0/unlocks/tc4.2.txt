@@ -1,1 +1,3 @@
-TC-4 RESULT=PASS
+TC-4 RESULT=FAIL
+2025-04-05 raw=57 daily=v6.0 (before=v6.0)
+2025-04-06 raw=57 daily=v6.0 (before=v6.0)
