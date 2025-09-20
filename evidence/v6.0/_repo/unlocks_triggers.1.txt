@@ -1,0 +1,6 @@
+=== ENQUEUE CALLS (WorkManager/Unlock*) ===
+
+=== RECEIVERS & TRIGGERS (TriggerReceiver.*, ACTION_*) ===
+
+=== ANY rollup helper calls ===
+DIAG-TRIGGERS RESULT=PASS

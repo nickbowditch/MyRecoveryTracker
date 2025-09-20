@@ -1,0 +1,149 @@
+AUTH_SSH_BEGIN
+Hi nickbowditch! You've successfully authenticated, but GitHub does not provide shell access.
+AUTH_SSH_END
+REMOTE_BEGIN
+origin	git@github.com:nickbowditch/MyRecoveryTracker.git (fetch)
+origin	git@github.com:nickbowditch/MyRecoveryTracker.git (push)
+* remote origin
+  Fetch URL: git@github.com:nickbowditch/MyRecoveryTracker.git
+  Push  URL: git@github.com:nickbowditch/MyRecoveryTracker.git
+  HEAD branch: main
+  Remote branch:
+    main tracked
+  Local branch configured for 'git pull':
+    main merges with remote main
+  Local ref configured for 'git push':
+    main pushes to main (fast-forwardable)
+REMOTE_END
+FETCH_BEGIN
+From github.com:nickbowditch/MyRecoveryTracker
+ = [up to date]      main       -> origin/main
+FETCH_OK
+FETCH_END
+STATUS_BEGIN
+## main...origin/main [ahead 28]
+ M app/build.gradle.kts
+ M app/src/main/java/com/nick/myrecoverytracker/RedcapUploadWorker.kt
+ M app/src/main/java/com/nick/myrecoverytracker/RollupValidator.kt
+ M app/src/main/java/com/nick/myrecoverytracker/Rollups.kt
+ M app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt
+ M app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt
+ M app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt
+ M evidence/v6.0/sleep/di3.2.txt
+ M evidence/v6.0/sleep/di3.console.2.txt
+ M evidence/v6.0/sleep/gv1.4.txt
+ M evidence/v6.0/sleep/gv1.console.4.txt
+ M evidence/v6.0/sleep/gv4.14.txt
+ M evidence/v6.0/sleep/gv4.console.14.txt
+ M evidence/v6.0/unlocks/ee2.1.txt
+ M evidence/v6.0/unlocks/ee3.1.txt
+ M evidence/v6.0/unlocks/tc2.17.txt
+ M evidence/v6.0/unlocks/tc4.2.txt
+ M evidence/v6.0/unlocks/tc5.1.txt
+ M tools/checks/at2_v6.0.1.sh
+ M tools/checks/sleep_gv1_v6.0.4.sh
+ M tools/checks/sleep_gv4_v6.0.14.sh
+ M tools/checks/unlocks_at1_evidence_v6.0.1.sh
+?? evidence/v6.0/_repo/bootstrap_all.1.txt
+?? evidence/v6.0/_repo/bootstrap_all.console.1.txt
+?? evidence/v6.0/_repo/features.list.1.txt
+?? evidence/v6.0/_repo/git_push_diag.2.txt
+?? evidence/v6.0/_repo/run_suite.1.txt
+?? evidence/v6.0/_repo/schema_guard.2.txt
+?? evidence/v6.0/_repo/schema_guard.console.2.txt
+?? evidence/v6.0/_repo/schema_sweep.1.txt
+?? evidence/v6.0/_repo/schema_sweep.2.txt
+?? evidence/v6.0/_repo/schema_sweep.console.1.txt
+?? evidence/v6.0/_repo/schema_sweep.console.2.txt
+?? evidence/v6.0/_repo/shape_guard.1.txt
+?? evidence/v6.0/_repo/unlocks_callers.1.txt
+?? evidence/v6.0/_repo/unlocks_callers.2.txt
+?? evidence/v6.0/_repo/unlocks_callers.3.txt
+?? evidence/v6.0/_repo/unlocks_callers.console.1.txt
+?? evidence/v6.0/_repo/unlocks_callers.console.2.txt
+?? evidence/v6.0/_repo/unlocks_callers.console.3.txt
+?? evidence/v6.0/_repo/unlocks_device_header.2.txt
+?? evidence/v6.0/_repo/unlocks_device_header.3.txt
+?? evidence/v6.0/_repo/unlocks_device_header.console.2.txt
+?? evidence/v6.0/_repo/unlocks_device_header.console.3.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.2.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.3.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.console.2.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.console.3.txt
+?? evidence/v6.0/_repo/unlocks_guard.1.txt
+?? evidence/v6.0/_repo/unlocks_guard.console.1.txt
+?? evidence/v6.0/_repo/unlocks_heal.1.txt
+?? evidence/v6.0/_repo/unlocks_heal.3.txt
+?? evidence/v6.0/_repo/unlocks_heal.console.1.txt
+?? evidence/v6.0/_repo/unlocks_heal.console.3.txt
+?? evidence/v6.0/_repo/unlocks_sources.2.txt
+?? evidence/v6.0/_repo/unlocks_sources.3.txt
+?? evidence/v6.0/_repo/unlocks_sources.console.2.txt
+?? evidence/v6.0/_repo/unlocks_sources.console.3.txt
+?? evidence/v6.0/_repo/unlocks_triggers.1.txt
+?? evidence/v6.0/_repo/unlocks_triggers.console.1.txt
+?? evidence/v6.0/_repo/unlocks_writers.1.txt
+?? evidence/v6.0/_repo/unlocks_writers.console.1.txt
+?? evidence/v6.0/_repo/writers_allowlist.1.txt
+?? evidence/v6.0/_repo/writers_allowlist.3.txt
+?? evidence/v6.0/_repo/writers_allowlist.5.txt
+?? evidence/v6.0/_repo/writers_allowlist.console.3.txt
+?? evidence/v6.0/_repo/writers_allowlist.console.5.txt
+?? evidence/v6.0/sleep/ee1.txt
+?? evidence/v6.0/sleep/ee2.1.txt
+?? evidence/v6.0/sleep/ee3.1.txt
+?? evidence/v6.0/sleep/gv3.8.txt
+?? evidence/v6.0/sleep/gv3.9.txt
+?? evidence/v6.0/sleep/gv3.console.9.txt
+?? tools/checks/diag_schema_v6.0.1.sh
+?? tools/checks/diag_schema_v6.0.2.sh
+?? tools/checks/diag_unlocks_callers_v6.0.1.sh
+?? tools/checks/diag_unlocks_callers_v6.0.2.sh
+?? tools/checks/diag_unlocks_callers_v6.0.3.sh
+?? tools/checks/diag_unlocks_device_header_v6.0.2.sh
+?? tools/checks/diag_unlocks_device_header_v6.0.3.sh
+?? tools/checks/diag_unlocks_device_snap_v6.0.2.sh
+?? tools/checks/diag_unlocks_device_snap_v6.0.3.sh
+?? tools/checks/diag_unlocks_sources_v6.0.2.sh
+?? tools/checks/diag_unlocks_sources_v6.0.3.sh
+?? tools/checks/diag_unlocks_triggers_v6.0.1.sh
+?? tools/checks/diag_unlocks_writers_v6.0.1.sh
+?? tools/checks/git_push_diag_v6.0.2.sh
+?? tools/checks/guard_unlocks_header_v6.0.1.sh
+?? tools/checks/list_features_v6.0.1.sh
+?? tools/checks/run_unlocks_sleep_suite_v6.0.1.sh
+?? tools/checks/schema_guard_v6.0.2.sh
+?? tools/checks/shape_guard_v6.0.1.sh
+?? tools/checks/sleep_at2_v6.0.2.sh
+?? tools/checks/sleep_at3_v6.0.1.sh
+?? tools/checks/sleep_di2_v6.0.1.sh
+?? tools/checks/sleep_di3_v6.0.2.sh
+?? tools/checks/sleep_di4_v6.0.1.sh
+?? tools/checks/sleep_gv3_v6.0.9.sh
+?? tools/checks/sleep_gv5_v6.0.1.sh
+?? tools/checks/sleep_tc3_v6.0.1.sh
+?? tools/checks/sleep_tc4_evidence_v6.0.1.sh
+?? tools/checks/sleep_tc5_v6.0.1.sh
+?? tools/checks/sleep_tc6_v6.0.1.sh
+?? tools/checks/writers_allowlist_v6.0.1.sh
+?? tools/checks/writers_allowlist_v6.0.2.sh
+?? tools/checks/writers_allowlist_v6.0.3.sh
+?? tools/checks/writers_allowlist_v6.0.5.sh
+?? tools/fixtures/bootstrap_all_v6.0.1.sh
+?? tools/fixtures/unlocks_header_heal_v6.0.1.sh
+?? tools/fixtures/unlocks_header_heal_v6.0.3.sh
+STATUS_END
+DIVERGENCE_BEGIN
+0	28
+DIVERGENCE_END
+PUSH_TAG_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_TAG_FAIL
+PUSH_TAG_END
+PUSH_MAIN_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_MAIN_FAIL
+PUSH_MAIN_END
+GIT-PUSH-DIAG RESULT=FAIL

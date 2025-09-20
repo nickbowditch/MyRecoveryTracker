@@ -1,0 +1,4 @@
+SCHEMA-SWEEP RESULT=FAIL
+MISMATCH:files/daily_unlocks.csv
+LOCK:date,feature_schema_version,daily_unlocks
+HEAD:date,unlocks

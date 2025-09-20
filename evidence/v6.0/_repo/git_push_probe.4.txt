@@ -1,0 +1,1031 @@
+REMOTE_BEGIN
+origin	git@github.com:nickbowditch/MyRecoveryTracker.git (fetch)
+origin	git@github.com:nickbowditch/MyRecoveryTracker.git (push)
+* remote origin
+  Fetch URL: git@github.com:nickbowditch/MyRecoveryTracker.git
+  Push  URL: git@github.com:nickbowditch/MyRecoveryTracker.git
+  HEAD branch: main
+  Remote branch:
+    main tracked
+  Local branch configured for 'git pull':
+    main merges with remote main
+  Local ref configured for 'git push':
+    main pushes to main (fast-forwardable)
+REMOTE_END
+FETCH_BEGIN
+From github.com:nickbowditch/MyRecoveryTracker
+ = [up to date]      main       -> origin/main
+FETCH_OK
+FETCH_END
+STATUS_BEGIN
+## main...origin/main [ahead 28]
+ M app/build.gradle.kts
+ M app/src/main/java/com/nick/myrecoverytracker/RedcapUploadWorker.kt
+ M app/src/main/java/com/nick/myrecoverytracker/RollupValidator.kt
+ M app/src/main/java/com/nick/myrecoverytracker/Rollups.kt
+ M app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt
+ M app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt
+ M app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt
+ M evidence/v6.0/sleep/di3.2.txt
+ M evidence/v6.0/sleep/di3.console.2.txt
+ M evidence/v6.0/sleep/gv1.4.txt
+ M evidence/v6.0/sleep/gv1.console.4.txt
+ M evidence/v6.0/sleep/gv4.14.txt
+ M evidence/v6.0/sleep/gv4.console.14.txt
+ M evidence/v6.0/unlocks/ee2.1.txt
+ M evidence/v6.0/unlocks/ee3.1.txt
+ M evidence/v6.0/unlocks/tc2.17.txt
+ M evidence/v6.0/unlocks/tc4.2.txt
+ M evidence/v6.0/unlocks/tc5.1.txt
+ M tools/checks/at2_v6.0.1.sh
+ M tools/checks/sleep_gv1_v6.0.4.sh
+ M tools/checks/sleep_gv4_v6.0.14.sh
+ M tools/checks/unlocks_at1_evidence_v6.0.1.sh
+?? evidence/v6.0/_repo/bootstrap_all.1.txt
+?? evidence/v6.0/_repo/bootstrap_all.console.1.txt
+?? evidence/v6.0/_repo/features.list.1.txt
+?? evidence/v6.0/_repo/git_push_diag.2.txt
+?? evidence/v6.0/_repo/git_push_probe.3.txt
+?? evidence/v6.0/_repo/git_push_probe.4.txt
+?? evidence/v6.0/_repo/run_suite.1.txt
+?? evidence/v6.0/_repo/schema_guard.2.txt
+?? evidence/v6.0/_repo/schema_guard.console.2.txt
+?? evidence/v6.0/_repo/schema_sweep.1.txt
+?? evidence/v6.0/_repo/schema_sweep.2.txt
+?? evidence/v6.0/_repo/schema_sweep.console.1.txt
+?? evidence/v6.0/_repo/schema_sweep.console.2.txt
+?? evidence/v6.0/_repo/shape_guard.1.txt
+?? evidence/v6.0/_repo/unlocks_callers.1.txt
+?? evidence/v6.0/_repo/unlocks_callers.2.txt
+?? evidence/v6.0/_repo/unlocks_callers.3.txt
+?? evidence/v6.0/_repo/unlocks_callers.console.1.txt
+?? evidence/v6.0/_repo/unlocks_callers.console.2.txt
+?? evidence/v6.0/_repo/unlocks_callers.console.3.txt
+?? evidence/v6.0/_repo/unlocks_device_header.2.txt
+?? evidence/v6.0/_repo/unlocks_device_header.3.txt
+?? evidence/v6.0/_repo/unlocks_device_header.console.2.txt
+?? evidence/v6.0/_repo/unlocks_device_header.console.3.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.2.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.3.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.console.2.txt
+?? evidence/v6.0/_repo/unlocks_device_snap.console.3.txt
+?? evidence/v6.0/_repo/unlocks_guard.1.txt
+?? evidence/v6.0/_repo/unlocks_guard.console.1.txt
+?? evidence/v6.0/_repo/unlocks_heal.1.txt
+?? evidence/v6.0/_repo/unlocks_heal.3.txt
+?? evidence/v6.0/_repo/unlocks_heal.console.1.txt
+?? evidence/v6.0/_repo/unlocks_heal.console.3.txt
+?? evidence/v6.0/_repo/unlocks_sources.2.txt
+?? evidence/v6.0/_repo/unlocks_sources.3.txt
+?? evidence/v6.0/_repo/unlocks_sources.console.2.txt
+?? evidence/v6.0/_repo/unlocks_sources.console.3.txt
+?? evidence/v6.0/_repo/unlocks_triggers.1.txt
+?? evidence/v6.0/_repo/unlocks_triggers.console.1.txt
+?? evidence/v6.0/_repo/unlocks_writers.1.txt
+?? evidence/v6.0/_repo/unlocks_writers.console.1.txt
+?? evidence/v6.0/_repo/writers_allowlist.1.txt
+?? evidence/v6.0/_repo/writers_allowlist.3.txt
+?? evidence/v6.0/_repo/writers_allowlist.5.txt
+?? evidence/v6.0/_repo/writers_allowlist.console.3.txt
+?? evidence/v6.0/_repo/writers_allowlist.console.5.txt
+?? evidence/v6.0/sleep/ee1.txt
+?? evidence/v6.0/sleep/ee2.1.txt
+?? evidence/v6.0/sleep/ee3.1.txt
+?? evidence/v6.0/sleep/gv3.8.txt
+?? evidence/v6.0/sleep/gv3.9.txt
+?? evidence/v6.0/sleep/gv3.console.9.txt
+?? tools/checks/diag_schema_v6.0.1.sh
+?? tools/checks/diag_schema_v6.0.2.sh
+?? tools/checks/diag_unlocks_callers_v6.0.1.sh
+?? tools/checks/diag_unlocks_callers_v6.0.2.sh
+?? tools/checks/diag_unlocks_callers_v6.0.3.sh
+?? tools/checks/diag_unlocks_device_header_v6.0.2.sh
+?? tools/checks/diag_unlocks_device_header_v6.0.3.sh
+?? tools/checks/diag_unlocks_device_snap_v6.0.2.sh
+?? tools/checks/diag_unlocks_device_snap_v6.0.3.sh
+?? tools/checks/diag_unlocks_sources_v6.0.2.sh
+?? tools/checks/diag_unlocks_sources_v6.0.3.sh
+?? tools/checks/diag_unlocks_triggers_v6.0.1.sh
+?? tools/checks/diag_unlocks_writers_v6.0.1.sh
+?? tools/checks/git_push_diag_v6.0.2.sh
+?? tools/checks/git_push_probe_v6.0.3.sh
+?? tools/checks/git_push_probe_v6.0.4.sh
+?? tools/checks/guard_unlocks_header_v6.0.1.sh
+?? tools/checks/list_features_v6.0.1.sh
+?? tools/checks/run_unlocks_sleep_suite_v6.0.1.sh
+?? tools/checks/schema_guard_v6.0.2.sh
+?? tools/checks/shape_guard_v6.0.1.sh
+?? tools/checks/sleep_at2_v6.0.2.sh
+?? tools/checks/sleep_at3_v6.0.1.sh
+?? tools/checks/sleep_di2_v6.0.1.sh
+?? tools/checks/sleep_di3_v6.0.2.sh
+?? tools/checks/sleep_di4_v6.0.1.sh
+?? tools/checks/sleep_gv3_v6.0.9.sh
+?? tools/checks/sleep_gv5_v6.0.1.sh
+?? tools/checks/sleep_tc3_v6.0.1.sh
+?? tools/checks/sleep_tc4_evidence_v6.0.1.sh
+?? tools/checks/sleep_tc5_v6.0.1.sh
+?? tools/checks/sleep_tc6_v6.0.1.sh
+?? tools/checks/writers_allowlist_v6.0.1.sh
+?? tools/checks/writers_allowlist_v6.0.2.sh
+?? tools/checks/writers_allowlist_v6.0.3.sh
+?? tools/checks/writers_allowlist_v6.0.5.sh
+?? tools/fixtures/bootstrap_all_v6.0.1.sh
+?? tools/fixtures/unlocks_header_heal_v6.0.1.sh
+?? tools/fixtures/unlocks_header_heal_v6.0.3.sh
+STATUS_END
+DIVERGENCE_BEGIN
+0	28
+DIVERGENCE_END
+TRACE_ENV_BEGIN
+GIT_TRACE=1
+GIT_TRACE_PACKET=1
+GIT_SSH_COMMAND=ssh -vvv
+TRACE_ENV_END
+PUSH_TMP_BRANCH_BEGIN
+18:54:22.006253 exec-cmd.c:139          trace: resolved executable path from Darwin stack: /Library/Developer/CommandLineTools/usr/bin/git
+18:54:22.006463 exec-cmd.c:238          trace: resolved executable dir: /Library/Developer/CommandLineTools/usr/bin
+18:54:22.006779 git.c:460               trace: built-in: git push -v origin HEAD:refs/heads/ci/probe-1758358461
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+18:54:22.007853 run-command.c:655       trace: run_command: unset GIT_PREFIX; 'ssh -vvv' git@github.com 'git-receive-pack '\''nickbowditch/MyRecoveryTracker.git'\'''
+OpenSSH_9.7p1, LibreSSL 3.3.6
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files
+debug1: /etc/ssh/ssh_config line 54: Applying options for *
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' -> '/Users/nickbowditch/.ssh/known_hosts'
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' -> '/Users/nickbowditch/.ssh/known_hosts2'
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug3: channel_clear_timeouts: clearing
+debug1: Connecting to github.com port 22.
+debug1: Connection established.
+debug1: identity file /Users/nickbowditch/.ssh/id_rsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_rsa-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa_sk type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa_sk-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519 type 3
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519_sk type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519_sk-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_xmss type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_xmss-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_dsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_dsa-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_9.7
+debug1: Remote protocol version 2.0, remote software version 550beff
+debug1: compat_banner: no match: 550beff
+debug3: fd 5 is O_NONBLOCK
+debug1: Authenticating to github.com:22 as 'git'
+debug3: record_hostkey: found key type ED25519 in file /Users/nickbowditch/.ssh/known_hosts:4
+debug3: record_hostkey: found key type RSA in file /Users/nickbowditch/.ssh/known_hosts:5
+debug3: record_hostkey: found key type ECDSA in file /Users/nickbowditch/.ssh/known_hosts:6
+debug3: load_hostkeys_file: loaded 3 keys from github.com
+debug1: load_hostkeys: fopen /Users/nickbowditch/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim
+debug3: send packet: type 20
+debug1: SSH2_MSG_KEXINIT sent
+debug3: receive packet: type 20
+debug1: SSH2_MSG_KEXINIT received
+debug2: local client KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug2: peer server KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,kex-strict-s-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+debug2: MACs ctos: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+debug2: MACs stoc: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: kex_choose_conf: will use strict KEX ordering
+debug1: kex: algorithm: sntrup761x25519-sha512@openssh.com
+debug1: kex: host key algorithm: ssh-ed25519
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug3: send packet: type 30
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug3: receive packet: type 31
+debug1: SSH2_MSG_KEX_ECDH_REPLY received
+debug1: Server host key: ssh-ed25519 SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+debug3: record_hostkey: found key type ED25519 in file /Users/nickbowditch/.ssh/known_hosts:4
+debug3: record_hostkey: found key type RSA in file /Users/nickbowditch/.ssh/known_hosts:5
+debug3: record_hostkey: found key type ECDSA in file /Users/nickbowditch/.ssh/known_hosts:6
+debug3: load_hostkeys_file: loaded 3 keys from github.com
+debug1: load_hostkeys: fopen /Users/nickbowditch/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug1: Host 'github.com' is known and matches the ED25519 host key.
+debug1: Found key in /Users/nickbowditch/.ssh/known_hosts:4
+debug3: send packet: type 21
+debug1: ssh_packet_send2_wrapped: resetting send seqnr 3
+debug2: ssh_set_newkeys: mode 1
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug3: receive packet: type 21
+debug1: ssh_packet_read_poll2: resetting read seqnr 3
+debug1: SSH2_MSG_NEWKEYS received
+debug2: ssh_set_newkeys: mode 0
+debug1: rekey in after 134217728 blocks
+debug2: KEX algorithms: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: send packet: type 5
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa>
+debug3: kex_input_ext_info: extension publickey-hostbound@openssh.com
+debug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>
+debug3: receive packet: type 6
+debug2: service_accept: ssh-userauth
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug3: send packet: type 50
+debug3: receive packet: type 51
+debug1: Authentications that can continue: publickey
+debug3: start over, passed a different list publickey
+debug3: preferred publickey,keyboard-interactive,password
+debug3: authmethod_lookup publickey
+debug3: remaining preferred: keyboard-interactive,password
+debug3: authmethod_is_enabled publickey
+debug1: Next authentication method: publickey
+debug3: ssh_get_authentication_socket_path: path '/private/tmp/com.apple.launchd.QVPs2r4sHp/Listeners'
+debug1: get_agent_identities: bound agent to hostkey
+debug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_rsa 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ecdsa 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ecdsa_sk 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ed25519_sk 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_xmss 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_dsa 
+debug2: pubkey_prepare: done
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_rsa
+debug3: no such identity: /Users/nickbowditch/.ssh/id_rsa: No such file or directory
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_ecdsa
+debug3: no such identity: /Users/nickbowditch/.ssh/id_ecdsa: No such file or directory
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_ecdsa_sk
+debug3: no such identity: /Users/nickbowditch/.ssh/id_ecdsa_sk: No such file or directory
+debug1: Offering public key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: send packet: type 50
+debug2: we sent a publickey packet, wait for reply
+debug3: receive packet: type 60
+debug1: Server accepts key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: sign_and_send_pubkey: using publickey-hostbound-v00@openssh.com with ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: sign_and_send_pubkey: signing using ssh-ed25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: send packet: type 50
+debug3: receive packet: type 52
+Authenticated to github.com ([4.237.22.38]:22) using "publickey".
+debug2: fd 6 setting O_NONBLOCK
+debug2: fd 7 setting O_NONBLOCK
+debug2: fd 8 setting O_NONBLOCK
+debug1: channel 0: new session [client-session] (inactive timeout: 0)
+debug3: ssh_session2_open: channel_new: 0
+debug2: channel 0: send open
+debug3: send packet: type 90
+debug1: Entering interactive session.
+debug1: pledge: filesystem
+debug3: client_repledge: enter
+debug3: receive packet: type 80
+debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
+debug3: client_input_hostkeys: received RSA key SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s
+debug3: client_input_hostkeys: received ECDSA key SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM
+debug3: client_input_hostkeys: received ED25519 key SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+debug1: client_input_hostkeys: searching /Users/nickbowditch/.ssh/known_hosts for github.com / (none)
+debug3: hostkeys_foreach: reading file "/Users/nickbowditch/.ssh/known_hosts"
+debug3: hostkeys_find: found ssh-ed25519 key at /Users/nickbowditch/.ssh/known_hosts:4
+debug3: hostkeys_find: found ssh-rsa key at /Users/nickbowditch/.ssh/known_hosts:5
+debug3: hostkeys_find: found ecdsa-sha2-nistp256 key at /Users/nickbowditch/.ssh/known_hosts:6
+debug1: client_input_hostkeys: searching /Users/nickbowditch/.ssh/known_hosts2 for github.com / (none)
+debug1: client_input_hostkeys: hostkeys file /Users/nickbowditch/.ssh/known_hosts2 does not exist
+debug3: client_input_hostkeys: 3 server keys: 0 new, 3 retained, 0 incomplete match. 0 to remove
+debug1: client_input_hostkeys: no new or deprecated keys from server
+debug3: client_repledge: enter
+debug3: receive packet: type 91
+debug2: channel_input_open_confirmation: channel 0: callback start
+debug2: fd 5 setting TCP_NODELAY
+debug3: set_sock_tos: set socket 5 IP_TOS 0x20
+debug2: client_session2_setup: id 0
+debug1: Sending environment.
+debug3: Ignored env MANPATH
+debug3: Ignored env TERM_PROGRAM
+debug3: Ignored env TERM
+debug3: Ignored env SHELL
+debug3: Ignored env REDDIT_USERNAME
+debug3: Ignored env TMPDIR
+debug3: Ignored env HOMEBREW_REPOSITORY
+debug3: Ignored env LIBRARY_PATH
+debug3: Ignored env TERM_PROGRAM_VERSION
+debug3: Ignored env SDKROOT
+debug3: Ignored env REDDIT_PASSWORD
+debug3: Ignored env TERM_SESSION_ID
+debug3: Ignored env USER
+debug3: Ignored env REDDIT_CLIENT_SECRET
+debug3: Ignored env SSH_AUTH_SOCK
+debug3: Ignored env CPATH
+debug3: Ignored env __CF_USER_TEXT_ENCODING
+debug3: Ignored env PATH
+debug3: Ignored env GIT_TRACE_PACKET
+debug3: Ignored env _
+debug3: Ignored env LaunchInstanceID
+debug3: Ignored env __CFBundleIdentifier
+debug3: Ignored env PWD
+debug3: Ignored env JAVA_HOME
+debug1: channel 0: setting env LANG = "en_AU.UTF-8"
+debug2: channel 0: request env confirm 0
+debug3: send packet: type 98
+debug3: Ignored env XPC_FLAGS
+debug3: Ignored env XPC_SERVICE_NAME
+debug3: Ignored env SHLVL
+debug3: Ignored env HOME
+debug3: Ignored env HOMEBREW_PREFIX
+debug3: Ignored env GIT_SSH_COMMAND
+debug3: Ignored env GIT_TRACE
+debug3: Ignored env LOGNAME
+debug3: Ignored env REDDIT_USER_AGENT
+debug3: Ignored env INFOPATH
+debug3: Ignored env HOMEBREW_CELLAR
+debug3: Ignored env SECURITYSESSIONID
+debug3: Ignored env REDDIT_CLIENT_ID
+debug3: Ignored env GIT_EXEC_PATH
+debug1: Sending command: git-receive-pack 'nickbowditch/MyRecoveryTracker.git'
+debug2: channel 0: request exec confirm 1
+debug3: send packet: type 98
+debug3: client_repledge: enter
+debug1: pledge: fork
+debug2: channel_input_open_confirmation: channel 0: callback done
+debug2: channel 0: open confirm rwindow 32000 rmax 35000
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: exec request accepted on channel 0
+18:54:24.454115 pkt-line.c:80           packet:         push< 2cf02a3a9088d51c69caa9aa48924c96d37b5c36 refs/heads/main\0report-status report-status-v2 delete-refs side-band-64k ofs-delta atomic object-format=sha1 quiet agent=github/spokes-receive-pack-acac8763c60f636c44baaf5c3887895cf5f55c30 push-options
+18:54:24.454298 pkt-line.c:80           packet:         push< a3d678e8cfe32da8b24b9cc7b1e8cf199c93ec7f refs/tags/stable-2025-09-03
+18:54:24.454322 pkt-line.c:80           packet:         push< fee859d56917ed735b01c4f59fcf78067ef0a589 refs/tags/stable-fgservice
+18:54:24.454331 pkt-line.c:80           packet:         push< 0000
+18:54:24.454763 run-command.c:655       trace: run_command: .git/hooks/pre-push origin git@github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+18:54:24.654408 pkt-line.c:80           packet:         push> 0000
+debug2: channel 0: read failed rfd 6 maxlen 31996: Broken pipe
+debug2: channel 0: read failed
+debug2: chan_shutdown_read: channel 0: (i0 o0 sock -1 wfd 6 efd 8 [write])
+debug2: channel 0: input open -> drain
+debug2: channel 0: ibuf empty
+debug2: channel 0: send eof
+debug3: send packet: type 96
+debug2: channel 0: input drain -> closed
+debug2: channel 0: rcvd adjust 2065156
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug3: receive packet: type 96
+debug2: channel 0: rcvd eof
+debug2: channel 0: output open -> drain
+debug2: channel 0: obuf empty
+debug2: chan_shutdown_write: channel 0: (i3 o1 sock -1 wfd 7 efd 8 [write])
+debug2: channel 0: output drain -> closed
+debug3: receive packet: type 97
+debug2: channel 0: rcvd close
+debug3: channel 0: will not send data after close
+debug2: channel 0: almost dead
+debug2: channel 0: gc: notify user
+debug2: channel 0: gc: user detached
+debug2: channel 0: send close
+debug3: send packet: type 97
+debug2: channel 0: is dead
+debug2: channel 0: garbage collecting
+debug1: channel 0: free: client-session, nchannels 1
+debug3: channel 0: status: The following connections are open:
+  #0 client-session (t4 [session] r43 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 io 0x00/0x00)
+
+debug3: send packet: type 1
+Transferred: sent 3532, received 4016 bytes, in 1.0 seconds
+Bytes per second: sent 3649.4, received 4149.5
+debug1: Exit status 0
+PUSH_TMP_BRANCH_FAIL
+PUSH_TMP_BRANCH_END
+DEL_TMP_BRANCH_BEGIN
+DEL_TMP_BRANCH_END
+PUSH_TMP_TAG_BEGIN
+18:54:27.517615 exec-cmd.c:139          trace: resolved executable path from Darwin stack: /Library/Developer/CommandLineTools/usr/bin/git
+18:54:27.518058 exec-cmd.c:238          trace: resolved executable dir: /Library/Developer/CommandLineTools/usr/bin
+18:54:27.518663 git.c:460               trace: built-in: git push -v origin refs/tags/probe-tag-1758358461
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+18:54:27.519816 run-command.c:655       trace: run_command: unset GIT_PREFIX; 'ssh -vvv' git@github.com 'git-receive-pack '\''nickbowditch/MyRecoveryTracker.git'\'''
+OpenSSH_9.7p1, LibreSSL 3.3.6
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files
+debug1: /etc/ssh/ssh_config line 54: Applying options for *
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' -> '/Users/nickbowditch/.ssh/known_hosts'
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' -> '/Users/nickbowditch/.ssh/known_hosts2'
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug3: channel_clear_timeouts: clearing
+debug1: Connecting to github.com port 22.
+debug1: Connection established.
+debug1: identity file /Users/nickbowditch/.ssh/id_rsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_rsa-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa_sk type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa_sk-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519 type 3
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519_sk type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519_sk-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_xmss type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_xmss-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_dsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_dsa-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_9.7
+debug1: Remote protocol version 2.0, remote software version 550beff
+debug1: compat_banner: no match: 550beff
+debug3: fd 5 is O_NONBLOCK
+debug1: Authenticating to github.com:22 as 'git'
+debug3: record_hostkey: found key type ED25519 in file /Users/nickbowditch/.ssh/known_hosts:4
+debug3: record_hostkey: found key type RSA in file /Users/nickbowditch/.ssh/known_hosts:5
+debug3: record_hostkey: found key type ECDSA in file /Users/nickbowditch/.ssh/known_hosts:6
+debug3: load_hostkeys_file: loaded 3 keys from github.com
+debug1: load_hostkeys: fopen /Users/nickbowditch/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim
+debug3: send packet: type 20
+debug1: SSH2_MSG_KEXINIT sent
+debug3: receive packet: type 20
+debug1: SSH2_MSG_KEXINIT received
+debug2: local client KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug2: peer server KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,kex-strict-s-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+debug2: MACs ctos: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+debug2: MACs stoc: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: kex_choose_conf: will use strict KEX ordering
+debug1: kex: algorithm: sntrup761x25519-sha512@openssh.com
+debug1: kex: host key algorithm: ssh-ed25519
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug3: send packet: type 30
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug3: receive packet: type 31
+debug1: SSH2_MSG_KEX_ECDH_REPLY received
+debug1: Server host key: ssh-ed25519 SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+debug3: record_hostkey: found key type ED25519 in file /Users/nickbowditch/.ssh/known_hosts:4
+debug3: record_hostkey: found key type RSA in file /Users/nickbowditch/.ssh/known_hosts:5
+debug3: record_hostkey: found key type ECDSA in file /Users/nickbowditch/.ssh/known_hosts:6
+debug3: load_hostkeys_file: loaded 3 keys from github.com
+debug1: load_hostkeys: fopen /Users/nickbowditch/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug1: Host 'github.com' is known and matches the ED25519 host key.
+debug1: Found key in /Users/nickbowditch/.ssh/known_hosts:4
+debug3: send packet: type 21
+debug1: ssh_packet_send2_wrapped: resetting send seqnr 3
+debug2: ssh_set_newkeys: mode 1
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug3: receive packet: type 21
+debug1: ssh_packet_read_poll2: resetting read seqnr 3
+debug1: SSH2_MSG_NEWKEYS received
+debug2: ssh_set_newkeys: mode 0
+debug1: rekey in after 134217728 blocks
+debug2: KEX algorithms: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: send packet: type 5
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa>
+debug3: kex_input_ext_info: extension publickey-hostbound@openssh.com
+debug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>
+debug3: receive packet: type 6
+debug2: service_accept: ssh-userauth
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug3: send packet: type 50
+debug3: receive packet: type 51
+debug1: Authentications that can continue: publickey
+debug3: start over, passed a different list publickey
+debug3: preferred publickey,keyboard-interactive,password
+debug3: authmethod_lookup publickey
+debug3: remaining preferred: keyboard-interactive,password
+debug3: authmethod_is_enabled publickey
+debug1: Next authentication method: publickey
+debug3: ssh_get_authentication_socket_path: path '/private/tmp/com.apple.launchd.QVPs2r4sHp/Listeners'
+debug1: get_agent_identities: bound agent to hostkey
+debug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_rsa 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ecdsa 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ecdsa_sk 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ed25519_sk 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_xmss 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_dsa 
+debug2: pubkey_prepare: done
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_rsa
+debug3: no such identity: /Users/nickbowditch/.ssh/id_rsa: No such file or directory
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_ecdsa
+debug3: no such identity: /Users/nickbowditch/.ssh/id_ecdsa: No such file or directory
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_ecdsa_sk
+debug3: no such identity: /Users/nickbowditch/.ssh/id_ecdsa_sk: No such file or directory
+debug1: Offering public key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: send packet: type 50
+debug2: we sent a publickey packet, wait for reply
+debug3: receive packet: type 60
+debug1: Server accepts key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: sign_and_send_pubkey: using publickey-hostbound-v00@openssh.com with ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: sign_and_send_pubkey: signing using ssh-ed25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: send packet: type 50
+debug3: receive packet: type 52
+Authenticated to github.com ([4.237.22.38]:22) using "publickey".
+debug2: fd 6 setting O_NONBLOCK
+debug2: fd 7 setting O_NONBLOCK
+debug2: fd 8 setting O_NONBLOCK
+debug1: channel 0: new session [client-session] (inactive timeout: 0)
+debug3: ssh_session2_open: channel_new: 0
+debug2: channel 0: send open
+debug3: send packet: type 90
+debug1: Entering interactive session.
+debug1: pledge: filesystem
+debug3: client_repledge: enter
+debug3: receive packet: type 80
+debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
+debug3: client_input_hostkeys: received RSA key SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s
+debug3: client_input_hostkeys: received ECDSA key SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM
+debug3: client_input_hostkeys: received ED25519 key SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+debug1: client_input_hostkeys: searching /Users/nickbowditch/.ssh/known_hosts for github.com / (none)
+debug3: hostkeys_foreach: reading file "/Users/nickbowditch/.ssh/known_hosts"
+debug3: hostkeys_find: found ssh-ed25519 key at /Users/nickbowditch/.ssh/known_hosts:4
+debug3: hostkeys_find: found ssh-rsa key at /Users/nickbowditch/.ssh/known_hosts:5
+debug3: hostkeys_find: found ecdsa-sha2-nistp256 key at /Users/nickbowditch/.ssh/known_hosts:6
+debug1: client_input_hostkeys: searching /Users/nickbowditch/.ssh/known_hosts2 for github.com / (none)
+debug1: client_input_hostkeys: hostkeys file /Users/nickbowditch/.ssh/known_hosts2 does not exist
+debug3: client_input_hostkeys: 3 server keys: 0 new, 3 retained, 0 incomplete match. 0 to remove
+debug1: client_input_hostkeys: no new or deprecated keys from server
+debug3: client_repledge: enter
+debug3: receive packet: type 91
+debug2: channel_input_open_confirmation: channel 0: callback start
+debug2: fd 5 setting TCP_NODELAY
+debug3: set_sock_tos: set socket 5 IP_TOS 0x20
+debug2: client_session2_setup: id 0
+debug1: Sending environment.
+debug3: Ignored env MANPATH
+debug3: Ignored env TERM_PROGRAM
+debug3: Ignored env TERM
+debug3: Ignored env SHELL
+debug3: Ignored env REDDIT_USERNAME
+debug3: Ignored env TMPDIR
+debug3: Ignored env HOMEBREW_REPOSITORY
+debug3: Ignored env LIBRARY_PATH
+debug3: Ignored env TERM_PROGRAM_VERSION
+debug3: Ignored env SDKROOT
+debug3: Ignored env REDDIT_PASSWORD
+debug3: Ignored env TERM_SESSION_ID
+debug3: Ignored env USER
+debug3: Ignored env REDDIT_CLIENT_SECRET
+debug3: Ignored env SSH_AUTH_SOCK
+debug3: Ignored env CPATH
+debug3: Ignored env __CF_USER_TEXT_ENCODING
+debug3: Ignored env PATH
+debug3: Ignored env GIT_TRACE_PACKET
+debug3: Ignored env _
+debug3: Ignored env LaunchInstanceID
+debug3: Ignored env __CFBundleIdentifier
+debug3: Ignored env PWD
+debug3: Ignored env JAVA_HOME
+debug1: channel 0: setting env LANG = "en_AU.UTF-8"
+debug2: channel 0: request env confirm 0
+debug3: send packet: type 98
+debug3: Ignored env XPC_FLAGS
+debug3: Ignored env XPC_SERVICE_NAME
+debug3: Ignored env SHLVL
+debug3: Ignored env HOME
+debug3: Ignored env HOMEBREW_PREFIX
+debug3: Ignored env GIT_SSH_COMMAND
+debug3: Ignored env GIT_TRACE
+debug3: Ignored env LOGNAME
+debug3: Ignored env REDDIT_USER_AGENT
+debug3: Ignored env INFOPATH
+debug3: Ignored env HOMEBREW_CELLAR
+debug3: Ignored env SECURITYSESSIONID
+debug3: Ignored env REDDIT_CLIENT_ID
+debug3: Ignored env GIT_EXEC_PATH
+debug1: Sending command: git-receive-pack 'nickbowditch/MyRecoveryTracker.git'
+debug2: channel 0: request exec confirm 1
+debug3: send packet: type 98
+debug3: client_repledge: enter
+debug1: pledge: fork
+debug2: channel_input_open_confirmation: channel 0: callback done
+debug2: channel 0: open confirm rwindow 32000 rmax 35000
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: exec request accepted on channel 0
+18:54:29.616536 pkt-line.c:80           packet:         push< 2cf02a3a9088d51c69caa9aa48924c96d37b5c36 refs/heads/main\0report-status report-status-v2 delete-refs side-band-64k ofs-delta atomic object-format=sha1 quiet agent=github/spokes-receive-pack-acac8763c60f636c44baaf5c3887895cf5f55c30 push-options
+18:54:29.617724 pkt-line.c:80           packet:         push< a3d678e8cfe32da8b24b9cc7b1e8cf199c93ec7f refs/tags/stable-2025-09-03
+18:54:29.617745 pkt-line.c:80           packet:         push< fee859d56917ed735b01c4f59fcf78067ef0a589 refs/tags/stable-fgservice
+18:54:29.617752 pkt-line.c:80           packet:         push< 0000
+18:54:29.618692 run-command.c:655       trace: run_command: .git/hooks/pre-push origin git@github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+18:54:29.782275 pkt-line.c:80           packet:         push> 0000
+debug2: channel 0: read failed rfd 6 maxlen 31996: Broken pipe
+debug2: channel 0: read failed
+debug2: chan_shutdown_read: channel 0: (i0 o0 sock -1 wfd 6 efd 8 [write])
+debug2: channel 0: input open -> drain
+debug2: channel 0: ibuf empty
+debug2: channel 0: send eof
+debug3: send packet: type 96
+debug2: channel 0: input drain -> closed
+debug2: channel 0: rcvd adjust 2065156
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug3: receive packet: type 96
+debug2: channel 0: rcvd eof
+debug2: channel 0: output open -> drain
+debug2: channel 0: obuf empty
+debug2: chan_shutdown_write: channel 0: (i3 o1 sock -1 wfd 7 efd 8 [write])
+debug2: channel 0: output drain -> closed
+debug3: receive packet: type 97
+debug2: channel 0: rcvd close
+debug3: channel 0: will not send data after close
+debug2: channel 0: almost dead
+debug2: channel 0: gc: notify user
+debug2: channel 0: gc: user detached
+debug2: channel 0: send close
+debug3: send packet: type 97
+debug2: channel 0: is dead
+debug2: channel 0: garbage collecting
+debug1: channel 0: free: client-session, nchannels 1
+debug3: channel 0: status: The following connections are open:
+  #0 client-session (t4 [session] r43 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 io 0x00/0x00)
+
+debug3: send packet: type 1
+Transferred: sent 3532, received 4016 bytes, in 0.9 seconds
+Bytes per second: sent 3909.3, received 4445.0
+debug1: Exit status 0
+PUSH_TMP_TAG_FAIL
+PUSH_TMP_TAG_END
+DEL_TMP_TAG_BEGIN
+DEL_TMP_TAG_END
+PUSH_MAIN_BEGIN
+18:54:32.787887 exec-cmd.c:139          trace: resolved executable path from Darwin stack: /Library/Developer/CommandLineTools/usr/bin/git
+18:54:32.788259 exec-cmd.c:238          trace: resolved executable dir: /Library/Developer/CommandLineTools/usr/bin
+18:54:32.788656 git.c:460               trace: built-in: git push -v origin HEAD:refs/heads/main
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+18:54:32.789563 run-command.c:655       trace: run_command: unset GIT_PREFIX; 'ssh -vvv' git@github.com 'git-receive-pack '\''nickbowditch/MyRecoveryTracker.git'\'''
+OpenSSH_9.7p1, LibreSSL 3.3.6
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 21: include /etc/ssh/ssh_config.d/* matched no files
+debug1: /etc/ssh/ssh_config line 54: Applying options for *
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' -> '/Users/nickbowditch/.ssh/known_hosts'
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' -> '/Users/nickbowditch/.ssh/known_hosts2'
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug3: channel_clear_timeouts: clearing
+debug1: Connecting to github.com port 22.
+debug1: Connection established.
+debug1: identity file /Users/nickbowditch/.ssh/id_rsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_rsa-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa_sk type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ecdsa_sk-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519 type 3
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519_sk type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_ed25519_sk-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_xmss type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_xmss-cert type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_dsa type -1
+debug1: identity file /Users/nickbowditch/.ssh/id_dsa-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_9.7
+debug1: Remote protocol version 2.0, remote software version 550beff
+debug1: compat_banner: no match: 550beff
+debug3: fd 5 is O_NONBLOCK
+debug1: Authenticating to github.com:22 as 'git'
+debug3: record_hostkey: found key type ED25519 in file /Users/nickbowditch/.ssh/known_hosts:4
+debug3: record_hostkey: found key type RSA in file /Users/nickbowditch/.ssh/known_hosts:5
+debug3: record_hostkey: found key type ECDSA in file /Users/nickbowditch/.ssh/known_hosts:6
+debug3: load_hostkeys_file: loaded 3 keys from github.com
+debug1: load_hostkeys: fopen /Users/nickbowditch/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug3: order_hostkeyalgs: have matching best-preference key type ssh-ed25519-cert-v01@openssh.com, using HostkeyAlgorithms verbatim
+debug3: send packet: type 20
+debug1: SSH2_MSG_KEXINIT sent
+debug3: receive packet: type 20
+debug1: SSH2_MSG_KEXINIT received
+debug2: local client KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug2: peer server KEXINIT proposal
+debug2: KEX algorithms: sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,kex-strict-s-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+debug2: MACs ctos: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+debug2: MACs stoc: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: kex_choose_conf: will use strict KEX ordering
+debug1: kex: algorithm: sntrup761x25519-sha512@openssh.com
+debug1: kex: host key algorithm: ssh-ed25519
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug3: send packet: type 30
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug3: receive packet: type 31
+debug1: SSH2_MSG_KEX_ECDH_REPLY received
+debug1: Server host key: ssh-ed25519 SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+debug3: record_hostkey: found key type ED25519 in file /Users/nickbowditch/.ssh/known_hosts:4
+debug3: record_hostkey: found key type RSA in file /Users/nickbowditch/.ssh/known_hosts:5
+debug3: record_hostkey: found key type ECDSA in file /Users/nickbowditch/.ssh/known_hosts:6
+debug3: load_hostkeys_file: loaded 3 keys from github.com
+debug1: load_hostkeys: fopen /Users/nickbowditch/.ssh/known_hosts2: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
+debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
+debug1: Host 'github.com' is known and matches the ED25519 host key.
+debug1: Found key in /Users/nickbowditch/.ssh/known_hosts:4
+debug3: send packet: type 21
+debug1: ssh_packet_send2_wrapped: resetting send seqnr 3
+debug2: ssh_set_newkeys: mode 1
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug3: receive packet: type 21
+debug1: ssh_packet_read_poll2: resetting read seqnr 3
+debug1: SSH2_MSG_NEWKEYS received
+debug2: ssh_set_newkeys: mode 0
+debug1: rekey in after 134217728 blocks
+debug2: KEX algorithms: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c,kex-strict-c-v00@openssh.com
+debug2: host key algorithms: ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug3: send packet: type 5
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug3: kex_input_ext_info: extension server-sig-algs
+debug1: kex_ext_info_client_parse: server-sig-algs=<ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa>
+debug3: kex_input_ext_info: extension publickey-hostbound@openssh.com
+debug1: kex_ext_info_check_ver: publickey-hostbound@openssh.com=<0>
+debug3: receive packet: type 6
+debug2: service_accept: ssh-userauth
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug3: send packet: type 50
+debug3: receive packet: type 51
+debug1: Authentications that can continue: publickey
+debug3: start over, passed a different list publickey
+debug3: preferred publickey,keyboard-interactive,password
+debug3: authmethod_lookup publickey
+debug3: remaining preferred: keyboard-interactive,password
+debug3: authmethod_is_enabled publickey
+debug1: Next authentication method: publickey
+debug3: ssh_get_authentication_socket_path: path '/private/tmp/com.apple.launchd.QVPs2r4sHp/Listeners'
+debug1: get_agent_identities: bound agent to hostkey
+debug1: get_agent_identities: ssh_fetch_identitylist: agent contains no identities
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_rsa 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ecdsa 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ecdsa_sk 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_ed25519_sk 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_xmss 
+debug1: Will attempt key: /Users/nickbowditch/.ssh/id_dsa 
+debug2: pubkey_prepare: done
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_rsa
+debug3: no such identity: /Users/nickbowditch/.ssh/id_rsa: No such file or directory
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_ecdsa
+debug3: no such identity: /Users/nickbowditch/.ssh/id_ecdsa: No such file or directory
+debug1: Trying private key: /Users/nickbowditch/.ssh/id_ecdsa_sk
+debug3: no such identity: /Users/nickbowditch/.ssh/id_ecdsa_sk: No such file or directory
+debug1: Offering public key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: send packet: type 50
+debug2: we sent a publickey packet, wait for reply
+debug3: receive packet: type 60
+debug1: Server accepts key: /Users/nickbowditch/.ssh/id_ed25519 ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: sign_and_send_pubkey: using publickey-hostbound-v00@openssh.com with ED25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: sign_and_send_pubkey: signing using ssh-ed25519 SHA256:AaZ/waAZPws6PCjX6W1XPu0YRvbqlAQwJk8tPAYlG64
+debug3: send packet: type 50
+debug3: receive packet: type 52
+Authenticated to github.com ([4.237.22.38]:22) using "publickey".
+debug2: fd 6 setting O_NONBLOCK
+debug2: fd 7 setting O_NONBLOCK
+debug2: fd 8 setting O_NONBLOCK
+debug1: channel 0: new session [client-session] (inactive timeout: 0)
+debug3: ssh_session2_open: channel_new: 0
+debug2: channel 0: send open
+debug3: send packet: type 90
+debug1: Entering interactive session.
+debug1: pledge: filesystem
+debug3: client_repledge: enter
+debug3: receive packet: type 80
+debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
+debug3: client_input_hostkeys: received RSA key SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s
+debug3: client_input_hostkeys: received ECDSA key SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM
+debug3: client_input_hostkeys: received ED25519 key SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+debug1: client_input_hostkeys: searching /Users/nickbowditch/.ssh/known_hosts for github.com / (none)
+debug3: hostkeys_foreach: reading file "/Users/nickbowditch/.ssh/known_hosts"
+debug3: hostkeys_find: found ssh-ed25519 key at /Users/nickbowditch/.ssh/known_hosts:4
+debug3: hostkeys_find: found ssh-rsa key at /Users/nickbowditch/.ssh/known_hosts:5
+debug3: hostkeys_find: found ecdsa-sha2-nistp256 key at /Users/nickbowditch/.ssh/known_hosts:6
+debug1: client_input_hostkeys: searching /Users/nickbowditch/.ssh/known_hosts2 for github.com / (none)
+debug1: client_input_hostkeys: hostkeys file /Users/nickbowditch/.ssh/known_hosts2 does not exist
+debug3: client_input_hostkeys: 3 server keys: 0 new, 3 retained, 0 incomplete match. 0 to remove
+debug1: client_input_hostkeys: no new or deprecated keys from server
+debug3: client_repledge: enter
+debug3: receive packet: type 91
+debug2: channel_input_open_confirmation: channel 0: callback start
+debug2: fd 5 setting TCP_NODELAY
+debug3: set_sock_tos: set socket 5 IP_TOS 0x20
+debug2: client_session2_setup: id 0
+debug1: Sending environment.
+debug3: Ignored env MANPATH
+debug3: Ignored env TERM_PROGRAM
+debug3: Ignored env TERM
+debug3: Ignored env SHELL
+debug3: Ignored env REDDIT_USERNAME
+debug3: Ignored env TMPDIR
+debug3: Ignored env HOMEBREW_REPOSITORY
+debug3: Ignored env LIBRARY_PATH
+debug3: Ignored env TERM_PROGRAM_VERSION
+debug3: Ignored env SDKROOT
+debug3: Ignored env REDDIT_PASSWORD
+debug3: Ignored env TERM_SESSION_ID
+debug3: Ignored env USER
+debug3: Ignored env REDDIT_CLIENT_SECRET
+debug3: Ignored env SSH_AUTH_SOCK
+debug3: Ignored env CPATH
+debug3: Ignored env __CF_USER_TEXT_ENCODING
+debug3: Ignored env PATH
+debug3: Ignored env GIT_TRACE_PACKET
+debug3: Ignored env _
+debug3: Ignored env LaunchInstanceID
+debug3: Ignored env __CFBundleIdentifier
+debug3: Ignored env PWD
+debug3: Ignored env JAVA_HOME
+debug1: channel 0: setting env LANG = "en_AU.UTF-8"
+debug2: channel 0: request env confirm 0
+debug3: send packet: type 98
+debug3: Ignored env XPC_FLAGS
+debug3: Ignored env XPC_SERVICE_NAME
+debug3: Ignored env SHLVL
+debug3: Ignored env HOME
+debug3: Ignored env HOMEBREW_PREFIX
+debug3: Ignored env GIT_SSH_COMMAND
+debug3: Ignored env GIT_TRACE
+debug3: Ignored env LOGNAME
+debug3: Ignored env REDDIT_USER_AGENT
+debug3: Ignored env INFOPATH
+debug3: Ignored env HOMEBREW_CELLAR
+debug3: Ignored env SECURITYSESSIONID
+debug3: Ignored env REDDIT_CLIENT_ID
+debug3: Ignored env GIT_EXEC_PATH
+debug1: Sending command: git-receive-pack 'nickbowditch/MyRecoveryTracker.git'
+debug2: channel 0: request exec confirm 1
+debug3: send packet: type 98
+debug3: client_repledge: enter
+debug1: pledge: fork
+debug2: channel_input_open_confirmation: channel 0: callback done
+debug2: channel 0: open confirm rwindow 32000 rmax 35000
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: exec request accepted on channel 0
+18:54:35.264279 pkt-line.c:80           packet:         push< 2cf02a3a9088d51c69caa9aa48924c96d37b5c36 refs/heads/main\0report-status report-status-v2 delete-refs side-band-64k ofs-delta atomic object-format=sha1 quiet agent=github/spokes-receive-pack-acac8763c60f636c44baaf5c3887895cf5f55c30 push-options
+18:54:35.264465 pkt-line.c:80           packet:         push< a3d678e8cfe32da8b24b9cc7b1e8cf199c93ec7f refs/tags/stable-2025-09-03
+18:54:35.264494 pkt-line.c:80           packet:         push< fee859d56917ed735b01c4f59fcf78067ef0a589 refs/tags/stable-fgservice
+18:54:35.264506 pkt-line.c:80           packet:         push< 0000
+18:54:35.266697 run-command.c:655       trace: run_command: .git/hooks/pre-push origin git@github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+18:54:35.433192 pkt-line.c:80           packet:         push> 0000
+debug2: channel 0: read failed rfd 6 maxlen 31996: Broken pipe
+debug2: channel 0: read failed
+debug2: chan_shutdown_read: channel 0: (i0 o0 sock -1 wfd 6 efd 8 [write])
+debug2: channel 0: input open -> drain
+debug2: channel 0: ibuf empty
+debug2: channel 0: send eof
+debug3: send packet: type 96
+debug2: channel 0: input drain -> closed
+debug2: channel 0: rcvd adjust 2065156
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug3: receive packet: type 96
+debug2: channel 0: rcvd eof
+debug2: channel 0: output open -> drain
+debug2: channel 0: obuf empty
+debug2: chan_shutdown_write: channel 0: (i3 o1 sock -1 wfd 7 efd 8 [write])
+debug2: channel 0: output drain -> closed
+debug3: receive packet: type 97
+debug2: channel 0: rcvd close
+debug3: channel 0: will not send data after close
+debug2: channel 0: almost dead
+debug2: channel 0: gc: notify user
+debug2: channel 0: gc: user detached
+debug2: channel 0: send close
+debug3: send packet: type 97
+debug2: channel 0: is dead
+debug2: channel 0: garbage collecting
+debug1: channel 0: free: client-session, nchannels 1
+debug3: channel 0: status: The following connections are open:
+  #0 client-session (t4 [session] r43 i3/0 o3/0 e[write]/0 fd -1/-1/8 sock -1 cc -1 io 0x00/0x00)
+
+debug3: send packet: type 1
+Transferred: sent 3532, received 4016 bytes, in 1.1 seconds
+Bytes per second: sent 3337.5, received 3794.8
+debug1: Exit status 0
+PUSH_MAIN_FAIL
+PUSH_MAIN_END
+CONFIG_BEGIN
+CONFIG_END
+HOOKS_BEGIN
+total 128
+drwxr-xr-x  16 nickbowditch  staff   512 13 Sep 12:47 .
+drwxr-xr-x  14 nickbowditch  staff   448 20 Sep 18:54 ..
+-rwxr-xr-x   1 nickbowditch  staff   478 14 Aug 17:58 applypatch-msg.sample
+-rwxr-xr-x   1 nickbowditch  staff   896 14 Aug 17:58 commit-msg.sample
+-rwxr-xr-x   1 nickbowditch  staff  4726 14 Aug 17:58 fsmonitor-watchman.sample
+-rwxr-xr-x   1 nickbowditch  staff   189 14 Aug 17:58 post-update.sample
+-rwxr-xr-x   1 nickbowditch  staff   424 14 Aug 17:58 pre-applypatch.sample
+-rwxr-xr-x   1 nickbowditch  staff  1643 14 Aug 17:58 pre-commit.sample
+-rwxr-xr-x   1 nickbowditch  staff   416 14 Aug 17:58 pre-merge-commit.sample
+-rwxr-xr-x   1 nickbowditch  staff   560 13 Sep 12:48 pre-push
+-rwxr-xr-x   1 nickbowditch  staff  1374 14 Aug 17:58 pre-push.sample
+-rwxr-xr-x   1 nickbowditch  staff  4898 14 Aug 17:58 pre-rebase.sample
+-rwxr-xr-x   1 nickbowditch  staff   544 14 Aug 17:58 pre-receive.sample
+-rwxr-xr-x   1 nickbowditch  staff  1492 14 Aug 17:58 prepare-commit-msg.sample
+-rwxr-xr-x   1 nickbowditch  staff  2783 14 Aug 17:58 push-to-checkout.sample
+-rwxr-xr-x   1 nickbowditch  staff  3650 14 Aug 17:58 update.sample
+HOOKS_END
+GIT-PUSH-PROBE RESULT=FAIL

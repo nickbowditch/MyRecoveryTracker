@@ -1,0 +1,3 @@
+SCAN_DIR: app/src/main/java
+UNLOCKS_WRITER_DRIFT:app/src/main/java/com/nick/myrecoverytracker/RollupValidator.kt
+WRITERS-ALLOWLIST RESULT=FAIL

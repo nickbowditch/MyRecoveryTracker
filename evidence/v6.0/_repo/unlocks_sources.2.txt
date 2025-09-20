@@ -1,0 +1,6 @@
+=== HARD_CODED_HEADERS(date,unlocks) ===
+
+=== CALL_SITES(runDailyUnlocks|runAll) ===
+
+=== WRITES_TO(daily_unlocks.csv) ===
+DIAG-SOURCES RESULT=FAIL

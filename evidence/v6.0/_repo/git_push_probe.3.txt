@@ -1,0 +1,42 @@
+REMOTE_BEGIN
+origin	git@github.com:nickbowditch/MyRecoveryTracker.git (fetch)
+origin	git@github.com:nickbowditch/MyRecoveryTracker.git (push)
+* remote origin
+  Fetch URL: git@github.com:nickbowditch/MyRecoveryTracker.git
+  Push  URL: git@github.com:nickbowditch/MyRecoveryTracker.git
+  HEAD branch: main
+  Remote branch:
+    main tracked
+  Local branch configured for 'git pull':
+    main merges with remote main
+  Local ref configured for 'git push':
+    main pushes to main (fast-forwardable)
+REMOTE_END
+FETCH_BEGIN
+From github.com:nickbowditch/MyRecoveryTracker
+ = [up to date]      main       -> origin/main
+FETCH_OK
+FETCH_END
+DIVERGENCE_BEGIN
+0	28
+DIVERGENCE_END
+PUSH_TMP_BRANCH_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_TMP_BRANCH_FAIL
+PUSH_TMP_BRANCH_END
+DEL_TMP_BRANCH_BEGIN
+DEL_TMP_BRANCH_END
+PUSH_TMP_TAG_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_TMP_TAG_FAIL
+PUSH_TMP_TAG_END
+DEL_TMP_TAG_BEGIN
+DEL_TMP_TAG_END
+PUSH_MAIN_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_MAIN_FAIL
+PUSH_MAIN_END
+GIT-PUSH-PROBE RESULT=FAIL

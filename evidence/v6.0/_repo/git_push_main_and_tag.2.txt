@@ -1,0 +1,8 @@
+VERIFY_LOCAL_TAG_BEGIN
+LOCAL_TAG:present
+VERIFY_LOCAL_TAG_END
+PUSH_MAIN_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+error: failed to push some refs to 'github.com:nickbowditch/MyRecoveryTracker.git'
+PUSH_MAIN_FAIL
+GIT-PUSH-MAIN-AND-TAG RESULT=FAIL

@@ -1,0 +1,14 @@
+LOCKS_DIR: app/locks
+FEATURE=daily_metrics
+  CSV_FILE=files/daily_metrics.csv
+  COLS_EXPECT=3
+  RESULT=PASS (empty body)
+FEATURE=daily_sleep
+  CSV_FILE=files/daily_sleep.csv
+  COLS_EXPECT=4
+  RESULT=PASS
+FEATURE=daily_sleep_duration
+  CSV_FILE=files/daily_sleep_duration.csv
+  COLS_EXPECT=2
+  RESULT=PASS
+SHAPE-GUARD RESULT=PASS
