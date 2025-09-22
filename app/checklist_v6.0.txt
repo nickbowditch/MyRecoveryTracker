@@ -1,0 +1,6 @@
+Checklist v6.0
+
+Sleep
+- daily_sleep_summary.csv  (locked: app/locks/daily_sleep_summary.header)
+- daily_sleep_duration.csv (locked: app/locks/daily_sleep_duration.header)
+
