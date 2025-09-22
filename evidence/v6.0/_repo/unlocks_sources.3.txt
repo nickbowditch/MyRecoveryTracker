@@ -1,7 +1,6 @@
 === HARD_CODED_HEADERS(date,unlocks) ===
 
 === WRITES_TO(daily_unlocks.csv) ===
-app/src/main/java/com/nick/myrecoverytracker/Rollups.kt:17:        val out = File(dir, "daily_unlocks.csv")
 app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:18:        "unlock_rollup.csv" to "daily_unlocks.csv",
 app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:19:        "daily_unlocks_count.csv" to "daily_unlocks.csv",
 app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:20:        "daily_unlocks_v0.csv" to "daily_unlocks.csv"

@@ -1,0 +1,1 @@
+TC-2 RESULT=FAIL (d=date: bad date 2025-09-22 -0 day daily=0 raw=0 inc_daily=0 inc_raw=0)

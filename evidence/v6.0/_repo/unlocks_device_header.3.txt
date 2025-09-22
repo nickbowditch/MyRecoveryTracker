@@ -1,4 +1,4 @@
 LOCK:date,feature_schema_version,daily_unlocks
-HEAD:date,unlocks
+HEAD:date,feature_schema_version,daily_unlocks
 STAT:
-DIAG-DEVICE RESULT=FAIL (header drift)
+DIAG-DEVICE RESULT=PASS

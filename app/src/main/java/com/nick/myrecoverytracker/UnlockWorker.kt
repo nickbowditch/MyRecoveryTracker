@@ -1,4 +1,3 @@
-// app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -22,6 +21,10 @@ class UnlockWorker(
     private val dateRe = Regex("""^(\d{4}-\d{2}-\d{2})""")
     private val zone = ZoneId.systemDefault()
 
+    // Sealed v6.0 schema (matches app/locks/daily_metrics.header)
+    private val header = "date,feature_schema_version,daily_unlocks"
+    private val schemaVersion = "v6.0"
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val filesDir = ctx.filesDir ?: return@withContext Result.success()
@@ -39,27 +42,27 @@ class UnlockWorker(
             }
 
             // Always upsert today's row, even if zero unlocks
-            val today = LocalDate.now(zone).toString() // ISO yyyy-MM-dd
+            val today = LocalDate.now(zone).toString()
             counts.putIfAbsent(today, 0)
 
             val outFile = File(filesDir, "daily_unlocks.csv")
             val tmpFile = File(filesDir, "daily_unlocks.csv.tmp")
 
+            // Always write sealed v6.0 schema
             val sb = StringBuilder()
-            sb.append("date,unlocks\n")
+            sb.append(header).append('\n')
             counts.keys.sorted().forEach { d ->
-                sb.append(d).append(",").append(counts[d]).append("\n")
+                sb.append(d).append(',').append(schemaVersion).append(',').append(counts[d]).append('\n')
             }
 
             tmpFile.writeText(sb.toString())
             if (outFile.exists()) outFile.delete()
             if (!tmpFile.renameTo(outFile)) {
-                // Fallback: write directly if rename fails
                 outFile.writeText(sb.toString())
                 tmpFile.delete()
             }
 
-            Log.i(tag, "rollup_written rows=${counts.size}")
+            Log.i(tag, "rollup_written rows=${counts.size} header=$header")
             Result.success()
         } catch (t: Throwable) {
             Log.e(tag, "error", t)

@@ -1,55 +1,35 @@
-#!/bin/bash
-PKG="com.nick.myrecoverytracker"
-T="${HC_TIMEOUT:-90}"
-LOG="evidence/v6.0/unlocks/health_unlocks.1.txt"
+#!/bin/sh
+OUT="evidence/v6.0/unlocks/health.1.txt"
+mkdir -p "$(dirname "$OUT")"
+: > "$OUT"
 
-adb get-state >/dev/null 2>&1 || { echo "UNLOCKS-HEALTH RESULT=FAIL (no device)"; exit 2; }
-adb shell pm path "$PKG" >/dev/null 2>&1 || { echo "UNLOCKS-HEALTH RESULT=FAIL (app not installed)"; exit 3; }
+log(){ printf '%s\n' "$*" | tee -a "$OUT"; }
 
-run_with_timeout() {
-  secs="$1"; shift
-  ( "$@" & c=$!
-    ( sleep "$secs"; kill -TERM "$c" 2>/dev/null ) & w=$!
-    wait "$c"; r=$?
-    kill "$w" 2>/dev/null || true
-    exit "$r"
-  )
-}
+SCRIPTS="$(ls tools/checks/*_v6.0*.sh 2>/dev/null | grep -v '/sleep_' | xargs grep -l -E 'daily_unlocks\.csv|unlock_log\.csv|ACTION_RUN_UNLOCK_ROLLUP|unlocks' 2>/dev/null | sort -u)"
 
-ts(){ date +"%F %T"; }
-
-mkdir -p "$(dirname "$LOG")"
-: > "$LOG"
+[ -n "$SCRIPTS" ] || { log "UNLOCKS-HEALTH RESULT=FAIL (no unlocks checks found)"; exit 2; }
 
 fail=0
+for f in $SCRIPTS; do
+  b="$(basename "$f")"
+  log "RUN:$b"
+  t="$(mktemp)"
+  sh "$f" >"$t" 2>&1
+  rc=$?
+  sed 's/^/  /' "$t" | tee -a "$OUT" >/dev/null
+  rm -f "$t"
+  if [ $rc -eq 0 ]; then
+    log "CHECK:$b RESULT=PASS"
+  else
+    log "CHECK:$b RESULT=FAIL (rc=$rc)"
+    fail=$((fail+1))
+  fi
+done
 
-run_block() {
-  pat="$1"
-  for f in $(ls $pat 2>/dev/null | sort); do
-    [ -f "$f" ] || continue
-    chmod +x "$f" 2>/dev/null || true
-    echo "==> $(ts) RUN $f" | tee -a "$LOG"
-    run_with_timeout "$T" bash "$f" | tee -a "$LOG"
-    rc=${PIPESTATUS[0]}
-    if [ $rc -ne 0 ]; then
-      echo "--> $(ts) FAIL $f (rc=$rc)" | tee -a "$LOG"
-      fail=1
-    else
-      echo "--> $(ts) PASS $f" | tee -a "$LOG"
-    fi
-  done
-}
-
-run_block "tools/checks/ee*_v6.0*.sh"
-run_block "tools/checks/tc*_v6.0*.sh"
-run_block "tools/checks/di*_v6.0*.sh"
-run_block "tools/checks/at*_v6.0*.sh"
-run_block "tools/checks/gv*_v6.0*.sh"
-
-if [ "$fail" -eq 0 ]; then
-  echo "UNLOCKS-HEALTH RESULT=PASS" | tee -a "$LOG"
+if [ $fail -eq 0 ]; then
+  log "UNLOCKS-HEALTH RESULT=PASS"
   exit 0
 else
-  echo "UNLOCKS-HEALTH RESULT=FAIL" | tee -a "$LOG"
+  log "UNLOCKS-HEALTH RESULT=FAIL ($fail failing checks)"
   exit 1
 fi
