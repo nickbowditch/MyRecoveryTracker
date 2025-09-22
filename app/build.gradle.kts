@@ -14,6 +14,10 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Needed for RedcapUploadWorker.kt
+        buildConfigField("String", "REDCAP_URL", "\"\"")
+        buildConfigField("String", "REDCAP_TOKEN", "\"\"")
     }
 
     buildTypes {
@@ -24,6 +28,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
@@ -43,6 +51,11 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    // Ensure OkHttp is pinned to 4.x so resp.body?.string() works
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

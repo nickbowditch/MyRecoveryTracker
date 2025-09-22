@@ -28,7 +28,6 @@ class UnlockValidationWorker(appContext: Context, params: WorkerParameters) : Wo
         var pass = true
         val reasons = mutableListOf<String>()
 
-        // --- File existence checks ---
         if (!fUnlocks.exists()) {
             reasons += "daily_unlocks.csv missing"
             pass = false
@@ -38,51 +37,67 @@ class UnlockValidationWorker(appContext: Context, params: WorkerParameters) : Wo
             pass = false
         }
 
-        // --- Validate daily_unlocks.csv ---
         if (fUnlocks.exists()) {
-            fUnlocks.useLines { lines ->
-                lines.drop(1).forEach { line ->
-                    if (line.isBlank()) return@forEach
-                    val parts = line.split(",")
-                    if (parts.size >= 2) {
-                        val dateStr = parts[0]
-                        val unlockStr = parts[1]
+            val lines = fUnlocks.readLines()
+            if (lines.isEmpty()) {
+                reasons += "daily_unlocks.csv empty"
+                pass = false
+            } else {
+                val header = lines.first().trim()
+                val cols = header.split(',')
+                val dateIdx = cols.indexOf("date")
+                val countIdx = when {
+                    cols.contains("daily_unlocks") -> cols.indexOf("daily_unlocks")
+                    cols.contains("unlocks") -> cols.indexOf("unlocks")
+                    else -> -1
+                }
+                if (dateIdx < 0 || countIdx < 0) {
+                    reasons += "header missing required columns: $header"
+                    pass = false
+                } else {
+                    lines.drop(1).forEach { line ->
+                        if (line.isBlank()) return@forEach
+                        val parts = line.split(',')
+                        if (parts.size <= countIdx || parts.size <= dateIdx) {
+                            reasons += "Malformed row: $line"
+                            pass = false
+                            return@forEach
+                        }
+                        val dateStr = parts[dateIdx].trim()
+                        val unlockStr = parts[countIdx].trim()
+
                         try {
                             LocalDate.parse(dateStr, fmtDate)
-                        } catch (e: Exception) {
-                            reasons += "Bad date format: $dateStr"
+                        } catch (_: Throwable) {
+                            reasons += "Bad date: $dateStr"
                             pass = false
                         }
+
                         val unlocks = unlockStr.toIntOrNull()
                         if (unlocks == null) {
-                            reasons += "Non-integer unlock count: $unlockStr"
+                            reasons += "Non-integer unlocks: $unlockStr"
                             pass = false
                         } else if (unlocks < 0 || unlocks > 2000) {
-                            reasons += "Unlock count out of range: $unlocks"
+                            reasons += "Unlocks out of range: $unlocks"
                             pass = false
                         }
-                    } else {
-                        reasons += "Malformed row in daily_unlocks.csv: $line"
-                        pass = false
                     }
                 }
             }
         }
 
-        // --- Write QA JSON ---
-        val qa = JSONObject()
-        qa.put("feature", "Unlocks")
-        qa.put("date", today.format(fmtDate))
-        qa.put("exists_daily_unlocks", fUnlocks.exists())
-        qa.put("exists_unlock_log", fUnlockLog.exists())
-        qa.put("pass", pass)
-        qa.put("reasons", reasons)
-
+        val qa = JSONObject().apply {
+            put("feature", "Unlocks")
+            put("date", today.format(fmtDate))
+            put("exists_daily_unlocks", fUnlocks.exists())
+            put("exists_unlock_log", fUnlockLog.exists())
+            put("pass", pass)
+            put("reasons", reasons)
+        }
         val outFile = File(dir, "qa_${today.format(fmtDate)}_unlocks.json")
         outFile.writeText(qa.toString())
 
-        Log.i(TAG, "UnlockValidation written -> ${outFile.name} pass=$pass reasons=$reasons")
-
+        Log.i(TAG, "UnlockValidation pass=$pass reasons=$reasons")
         return Result.success()
     }
 }

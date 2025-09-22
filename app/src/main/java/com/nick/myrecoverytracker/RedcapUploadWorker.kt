@@ -23,7 +23,6 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
-import com.nick.myrecoverytracker.qa.RollupValidator
 
 class RedcapUploadWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
 

@@ -6,7 +6,7 @@ D2="2025-04-06"
 DAILY="$(adb exec-out run-as "$PKG" cat files/daily_unlocks.csv 2>/dev/null || printf "")"
 RAW="$(adb exec-out run-as "$PKG" cat files/unlock_log.csv 2>/dev/null || printf "")"
 
-get_daily(){ awk -F, -v dd="$1" 'NR>1&&$1==dd{print $2;f=1;exit} END{if(!f)print 0}'; }
+get_daily(){ awk -F, -v dd="$1" 'NR>1&&$1==dd{print $3;f=1;exit} END{if(!f)print 0}'; }
 D1_BEFORE="$(printf '%s\n' "$DAILY" | get_daily "$D1")"
 D2_BEFORE="$(printf '%s\n' "$DAILY" | get_daily "$D2")"
 

@@ -1,0 +1,3 @@
+BAD:EMPTY_HEADER files/daily_battery_drain.csv
+BAD:NO_TRAILING_LF files/daily_metrics_upload.csv
+CSV-AUDIT RESULT=FAIL (2)

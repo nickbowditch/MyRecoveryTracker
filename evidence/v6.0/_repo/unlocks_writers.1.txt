@@ -1,9 +1,6 @@
 === HARD-CODED HEADERS ===
-app/src/main/java/com/nick/myrecoverytracker/Rollups.kt:47:            w.write("date,unlocks\n")
-app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:25:    private val vHeader2 = "date,unlocks"
 
 === WRITES TO daily_unlocks.csv ===
-app/src/main/java/com/nick/myrecoverytracker/Rollups.kt:18:        val out = File(dir, "daily_unlocks.csv")
 app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:18:        "unlock_rollup.csv" to "daily_unlocks.csv",
 app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:19:        "daily_unlocks_count.csv" to "daily_unlocks.csv",
 app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:20:        "daily_unlocks_v0.csv" to "daily_unlocks.csv"
@@ -17,5 +14,5 @@ app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:197:        // N
 app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:25:        val fUnlocks = File(dir, "daily_unlocks.csv")
 app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:32:            reasons += "daily_unlocks.csv missing"
 app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:43:                reasons += "daily_unlocks.csv empty"
-app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:47:            val outFile = File(filesDir, "daily_unlocks.csv")
-app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:48:            val tmpFile = File(filesDir, "daily_unlocks.csv.tmp")
+app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:48:            val outFile = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:49:            val tmpFile = File(filesDir, "daily_unlocks.csv.tmp")

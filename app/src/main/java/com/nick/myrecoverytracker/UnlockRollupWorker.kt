@@ -17,6 +17,7 @@ class UnlockRollupWorker(appContext: Context, params: WorkerParameters) : Corout
 
     private val recentDays = 7
     private val zone: ZoneId = ZoneId.systemDefault()
+    private val schemaVersion = "v6.0"
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
@@ -40,9 +41,9 @@ class UnlockRollupWorker(appContext: Context, params: WorkerParameters) : Corout
                 val lines = out.readLines()
                 val body = if (lines.isNotEmpty() && looksLikeHeader(lines[0])) lines.drop(1) else lines
                 for (line in body) {
-                    val parts = line.split(',', limit = 2)
+                    val parts = line.split(',')
                     val d = parts.getOrNull(0)?.trim().orEmpty()
-                    val v = parts.getOrNull(1)?.trim()?.toIntOrNull()
+                    val v = parts.getOrNull(2)?.trim()?.toIntOrNull() // third column = daily_unlocks
                     if (d.length == 10 && v != null) existing[d] = v
                 }
             }
@@ -64,9 +65,14 @@ class UnlockRollupWorker(appContext: Context, params: WorkerParameters) : Corout
 
             val tmp = File(dir, "daily_unlocks.csv.tmp")
             val sb = StringBuilder().apply {
-                append("date,unlocks\n")
+                append("date,feature_schema_version,daily_unlocks\n")
                 merged.keys.sorted().forEach { d ->
-                    append(d).append(',').append(merged[d]).append('\n')
+                    append(d)
+                        .append(',')
+                        .append(schemaVersion)
+                        .append(',')
+                        .append(merged[d])
+                        .append('\n')
                 }
             }
             tmp.writeText(sb.toString())
