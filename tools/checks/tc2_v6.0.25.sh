@@ -33,13 +33,13 @@ printf "%s,UNLOCK\n%s,UNLOCK\n" "$a" "$b" >> "$f"
 deadline=$(( $(date +%s) + 30 ))
 ok=1
 while :; do
-  adb shell am broadcast -a "$ACT" -n "$CMP" >/dev/null 2>&1 || true
-  sleep 2
-  after_daily="$(adb exec-out run-as "$PKG" cat "$CSV_DAILY" | tr -d '\r' | getd "$T")"
-  after_raw="$(adb exec-out run-as "$PKG"  cat "$CSV_RAW"   | tr -d '\r' | countr "$T")"
-  inc_raw=$(( ${after_raw:-0} - ${before_raw:-0} ))
-  if [ "${after_daily:-0}" -eq "${after_raw:-0}" ] && [ "$inc_raw" -ge 2 ]; then ok=0; break; fi
-  [ "$(date +%s)" -ge "$deadline" ] && break
+adb shell am broadcast -a "$ACT" -n "$CMP" >/dev/null 2>&1 || true
+sleep 2
+after_daily="$(adb exec-out run-as "$PKG" cat "$CSV_DAILY" | tr -d '\r' | getd "$T")"
+after_raw="$(adb exec-out run-as "$PKG"  cat "$CSV_RAW"   | tr -d '\r' | countr "$T")"
+inc_raw=$(( ${after_raw:-0} - ${before_raw:-0} ))
+if [ "${after_daily:-0}" -eq "${after_raw:-0}" ] && [ "$inc_raw" -ge 2 ]; then ok=0; break; fi
+[ "$(date +%s)" -ge "$deadline" ] && break
 done
 
 adb exec-out run-as "$PKG" sh -c '
@@ -48,4 +48,4 @@ awk -F, -v a="$a" -v b="$b" '"'"'NR==1{print;next}{if($1!=a && $1!=b) print}'"'"
 ' >/dev/null || true
 
 [ $ok -eq 0 ] && { echo "TC-2 RESULT=PASS" | tee "$OUT"; exit 0; } \
-              || { echo "TC-2 RESULT=FAIL (daily=$(adb exec-out run-as "$PKG" cat "$CSV_DAILY" | tr -d '\r' | getd "$T") raw=$(adb exec-out run-as "$PKG" cat "$CSV_RAW" | tr -d '\r' | countr "$T"))" | tee "$OUT"; exit 1; }
+|| { echo "TC-2 RESULT=FAIL (daily=$(adb exec-out run-as "$PKG" cat "$CSV_DAILY" | tr -d '\r' | getd "$T") raw=$(adb exec-out run-as "$PKG" cat "$CSV_RAW" | tr -d '\r' | countr "$T"))" | tee "$OUT"; exit 1; }
