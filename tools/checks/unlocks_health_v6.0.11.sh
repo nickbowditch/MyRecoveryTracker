@@ -23,7 +23,7 @@ all=$(for f in tools/checks/*_v6.0*.sh; do
 done)
 
 tc3=$(echo "$all" | grep '/tc3_v6.0' | sort -V | tail -n1)
-mut=$(echo "$all" | grep -E '/(at1|at2|tc2|tc4|unlocks_tc4)_v6.0' | pick_latest "$(cat)")
+mut=$(echo "$all" | grep -E '/(at1|at2|tc2)_v6.0|/(at1|at2|tc2)_v6.0|/(at1|at2|tc2)_v6.0)_v6.0' | pick_latest "$(cat)")
 
 pass=0; fail=0; failed=""
 run(){ sh "$1" >/dev/null 2>&1; rc=$?; [ $rc -eq 0 ] && pass=$((pass+1)) || { fail=$((fail+1)); failed="$failed $(basename "$1")"; }; }
