@@ -1,2 +1,2 @@
-# name            policy
-UNLOCK_ROLLUP     KEEP
+once-LateNightRollup,ExistingWorkPolicy.REPLACE
+periodic_late_night_rollup,ExistingPeriodicWorkPolicy.UPDATE
