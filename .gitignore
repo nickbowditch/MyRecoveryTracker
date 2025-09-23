@@ -38,3 +38,4 @@ evidence/v6.0/
 evidence/v6.0/lnsu/
 evidence/v6.0/lnsu/*.csv
 !evidence/v6.0/lnsu/*.csv
+!evidence/**
