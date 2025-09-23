@@ -31,3 +31,5 @@ app/release/
 !evidence/v6.0/sleep/*.txt
 !evidence/v6.0/sleep/.txt
 !evidence/v6.0/*.txt
+!evidence/v6.0/lnsu/
+!evidence/v6.0/lnsu/*.txt
