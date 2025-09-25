@@ -39,3 +39,5 @@ app/release/
 !evidence/v6.0/lnsu
 !evidence/v6.0/lnsu/.txt
 !evidence/v6.0/lnsu/.csv
+!evidence/v6.0/notification_engagement/
+!evidence/v6.0/notification_engagement/*.txt
