@@ -43,3 +43,4 @@ app/release/
 !evidence/v6.0/notification_engagement/*.txt
 !evidence/v6.0/notification_engagement
 !evidence/v6.0/notification_engagement/.csv
+!evidence/v6.0/notification_engagement/.txt
