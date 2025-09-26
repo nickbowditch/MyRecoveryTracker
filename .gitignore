@@ -48,3 +48,4 @@ app/release/
 !evidence/v6.0/unlocks/*.txt
 !evidence/v6.0/maintenance/
 !evidence/v6.0/maintenance/*.txt
+!evidence/v6.0/unlocks
