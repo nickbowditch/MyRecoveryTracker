@@ -1,7 +1,0 @@
-POST_NOTIFICATION appops: Default mode: allow
-POST_NOTIFICATIONS appops: [none]
-POST_NOTIFICATIONS runtime:         android.permission.POST_NOTIFICATIONS: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
-ALLOW_LISTENER:
-Error occurred. Check logcat for details. Argument expected after "allow_listener"
-LOCK_HEADER: OK
-EE-1 RESULT=PASS
