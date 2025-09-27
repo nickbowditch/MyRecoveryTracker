@@ -45,7 +45,7 @@ class ForegroundSleepService : Service() {
                 val ch = NotificationChannel(
                     CHANNEL_ID,
                     "MRT Sleep FG",
-                    NotificationManager.IMPORTANCE_LOW
+                    NotificationManager.IMPORTANCE_MIN
                 )
                 nm.createNotificationChannel(ch)
             }
