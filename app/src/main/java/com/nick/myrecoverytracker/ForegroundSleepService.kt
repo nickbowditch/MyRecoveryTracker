@@ -26,9 +26,9 @@ class ForegroundSleepService : Service() {
             .build()
 
         if (Build.VERSION.SDK_INT >= 29) {
-            startForeground(NOTI_ID, noti, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+//startForeground(NOTI_ID, noti, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
         } else {
-            startForeground(NOTI_ID, noti)
+//startForeground(NOTI_ID, noti)
         }
     }
 
