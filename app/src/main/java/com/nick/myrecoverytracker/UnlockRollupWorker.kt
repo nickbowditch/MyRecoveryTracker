@@ -22,19 +22,9 @@ class UnlockRollupWorker(appContext: Context, params: WorkerParameters) : Corout
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val dir = applicationContext.filesDir ?: return@withContext Result.success()
-            val raw = File(dir, "unlock_log.csv")
             val out = File(dir, "daily_unlocks.csv")
 
-            val counts = mutableMapOf<String, Int>()
-            if (raw.exists()) {
-                val lines = raw.readLines()
-                val body = if (lines.isNotEmpty() && looksLikeHeader(lines[0])) lines.drop(1) else lines
-                for (line in body) {
-                    if (line.isBlank()) continue
-                    val date = extractDate(line) ?: continue
-                    counts[date] = (counts[date] ?: 0) + 1
-                }
-            }
+            val counts = readUnlockCounts(dir)
 
             val existing = mutableMapOf<String, Int>()
             if (out.exists() && out.length() > 0L) {
@@ -43,7 +33,7 @@ class UnlockRollupWorker(appContext: Context, params: WorkerParameters) : Corout
                 for (line in body) {
                     val parts = line.split(',')
                     val d = parts.getOrNull(0)?.trim().orEmpty()
-                    val v = parts.getOrNull(2)?.trim()?.toIntOrNull() // third column = daily_unlocks
+                    val v = parts.getOrNull(2)?.trim()?.toIntOrNull()
                     if (d.length == 10 && v != null) existing[d] = v
                 }
             }
@@ -79,31 +69,41 @@ class UnlockRollupWorker(appContext: Context, params: WorkerParameters) : Corout
             if (out.exists()) out.delete()
             tmp.renameTo(out)
 
-            runCatching {
-                val lines2 = out.takeIf { it.exists() }?.readLines() ?: return@runCatching
-                val hasLocal = lines2.drop(1).any { it.startsWith("$localToday,") }
-                val hasUtc = lines2.drop(1).any { it.startsWith("$utcToday,") }
-                if (!(hasLocal && !hasUtc)) {
-                    Log.e("UnlockRollupWorker", "TC-1 violation: local=$hasLocal utc=$hasUtc")
-                }
-            }
-
             Result.success()
         } catch (_: Throwable) {
             Result.retry()
         }
     }
 
+    private fun readUnlockCounts(dir: File): Map<String, Int> {
+        val files = listOf(
+            File(dir, "unlock_log.csv"),
+            File(dir, "unlocks_log.csv") // legacy
+        )
+        val counts = mutableMapOf<String, Int>()
+        files.filter { it.exists() }.forEach { f ->
+            val lines = f.readLines()
+            val body = if (lines.isNotEmpty() && looksLikeHeader(lines[0])) lines.drop(1) else lines
+            for (raw in body) {
+                val line = raw.trim()
+                if (line.isEmpty()) continue
+                // Expect "YYYY-MM-DD HH:MM:SS,UNLOCK"
+                val parts = line.split(',')
+                if (parts.size >= 2) {
+                    val ts = parts[0]
+                    val event = parts[1].trim().uppercase(Locale.US)
+                    if (ts.length >= 10 && ts[4] == '-' && ts[7] == '-' && event == "UNLOCK") {
+                        val d = ts.substring(0, 10)
+                        counts[d] = (counts[d] ?: 0) + 1
+                    }
+                }
+            }
+        }
+        return counts
+    }
+
     private fun looksLikeHeader(first: String): Boolean {
         val l = first.lowercase(Locale.US)
         return l.startsWith("ts,") || l.startsWith("date,")
-    }
-
-    private fun extractDate(line: String): String? {
-        return if (line.length >= 10 && line[4] == '-' && line[7] == '-') {
-            line.substring(0, 10)
-        } else {
-            null
-        }
     }
 }

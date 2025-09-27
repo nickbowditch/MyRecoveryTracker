@@ -9,41 +9,34 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class DistanceSummaryWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            val filesDir = applicationContext.filesDir
-            if (!filesDir.exists()) filesDir.mkdirs()
+            val dir = applicationContext.filesDir
+            if (!dir.exists()) dir.mkdirs()
 
-            val locFile = File(filesDir, "location_log.csv")
-            val outFile = File(filesDir, "daily_distance_log.csv")
+            val locFile = File(dir, "location_log.csv")
+            val outFile = File(dir, "daily_distance_log.csv")
+            val header = "date,distance_km\n"
 
             val today = dayString(0)
             val yesterday = dayString(-1)
 
             if (!locFile.exists()) {
-                // Still write zeros so downstream checks don't stall
-                writeOrReplace(outFile, yesterday, 0.0f)
-                writeOrReplace(outFile, today, 0.0f)
-                Log.w(TAG, "location_log.csv missing; wrote $yesterday,0.0 and $today,0.0")
+                applyUpdates(outFile, header, listOf(yesterday to 0f, today to 0f))
+                Log.w(TAG, "location_log.csv missing; wrote zeros for $yesterday and $today")
                 return@withContext Result.success()
             }
 
-            // Compute for both days so “RolledUp” shows YES in your checker
             val days = listOf(yesterday, today)
-            val updates = mutableListOf<Pair<String, Float>>()
+            val updates = days.map { d -> d to computeKmForDay(locFile, d) }
 
-            days.forEach { d ->
-                val km = computeKmForDay(locFile, d)
-                updates += d to km
-                Log.i(TAG, "Distance($d): ${"%.2f".format(km)} km")
-            }
-
-            // Apply updates (replace per-date rows, keep everything else)
-            applyUpdates(outFile, updates)
+            applyUpdates(outFile, header, updates)
+            updates.forEach { (d, km) -> Log.i(TAG, "Distance($d) = ${"%.2f".format(km)} km") }
 
             Result.success()
         } catch (t: Throwable) {
@@ -53,21 +46,18 @@ class DistanceSummaryWorker(appContext: Context, params: WorkerParameters) : Cor
     }
 
     private fun computeKmForDay(locFile: File, day: String): Float {
-        // location_log.csv lines: "YYYY-MM-DD HH:mm:ss,lat,lon,acc"
-        val points: List<Triple<String, Location, Float>> = locFile.useLines { seq ->
+        // "YYYY-MM-DD HH:mm:ss,lat,lon,acc?"
+        val points = locFile.useLines { seq ->
             seq.mapNotNull { line ->
                 val parts = line.split(',')
                 if (parts.size >= 3 && parts[0].startsWith(day)) {
-                    val ts = parts[0] // "YYYY-MM-DD HH:mm:ss"
                     val lat = parts[1].toDoubleOrNull()
                     val lon = parts[2].toDoubleOrNull()
                     if (lat != null && lon != null) {
                         val acc = parts.getOrNull(3)?.toFloatOrNull() ?: 0f
-                        Triple(
-                            ts,
-                            Location("").apply { latitude = lat; longitude = lon },
-                            acc
-                        )
+                        Triple(parts[0], Location("").apply {
+                            latitude = lat; longitude = lon
+                        }, acc)
                     } else null
                 } else null
             }.sortedBy { it.first }.toList()
@@ -83,7 +73,6 @@ class DistanceSummaryWorker(appContext: Context, params: WorkerParameters) : Cor
             val (ts, loc, acc) = points[i]
             val d = prevLoc.distanceTo(loc)
 
-            // Sanity checks
             val hopOk = d.isFinite() && d >= 0f && d <= 30000f
             val accOk = (acc == 0f || acc <= 100f) && (prevAcc == 0f || prevAcc <= 100f)
 
@@ -92,33 +81,27 @@ class DistanceSummaryWorker(appContext: Context, params: WorkerParameters) : Cor
                 prevLoc = loc
                 prevAcc = acc
             } else {
-                Log.d(TAG, "Skip hop @ $ts: d=${"%.1f".format(d)}m acc=$acc (prevAcc=$prevAcc)")
+                Log.d(TAG, "Skip hop @$ts d=${"%.1f".format(d)}m acc=$acc prevAcc=$prevAcc")
             }
         }
 
         return meters / 1000f
     }
 
-    private fun applyUpdates(outFile: File, updates: List<Pair<String, Float>>) {
+    private fun applyUpdates(outFile: File, header: String, updates: List<Pair<String, Float>>) {
         outFile.parentFile?.mkdirs()
-        val existing = if (outFile.exists()) outFile.readLines().toMutableList() else mutableListOf()
+        val existing = if (outFile.exists()) outFile.readLines() else emptyList()
+        val withoutHeader = existing.filterNot { it.startsWith("date,") }.toMutableList()
 
-        // Remove rows for the dates we’re updating
         val dates = updates.map { it.first }.toSet()
-        val kept = existing.filterNot { line ->
-            dates.any { d -> line.startsWith("$d,") }
-        }.toMutableList()
+        val kept = withoutHeader.filterNot { line -> dates.any { d -> line.startsWith("$d,") } }.toMutableList()
 
-        // Append fresh rows for each date
-        updates.forEach { (d, km) ->
-            kept += "$d,${format1(km)}"
-        }
+        updates.forEach { (d, km) -> kept += "$d,${String.format(Locale.US, "%.2f", km)}" }
 
-        outFile.writeText(kept.joinToString("\n") + "\n")
-    }
-
-    private fun writeOrReplace(outFile: File, day: String, km: Float) {
-        applyUpdates(outFile, listOf(day to km))
+        outFile.writeText(buildString {
+            append(header)
+            kept.forEach { append(it).append('\n') }
+        })
     }
 
     private fun dayString(offsetDays: Int): String {
@@ -126,7 +109,7 @@ class DistanceSummaryWorker(appContext: Context, params: WorkerParameters) : Cor
         return SimpleDateFormat("yyyy-MM-dd", Locale.US).format(cal.time)
     }
 
-    private fun format1(v: Float): String = String.format(Locale.US, "%.2f", v)
-
-    companion object { private const val TAG = "DistanceSummaryWorker" }
+    companion object {
+        private const val TAG = "DistanceSummaryWorker"
+    }
 }

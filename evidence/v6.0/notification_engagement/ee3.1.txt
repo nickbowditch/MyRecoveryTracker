@@ -1,0 +1,8 @@
+=== LOGCAT (idle->broadcast->completion) ===
+09-24 16:20:40.826  1463  3218 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-24 16:20:40.828  1463  3218 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-24 16:20:40.834 19446 19446 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP
+
+=== WORKMANAGER STATUS ===
+[none]
+EE-3 RESULT=FAIL

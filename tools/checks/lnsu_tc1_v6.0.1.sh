@@ -1,8 +1,8 @@
 #!/bin/sh
 PKG="com.nick.myrecoverytracker"
 OUT="evidence/v6.0/lnsu/tc1.1.txt"
-CSV="files/daily_lnsu.csv"
-LOCK="app/locks/daily_lnsu.header"
+CSV="files/daily_lnslu.csv"
+LOCK="app/locks/daily_lnslu.header"
 mkdir -p "$(dirname "$OUT")"
 adb get-state >/dev/null 2>&1 || { echo "TC-1 RESULT=FAIL (no device)" | tee "$OUT"; exit 2; }
 adb shell pm path "$PKG" >/dev/null 2>&1 || { echo "TC-1 RESULT=FAIL (app not installed)" | tee "$OUT"; exit 3; }

@@ -1,0 +1,23 @@
+=== BEFORE CSV SHA1 ===
+NONE
+
+=== AFTER CSV SHA1 ===
+NONE
+
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+09-25 08:26:09.904  1463  3769 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-25 08:26:09.907  1463  3769 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-25 08:26:09.914 19446 19446 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP
+09-25 08:26:10.011  1463  3769 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-25 08:26:10.014  1463  3769 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-25 08:26:10.019 19446 19446 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP
+09-25 08:26:10.107  1463  3769 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-25 08:26:10.110  1463  3769 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-25 08:26:10.116 19446 19446 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP
+
+=== CSV TAIL (files/daily_notification_engagement.csv) ===
+[MISSING: files/daily_notification_engagement.csv]
+EE-3 RESULT=FAIL

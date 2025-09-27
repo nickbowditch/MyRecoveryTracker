@@ -19,7 +19,7 @@ class ForegroundSleepService : Service() {
 
         val noti = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("MyRecoveryTracker")
-            .setContentText("Sleep processing active")
+            .setContentText("")
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)

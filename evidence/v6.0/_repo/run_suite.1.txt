@@ -1,0 +1,52 @@
+RUN:SCH_GUARD
+LOCKS_DIR: app/locks
+FEATURE=daily_metrics
+  CSV_FILE=files/daily_metrics.csv
+  LOCK_HEADER=date,feature_schema_version,daily_unlocks
+  CSV_HEADER=date,feature_schema_version,daily_unlocks
+  RESULT=PASS
+FEATURE=daily_sleep
+  CSV_FILE=files/daily_sleep.csv
+  LOCK_HEADER=date,sleep_time,wake_time,duration_hours
+  CSV_HEADER=date,sleep_time,wake_time,duration_hours
+  RESULT=PASS
+FEATURE=daily_sleep_duration
+  CSV_FILE=files/daily_sleep_duration.csv
+  LOCK_HEADER=date,hours
+  CSV_HEADER=date,hours
+  RESULT=PASS
+SCHEMA-GUARD RESULT=PASS
+RUN:SHAPE_GUARD
+LOCKS_DIR: app/locks
+FEATURE=daily_metrics
+  CSV_FILE=files/daily_metrics.csv
+  COLS_EXPECT=3
+  RESULT=PASS (empty body)
+FEATURE=daily_sleep
+  CSV_FILE=files/daily_sleep.csv
+  COLS_EXPECT=4
+  RESULT=PASS
+FEATURE=daily_sleep_duration
+  CSV_FILE=files/daily_sleep_duration.csv
+  COLS_EXPECT=2
+  RESULT=PASS
+SHAPE-GUARD RESULT=PASS
+RUN:WRITERS_ALLOW
+SCAN_DIR: app/src/main/java
+app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:18:        "unlock_rollup.csv" to "daily_unlocks.csv",
+app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:19:        "daily_unlocks_count.csv" to "daily_unlocks.csv",
+app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:20:        "daily_unlocks_v0.csv" to "daily_unlocks.csv"
+app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt:26:            val out = File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt:66:            val tmp = File(dir, "daily_unlocks.csv.tmp")
+app/src/main/java/com/nick/myrecoverytracker/RedcapUploadWorker.kt:40:        val rollup = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/LogRetentionWorker.kt:28:            File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/RollupValidator.kt:16:    fun validateUnlocks(context: Context): Boolean = validate(context, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/HealthSnapshotWorker.kt:22:            val unlockRoll = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:197:        // New: explicit constant to drive rollup of daily_unlocks.csv
+app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:25:        val fUnlocks = File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:32:            reasons += "daily_unlocks.csv missing"
+app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:43:                reasons += "daily_unlocks.csv empty"
+app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:48:            val outFile = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:49:            val tmpFile = File(filesDir, "daily_unlocks.csv.tmp")
+UNLOCKS_WRITER_DRIFT
+WRITERS-ALLOWLIST RESULT=FAIL

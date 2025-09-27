@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 
 object WorkScheduler {
     private const val SLEEP_PERIODIC = "periodic-SleepRollup"
+    private const val ENGAGEMENT_PERIODIC = "periodic-EngagementRollup"
 
     fun scheduleDailySleepRollup(context: Context) {
         val now = LocalDateTime.now()
@@ -35,6 +36,20 @@ object WorkScheduler {
         val one = OneTimeWorkRequestBuilder<SleepRollupWorker>().build()
         WorkManager.getInstance(context)
             .enqueueUniqueWork("boot-once-SleepRollup", ExistingWorkPolicy.KEEP, one)
+    }
+
+    // Daily schedule for NotificationEngagementWorker (matrix/golden schema)
+    fun scheduleDailyEngagementRollup(context: Context) {
+        val now = LocalDateTime.now()
+        val zone = ZoneId.systemDefault()
+        val target = LocalDate.now(zone).atTime(LocalTime.of(4, 25))
+        val initial = Duration.between(now, nextOccurrence(now, target))
+        val req = PeriodicWorkRequestBuilder<NotificationEngagementWorker>(24, TimeUnit.HOURS)
+            .setInitialDelay(initial.toMinutes().coerceAtLeast(1), TimeUnit.MINUTES)
+            .addTag("NotificationEngagement")
+            .build()
+        WorkManager.getInstance(context)
+            .enqueueUniquePeriodicWork(ENGAGEMENT_PERIODIC, ExistingPeriodicWorkPolicy.UPDATE, req)
     }
 
     private fun nextOccurrence(now: LocalDateTime, targetToday: LocalDateTime): LocalDateTime {

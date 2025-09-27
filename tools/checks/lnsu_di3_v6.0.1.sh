@@ -15,12 +15,12 @@ adb exec-out run-as "$PKG" tail -n +2 "$CSV" 2>/dev/null | tr -d '\r' | awk -F',
 function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
 function is_int(x){ return x ~ /^-?[0-9]+$/ }
 {
-  d=$1; ver=$2; mins=$3
-  if(!date_ok(d)) exit 1
-  if(ver!="v6.0") exit 1
-  if(mins=="") exit 1
-  if(!is_int(mins)) exit 1
-  if((mins+0)<0 || (mins+0)>240) exit 1
+d=$1; ver=$2; mins=$3
+if(!date_ok(d)) exit 1
+if(ver!="v6.0") exit 1
+if(mins=="") exit 1
+if(!is_int(mins)) exit 1
+if((mins+0)<0 || (mins+0)>240) exit 1
 }
 END{ }' || { echo "DI-3 RESULT=FAIL (invalid rows)" | tee "$OUT"; exit 5; }
 

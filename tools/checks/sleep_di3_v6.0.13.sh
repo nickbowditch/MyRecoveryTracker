@@ -24,17 +24,17 @@ HDUR="$(adb exec-out run-as "$PKG" head -n1 "$DUR" 2>/dev/null | tr -d '\r' || t
 [ "$HDUR" = "$EDUR" ] || { echo "DI-3 RESULT=FAIL (duration header drift)" | tee "$OUT"; exit 6; }
 
 adb exec-out run-as "$PKG" tail -n +2 "$SUM" 2>/dev/null | tr -d '\r' | awk -F',' '
-  function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
-  function time_ok(t){ return (t=="" || t ~ /^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/) }
-  function is_num(x){ return x ~ /^-?[0-9]+([.][0-9]+)?$/ }
-  { d=$1; st=$2; wt=$3; hrs=$4; if(!date_ok(d)) exit 1; if(!time_ok(st) || !time_ok(wt)) exit 1;
-    if(hrs!=""){ if(!(is_num(hrs) && (hrs+0)>=0 && (hrs+0)<=18.0)) exit 1 } }' \
+function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
+function time_ok(t){ return (t=="" || t ~ /^([01][0-9]|2[0-3]):[0-5]0-9?$/) }
+function is_num(x){ return x ~ /^-?[0-9]+([.][0-9]+)?$/ }
+{ d=$1; st=$2; wt=$3; hrs=$4; if(!date_ok(d)) exit 1; if(!time_ok(st) || !time_ok(wt)) exit 1;
+if(hrs!=""){ if(!(is_num(hrs) && (hrs+0)>=0 && (hrs+0)<=18.0)) exit 1 } }' \
 || { echo "DI-3 RESULT=FAIL (summary invalid)" | tee "$OUT"; exit 7; }
 
 adb exec-out run-as "$PKG" tail -n +2 "$DUR" 2>/dev/null | tr -d '\r' | awk -F',' '
-  function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
-  function is_num(x){ return x ~ /^-?[0-9]+([.][0-9]+)?$/ }
-  { d=$1; hrs=$2; if(!date_ok(d)) exit 1; if(hrs!=""){ if(!(is_num(hrs) && (hrs+0)>=0 && (hrs+0)<=18.0)) exit 1 } }' \
+function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
+function is_num(x){ return x ~ /^-?[0-9]+([.][0-9]+)?$/ }
+{ d=$1; hrs=$2; if(!date_ok(d)) exit 1; if(hrs!=""){ if(!(is_num(hrs) && (hrs+0)>=0 && (hrs+0)<=18.0)) exit 1 } }' \
 || { echo "DI-3 RESULT=FAIL (duration invalid)" | tee "$OUT"; exit 7; }
 
 echo "DI-3 RESULT=PASS" | tee "$OUT"
