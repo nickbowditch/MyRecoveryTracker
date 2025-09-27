@@ -21,7 +21,7 @@ class ForegroundSleepService : Service() {
             .setContentTitle("MyRecoveryTracker")
             .setContentText("")
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
-            .setOngoing(true)
+            .setOngoing(false)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .build()
 
