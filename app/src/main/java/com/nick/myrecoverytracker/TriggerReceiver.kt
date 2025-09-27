@@ -13,7 +13,10 @@ import androidx.work.WorkManager
 class TriggerReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        when (intent?.action) {
+        val action = intent?.action ?: return
+        Log.i("TriggerReceiver", "onReceive action=$action")
+
+        when (action) {
             ACTION_RUN_ROLLUPS,
             ACTION_RUN_ALL_ROLLUPS -> {
                 UnlockMigrations.run(context)
@@ -40,9 +43,8 @@ class TriggerReceiver : BroadcastReceiver() {
                     .enqueue()
             }
 
-            // Added explicit rollup trigger to support ACTION_RUN_UNLOCK_ROLLUP
             ACTION_RUN_UNLOCK_ROLLUP -> {
-                Log.i("TriggerReceiver", "Enqueue UnlockRollupWorker (unique=once-UnlockRollup)")
+                Log.i("TriggerReceiver", "Enqueue UnlockRollupWorker (once-UnlockRollup)")
                 val req = OneTimeWorkRequestBuilder<UnlockRollupWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("UnlockRollup")
@@ -52,7 +54,7 @@ class TriggerReceiver : BroadcastReceiver() {
             }
 
             ACTION_RUN_MOVEMENT_ROLLUP -> {
-                Log.i("TriggerReceiver", "Enqueue MovementRollupWorker (unique=once-MovementRollup)")
+                Log.i("TriggerReceiver", "Enqueue MovementRollupWorker (once-MovementRollup)")
                 val req = OneTimeWorkRequestBuilder<MovementRollupWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("MovementRollup")
@@ -62,7 +64,7 @@ class TriggerReceiver : BroadcastReceiver() {
             }
 
             ACTION_RUN_MOVEMENT_INTENSITY -> {
-                Log.i("TriggerReceiver", "Enqueue MovementIntensityDailyWorker (unique=once-MovementIntensity)")
+                Log.i("TriggerReceiver", "Enqueue MovementIntensityDailyWorker (once-MovementIntensity)")
                 val req = OneTimeWorkRequestBuilder<MovementIntensityDailyWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("MovementIntensity")
@@ -136,7 +138,7 @@ class TriggerReceiver : BroadcastReceiver() {
             }
 
             ACTION_RUN_USAGE_CAPTURE -> {
-                Log.i("TriggerReceiver", "Enqueue UsageCaptureWorker (unique=once-UsageCapture)")
+                Log.i("TriggerReceiver", "Enqueue UsageCaptureWorker (once-UsageCapture)")
                 val req = OneTimeWorkRequestBuilder<UsageCaptureWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("UsageCapture")
@@ -145,18 +147,27 @@ class TriggerReceiver : BroadcastReceiver() {
                     .enqueueUniqueWork("once-UsageCapture", ExistingWorkPolicy.REPLACE, req)
             }
 
-            ACTION_RUN_NOTIFICATION_ROLLUP -> {
-                Log.i("TriggerReceiver", "Enqueue NotificationRollupWorker (unique=once-NotificationRollup)")
-                val req = OneTimeWorkRequestBuilder<NotificationRollupWorker>()
+            // === NOTIFICATION ENGAGEMENT (matrix = golden) =========================
+            // Route *all* engagement actions (including the legacy NOTIFICATION_ROLLUP)
+            // to NotificationEngagementWorker which writes:
+            // files/daily_notification_engagement.csv
+            // header: date,feature_schema_version,delivered,opened,open_rate
+            ACTION_RUN_NOTIFICATION_ROLLUP,
+            ACTION_RUN_ENGAGEMENT_ROLLUP,
+            ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP,
+            ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP -> {
+                Log.i("TriggerReceiver", "Enqueue NotificationEngagementWorker (once-EngagementRollup)")
+                val req = OneTimeWorkRequestBuilder<NotificationEngagementWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                    .addTag("NotificationRollup")
+                    .addTag("NotificationEngagement")
                     .build()
                 WorkManager.getInstance(context)
-                    .enqueueUniqueWork("once-NotificationRollup", ExistingWorkPolicy.REPLACE, req)
+                    .enqueueUniqueWork("once-EngagementRollup", ExistingWorkPolicy.REPLACE, req)
             }
+            // =======================================================================
 
             ACTION_RUN_NOTIFICATION_VALIDATION -> {
-                Log.i("TriggerReceiver", "Enqueue NotificationValidationWorker (unique=once-NotificationValidation)")
+                Log.i("TriggerReceiver", "Enqueue NotificationValidationWorker (once-NotificationValidation)")
                 val req = OneTimeWorkRequestBuilder<NotificationValidationWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("NotificationValidation")
@@ -166,7 +177,7 @@ class TriggerReceiver : BroadcastReceiver() {
             }
 
             ACTION_RUN_REDCAP_UPLOAD -> {
-                Log.i("TriggerReceiver", "Enqueue RedcapUploadWorker (unique=once-RedcapUpload)")
+                Log.i("TriggerReceiver", "Enqueue RedcapUploadWorker (once-RedcapUpload)")
                 val req = OneTimeWorkRequestBuilder<RedcapUploadWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("RedcapUpload")
@@ -174,27 +185,48 @@ class TriggerReceiver : BroadcastReceiver() {
                 WorkManager.getInstance(context)
                     .enqueueUniqueWork("once-RedcapUpload", ExistingWorkPolicy.REPLACE, req)
             }
+
+            ACTION_RUN_LNS_ROLLUP -> {
+                Log.i("TriggerReceiver", "Enqueue LateNightScreenRollupWorker (once-LateNightRollup)")
+                val req = OneTimeWorkRequestBuilder<LateNightScreenRollupWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("LateNightRollup")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-LateNightRollup", ExistingWorkPolicy.REPLACE, req)
+            }
         }
     }
 
     companion object {
         const val ACTION_RUN_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
         const val ACTION_RUN_ALL_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+
         const val ACTION_RUN_MOVEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
         const val ACTION_RUN_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+
         const val ACTION_RUN_UNLOCK_SCAN = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
         const val ACTION_RUN_USAGE_ENTROPY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
         const val ACTION_RUN_HEALTH_SNAPSHOT = "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+
         const val ACTION_RUN_SLEEP_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
         const val ACTION_RUN_SLEEP_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
         const val ACTION_VERIFY_SLEEP_RESCHEDULE = "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+
         const val ACTION_RUN_UNLOCK_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION"
         const val ACTION_RUN_USAGE_CAPTURE = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE"
+
+        // Legacy name kept but now routes to *engagement* worker per matrix golden
         const val ACTION_RUN_NOTIFICATION_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+
+        // Explicit engagement aliases
+        const val ACTION_RUN_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP"
+        const val ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+        const val ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP"
+
         const val ACTION_RUN_NOTIFICATION_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
         const val ACTION_RUN_REDCAP_UPLOAD = "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
-
-        // New: explicit constant to drive rollup of daily_unlocks.csv
         const val ACTION_RUN_UNLOCK_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+        const val ACTION_RUN_LNS_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
     }
 }

@@ -1,0 +1,14 @@
+=== LOG ===
+09-27 09:30:02.853  1463  1659 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-27 09:30:02.855  1463  1659 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-27 09:30:02.859  9879  9879 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP
+09-27 09:30:02.860  9879  9879 I TriggerReceiver: Enqueue NotificationEngagementWorker (once-EngagementRollup)
+09-27 09:30:02.962  9879 10332 I NotificationEngagementWorker: Engagement rollup wrote 1 date(s) to daily_notification_engagement.csv
+09-27 09:30:02.967  9879  9902 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=101aae56-5396-4c1c-8d50-486d0202b934, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]
+
+=== TAIL: files/daily_notification_engagement.csv ===
+date,feature_schema_version,delivered,opened,open_rate
+2025-09-25,1,1,1,1.000000
+2025-09-26,1,1,1,1.000000
+2025-09-27,1,1,1,1.000000
+GV7 RESULT=PASS

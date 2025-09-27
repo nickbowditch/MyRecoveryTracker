@@ -26,11 +26,19 @@ class MainApplication : Application() {
             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
             .build()
 
+        // Foreground ping worker
         val locationPing = PeriodicWorkRequestBuilder<LocationPingWorker>(
             15, TimeUnit.MINUTES,
             5, TimeUnit.MINUTES
         ).setConstraints(locConstraints).addTag(TAG_LOC).build()
         wm.enqueueUniquePeriodicWork(UNIQUE_LOC, ExistingPeriodicWorkPolicy.KEEP, locationPing)
+
+        // NEW: actual location logger
+        val locationLogger = PeriodicWorkRequestBuilder<LocationWorker>(
+            15, TimeUnit.MINUTES,
+            5, TimeUnit.MINUTES
+        ).setConstraints(locConstraints).addTag(TAG_LOC_LOG).build()
+        wm.enqueueUniquePeriodicWork(UNIQUE_LOC_LOG, ExistingPeriodicWorkPolicy.KEEP, locationLogger)
 
         val distanceDaily = dailyAt(DistanceSummaryWorker::class.java, UNIQUE_DIST, TAG_DIST, 3, 10)
         wm.enqueueUniquePeriodicWork(UNIQUE_DIST, ExistingPeriodicWorkPolicy.UPDATE, distanceDaily)
@@ -160,6 +168,13 @@ class MainApplication : Application() {
             OneTimeWorkRequestBuilder<MovementIntensityDailyWorker>().addTag(TAG_MOVE_INTENSITY + "_now").build()
         )
 
+        // NEW: immediate one-time run of LocationWorker
+        wm.enqueueUniqueWork(
+            UNIQUE_LOC_LOG_NOW,
+            ExistingWorkPolicy.REPLACE,
+            OneTimeWorkRequestBuilder<LocationWorker>().addTag(TAG_LOC_LOG + "_now").build()
+        )
+
         Log.i(TAG, "Immediate catch-up enqueued")
     }
 
@@ -185,9 +200,12 @@ class MainApplication : Application() {
         const val TAG = "MainApplication"
 
         private const val UNIQUE_LOC = "periodic_location_ping"
+        private const val UNIQUE_LOC_LOG = "periodic_location_logger"
+        private const val UNIQUE_LOC_LOG_NOW = "onstart_location_logger"
         private const val UNIQUE_DIST = "periodic_distance_summary"
         private const val UNIQUE_DIST_NOW = "onstart_distance_summary"
         private const val TAG_LOC = "LocationPingPeriodic"
+        private const val TAG_LOC_LOG = "LocationLoggerPeriodic"
         private const val TAG_DIST = "DistanceSummaryPeriodic"
 
         private const val UNIQUE_SLEEP = "periodic_sleep_rollup"

@@ -1,0 +1,16 @@
++ HOOK=.git/hooks/pre-push
+++ git rev-parse HEAD
++ LOCAL=d8ccede1aa78be36281496d86539405cac27ea44
+++ git ls-remote origin -h refs/heads/main
+++ awk '{print $1}'
++ REMOTE=13488b02a0ea31c9d33c115df662c8c24f930bbf
++ printf 'refs/heads/main %s refs/heads/main %s\n' d8ccede1aa78be36281496d86539405cac27ea44 13488b02a0ea31c9d33c115df662c8c24f930bbf
++ bash -x .git/hooks/pre-push origin git@github.com:nickbowditch/MyRecoveryTracker.git
++ PKG=com.nick.myrecoverytracker
++ HEADER_EXPECTED=date,unlocks
+++ adb exec-out run-as com.nick.myrecoverytracker sh -c 'head -n1 files/daily_unlocks.csv 2>/dev/null'
++ HDR=date,feature_schema_version,daily_unlocks
++ '[' date,feature_schema_version,daily_unlocks = date,unlocks ']'
++ exit 1
++ echo RC:1
+RC:1

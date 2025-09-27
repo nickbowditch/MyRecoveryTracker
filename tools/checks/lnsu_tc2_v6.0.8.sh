@@ -2,9 +2,9 @@
 set -eu
 PKG="com.nick.myrecoverytracker"
 OUT="evidence/v6.0/lnsu/tc2.8.txt"
-CSV_DAILY="files/daily_lnsu.csv"
+CSV_DAILY="files/daily_lnslu.csv"
 CSV_RAW="files/screen_log.csv"
-LOCK="app/locks/daily_lnsu.header"
+LOCK="app/locks/daily_lnslu.header"
 mkdir -p "$(dirname "$OUT")"
 
 adb get-state >/dev/null 2>&1 || { echo "TC-2 RESULT=FAIL (no device)" | tee "$OUT"; exit 2; }
@@ -13,12 +13,12 @@ adb shell pm path "$PKG"  >/dev/null 2>&1 || { echo "TC-2 RESULT=FAIL (app not i
 EXP="$(tr -d '\r' < "$LOCK" 2>/dev/null || true)"
 [ -n "$EXP" ] || { echo "TC-2 RESULT=FAIL (missing lock)" | tee "$OUT"; exit 4; }
 HDR="$(adb exec-out run-as "$PKG" head -n1 "$CSV_DAILY" 2>/dev/null | tr -d '\r' || true)"
-[ "$HDR" = "$EXP" ] || { echo "TC-2 RESULT=FAIL (bad daily_lnsu header)" | tee "$OUT"; exit 5; }
+[ "$HDR" = "$EXP" ] || { echo "TC-2 RESULT=FAIL (bad daily_lnslu header)" | tee "$OUT"; exit 5; }
 
 D="$(adb exec-out run-as "$PKG" awk -F, 'NR>1{d=$1} END{print d}' "$CSV_DAILY" 2>/dev/null | tr -d '\r')"
-[ -n "$D" ] || { echo "TC-2 RESULT=FAIL (no rows in daily_lnsu.csv)" | tee "$OUT"; exit 6; }
+[ -n "$D" ] || { echo "TC-2 RESULT=FAIL (no rows in daily_lnslu.csv)" | tee "$OUT"; exit 6; }
 
-DAILY_VAL="$(adb exec-out run-as "$PKG" awk -F, -v d="$D" 'NR>1&&$1==d{print $3;exit}' "$CSV_DAILY" 2>/dev/null | tr -d '\r' || echo 0)"
+DAILY_VAL="$(adb exec-out run-as "$PKG" awk -F, -v d="$D" 'NR>1&&$1==d{print $2;exit}' "$CSV_DAILY" 2>/dev/null | tr -d '\r' || echo 0)"
 [ -n "$DAILY_VAL" ] || DAILY_VAL=0
 
 RECOMP="$(adb exec-out run-as "$PKG" sh -c '
@@ -42,13 +42,13 @@ seg_end="$t"; [ "$seg_end" -gt "$we" ] && seg_end="$we"
 if [ "$prev_on" -eq 1 ]; then
 s="$prev_ts"; [ "$s" -lt "$ws" ] && s="$ws"
 e="$seg_end"; [ "$e" -gt "$we" ] && e="$we"
-[ "$e" -gt "$s" ] && acc=$((acc + e - s))
+[ "$e" -gt "$s" ] && acc=$(( acc + e - s ))
 fi
 prev_ts="$t"; prev_on="$cur_on"
 [ "$t" -ge "$we" ] && break
 done
 if [ -n "$prev_ts" ] && [ "$prev_on" -eq 1 ] && [ "$prev_ts" -lt "$we" ]; then
-s="$prev_ts"; [ "$s" -lt "$ws" ] && s="$ws"; e="$we"; [ "$e" -gt "$s" ] && acc=$((acc + e - s))
+s="$prev_ts"; [ "$s" -lt "$ws" ] && s="$ws"; e="$we"; [ "$e" -gt "$s" ] && acc=$(( acc + e - s ))
 fi
 echo $(( acc / 60 ))
 ')"
@@ -56,7 +56,7 @@ echo $(( acc / 60 ))
 printf 'TC-2 D=%s recomputed=%s daily=%s\n' "$D" "$RECOMP" "$DAILY_VAL" | tee "$OUT" >/dev/null
 
 if [ "${RECOMP:-0}" = "${DAILY_VAL:-0}" ]; then
-echo "TC-2 RESULT=PASS" | tee -a "$OUT"; exit 0
+  echo "TC-2 RESULT=PASS" | tee -a "$OUT"; exit 0
 else
-echo "TC-2 RESULT=FAIL" | tee -a "$OUT"; exit 1
+  echo "TC-2 RESULT=FAIL" | tee -a "$OUT"; exit 1
 fi

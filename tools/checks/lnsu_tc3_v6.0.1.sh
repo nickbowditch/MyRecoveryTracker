@@ -2,7 +2,7 @@
 set -eu
 PKG="com.nick.myrecoverytracker"
 OUT="evidence/v6.0/lnsu/tc3.1.txt"
-CSV="files/daily_lnsu.csv"
+CSV="files/daily_lnslu.csv"
 mkdir -p "$(dirname "$OUT")"
 
 adb get-state >/dev/null 2>&1 || { echo "TC-3 RESULT=FAIL (no device)" | tee "$OUT"; exit 2; }

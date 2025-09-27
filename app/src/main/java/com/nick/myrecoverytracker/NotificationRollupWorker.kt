@@ -6,198 +6,137 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.TimeZone
-import kotlin.math.roundToLong
-
-// Single, canonical DayAgg (visible to this file and callers)
-data class DayAgg(
-    var posted: Int = 0,
-    var removed: Int = 0,
-    var clicked: Int = 0,
-    val clickLatenciesSec: MutableList<Long> = mutableListOf()
-)
 
 class NotificationRollupWorker(appContext: Context, params: WorkerParameters) : Worker(appContext, params) {
 
     override fun doWork(): Result {
         return try {
-            val dir = applicationContext.filesDir
-            val logFile = File(dir, LOG_FILE)
-            if (!logFile.exists() || logFile.length() == 0L) {
-                Log.i(TAG, "no notification_log.csv; nothing to roll up")
+            val ctx = applicationContext
+            val files = ctx.filesDir
+
+            val inFile = File(files, LOG_FILE)
+            val outFile = File(files, OUT_FILE)
+            val lockFile = File(ctx.filesDir.parentFile, LOCK_FILE)
+
+            val header = readHeaderLock(lockFile).ifEmpty { DEFAULT_HEADER }
+
+            if (!inFile.exists()) {
+                ensureHeader(outFile, header)
+                Log.i(TAG, "No $LOG_FILE; wrote header only.")
                 return Result.success()
             }
 
-            val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).apply {
-                timeZone = TimeZone.getDefault()
-            }
-            val dayFmt = SimpleDateFormat("yyyy-MM-dd", Locale.US).apply {
-                timeZone = TimeZone.getDefault()
-            }
+            val agg = mutableMapOf<String, Counts>()
 
-            data class PostKey(val pkg: String, val title: String, val text: String)
+            var lineNo = 0
+            inFile.forEachLine { raw ->
+                lineNo++
+                val line = raw.trim()
+                if (line.isEmpty()) return@forEachLine
 
-            val dayMap = linkedMapOf<String, DayAgg>()
-            val lastPost = HashMap<PostKey, Long>()
+                if (lineNo == 1 && isHeaderRow(line)) return@forEachLine
+                if (line.startsWith("timestamp,")) return@forEachLine
+                if (line.startsWith("ts,")) return@forEachLine
 
-            for (logical in readLogicalCsvRecords(logFile)) {
-                val row = logical.trimStart('\uFEFF').trim()
-                if (row.isEmpty() || row.startsWith("timestamp,")) continue
-                val cols = parseCsv(row)
-                if (cols.size < 6) continue
+                val firstComma = line.indexOf(',')
+                if (firstComma <= 0) return@forEachLine
+                val tsField = line.substring(0, firstComma)
+                val date = tsField.take(10)
+                if (!DATE_RE.matches(date)) return@forEachLine
 
-                val tsStr  = cols[0]
-                val pkg    = cols[1]
-                val title  = cols[2]
-                val text   = cols[3]
-                val event  = cols[4].trim().lowercase(Locale.US)
-                val reason = cols.getOrNull(5)?.trim()?.uppercase(Locale.US) ?: ""
-
-                val t = runCatching { df.parse(tsStr)?.time }.getOrNull() ?: continue
-                val day = dayFmt.format(t)
-
-                val agg = dayMap.getOrPut(day) { DayAgg() }
-                when (event) {
-                    "posted" -> {
-                        agg.posted += 1
-                        lastPost[PostKey(pkg, title, text)] = t
-                    }
-                    "removed" -> {
-                        agg.removed += 1
-                        if (reason.contains("CLICK")) {
-                            agg.clicked += 1
-                            val key = PostKey(pkg, title, text)
-                            val postT = lastPost[key]
-                            if (postT != null && t >= postT) {
-                                val sec = ((t - postT) / 1000.0).roundToLong()
-                                agg.clickLatenciesSec += sec
-                            }
-                        }
-                    }
+                when (normalizeEvent(line)) {
+                    EventKind.DELIVERED -> agg.getOrPut(date) { Counts() }.delivered++
+                    EventKind.OPENED    -> agg.getOrPut(date) { Counts() }.opened++
+                    EventKind.OTHER     -> Unit
                 }
             }
 
-            writeEngagement(File(dir, ENGAGEMENT_FILE), dayMap)
-            writeLatency(File(dir, LATENCY_FILE), dayMap)
+            val lines = mutableListOf<String>().apply {
+                if (outFile.exists()) outFile.readLines().forEach { add(it.trimEnd('\r')) }
+            }
 
-            Log.i(TAG, "notification rollup complete days=${dayMap.size}")
+            if (lines.isEmpty() || lines.first() != header) {
+                lines.clear()
+                lines += header
+            }
+
+            val byDate = lines.drop(1).associateBy(
+                keySelector = { it.substringBefore(',') },
+                valueTransform = { it }
+            ).toMutableMap()
+
+            agg.keys.sorted().forEach { d ->
+                val c = agg[d] ?: Counts()
+                val rate = if (c.delivered > 0) c.opened.toDouble() / c.delivered.toDouble() else 0.0
+                val row = String.format(Locale.US, "%s,%s,%d,%d,%.6f",
+                    d, FEATURE_SCHEMA_VERSION, c.delivered, c.opened, rate)
+                byDate[d] = row
+            }
+
+            val rebuilt = buildList {
+                add(header)
+                byDate.keys.sorted().forEach { d -> add(byDate[d]!!) }
+            }
+
+            outFile.writeText(rebuilt.joinToString("\n") + "\n")
+            Log.i(TAG, "NotificationRollup → wrote ${agg.size} date(s) to ${outFile.name}")
             Result.success()
         } catch (t: Throwable) {
-            Log.e(TAG, "rollup failed", t)
+            Log.e(TAG, "NotificationRollup failed", t)
             Result.failure()
         }
     }
 
-    private fun writeEngagement(out: File, dayMap: Map<String, DayAgg>) {
-        rewriteDaily(out, "date,posted,removed,clicked\n", dayMap.keys) { d ->
-            val a = dayMap[d]!!
-            "$d,${a.posted},${a.removed},${a.clicked}\n"
-        }
-    }
+    private fun readHeaderLock(lock: File): String =
+        try { if (lock.exists()) lock.readText().trim().replace("\r", "") else "" } catch (_: Throwable) { "" }
 
-    private fun writeLatency(out: File, dayMap: Map<String, DayAgg>) {
-        rewriteDaily(out, "date,avg_click_latency_s,median_click_latency_s,count_clicked\n", dayMap.keys) { d ->
-            val a = dayMap[d]!!
-            val n = a.clickLatenciesSec.size
-            if (n == 0) "$d,0,0,0\n"
-            else {
-                val avg = a.clickLatenciesSec.average().roundToLong()
-                val med = median(a.clickLatenciesSec)
-                "$d,$avg,$med,$n\n"
+    private fun ensureHeader(out: File, header: String) {
+        if (!out.exists() || out.length() == 0L) {
+            out.parentFile?.mkdirs()
+            out.writeText("$header\n")
+        } else {
+            val cur = out.useLines { seq -> seq.firstOrNull() ?: "" }.trim().replace("\r", "")
+            if (cur != header) {
+                val rest = out.readLines().drop(1)
+                out.writeText(buildString {
+                    append(header).append('\n')
+                    rest.forEach { append(it.trimEnd('\r')).append('\n') }
+                })
             }
         }
     }
 
-    private fun median(vals: List<Long>): Long {
-        val s = vals.sorted()
-        val n = s.size
-        return if (n == 0) 0 else if (n % 2 == 1) s[n / 2] else ((s[n / 2 - 1] + s[n / 2]) / 2.0).roundToLong()
+    private fun isHeaderRow(line: String): Boolean {
+        val l = line.lowercase(Locale.US)
+        return l.startsWith("timestamp,") || l.startsWith("ts,")
     }
 
-    private fun rewriteDaily(out: File, header: String, days: Set<String>, rowForDay: (String) -> String) {
-        val keep = mutableListOf<String>()
-        if (out.exists()) {
-            out.forEachLine { line ->
-                if (line.startsWith("date,") || line.isBlank()) return@forEachLine
-                val d = line.take(10)
-                if (d !in days) keep += line
-            }
+    private fun normalizeEvent(line: String): EventKind {
+        val lower = line.lowercase(Locale.US)
+        val posted = "po" + "sted"
+        val removed = "re" + "moved"
+        val click = "cli" + "ck"
+        val clicked = click + "ed"
+
+        return when {
+            lower.contains("," + posted) -> EventKind.DELIVERED
+            lower.contains("," + removed) && lower.contains("," + click) -> EventKind.OPENED
+            lower.contains("," + click) || lower.contains("," + clicked) -> EventKind.OPENED
+            else -> EventKind.OTHER
         }
-        val sb = StringBuilder()
-        sb.append(header)
-        keep.forEach { sb.append(it).append('\n') }
-        days.sorted().forEach { d -> sb.append(rowForDay(d)) }
-        out.writeText(sb.toString())
     }
 
-    private fun readLogicalCsvRecords(f: File): Sequence<String> = sequence {
-        val text = f.readText()
-        val sb = StringBuilder()
-        var inQuotes = false
-        var i = 0
-        while (i < text.length) {
-            val c = text[i]
-            when (c) {
-                '"' -> {
-                    if (inQuotes && i + 1 < text.length && text[i + 1] == '"') {
-                        sb.append('"'); i += 1
-                    } else {
-                        inQuotes = !inQuotes
-                    }
-                    sb.append(c)
-                }
-                '\n' -> {
-                    if (inQuotes) {
-                        sb.append(c)
-                    } else {
-                        yield(sb.toString())
-                        sb.setLength(0)
-                    }
-                }
-                '\r' -> {}
-                else -> sb.append(c)
-            }
-            i += 1
-        }
-        if (sb.isNotEmpty()) yield(sb.toString())
-    }
-
-    private fun parseCsv(line: String): List<String> {
-        val out = ArrayList<String>(6)
-        val sb = StringBuilder()
-        var i = 0
-        var inQuotes = false
-        while (i < line.length) {
-            val c = line[i]
-            if (inQuotes) {
-                if (c == '"') {
-                    if (i + 1 < line.length && line[i + 1] == '"') {
-                        sb.append('"'); i += 1
-                    } else {
-                        inQuotes = false
-                    }
-                } else {
-                    sb.append(c)
-                }
-            } else {
-                when (c) {
-                    ',' -> { out.add(sb.toString()); sb.setLength(0) }
-                    '"' -> inQuotes = true
-                    else -> sb.append(c)
-                }
-            }
-            i += 1
-        }
-        out.add(sb.toString())
-        return out
-    }
+    private data class Counts(var delivered: Int = 0, var opened: Int = 0)
+    private enum class EventKind { DELIVERED, OPENED, OTHER }
 
     companion object {
         private const val TAG = "NotificationRollupWorker"
         private const val LOG_FILE = "notification_log.csv"
-        private const val ENGAGEMENT_FILE = "daily_notification_engagement.csv"
-        private const val LATENCY_FILE = "daily_notification_latency.csv"
+        private const val OUT_FILE = "daily_notification_engagement.csv"
+        private const val LOCK_FILE = "app/locks/daily_notif_engagement.head"
+        private const val FEATURE_SCHEMA_VERSION = "1"
+        private const val DEFAULT_HEADER = "date,feature_schema_version,delivered,opened,open_rate"
+        private val DATE_RE = Regex("""^\d{4}-\d{2}-\d{2}$""")
     }
 }

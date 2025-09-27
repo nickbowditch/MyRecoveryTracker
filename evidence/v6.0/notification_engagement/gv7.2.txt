@@ -1,0 +1,12 @@
+=== LOG ===
+09-26 14:43:49.469  1463  3752 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-26 14:43:49.474  1463  3752 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-26 14:43:49.485  8427  8427 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP
+09-26 14:43:49.486  8427  8427 I TriggerReceiver: Enqueue NotificationEngagementWorker (once-EngagementRollup)
+09-26 14:43:49.605  8427  8470 I NotificationEngagementWorker: Engagement rollup wrote 1 date(s) to daily_notification_engagement.csv
+09-26 14:43:49.611  8427  8444 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=349ac5bb-bc5d-418b-805d-ff86b4cf862e, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]
+
+=== TAIL: files/daily_notification_engagement.csv ===
+date,feature_schema_version,delivered,opened,open_rate
+2025-09-25,1,1,1,1.000000
+GV7 RESULT=FAIL (bad or missing CSV rows)
