@@ -1,2 +1,0 @@
-SCAN_DIR: app/src/main/java
-WRITERS-ALLOWLIST RESULT=PASS

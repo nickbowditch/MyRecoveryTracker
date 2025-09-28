@@ -1,1 +1,0 @@
-TC-2 RESULT=FAIL (no daily_lnsu.csv)
