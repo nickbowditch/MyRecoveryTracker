@@ -1,0 +1,16 @@
+=== JOBSCHEDULER ===
+[none]
+
+=== WORKMANAGER ===
+[none]
+
+=== LOGCAT ===
+09-27 11:56:03.367  1463  4929 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-27 11:56:03.370  1463  4929 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-27 11:56:06.252  1463  2057 D MediaSessionService: setFgsIfNoSessionIsLinkedToNotification: record=com.google.android.gms/cast_rcn_media_session/3218 (userId=0)
+09-27 11:56:06.886  1463  2057 D MediaSessionService: setFgsIfNoSessionIsLinkedToNotification: record=com.google.android.gms/cast_rcn_media_session/3219 (userId=0)
+09-27 11:56:08.648  2251  2423 D ImpulseStateSource: Notify clients: 52645
+09-27 11:56:13.381  1463 15128 I ActivityManager: Skipping duplicate ANR: com.android.server.am.ProcessErrorStateRecord@60d1e18 Broadcast of Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LATENCY_ROLLUP flg=0x10400010 xflg=0x1 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-27 11:56:13.381  1463 15128 D ActivityManager: Completed ANR of com.nick.myrecoverytracker in 2ms, latency 3ms
+09-27 11:56:18.650  2251  2446 D ImpulseStateSource: Notify clients: 52646
+EE-2 RESULT=PASS
