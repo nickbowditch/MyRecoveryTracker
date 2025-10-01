@@ -21,7 +21,6 @@ local.properties
 # --- Build outputs ---
 /**/build/
 app/release/
-!evidence/
 !evidence/v6.0/
 !evidence/v6.0/**
 !evidence/v6.0/**/*.txt
@@ -51,3 +50,5 @@ app/release/
 !evidence/v6.0/unlocks
 !evidence/v6.0/notification_latency/
 !evidence/v6.0/notification_latency/*.txt
+!evidence/v6.0/notification_latency
+!evidence/v6.0/notification_latency/*.csv
