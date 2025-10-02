@@ -57,3 +57,5 @@ app/release/
 !evidence/
 !evidence/v6.0/usage_events_daily/
 !evidence/v6.0/usage_events_daily/*.txt
+!evidence/v6.0/usage_events/
+!evidence/v6.0/usage_events/*.txt

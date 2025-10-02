@@ -1,0 +1,6 @@
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+10-02 13:50:31.542 21578 21578 I TriggerReceiver: Enqueue UsageEventsDailyWorker (once-UsageEventsDaily)
+EE-3 RESULT=PASS
