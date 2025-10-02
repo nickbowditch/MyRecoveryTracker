@@ -1,0 +1,16 @@
+--------- beginning of main
+10-02 10:19:17.416  1463  3751 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-02 10:19:17.418  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-02 10:19:17.424  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-02 10:19:17.424  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-02 10:19:17.424  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-02 10:19:17.431  1463  3751 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-02 10:19:17.434  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-02 10:19:17.437  4028  4028 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP
+10-02 10:19:17.438  4028  4028 I TriggerReceiver: Enqueue NotificationLatencyWorker (once-NotificationLatencyRollup)
+10-02 10:19:17.440  1463  1703 I ActivityManager: Broadcast completed: result=0
+10-02 10:19:17.501 14840 14844 E gcblocker: too long GC blocking: 8
+10-02 10:19:17.502 14840 14844 E gcblocker: gc block end, 732551757,101
+10-02 10:19:17.536  4028  4781 I NotificationLatencyWorker: NotificationLatency(2025-10-02): p50=12500ms p90=18500ms p99=19850ms n=2
+10-02 10:19:17.540  4028  4780 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=63b6002f-9767-48c6-9607-44cec3c782b7, tags={ com.nick.myrecoverytracker.NotificationLatencyWorker, NotificationLatency } ]
