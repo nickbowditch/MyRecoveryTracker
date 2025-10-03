@@ -1,3 +1,0 @@
-RAW_HEADER=date,time,event_type,package
-DAILY_HEADER=date,event_count
-SCHEMA-CHK RESULT=PASS
