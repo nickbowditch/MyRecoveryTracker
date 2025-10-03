@@ -1,0 +1,14 @@
+=== JOBSCHEDULER ===
+[none]
+
+=== WORKMANAGER ===
+[none]
+
+=== LOGCAT ===
+10-04 06:21:50.093  1463  3742 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-04 06:21:50.094  1463  3742 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-04 06:21:50.100 19252 19252 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY
+10-04 06:21:50.100 19252 19252 I TriggerReceiver: Enqueue UsageEventsDailyWorker (once-UsageEventsDaily)
+10-04 06:21:50.190 19252 19904 I UsageEventsDailyWorker: UsageEventsDaily -> 2025-10-03=0, 2025-10-04=4
+10-04 06:21:50.194 19252 19283 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=7c606905-f63d-4d75-947e-7237e15ef4fb, tags={ com.nick.myrecoverytracker.UsageEventsDailyWorker, UsageEventsDaily } ]
+EE-2 RESULT=PASS
