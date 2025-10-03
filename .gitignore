@@ -54,7 +54,6 @@ app/release/
 !evidence/v6.0/notification_latency/*.csv
 !evidence/v6.0/notification_latency/.txt
 !evidence/v6.0/notification_latency/.csv
-!evidence/
 !evidence/v6.0/usage_events_daily/
 !evidence/v6.0/usage_events_daily/*.txt
 !evidence/v6.0/usage_events/
