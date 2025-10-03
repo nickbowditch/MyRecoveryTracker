@@ -1,0 +1,22 @@
+--------- beginning of main
+10-04 06:08:28.448 16880  8879 I UsageEventsDailyWorker: UsageEventsDaily -> 2025-10-03=1, 2025-10-04=3
+10-04 06:08:28.454 16880 16900 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=d4ef4f62-84a7-4e40-b36a-a540b9222417, tags={ com.nick.myrecoverytracker.UsageEventsDailyWorker, UsageEventsDaily } ]
+10-04 06:08:28.586  1463  2544 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LNSU_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-04 06:08:28.593  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-04 06:08:28.596  1463  2544 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LNSU_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-04 06:08:28.598 16880 16880 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_LNSU_ROLLUP
+10-04 06:08:28.600  1463  1703 I ActivityManager: Broadcast completed: result=0
+10-04 06:08:28.679  1463  2544 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ROLLUP_LNSU flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-04 06:08:28.681  1463  2544 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ROLLUP_LNSU flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-04 06:08:28.685  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-04 06:08:28.704 16880 16880 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ROLLUP_LNSU
+10-04 06:08:28.707  1463  1703 I ActivityManager: Broadcast completed: result=0
+10-04 06:08:28.960 14298 14527 W chromium: [WARNING:components/sync/engine/syncer_proto_util.cc:430] Error posting from syncer: Response Code (bogus on error): -1 Content-Length (bogus on error): -1 Server Status: CONNECTION_UNAVAILABLE
+10-04 06:08:28.960 14298 14527 E chromium: [ERROR:components/sync/engine/get_updates_processor.cc:267] PostClientToServerMessage() failed during GetUpdates with error Network error (ERR_NAME_NOT_RESOLVED)
+10-04 06:08:29.003  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-04 06:08:29.005  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-04 06:08:29.008  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-04 06:08:29.009  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-04 06:08:29.080  7496  7504 E gcblocker: too long GC blocking: 8
+10-04 06:08:29.080  7496  7504 E gcblocker: gc block end, 829182091,100
