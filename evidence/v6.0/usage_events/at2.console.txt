@@ -1,2 +1,0 @@
-BAD 2025-10-02 raw=3 daily=2151
-AT2 RESULT=FAIL
