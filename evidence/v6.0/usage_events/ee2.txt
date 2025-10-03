@@ -1,0 +1,11 @@
+=== JOBSCHEDULER ===
+[none]
+
+=== WORKMANAGER ===
+[none]
+
+=== LOGCAT ===
+10-04 06:08:17.038  1463  1939 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-04 06:08:17.041  1463  1939 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-04 06:08:17.048 16880 16880 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP
+EE-2 RESULT=FAIL
