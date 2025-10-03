@@ -58,3 +58,4 @@ app/release/
 !evidence/v6.0/usage_events_daily/*.txt
 !evidence/v6.0/usage_events/
 !evidence/v6.0/usage_events/*.txt
+!evidence/
