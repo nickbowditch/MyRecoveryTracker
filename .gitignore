@@ -62,3 +62,5 @@ app/release/
 !evidence/v6.0/usage_events_daily/.csv
 !evidence/v6.0/usage_events_daily/.txt
 !evidence/
+!evidence/v6.0/app_usage_by_category/
+!evidence/v6.0/app_usage_by_category/*.txt
