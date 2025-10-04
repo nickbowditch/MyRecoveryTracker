@@ -1,0 +1,175 @@
+=== MANIFEST RECEIVER INTENT ACTIONS ===
+37:                <action android:name="android.intent.action.BOOT_COMPLETED" />
+38:                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+39:                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+47:                <action android:name="android.intent.action.MAIN" />
+63:                <action android:name="android.service.notification.NotificationListenerService" />
+99:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS" />
+100:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS" />
+101:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP" />
+102:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY" />
+103:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN" />
+104:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY" />
+105:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" />
+106:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP" />
+107:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION" />
+108:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP" />
+109:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION" />
+110:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" />
+111:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP" />
+112:                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP" />
+124:                <action android:name="android.intent.action.USER_PRESENT" />
+
+=== ALL ACTION_* STRINGS IN CODE ===
+com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:239)
+com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:259)
+com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:246)
+com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:269)
+com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:242)
+com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:241)
+com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:260)
+com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:264)
+com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:256)
+com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:266)
+com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:261)
+com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:267)
+com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:238)
+com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:248)
+com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:249)
+com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:268)
+com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:244)
+com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:252)
+com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:253)
+com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:245)
+com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:272)
+com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE 	(app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:250)
+
+=== LINES IN TriggerReceiver REFERENCING ACTION OR CATEGORY ===
+20:    20	            ACTION_RUN_ROLLUPS,
+21:    21	            ACTION_RUN_ALL_ROLLUPS -> {
+56:    56	            ACTION_RUN_UNLOCK_ROLLUP -> {
+66:    66	            ACTION_RUN_MOVEMENT_ROLLUP -> {
+76:    76	            ACTION_RUN_MOVEMENT_INTENSITY -> {
+86:    86	            ACTION_RUN_UNLOCK_SCAN -> {
+96:    96	            ACTION_RUN_USAGE_ENTROPY -> {
+105:   105	            ACTION_RUN_HEALTH_SNAPSHOT -> {
+114:   114	            ACTION_RUN_SLEEP_ROLLUP -> {
+123:   123	            ACTION_RUN_SLEEP_VALIDATION -> {
+132:   132	            ACTION_VERIFY_SLEEP_RESCHEDULE -> {
+141:   141	            ACTION_RUN_UNLOCK_VALIDATION -> {
+150:   150	            ACTION_RUN_USAGE_CAPTURE -> {
+161:   161	            ACTION_RUN_NOTIFICATION_ROLLUP,
+162:   162	            ACTION_RUN_ENGAGEMENT_ROLLUP,
+163:   163	            ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP,
+164:   164	            ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP -> {
+184:   184	            ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP -> {
+194:   194	            ACTION_RUN_NOTIFICATION_VALIDATION -> {
+204:   204	            ACTION_RUN_REDCAP_UPLOAD -> {
+214:   214	            ACTION_RUN_LNS_ROLLUP -> {
+225:   225	            ACTION_RUN_USAGE_EVENTS_DAILY -> {
+238:   238	        const val ACTION_RUN_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+239:   239	        const val ACTION_RUN_ALL_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+241:   241	        const val ACTION_RUN_MOVEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+242:   242	        const val ACTION_RUN_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+244:   244	        const val ACTION_RUN_UNLOCK_SCAN = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+245:   245	        const val ACTION_RUN_USAGE_ENTROPY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+246:   246	        const val ACTION_RUN_HEALTH_SNAPSHOT = "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+248:   248	        const val ACTION_RUN_SLEEP_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+249:   249	        const val ACTION_RUN_SLEEP_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+250:   250	        const val ACTION_VERIFY_SLEEP_RESCHEDULE = "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+252:   252	        const val ACTION_RUN_UNLOCK_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION"
+253:   253	        const val ACTION_RUN_USAGE_CAPTURE = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE"
+256:   256	        const val ACTION_RUN_NOTIFICATION_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+259:   259	        const val ACTION_RUN_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP"
+260:   260	        const val ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+261:   261	        const val ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP"
+264:   264	        const val ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP"
+266:   266	        const val ACTION_RUN_NOTIFICATION_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+267:   267	        const val ACTION_RUN_REDCAP_UPLOAD = "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+268:   268	        const val ACTION_RUN_UNLOCK_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+269:   269	        const val ACTION_RUN_LNS_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+272:   272	        const val ACTION_RUN_USAGE_EVENTS_DAILY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+
+=== REFERENCES TO AppUsageByCategoryDailyWorker & ACTION IN CODE ===
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:19:class AppUsageByCategoryDailyWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:71:            Log.e(TAG, "AppUsageByCategoryDailyWorker error", t)
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:98:        when (ai?.category ?: ApplicationInfo.CATEGORY_UNDEFINED) {
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:99:            ApplicationInfo.CATEGORY_PRODUCTIVITY -> return "productivity"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:100:            ApplicationInfo.CATEGORY_SOCIAL -> return "social"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:101:            ApplicationInfo.CATEGORY_GAME -> return "game"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:102:            ApplicationInfo.CATEGORY_IMAGE -> return "image"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:103:            ApplicationInfo.CATEGORY_AUDIO -> return "music_and_audio"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:104:            ApplicationInfo.CATEGORY_VIDEO -> return "video"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:105:            ApplicationInfo.CATEGORY_NEWS -> return "news"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:106:            ApplicationInfo.CATEGORY_MAPS -> return "maps"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:182:        private const val TAG = "AppUsageByCategoryDaily"
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:150:                Intent.ACTION_USER_PRESENT -> {
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:153:                Intent.ACTION_SCREEN_ON -> {
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:164:                Intent.ACTION_SCREEN_OFF -> {
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:184:            addAction(Intent.ACTION_USER_PRESENT)
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:185:            addAction(Intent.ACTION_SCREEN_ON)
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:186:            addAction(Intent.ACTION_SCREEN_OFF)
+app/src/main/java/com/nick/myrecoverytracker/ForegroundUnlockService.kt:240:            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+app/src/main/java/com/nick/myrecoverytracker/UsagePermissionHelper.kt:27:            Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+app/src/main/java/com/nick/myrecoverytracker/UsagePermissionHelper.kt:45:        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+app/src/main/java/com/nick/myrecoverytracker/UnlockReceiver.kt:19:        if (intent.action == Intent.ACTION_USER_PRESENT) {
+app/src/main/java/com/nick/myrecoverytracker/ScreenEventReceiver.kt:17:            Intent.ACTION_SCREEN_ON  -> "$now,ON\n"
+app/src/main/java/com/nick/myrecoverytracker/ScreenEventReceiver.kt:18:            Intent.ACTION_SCREEN_OFF -> "$now,OFF\n"
+app/src/main/java/com/nick/myrecoverytracker/ScreenEventReceiver.kt:19:            Intent.ACTION_USER_PRESENT -> "$now,UNLOCK\n"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:20:            ACTION_RUN_ROLLUPS,
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:21:            ACTION_RUN_ALL_ROLLUPS -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:56:            ACTION_RUN_UNLOCK_ROLLUP -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:66:            ACTION_RUN_MOVEMENT_ROLLUP -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:76:            ACTION_RUN_MOVEMENT_INTENSITY -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:86:            ACTION_RUN_UNLOCK_SCAN -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:96:            ACTION_RUN_USAGE_ENTROPY -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:105:            ACTION_RUN_HEALTH_SNAPSHOT -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:114:            ACTION_RUN_SLEEP_ROLLUP -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:123:            ACTION_RUN_SLEEP_VALIDATION -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:132:            ACTION_VERIFY_SLEEP_RESCHEDULE -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:141:            ACTION_RUN_UNLOCK_VALIDATION -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:150:            ACTION_RUN_USAGE_CAPTURE -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:161:            ACTION_RUN_NOTIFICATION_ROLLUP,
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:162:            ACTION_RUN_ENGAGEMENT_ROLLUP,
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:163:            ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP,
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:164:            ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:184:            ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:194:            ACTION_RUN_NOTIFICATION_VALIDATION -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:204:            ACTION_RUN_REDCAP_UPLOAD -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:214:            ACTION_RUN_LNS_ROLLUP -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:225:            ACTION_RUN_USAGE_EVENTS_DAILY -> {
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:238:        const val ACTION_RUN_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:239:        const val ACTION_RUN_ALL_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:241:        const val ACTION_RUN_MOVEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:242:        const val ACTION_RUN_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:244:        const val ACTION_RUN_UNLOCK_SCAN = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:245:        const val ACTION_RUN_USAGE_ENTROPY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:246:        const val ACTION_RUN_HEALTH_SNAPSHOT = "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:248:        const val ACTION_RUN_SLEEP_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:249:        const val ACTION_RUN_SLEEP_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:250:        const val ACTION_VERIFY_SLEEP_RESCHEDULE = "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:252:        const val ACTION_RUN_UNLOCK_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:253:        const val ACTION_RUN_USAGE_CAPTURE = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:256:        const val ACTION_RUN_NOTIFICATION_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:259:        const val ACTION_RUN_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:260:        const val ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:261:        const val ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:264:        const val ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:266:        const val ACTION_RUN_NOTIFICATION_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:267:        const val ACTION_RUN_REDCAP_UPLOAD = "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:268:        const val ACTION_RUN_UNLOCK_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:269:        const val ACTION_RUN_LNS_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:272:        const val ACTION_RUN_USAGE_EVENTS_DAILY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt:75:        val appUsageCatDaily = dailyAt(AppUsageByCategoryDailyWorker::class.java, UNIQUE_APP_CAT, TAG_APP_CAT, 4, 15)
+app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt:150:            OneTimeWorkRequestBuilder<AppUsageByCategoryDailyWorker>().addTag(TAG_APP_CAT + "_now").build()
+app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt:242:        private const val TAG_APP_CAT = "AppUsageCategoryDaily"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:17:class AppUsageCategoryWorker(
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:22:    private val TAG = "AppUsageCategoryWorker"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:54:            writeCategoryDaily(day, buckets)
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:159:    private fun writeCategoryDaily(day: String, buckets: Map<String, Float>) {
+app/src/main/java/com/nick/myrecoverytracker/BatteryLogWorker.kt:90:        val ifilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+
+=== FILE WRITES FOR CATEGORY CSV TARGETS ===
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:27:            val byCategoryFile = File(filesDir, "app_category_daily.csv")
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:160:        val file = File(applicationContext.filesDir, "app_category_daily.csv")
+SCAN RESULT=PASS
