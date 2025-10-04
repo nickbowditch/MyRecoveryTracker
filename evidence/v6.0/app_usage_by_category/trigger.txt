@@ -1,1 +1,0 @@
-TRIGGER RESULT=FAIL (no CATEGORY action found in code)
