@@ -1,0 +1,24 @@
+=== SEARCH: exact expected CSV ===
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:160:        val file = File(applicationContext.filesDir, "app_category_daily.csv")
+
+=== SEARCH: likely variants ===
+[none]
+[none]
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:160:        val file = File(applicationContext.filesDir, "app_category_daily.csv")
+[none]
+
+=== SEARCH: directory+filename construction ===
+[none]
+[none]
+
+=== SEARCH: feature identifiers ===
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:19:class AppUsageByCategoryDailyWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:93:            Log.i(TAG, "AppUsageByCategory -> $day categories=${perCatMs.size} (packages=$packagesCounted)")
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:100:            Log.e(TAG, "AppUsageByCategoryDailyWorker error", t)
+app/src/main/java/com/nick/myrecoverytracker/AppUsageByCategoryDailyWorker.kt:199:        private const val TAG = "AppUsageByCategoryDaily"
+app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt:75:        val appUsageCatDaily = dailyAt(AppUsageByCategoryDailyWorker::class.java, UNIQUE_APP_CAT, TAG_APP_CAT, 4, 15)
+app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt:150:            OneTimeWorkRequestBuilder<AppUsageByCategoryDailyWorker>().addTag(TAG_APP_CAT + "_now").build()
+app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt:242:        private const val TAG_APP_CAT = "AppUsageCategoryDaily"
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:54:            writeCategoryDaily(day, buckets)
+app/src/main/java/com/nick/myrecoverytracker/AppUsageCategoryWorker.kt:159:    private fun writeCategoryDaily(day: String, buckets: Map<String, Float>) {
+GREP-REFS RESULT=PASS
