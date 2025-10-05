@@ -1,0 +1,20 @@
+--- REBUILT ---
+switches=342 entropy=2.7
+--- ACTUAL ---
+switches=342 entropy=2.7
+
+--- DEBUG: HEAD usage_events ---
+date,time,event_type,package
+2025-10-06,10:00:00,FOREGROUND,com.test.a
+2025-10-06,10:05:00,FOREGROUND,com.test.b
+2025-10-06,10:10:00,FOREGROUND,com.test.a
+2025-10-06,00:02:21,NOTIFICATION_INTERRUPTION,com.google.android.googlequicksearchbox
+--- DEBUG: TAIL usage_events (today) ---
+2025-10-06,09:50:28,NOTIFICATION_INTERRUPTION,com.instagram.android
+2025-10-06,09:50:40,NOTIFICATION_INTERRUPTION,com.instagram.android
+2025-10-06,09:56:16,EVENT_11,com.google.android.gm
+2025-10-06,10:04:09,EVENT_11,com.google.android.apps.weather
+2025-10-06,10:05:08,NOTIFICATION_INTERRUPTION,com.instagram.android
+--- DEBUG: DAILY ROWS ---
+3:2025-10-06,342,2.7
+AT2 RESULT=PASS
