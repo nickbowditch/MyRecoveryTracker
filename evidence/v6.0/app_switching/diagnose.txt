@@ -1,0 +1,39 @@
+=== SOURCE: writers referencing daily_app_switching.csv ===
+app/src/main/java/com/nick/myrecoverytracker/AppSwitchingWorker.kt:96:        val out = File(applicationContext.filesDir, "daily_app_switching.csv")
+app/src/main/java/com/nick/myrecoverytracker/UsageEntropyDailyWorker.kt:25:            val switching = File(dir, "daily_app_switching.csv")
+app/src/main/java/com/nick/myrecoverytracker/AppSwitchingDailyWorker.kt:35:    private val outFile by lazy { File(applicationContext.filesDir, "daily_app_switching.csv") }
+
+=== SOURCE: schema declarations (rollup expected) ===
+app/src/main/java/com/nick/myrecoverytracker/AppSwitchingDailyWorker.kt:40:                ensureHeader(outFile, "date,switches,entropy")
+app/src/main/java/com/nick/myrecoverytracker/AppSwitchingDailyWorker.kt:45:            ensureHeader(outFile, "date,switches,entropy")
+
+=== SOURCE: schema declarations (per-package) ===
+app/src/main/java/com/nick/myrecoverytracker/UsageCaptureWorker.kt:178:        ensureHeader(name, "date,package,starts")
+
+=== DEVICE: header before ===
+date,package,starts
+
+=== After ACTION_RUN_APP_SWITCHING_DAILY ===
+header=sed: files/daily_app_switching.csv: No such file or directory
+--- first 5 lines ---
+head: files/daily_app_switching.csv: No such file or directory
+
+=== After ACTION_RUN_USAGE_CAPTURE ===
+header=date,package,starts
+--- first 5 lines ---
+date,package,starts
+2025-10-05,com.instagram.android,36
+2025-10-05,com.google.android.apps.nexuslauncher,20
+2025-10-05,com.textra,16
+2025-10-05,com.twitter.android,5
+
+=== LOGCAT (Switching/UsageCapture) ===
+10-05 11:43:12.029  1463  1926 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-05 11:43:12.031  1463  1926 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-05 11:43:12.039 12341 12341 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY
+10-05 11:43:14.472  1463  1939 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-05 11:43:14.474  1463  1939 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-05 11:43:14.481 12341 12341 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE
+10-05 11:43:14.482 12341 12341 I TriggerReceiver: Enqueue UsageCaptureWorker (once-UsageCapture)
+10-05 11:43:14.758 12341 12401 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=ed53eeed-90ca-43bc-b547-14749f86fee2, tags={ com.nick.myrecoverytracker.UsageCaptureWorker, UsageCapture } ]
+DIAG RESULT=FAIL (Unexpected headers; investigate writers)
