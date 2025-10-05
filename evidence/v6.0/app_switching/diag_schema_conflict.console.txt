@@ -1,0 +1,1 @@
+DIAG RESULT=FAIL (UsageCapture overwrites files/daily_app_switching.csv with per-package schema: date,package,starts)
