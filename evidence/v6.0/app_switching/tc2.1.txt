@@ -1,2 +1,0 @@
-TC2 RESULT=PASS
-counts: Y=1 T=1 TM=0 other_dates=0
