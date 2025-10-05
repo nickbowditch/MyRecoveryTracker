@@ -1,0 +1,9 @@
+=== DEBUG ===
+allow_lines_present=YES
+.gitignore_matches:
+!evidence/v6.0/
+!evidence/
+
+ignored_paths:
+[none]
+EE-4 RESULT=PASS
