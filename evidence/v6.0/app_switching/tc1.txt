@@ -1,5 +1,0 @@
-TC1 RESULT=FAIL (counts: Y=1 T=1 TM=0 other_dates=0)
---- DEBUG ---
-date,switches,entropy
-2025-10-04,0,0.0
-2025-10-05,2,0.9
