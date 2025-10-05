@@ -66,6 +66,7 @@ app/release/
 !evidence/v6.0/app_usage_by_category
 !evidence/v6.0/app_usage_by_category/.csv
 !evidence/v6.0/app_usage_by_category/.txt
-!evidence/
 !evidence/v6.0/app_switching/
 !evidence/v6.0/app_switching/*.txt
+!evidence/v6.0/app_switching
+!evidence/v6.0/app_switching/*.csv
