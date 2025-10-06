@@ -1,5 +1,0 @@
-CSV_PATH=files/daily_distance_log.csv
-LOCK_PATH=files/daily_distance.lock
-CSV_HEADER=date,distance_km
-LOCK_HEADER=date,distance_km
-DI1 RESULT=PASS

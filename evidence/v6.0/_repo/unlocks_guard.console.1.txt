@@ -1,3 +1,0 @@
-HEAD:date,unlocks
-LOCK:date,feature_schema_version,daily_unlocks
-UNLOCKS-GUARD RESULT=FAIL (header drift)

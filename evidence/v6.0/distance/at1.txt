@@ -1,6 +1,0 @@
-today=2025-10-06
-before_sha=d0f8ac2bbd122e51273f411d22e7121d1a18c8a06813dcbdcb7b37fdf43fde47
-after_sha=6a2b4bf034f6f153381f4e4959c274bd8eb05ae2a9de8199d50e0dfa11b54535
-row_before=
-row_after=2025-10-06,0.39
-AT1 RESULT=PASS

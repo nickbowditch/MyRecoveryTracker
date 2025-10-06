@@ -1,3 +1,0 @@
-DI-1 RESULT=FAIL (drift)
-LOCK=date,feature_schema_version,minutes_22_02
-HEAD=head: files/daily_lnsu.csv: No such file or directory
