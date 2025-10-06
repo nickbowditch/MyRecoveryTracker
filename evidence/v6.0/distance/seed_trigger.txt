@@ -1,0 +1,63 @@
+[INFO] Seed & Trigger Distance worker
+[INFO] Seeding files/location_log.csv for 2025-10-06
+[INFO] Resetting daily_distance_log.csv
+[INFO] Triggering broadcast
+[INFO] Waiting for worker evidence (max 10s)
+awk: can't open file files/daily_distance_log.csv
+ source line number 1
+=== location_log.csv (head) ===
+ts,lat,lon,accuracy
+2025-10-06 08:00:00,-33.8675,151.2070,12
+2025-10-06 08:30:00,-33.8700,151.2100,10
+2025-10-06 09:00:00,-33.8730,151.2150,9
+=== daily_distance_log.csv (head) ===
+head: files/daily_distance_log.csv: No such file or directory
+=== logcat (tail, filtered) ===
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(20731): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+[FAIL] daily_distance_log.csv header missing
+[DEBUG] deviceidle (head)
+  Flags:
+    com.android.server.deviceidle.use_cpu_time_for_temp_allowlist=true
+    com.android.server.deviceidle.remove_idle_location=true
+
+  Settings:
+    flex_time_short=+1m0s0ms
+    light_after_inactive_to=+4m0s0ms
+    light_idle_to=+5m0s0ms
+    light_idle_to_initial_flex=+1m0s0ms
+    light_max_idle_to_flex=+15m0s0ms
+    light_idle_factor=2.0
+    light_idle_increase_linearly=true
+    light_idle_linear_increase_factor_ms=300000
+    light_idle_flex_linear_increase_factor_ms=60000
+    light_max_idle_to=+30m0s0ms
+    light_idle_maintenance_min_budget=+1m0s0ms
+    light_idle_maintenance_max_budget=+5m0s0ms
+    min_light_maintenance_time=+5s0ms
+    min_deep_maintenance_time=+30s0ms
+    inactive_to=+15s0ms
+[DEBUG] files/ listing
+total 77
+drwx------   9 u0_a407 u0_a407        3452 2025-10-02 10:03 .
+drwxrwx--x 415 system  system        57344 2025-10-04 01:29 ..
+drwx------   3 u0_a407 u0_a407        3452 2025-10-01 16:43 app
+drwxrws--x   3 u0_a407 u0_a407_cache  3452 2025-10-01 16:43 cache
+drwxrws--x   2 u0_a407 u0_a407_cache  3452 2025-10-02 10:03 code_cache
+drwxrwx--x   2 u0_a407 u0_a407        3452 2025-10-01 16:43 databases
+drwx------   2 u0_a407 u0_a407        8192 2025-10-06 12:13 files
+drwxrwx--x   2 u0_a407 u0_a407        3452 2025-10-01 16:43 no_backup
+drwxrwx--x   2 u0_a407 u0_a407        3452 2025-10-01 16:43 shared_prefs
+[DEBUG] location_log.csv head
+ts,lat,lon,accuracy
+2025-10-06 08:00:00,-33.8675,151.2070,12
+2025-10-06 08:30:00,-33.8700,151.2100,10
+2025-10-06 09:00:00,-33.8730,151.2150,9
+[DEBUG] daily_distance_log.csv head
+head: files/daily_distance_log.csv: No such file or directory
+[DEBUG] logcat tail (filtered)
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(20731): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+RESULT=FAIL

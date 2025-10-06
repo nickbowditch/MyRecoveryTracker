@@ -20,6 +20,17 @@ import java.util.TimeZone
 import kotlin.math.max
 import kotlin.math.round
 
+/**
+ * UsageCaptureWorker
+ *
+ * Output:
+ *   files/usage_events.csv -> date,time,event_type,package
+ *   files/daily_app_starts_by_package.csv -> date,package,starts
+ *   files/daily_app_usage_minutes.csv -> date,<category mins>
+ *
+ * This worker only captures usage events and daily summaries.
+ * It no longer writes or touches daily_app_switching.csv.
+ */
 class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
     CoroutineWorker(appContext, params) {
 
@@ -28,65 +39,49 @@ class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
         timeZone = TimeZone.getDefault()
     }
 
-    // Expanded categories (stable order)
     private val categories = listOf(
-        "app_min_social",
-        "app_min_dating",
-        "app_min_productivity",
-        "app_min_music_audio",
-        "app_min_image",
-        "app_min_maps",
-        "app_min_video",
-        "app_min_travel_local",
-        "app_min_shopping",
-        "app_min_news",
-        "app_min_game",
-        "app_min_health",
-        "app_min_finance",
-        "app_min_browser",
-        "app_min_comm",
-        "app_min_other",
-        "app_min_total"
+        "app_min_social", "app_min_dating", "app_min_productivity", "app_min_music_audio",
+        "app_min_image", "app_min_maps", "app_min_video", "app_min_travel_local",
+        "app_min_shopping", "app_min_news", "app_min_game", "app_min_health",
+        "app_min_finance", "app_min_browser", "app_min_comm", "app_min_other", "app_min_total"
     )
 
-    // Exclude pure system/noise
     private val excludedPkgs = setOf(
-        "android",
-        "com.android.systemui",
-        "androidx.work.impl.foreground",
-        "com.google.android.odad",
-        "com.nick.myrecoverytracker"
+        "android", "com.android.systemui", "androidx.work.impl.foreground",
+        "com.google.android.odad", "com.nick.myrecoverytracker"
     )
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val usm = applicationContext.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-
         val now = ZonedDateTime.now(zone)
         val start = LocalDate.now(zone).atStartOfDay(zone).toInstant().toEpochMilli()
         val end = now.toInstant().toEpochMilli()
-
         val ev = usm.queryEvents(start, end)
+
         if (!ev.hasNextEvent()) {
             upsertDailyCount("daily_usage_events.csv", LocalDate.now(zone).toString(), 0)
-            upsertDailySwitching(emptyMap())
+            upsertDailyStartsByPackage(emptyMap())
             upsertDailyMinutes(emptyMap())
             return@withContext Result.success()
         }
 
-        ensureHeader("usage_events.csv", "timestamp,package,event")
+        // GOLDEN: usage_events.csv header = date,time,event_type,package
+        ensureHeader("usage_events.csv", "date,time,event_type,package")
 
         var lastFgPkg: String? = null
         var lastFgStart: Long = 0L
         val perPkgMillis = hashMapOf<String, Long>()
         val perPkgStarts = hashMapOf<String, Int>()
         var totalEvents = 0
-
         val e = UsageEvents.Event()
         val lines = StringBuilder()
 
         while (ev.getNextEvent(e)) {
             totalEvents++
             val tsLocal = tsFmt.format(e.timeStamp)
+            val spaceIdx = tsLocal.indexOf(' ')
+            val dateStr = if (spaceIdx > 0) tsLocal.substring(0, spaceIdx) else tsLocal
+            val timeStr = if (spaceIdx > 0) tsLocal.substring(spaceIdx + 1) else ""
             val pkg = e.packageName ?: ""
             val typeStr = when (e.eventType) {
                 UsageEvents.Event.MOVE_TO_FOREGROUND -> "FOREGROUND"
@@ -98,9 +93,13 @@ class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
                 UsageEvents.Event.SCREEN_NON_INTERACTIVE -> "SCREEN_NON_INTERACTIVE"
                 UsageEvents.Event.SHORTCUT_INVOCATION -> "SHORTCUT_INVOCATION"
                 12 -> "NOTIFICATION_INTERRUPTION"
-                else -> "EVENT_" + e.eventType
+                else -> "EVENT_${e.eventType}"
             }
-            lines.append(tsLocal).append(',').append(pkg).append(',').append(typeStr).append('\n')
+
+            lines.append(dateStr).append(',')
+                .append(timeStr).append(',')
+                .append(typeStr).append(',')
+                .append(pkg).append('\n')
 
             when (e.eventType) {
                 UsageEvents.Event.MOVE_TO_FOREGROUND,
@@ -134,32 +133,30 @@ class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
         }
 
         appendBulk("usage_events.csv", lines.toString())
-
         upsertDailyCount("daily_usage_events.csv", LocalDate.now(zone).toString(), totalEvents)
-        upsertDailySwitching(perPkgStarts)
+        upsertDailyStartsByPackage(perPkgStarts)
         upsertDailyMinutes(perPkgMillis)
-
         Result.success()
     }
 
     private fun ensureHeader(name: String, header: String) {
         val f = File(applicationContext.filesDir, name)
-        if (!f.exists() || f.length() == 0L) {
+        if (!f.exists() || f.length() == 0L)
             FileOutputStream(f, false).use { it.write((header + "\n").toByteArray()) }
-        }
     }
 
-    private fun ensureHeaderExact(name: String, expectedHeader: String) {
+    private fun ensureHeaderExact(name: String, header: String) {
         val f = File(applicationContext.filesDir, name)
         if (!f.exists()) {
-            FileOutputStream(f, false).use { it.write((expectedHeader + "\n").toByteArray()) }
+            FileOutputStream(f, false).use { it.write((header + "\n").toByteArray()) }
             return
         }
         val current = f.bufferedReader().use { it.readLine() }?.trim() ?: ""
-        if (current == expectedHeader) return
-        val backup = File(applicationContext.filesDir, "$name.legacy")
-        runCatching { f.copyTo(backup, overwrite = true) }
-        FileOutputStream(f, false).use { it.write((expectedHeader + "\n").toByteArray()) }
+        if (current != header) {
+            val backup = File(applicationContext.filesDir, "$name.legacy")
+            runCatching { f.copyTo(backup, overwrite = true) }
+            FileOutputStream(f, false).use { it.write((header + "\n").toByteArray()) }
+        }
     }
 
     private fun appendBulk(name: String, text: String) {
@@ -173,8 +170,8 @@ class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
         upsertByFirstColumn(name, day, "$day,$count")
     }
 
-    private fun upsertDailySwitching(starts: Map<String, Int>) {
-        val name = "daily_app_switching.csv"
+    private fun upsertDailyStartsByPackage(starts: Map<String, Int>) {
+        val name = "daily_app_starts_by_package.csv"
         ensureHeader(name, "date,package,starts")
         val day = LocalDate.now(zone).toString()
         val all = readLines(name).filterNot { it.startsWith(day) && it != "date,package,starts" }
@@ -190,117 +187,67 @@ class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
         ensureHeaderExact(name, header)
         val day = LocalDate.now(zone).toString()
 
-        val perCategoryRaw = mutableMapOf<String, Double>()
-        categories.forEach { if (it != "app_min_total") perCategoryRaw[it] = 0.0 }
+        val perCategory = mutableMapOf<String, Double>().apply {
+            categories.forEach { if (it != "app_min_total") put(it, 0.0) }
+        }
 
-        val otherAggRaw = linkedMapOf<String, Double>()
-
-        for ((rawPkg, millis) in perPkgMillis) {
-            if (millis <= 0L) continue
-            val pkg = rawPkg.trim()
-            if (pkg.isEmpty() || pkg in excludedPkgs) continue
-
+        val otherAgg = linkedMapOf<String, Double>()
+        for ((pkg, millis) in perPkgMillis) {
+            if (millis <= 0L || pkg.isBlank() || pkg in excludedPkgs) continue
             val cat = mapPackageToCategory(pkg)
-            val minutes = millis / 60000.0
-            if (cat == "app_min_other") {
-                otherAggRaw[pkg] = (otherAggRaw[pkg] ?: 0.0) + minutes
-            } else {
-                perCategoryRaw[cat] = (perCategoryRaw[cat] ?: 0.0) + minutes
-            }
+            val mins = millis / 60000.0
+            if (cat == "app_min_other") otherAgg[pkg] = (otherAgg[pkg] ?: 0.0) + mins
+            else perCategory[cat] = (perCategory[cat] ?: 0.0) + mins
         }
 
-        fun round2(v: Double) = round(v * 100.0) / 100.0
-
-        val perCategoryRounded = mutableMapOf<String, Double>()
-        for ((k, v) in perCategoryRaw) {
-            if (k != "app_min_total" && k != "app_min_other") {
-                perCategoryRounded[k] = round2(v)
-            }
-        }
-
-        val otherAggRounded = linkedMapOf<String, Double>()
-        for ((pkg, v) in otherAggRaw) {
-            otherAggRounded[pkg] = round2(v)
-        }
-        val otherMinutesRounded = otherAggRounded.values.fold(0.0) { acc, d -> round2(acc + d) }
-        perCategoryRounded["app_min_other"] = otherMinutesRounded
-
-        val totalRounded = categories.filter { it != "app_min_total" }
-            .map { perCategoryRounded[it] ?: 0.0 }
-            .fold(0.0) { acc, d -> round2(acc + d) }
-        perCategoryRounded["app_min_total"] = totalRounded
+        fun r2(v: Double) = round(v * 100.0) / 100.0
+        val otherTotal = otherAgg.values.sum().let(::r2)
+        perCategory["app_min_other"] = otherTotal
+        perCategory["app_min_total"] = categories.filter { it != "app_min_total" }
+            .sumOf { perCategory[it] ?: 0.0 }.let(::r2)
 
         val row = buildString {
             append(day)
-            categories.forEach { c ->
-                append(",")
-                append(String.format(Locale.US, "%.2f", perCategoryRounded[c] ?: 0.0))
-            }
+            categories.forEach { append(",").append(String.format(Locale.US, "%.2f", perCategory[it] ?: 0.0)) }
         }
         upsertByFirstColumn(name, day, row)
-
-        writeOtherBreakdown(day, otherAggRounded)
+        writeOtherBreakdown(day, otherAgg)
     }
 
-    private fun writeOtherBreakdown(day: String, otherAgg: Map<String, Double>) {
+    private fun writeOtherBreakdown(day: String, other: Map<String, Double>) {
+        val tmp = File(applicationContext.filesDir, "daily_app_usage_other.csv.tmp")
+        val out = File(applicationContext.filesDir, "daily_app_usage_other.csv")
         val content = buildString {
             appendLine("date,package,minutes")
-            otherAgg.entries
-                .sortedByDescending { it.value }
+            other.entries.sortedByDescending { it.value }
                 .forEach { (pkg, mins) ->
                     appendLine("$day,$pkg,${"%.2f".format(Locale.US, mins)}")
                 }
         }
-        val dir = applicationContext.filesDir
-        val tmp = File(dir, "daily_app_usage_other.csv.tmp")
         FileOutputStream(tmp, false).use { it.write(content.toByteArray()) }
-        val f = File(dir, "daily_app_usage_other.csv")
-        if (f.exists()) f.delete()
-        tmp.renameTo(f)
+        if (out.exists()) out.delete()
+        tmp.renameTo(out)
     }
 
     private fun mapPackageToCategory(pkg: String): String {
         val p = pkg.lowercase(Locale.US)
-        if (p == "com.android.chrome" || p.startsWith("org.chromium.webapk")) return "app_min_browser"
-        if (p == "com.google.android.gm") return "app_min_productivity"
-        if (p == "com.google.android.apps.nexuslauncher") return "app_min_productivity"
-        if (p == "com.google.android.deskclock") return "app_min_productivity"
-        if (p == "com.google.android.dialer" || p == "com.textra") return "app_min_comm"
-
         return when {
-            p.contains("textra") || p.contains("dialer") || p.contains("messaging") || p.contains("contacts") || p.contains("phone") ->
-                "app_min_comm"
             p.contains("facebook") || p.contains("instagram") || p.contains("twitter") ||
-                    p.contains("snapchat") || p.contains("tiktok") || p.contains("telegram") || p.contains("whatsapp") ->
-                "app_min_social"
-            p.contains("tinder") || p.contains("bumble") || p.contains("hinge") || p.contains("grindr") ->
-                "app_min_dating"
+                    p.contains("snapchat") || p.contains("tiktok") || p.contains("telegram") || p.contains("whatsapp") -> "app_min_social"
+            p.contains("tinder") || p.contains("bumble") || p.contains("hinge") || p.contains("grindr") -> "app_min_dating"
             p.contains("docs") || p.contains("sheets") || p.contains("slides") || p.contains("office") ||
-                    p.contains("notion") || p.contains("keep") || p.contains("calendar") || p.contains("gmail") || p.contains("gm") ->
-                "app_min_productivity"
-            p.contains("spotify") || p.contains("music") || p.contains("podcast") || p.contains("soundcloud") || p.contains("pocketcasts") ->
-                "app_min_music_audio"
-            p.contains("camera") || p.contains("gallery") || p.contains("photos") ->
-                "app_min_image"
-            p.contains("maps") || p.contains("waze") || p.contains("map") ||
-                    p.contains("uber") || p.contains("lyft") || p.contains("airbnb") ||
-                    p.contains("booking") || p.contains("trip") || p.contains("transit") ->
-                "app_min_travel_local"
-            p.contains("youtube") || p.contains("netflix") || p.contains("primevideo") || p.contains("disney") ||
-                    p.contains("stan") || p.contains("twitch") || p.contains("iplayer") ->
-                "app_min_video"
-            p.contains("amazon") || p.contains("ebay") || p.contains("shop") || p.contains("shopping") || p.contains("etsy") ->
-                "app_min_shopping"
-            p.contains("news") || p.contains("bbc") || p.contains("cnn") || p.contains("guardian") || p.contains("nyt") ->
-                "app_min_news"
-            p.contains("game") || p.contains("playgames") || p.contains("supercell") || p.contains("riot") ->
-                "app_min_game"
-            p.contains("fit") || p.contains("health") || p.contains("run") || p.contains("strava") ->
-                "app_min_health"
-            p.contains("bank") || p.contains("paypal") || p.contains("finance") || p.contains("revolut") || p.contains("wise") ->
-                "app_min_finance"
-            p.contains("chrome") || p.contains("browser") || p.startsWith("org.chromium") ->
-                "app_min_browser"
+                    p.contains("notion") || p.contains("keep") || p.contains("calendar") || p.contains("gmail") -> "app_min_productivity"
+            p.contains("spotify") || p.contains("music") || p.contains("podcast") || p.contains("soundcloud") -> "app_min_music_audio"
+            p.contains("camera") || p.contains("gallery") || p.contains("photos") -> "app_min_image"
+            p.contains("maps") || p.contains("waze") || p.contains("uber") || p.contains("booking") -> "app_min_travel_local"
+            p.contains("youtube") || p.contains("netflix") || p.contains("primevideo") || p.contains("disney") -> "app_min_video"
+            p.contains("amazon") || p.contains("ebay") || p.contains("shop") -> "app_min_shopping"
+            p.contains("news") || p.contains("bbc") || p.contains("cnn") || p.contains("guardian") -> "app_min_news"
+            p.contains("game") || p.contains("playgames") || p.contains("supercell") -> "app_min_game"
+            p.contains("fit") || p.contains("health") || p.contains("strava") -> "app_min_health"
+            p.contains("bank") || p.contains("paypal") || p.contains("finance") -> "app_min_finance"
+            p.contains("chrome") || p.contains("browser") -> "app_min_browser"
+            p.contains("textra") || p.contains("dialer") || p.contains("phone") -> "app_min_comm"
             else -> "app_min_other"
         }
     }
@@ -324,8 +271,7 @@ class UsageCaptureWorker(appContext: Context, params: WorkerParameters) :
 
     private fun readLines(name: String): List<String> {
         val f = File(applicationContext.filesDir, name)
-        if (!f.exists()) return listOf()
-        return f.readLines(Charsets.UTF_8).map { it.trimEnd('\n', '\r') }
+        return if (!f.exists()) listOf() else f.readLines(Charsets.UTF_8).map { it.trimEnd('\r', '\n') }
     }
 
     private fun writeAll(name: String, content: String) {

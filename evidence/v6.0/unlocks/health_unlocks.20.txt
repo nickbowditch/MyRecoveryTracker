@@ -1,0 +1,7 @@
+==> 2025-09-19 14:05:49 RUN tools/checks/di1_v6.0.7.sh
+DI-1 RESULT=FAIL
+LOCK=date,feature_schema_version,daily_unlocks
+HEAD=date,unlocks
+--> 2025-09-19 14:06:14 FAIL tools/checks/di1_v6.0.7.sh (rc=1)
+==> 2025-09-19 14:06:14 RUN tools/checks/di2_v6.0.1.sh
+DI-2 RESULT=PASS

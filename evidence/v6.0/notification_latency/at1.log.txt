@@ -1,0 +1,52 @@
+--------- beginning of main
+10-07 07:20:16.945 32291 32390 E GRPC    : cronet_transport.cc:445] on_failed(0xb4000073564b9e70, -105)
+10-07 07:20:17.051  1463  4929 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-07 07:20:17.057  1463  4929 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-07 07:20:17.060  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:20:17.066 24535 24535 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP
+10-07 07:20:17.066 24535 24535 I TriggerReceiver: Enqueue NotificationLatencyWorker (once-NotificationLatencyRollup)
+10-07 07:20:17.073  1463  1703 I ActivityManager: Broadcast completed: result=0
+10-07 07:20:17.159 24535 24678 I NotificationLatencyWorker: NotificationLatency(2025-10-07): p50=210000ms p90=282000ms p99=298200ms n=2
+10-07 07:20:17.163 24535 24550 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=62fd797c-ac5b-4043-869e-ac5a331d71bb, tags={ com.nick.myrecoverytracker.NotificationLatencyWorker, NotificationLatency } ]
+10-07 07:20:17.306  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:20:17.308  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:20:17.309  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:20:17.310  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:20:17.396  7496  7504 E gcblocker: too long GC blocking: 8
+10-07 07:20:17.397  7496  7504 E gcblocker: gc block end, 997154421,100
+10-07 07:20:17.460 32291 32390 E GRPC    : cronet_transport.cc:445] on_failed(0xb4000073564bb250, -105)
+10-07 07:20:18.143  8915 10358 W bigd    : Job 'AdsStartupJob' did not complete within 00:30.0000 (mm:ss.ms).
+10-07 07:20:18.143  8915 10358 W bigd    : bjaj: Job 'AdsStartupJob' did not complete within 00:30.0000 (mm:ss.ms).
+10-07 07:20:18.143  8915 10358 W bigd    : 	at biic.call(PG:77)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at bizg.a(PG:75)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at bjiy.M(PG:1)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at biyp.run(PG:16)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at alzy.run(PG:288)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at ahvk.call(PG:31)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at biph.a(PG:144)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at blxp.c(PG:3)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at blxr.run(PG:38)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:348)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+10-07 07:20:18.143  8915 10358 W bigd    : 	at java.lang.Thread.run(Thread.java:1119)
+10-07 07:20:18.200  8915 10907 W bigd    : Job 'AdsStartupJob' did not complete within 00:30.0000 (mm:ss.ms).
+10-07 07:20:18.200  8915 10907 W bigd    : bjaj: Job 'AdsStartupJob' did not complete within 00:30.0000 (mm:ss.ms).
+10-07 07:20:18.200  8915 10907 W bigd    : 	at biic.call(PG:77)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at bizg.a(PG:75)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at bjiy.M(PG:1)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at biyp.run(PG:16)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at alzy.run(PG:288)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at ahvk.call(PG:31)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at biph.a(PG:144)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at blxp.c(PG:3)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at blxr.run(PG:38)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:348)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+10-07 07:20:18.200  8915 10907 W bigd    : 	at java.lang.Thread.run(Thread.java:1119)

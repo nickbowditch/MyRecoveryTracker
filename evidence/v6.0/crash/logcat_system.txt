@@ -1,0 +1,372 @@
+--------- beginning of system
+09-27 13:51:05.066  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:05.068  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:05.068  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:05.068  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:06.604  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:06.605  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:06.605  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:06.605  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:08.128  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:08.130  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:08.131  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:08.131  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:09.653  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:09.654  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:09.655  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:09.657  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:11.191  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:11.193  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:11.198  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:11.198  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:12.715  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:12.723  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:12.723  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:12.723  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:14.254  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:14.258  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:14.258  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:14.260  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:15.509  1463  4933 I MediaSessionStack: addSession to bottom of stack | record: com.google.android.gms/cast_rcn_media_session/3335 (userId=0)
+09-27 13:51:15.804  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:15.807  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:15.807  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:15.807  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:15.976  1463  4936 I MediaSessionStack: removeSession | record: com.google.android.gms/cast_rcn_media_session/3335 (userId=0)
+09-27 13:51:16.048  1463  4936 I MediaSessionStack: addSession to bottom of stack | record: com.google.android.gms/cast_rcn_media_session/3336 (userId=0)
+09-27 13:51:16.241  1463  3764 I MediaSessionStack: removeSession | record: com.google.android.gms/cast_rcn_media_session/3336 (userId=0)
+09-27 13:51:16.709  1463  2146 I MediaSessionStack: addSession to bottom of stack | record: com.google.android.gms/cast_rcn_media_session/3337 (userId=0)
+09-27 13:51:17.336  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:17.338  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:17.338  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:17.339  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:18.863  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:18.868  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:18.868  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:18.868  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:19.035  1463  4933 I MediaSessionStack: removeSession | record: com.google.android.gms/cast_rcn_media_session/3337 (userId=0)
+09-27 13:51:20.393  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:20.400  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:20.400  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:20.400  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:20.781  1463  1946 D ActivityManager: sync unfroze 9463 com.google.android.apps.weather for 6
+09-27 13:51:20.817  1463  1946 D ActivityManager: sync unfroze 29915 com.snapchat.android for 6
+09-27 13:51:20.819  1463  1946 D ActivityManager: sync unfroze 30767 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 for 6
+09-27 13:51:20.824  1463  1946 D ActivityManager: sync unfroze 30414 com.android.vending for 6
+09-27 13:51:20.826  1463  1946 D ActivityManager: sync unfroze 23773 com.android.chrome for 6
+09-27 13:51:20.829  1463  1946 D ActivityManager: sync unfroze 27705 com.android.vending:background for 6
+09-27 13:51:20.830  1463  1946 D ActivityManager: sync unfroze 30465 com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 for 6
+09-27 13:51:20.832  1463  1946 D ActivityManager: sync unfroze 30393 com.android.chrome:privileged_process0 for 6
+09-27 13:51:20.889  1463  4936 W ProcessStats: Tracking association SourceState{d05522a system/1000 ImpBg #2544084} whose proc state 6 is better than process ProcessState{d65edae com.google.android.apps.weather/10167 pkg=com.google.android.apps.weather} proc state 15 (3 skipped)
+09-27 13:51:21.129  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.784  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.790  1463  3764 D ActivityManager: sync unfroze 30277 com.google.android.gms for 6
+09-27 13:51:21.925  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.926  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.926  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.928  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.938  1463  3764 I SoundTriggerMiddlewareLogging: RECOGNITION (1, RecognitionEventSys{recognitionEvent: RecognitionEvent{status: 0, type: 1, captureAvailable: true, captureDelayMs: 0, capturePreambleMs: 0, triggerInData: false, audioConfig: AudioConfig{base: AudioConfigBase{sampleRate: 16000, channelMask: AudioChannelLayout.layoutMask(1), format: AudioFormatDescription{type: 1, pcm: 1, encoding: }}, offloadInfo: AudioOffloadInfo{base: AudioConfigBase{sampleRate: 0, channelMask: AudioChannelLayout.none(0), format: AudioFormatDescription{type: 0, pcm: 0, encoding: }}, streamType: -2, bitRatePerSecond: 0, durationUs: 0, hasVideo: false, isStreaming: false, bitWidth: 16, offloadBufferSize: 0, usage: -1, encapsulationMode: -1, contentId: 0, syncId: 0}, frameCount: 0}, data: [112, 111, 115, 95, 109, 117, 115, 105, 99, 44, 118, 97, 108, 58, 51, 50, 49, 50, 52], recognitionStillActive: false}, halEventReceivedMillis: 792620215027231, token: android.os.Binder@d794568}, 85929)
+09-27 13:51:21.939  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:21.947  1463  1463 V SoundTriggerService: 9f6ad62a-1f0b-11e7-87c5-40a8f03d3f15: onServiceConnected(android.os.BinderProxy@78f0992)
+09-27 13:51:21.948  1463  1463 V SoundTriggerService: 9f6ad62a-1f0b-11e7-87c5-40a8f03d3f15: runOp 0
+09-27 13:51:22.249  1463  4936 I SoundTriggerMiddlewareLogging: UNLOAD_MODEL (1)
+09-27 13:51:22.252  1463  4936 W SoundTriggerHelper: Unload error: Attempting unload invalid generic model with id:9f6ad62a-1f0b-11e7-87c5-40a8f03d3f15
+09-27 13:51:22.276  1463  4936 I SoundTriggerMiddlewareLogging: LOAD_MODEL ("9f6ad62a-1f0b-11e7-87c5-40a8f03d3f15") -> 1
+09-27 13:51:22.339  1463  4936 I SoundTriggerMiddlewareLogging: START_RECOGNITION (1, RecognitionConfig{captureRequested: true, phraseRecognitionExtras: [], audioCapabilities: 0, data: []}) -> android.os.Binder@768fb42
+09-27 13:51:22.339  1463  4936 I SoundTriggerHelper: startRecognition successful.
+09-27 13:51:22.339  1463  4936 W SoundTriggerService: error onStart(): Model 9f6ad62a-1f0b-11e7-87c5-40a8f03d3f15 already started
+09-27 13:51:22.340  1463  4936 W SoundTriggerHelper: Unload error: Attempting unload invalid generic model with id:12caddb1-acdb-4dce-8cb0-2e95a2313aee
+09-27 13:51:22.340  1463  4936 I SoundTriggerService: error onStop(): Model 12caddb1-acdb-4dce-8cb0-2e95a2313aee has no stats available
+09-27 13:51:23.465  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:23.468  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:23.468  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:23.469  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:24.992  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:24.992  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:24.992  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:24.992  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:26.527  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:26.528  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:26.533  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:26.533  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:28.062  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:28.065  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:28.066  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:28.067  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:29.596  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:29.602  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:29.604  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:29.604  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:29.701  1463  4936 E AppOps  : attributionTag IWLAN not declared in manifest of com.google.pixel.iwlan
+09-27 13:51:30.641  1463  4936 E AppOps  : attributionTag IWLAN not declared in manifest of com.google.pixel.iwlan
+09-27 13:51:31.129  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:31.130  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:31.132  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:31.132  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:31.803  1463  3751 W ActivityManager: Unbind failed: could not find connection for android.os.BinderProxy@ab031ae
+09-27 13:51:31.805  1463  3751 W ActivityManager: Unable to start service Intent { act=android.telephony.satellite.SatelliteService xflg=0x4 pkg=com.google.android.satellite } U=0: not found
+09-27 13:51:32.347  1463  1961 D ActivityManager: freezing 29915 com.snapchat.android
+09-27 13:51:32.358  1463  1961 D ActivityManager: freezing 30767 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+09-27 13:51:32.361  1463  1961 D ActivityManager: freezing 30414 com.android.vending
+09-27 13:51:32.365  1463  1961 D ActivityManager: freezing 23773 com.android.chrome
+09-27 13:51:32.368  1463  1961 D ActivityManager: freezing 27705 com.android.vending:background
+09-27 13:51:32.371  1463  1961 D ActivityManager: freezing 30465 com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+09-27 13:51:32.373  1463  1961 D ActivityManager: freezing 30393 com.android.chrome:privileged_process0
+09-27 13:51:32.380  1463  1961 D ActivityManager: freezing 9463 com.google.android.apps.weather
+09-27 13:51:32.385  1463  1961 D ActivityManager: freezing 30277 com.google.android.gms
+09-27 13:51:32.657  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:32.660  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:32.661  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:32.662  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:34.179  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:34.182  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:34.182  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:34.183  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:35.104   932  2102 I vendor.google.wifi_ext-service-vendor: Wifi: Setting SAR Scenario to 3
+09-27 13:51:35.712  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:35.713  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:35.715  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:35.715  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.046  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.046  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.049  1463  4936 D CoreBackPreview: Window{47bd4f3 u0 NotificationShade}: Setting back callback null
+09-27 13:51:37.078  1463  3755 W PackageConfigPersister: App-specific configuration not found for packageName: com.google.android.apps.nexuslauncher and userId: 0
+09-27 13:51:37.229  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.229  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.229  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.230  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.709  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 0 task=null activity=null display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 task null, skipping
+09-27 13:51:37.709  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=0 task=null activity=null display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772
+09-27 13:51:37.711  1463  2544 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+09-27 13:51:37.711  1463  2544 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+09-27 13:51:37.712  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 0 task=null activity=ActivityRecord{111259798 u0 com.myfitnesspal.android/.splash.SplashActivity display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 task null, skipping
+09-27 13:51:37.712  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=0 task=null activity=ActivityRecord{111259798 u0 com.myfitnesspal.android/.splash.SplashActivity t-1} display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772
+09-27 13:51:37.712  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{111259798 u0 com.myfitnesspal.android/.splash.SplashActivity t-1} display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 not entering desktop mode, skipping
+09-27 13:51:37.712  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{111259798 u0 com.myfitnesspal.android/.splash.SplashActivity t-1} display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 inherit-from-source=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@122302772 default-portrait freeform-size-mismatch=Rect(276, 716 - 804, 1796)
+09-27 13:51:37.712  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{111259798 u0 com.myfitnesspal.android/.splash.SplashActivity t-1} display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 not entering desktop mode, skipping
+09-27 13:51:37.712  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{111259798 u0 com.myfitnesspal.android/.splash.SplashActivity t-1} display-from-option=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 inherit-from-source=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@122302772 default-portrait freeform-size-mismatch=Rect(276, 716 - 804, 1796)
+09-27 13:51:37.715  1463  2544 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 xflg=0x4 cmp=com.myfitnesspal.android/.splash.SplashActivity bnds=[285,1052][540,1333]} with LAUNCH_MULTIPLE from uid 10227 (com.google.android.apps.nexuslauncher) (sr=55567402) (BAL_ALLOW_VISIBLE_WINDOW) result code=2
+09-27 13:51:37.716  2122  2145 V WindowManagerShell: Transition requested (#6670): android.os.BinderProxy@8b2f922 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=13321 effectiveUid=10326 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myfitnesspal.android/.splash.SplashActivity } baseActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity} topActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity} origActivity=null realActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.android.splash.SplashActivity} numActivities=1 lastActiveTime=788471988 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@e8fe249} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 152 - 0, 0) topActivityInfo=ActivityInfo{e689fb3 com.myfitnesspal.feature.main.ui.MainActivity} launchCookies=[android.os.BinderProxy@aa6b970] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(276, 716 - 804, 1796) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactiveundefined} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@21d44e9, appThread = android.app.IApplicationThread$Stub$Proxy@6ab856e, debugName = QuickstepLaunch }, displayChange = null, flags = 0, debugId = 6670 }
+09-27 13:51:37.716  2122  2145 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+09-27 13:51:37.716  2122  2145 V WindowManagerShell: RemoteTransition directly requested for (#6670) android.os.BinderProxy@8b2f922: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@21d44e9, appThread = android.app.IApplicationThread$Stub$Proxy@6ab856e, debugName = QuickstepLaunch }
+09-27 13:51:37.716  2122  2145 V WindowManagerShell: Transition (#6670): request handled by DefaultMixedHandler
+09-27 13:51:37.718  2122  2145 V ShellStartingWindow: RSO:Start tracking for task=13321
+09-27 13:51:37.719  2122  2145 D WindowManagerShell: onActivityRestartAttempt: topActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}, wasVisible=false
+09-27 13:51:37.725  1463  3769 D ActivityManager: quick sync unfreeze 18036 for 1
+09-27 13:51:37.725  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.727  1463  1706 D ActivityManager: sync unfroze 18036 com.myfitnesspal.android for 1
+09-27 13:51:37.728  1463  1706 D ActivityManager: sync unfroze 30414 com.android.vending for 1
+09-27 13:51:37.728  1463  3769 V WindowManager: Defer transition id=6670 for TaskFragmentTransaction=android.os.Binder@e4229ed
+09-27 13:51:37.728  1463  3769 V WindowManager: deferTransitionReady deferReadyDepth=1 stack=com.android.server.wm.TransitionController.deferTransitionReady:1014 com.android.server.wm.TaskFragmentOrganizerController$TaskFragmentOrganizerState.dispatchTransaction:508 com.android.server.wm.TaskFragmentOrganizerController.dispatchPendingEvents:1250 com.android.server.wm.TaskFragmentOrganizerController.dispatchPendingEvents:1219 com.android.server.wm.RootWindowContainer.performSurfacePlacementNoTrace:808 
+09-27 13:51:37.729  1463  1706 D ActivityManager: sync unfroze 18353 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 for 1
+09-27 13:51:37.730  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.730  1463  1706 D ActivityManager: sync unfroze 3069 com.google.android.adservices.api for 1
+09-27 13:51:37.730  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.730  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.730  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.730  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.730  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.730  1463  1706 D ActivityManager: sync unfroze 27705 com.android.vending:background for 1
+09-27 13:51:37.730  1463  3769 V WindowManager: Continue transition id=6670 for TaskFragmentTransaction=android.os.Binder@e4229ed
+09-27 13:51:37.730  1463  3769 V WindowManager: continueTransitionReady deferReadyDepth=0 stack=com.android.server.wm.TransitionController.continueTransitionReady:1023 com.android.server.wm.TaskFragmentOrganizerController$TaskFragmentOrganizerState.onTransactionFinished:537 com.android.server.wm.TaskFragmentOrganizerController.onTransactionHandled:731 android.window.ITaskFragmentOrganizerController$Stub.onTransact:225 android.os.Binder.execTransactInternal:1441 
+09-27 13:51:37.732  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.735  1463  1703 V WindowManager: Sent Transition (#6670) createdAt=09-27 13:51:37.711 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=13321 effectiveUid=10326 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myfitnesspal.android/.splash.SplashActivity } baseActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity} topActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity} origActivity=null realActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.android.splash.SplashActivity} numActivities=1 lastActiveTime=788471988 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{5840f12 Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 152 - 0, 0) topActivityInfo=ActivityInfo{8a9a3c6 com.myfitnesspal.feature.main.ui.MainActivity} launchCookies=[android.os.BinderProxy@c31dab3] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(276, 716 - 804, 1796) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactiveundefined} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@b4ed870, appThread = android.app.IApplicationThread$Stub$Proxy@d2477e9, debugName = QuickstepLaunch }, displayChange = null, flags = 0, debugId = 6670 }
+09-27 13:51:37.735  1463  1703 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+09-27 13:51:37.735  1463  1703 V WindowManager:     info={id=6670 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+09-27 13:51:37.735  1463  1703 V WindowManager:         {WCT{RemoteToken{5840f12 Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android}}} m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=13321)/@0x117086 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1},
+09-27 13:51:37.735  1463  1703 V WindowManager:         {WCT{RemoteToken{fdafdf5 Task{2915191 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x1959226 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1},
+09-27 13:51:37.735  1463  1703 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{73b5b64})/@0x83200d4 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0}
+09-27 13:51:37.735  1463  1703 V WindowManager:     ]}
+09-27 13:51:37.739  1463  1723 W ProcessStats: Tracking association SourceState{5e799da com.myfitnesspal.android/10326 BTop #2544158} whose proc state 2 is better than process ProcessState{209c17b com.android.vending/10178 pkg=com.android.vending} proc state 14 (5 skipped)
+09-27 13:51:37.748  2122 14338 V WindowManagerShell: onTransitionReady(transaction=6283537597470)
+09-27 13:51:37.749  2122  2145 V WindowManagerShell: onTransitionReady (#6670) android.os.BinderProxy@8b2f922: {id=6670 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+09-27 13:51:37.749  2122  2145 V WindowManagerShell:         {m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=13321)/@0x63e522b sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1},
+09-27 13:51:37.749  2122  2145 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xdd44688 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1},
+09-27 13:51:37.749  2122  2145 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{73b5b64})/@0x60fa821 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0}
+09-27 13:51:37.749  2122  2145 V WindowManagerShell:     ]}
+09-27 13:51:37.749  2122  2145 V WindowManagerShell: Playing animation for (#6670) android.os.BinderProxy@8b2f922@0
+09-27 13:51:37.749  2122  2145 V WindowManagerShell:  try firstHandler com.android.wm.shell.transition.DefaultMixedHandler@a27df36
+09-27 13:51:37.749  2122  2145 V WindowManagerShell: Mixed transition for opening an intent with a remote transition and PIP or Desktop #6670
+09-27 13:51:37.749  2122  2145 V WindowManagerShell: tryAnimateOpenIntentWithRemoteAndPipOrDesktop
+09-27 13:51:37.749  2122  2145 V WindowManagerShell:  Delegate animation for (#6670) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@21d44e9, appThread = android.app.IApplicationThread$Stub$Proxy@6ab856e, debugName = QuickstepLaunch }
+09-27 13:51:37.750  2122  2145 V WindowManagerShell:  animated by firstHandler
+09-27 13:51:37.752 18036 18036 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+09-27 13:51:37.752 18036 18036 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+09-27 13:51:37.753 18353 18353 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+09-27 13:51:37.754 18353 18353 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+09-27 13:51:37.755  2122  2145 V ShellStartingWindow: RSO:Transaction applied for task=13321
+09-27 13:51:37.765  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.766  1463  2544 D ActivityManager: sync unfroze 30277 com.google.android.gms for 6
+09-27 13:51:37.768  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.804  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:37.940  2122  2145 V ShellStartingWindow: RSO:Receive removal info for task=13321
+09-27 13:51:38.049  1463  2544 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:38.277  2122  2145 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#6670) android.os.BinderProxy@8b2f922@0
+09-27 13:51:38.287  1463  1703 V WindowManager: Finish Transition (#6670): created at 09-27 13:51:37.711 collect-started=0.079ms request-sent=3.457ms started=5.153ms ready=19.011ms sent=21.153ms commit=22.848ms finished=575.148ms
+09-27 13:51:38.291  2122  2145 V WindowManagerShell: Track 0 became idle
+09-27 13:51:38.291  2122  2145 V WindowManagerShell: All active transition animations finished
+09-27 13:51:38.309  2122  2145 D Bubbles : onLocusVisibilityChanged=Overview|DISABLED visible=false taskId=1
+09-27 13:51:38.346  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:38.744  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:38.745  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:38.745  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:38.745  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:39.458  1463  2544 D CoreBackPreview: Window{c9d5b19 u0 com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@59e36db, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+09-27 13:51:39.538  1463  2544 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:40.265  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.266  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.267  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.268  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.300  1463  4933 D CoreBackPreview: Window{c9d5b19 u0 com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}: Setting back callback null
+09-27 13:51:40.329  1463  1706 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
+09-27 13:51:40.342  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 0 task=null activity=null display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 task null, skipping
+09-27 13:51:40.343  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=0 task=null activity=null display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772
+09-27 13:51:40.343  1463  2544 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+09-27 13:51:40.344  1463  2544 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+09-27 13:51:40.344  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 0 task=null activity=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 task null, skipping
+09-27 13:51:40.344  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=0 task=null activity=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t-1} display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772
+09-27 13:51:40.345  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t-1} display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 not entering desktop mode, skipping
+09-27 13:51:40.345  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t-1} display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 inherit-from-source=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@122302772 default-portrait freeform-size-mismatch=Rect(276, 716 - 804, 1796)
+09-27 13:51:40.345  1463  2544 V WindowManager: DesktopModeLaunchParamsModifier: phase= 3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t-1} display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 not entering desktop mode, skipping
+09-27 13:51:40.346  1463  2544 V WindowManager: TaskLaunchParamsModifier:phase=3 task=Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android} activity=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t-1} display-area-from-source=DefaultTaskDisplayArea@122302772 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@122302772 inherit-from-source=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@122302772 default-portrait freeform-size-mismatch=Rect(276, 716 - 804, 1796)
+09-27 13:51:40.346  1463  2544 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+09-27 13:51:40.349  1463  2544 I ActivityTaskManager: START u0 {xflg=0x4 cmp=com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 (has extras)} with LAUNCH_SINGLE_TOP from uid 10326 (com.myfitnesspal.android) (sr=204124773) (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+09-27 13:51:40.349  2122  2145 V WindowManagerShell: Transition requested (#6671): android.os.BinderProxy@c52ad00 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=13321 effectiveUid=10326 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myfitnesspal.android/.splash.SplashActivity } baseActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity} topActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2} origActivity=null realActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.android.splash.SplashActivity} numActivities=2 lastActiveTime=792638627 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@e8fe249} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{de9d939 com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2} launchCookies=[android.os.BinderProxy@aa6b970] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(276, 716 - 804, 1796) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactiveundefined} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6671 }
+09-27 13:51:40.350  2122  2145 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+09-27 13:51:40.360  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.361  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.361  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.363  1463  4933 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:40.394 18036 18036 D InsetsController: Setting requestedVisibleTypes to -1 (was -9)
+09-27 13:51:40.397  1463  4933 D CoreBackPreview: Window{340b369 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@9dcbdd, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+09-27 13:51:40.439  1463  2544 V AutofillSession: Primary service component name: ComponentInfo{com.google.android.gms/com.google.android.gms.autofill.service.AutofillService}, secondary service component name: ComponentInfo{com.android.credentialmanager/com.android.credentialmanager.autofill.CredentialAutofillService}
+09-27 13:51:40.439  1463  2544 V SecondaryProviderHandler: Creating a secondary provider handler with component name, ComponentInfo{com.android.credentialmanager/com.android.credentialmanager.autofill.CredentialAutofillService}
+09-27 13:51:40.440  1463  2544 D PresentationStatsEventLogger: Started new PresentationStatsEvent
+09-27 13:51:40.440  1463  2544 W FillRequestEventLogger: Couldn't find packageName: com.google.android.inputmethod.latin
+09-27 13:51:40.455  2122 16959 V WindowManagerShell: onTransitionReady(transaction=6283537597546)
+09-27 13:51:40.455  1463  1703 V WindowManager: Sent Transition (#6671) createdAt=09-27 13:51:40.344 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=13321 effectiveUid=10326 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myfitnesspal.android/.splash.SplashActivity } baseActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity} topActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2} origActivity=null realActivity=ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.android.splash.SplashActivity} numActivities=2 lastActiveTime=792638627 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{5840f12 Task{dc8a30a #13321 type=standard A=10326:com.myfitnesspal.android}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{f21faaa com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2} launchCookies=[android.os.BinderProxy@c31dab3] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(276, 716 - 804, 1796) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactiveundefined} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6671 }
+09-27 13:51:40.455  1463  1703 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+09-27 13:51:40.455  1463  1703 V WindowManager:     info={id=6671 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+09-27 13:51:40.455  1463  1703 V WindowManager:         {m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t13321})/@0xe9c054c sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=-1->0 r=-1->0:-1 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}},
+09-27 13:51:40.455  1463  1703 V WindowManager:         {m=TO_BACK f=FILLS_TASK leash=Surface(name=ActivityRecord{204124773 u0 com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity t13321})/@0x56b13ab sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}}
+09-27 13:51:40.455  1463  1703 V WindowManager:     ]}
+09-27 13:51:40.455  2122  2145 V WindowManagerShell: onTransitionReady (#6671) android.os.BinderProxy@c52ad00: {id=6671 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+09-27 13:51:40.455  2122  2145 V WindowManagerShell:         {m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t13321})/@0x7d70b7e sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=-1->0 r=-1->0:-1 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}},
+09-27 13:51:40.455  2122  2145 V WindowManagerShell:         {m=TO_BACK f=FILLS_TASK leash=Surface(name=ActivityRecord{204124773 u0 com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity t13321})/@0xd8478df sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}}
+09-27 13:51:40.455  2122  2145 V WindowManagerShell:     ]}
+09-27 13:51:40.456  2122  2145 V WindowManagerShell: Playing animation for (#6671) android.os.BinderProxy@c52ad00@0
+09-27 13:51:40.456  2122  2145 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+09-27 13:51:40.456  2122  2145 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=6671 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t13321})/@0x7d70b7e sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=-1->0 r=-1->0:-1 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}},{m=TO_BACK f=FILLS_TASK leash=Surface(name=ActivityRecord{204124773 u0 com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity t13321})/@0xd8478df sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}}]}
+09-27 13:51:40.456  2122  2145 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@eb6a0e5 windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ee677ba, appThread = android.app.IApplicationThread$Stub$Proxy@477d66b, debugName = overlayBackTransition }}
+09-27 13:51:40.456  2122  2145 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@c1d15c8, appThread = android.app.IApplicationThread$Stub$Proxy@5b56661, debugName = LauncherToDream }}
+09-27 13:51:40.456  1463  2544 D AutofillSession: createPendingIntent for request 1078
+09-27 13:51:40.457  2122  2145 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@3745586, appThread = android.app.IApplicationThread$Stub$Proxy@63b6e47, debugName = QuickstepLaunchHome }}
+09-27 13:51:40.457  2122  2145 V WindowManagerShell:  Delegate animation for (#6671) to null
+09-27 13:51:40.457  2122  2145 V WindowManagerShell: start default transition animation, info = {id=6671 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t13321})/@0x7d70b7e sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=-1->0 r=-1->0:-1 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}},{m=TO_BACK f=FILLS_TASK leash=Surface(name=ActivityRecord{204124773 u0 com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity t13321})/@0xd8478df sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 bc=ffffffff activity=ActivityTransitionInfo { component = ComponentInfo{com.myfitnesspal.android/com.myfitnesspal.feature.main.ui.MainActivity}, taskId = 13321, appCompatTransitionInfo = null } opt={t=FROM_STYLE mUserId=0}}]}
+09-27 13:51:40.457  1463  2544 D ContentCapturePerUserService: Notified activity assist data for activity: Token{8a5a0ec ActivityRecord{51693471 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2 t13321}} without a session Id
+09-27 13:51:40.457  2122  2145 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@1791c18 animAttr=0x5 type=OPEN isEntrance=false
+09-27 13:51:40.458  2122  2145 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@9fea4d7 animAttr=0x4 type=OPEN isEntrance=true
+09-27 13:51:40.458  2122  2145 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@681d6c6
+09-27 13:51:40.571  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.602  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.606  1463  2544 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:40.739  1463  3745 D CoreBackPreview: Window{340b369 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@de1eeb0, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+09-27 13:51:40.745  2122  2145 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={Rect(0, 2298 - 1080, 2424)}
+09-27 13:51:40.754  2122  2145 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={Rect(0, 1459 - 1080, 2424)}
+09-27 13:51:40.762  1463  1463 W FillRequestEventLogger: Shouldn't be logging AutofillFillRequestReported again for same event
+09-27 13:51:40.762  1463  1463 W FillResponseEventLogger: Shouldn't be logging AutofillFillRequestReported again for same event
+09-27 13:51:40.762  1463  1463 W PresentationStatsEventLogger: Empty dataset. Autofill ignoring log
+09-27 13:51:40.762  1463  1463 D AutofillSession: clearPendingIntentLocked
+09-27 13:51:40.767  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.778  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:40.936  2122  2145 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#6671) android.os.BinderProxy@c52ad00@0
+09-27 13:51:40.940  1463  1703 V WindowManager: Finish Transition (#6671): created at 09-27 13:51:40.344 collect-started=0.092ms request-sent=4.656ms started=5.824ms ready=15.828ms sent=109.729ms commit=16.513ms finished=595.891ms
+09-27 13:51:40.941  2122  2145 V WindowManagerShell: Track 0 became idle
+09-27 13:51:40.941  2122  2145 V WindowManagerShell: All active transition animations finished
+09-27 13:51:40.971  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:41.789  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:41.790  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:41.790  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:41.790  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:41.797  1463  2146 D CoreBackPreview: Window{6962c4b u0 PopupWindow:712fcfb}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@7d15240, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+09-27 13:51:41.864  1463  3751 D CoreBackPreview: Window{340b369 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@b12fb96, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+09-27 13:51:41.864  1463  3751 D CoreBackPreview: Window{6962c4b u0 PopupWindow:712fcfb}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@bc10317, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+09-27 13:51:41.876  2122  2145 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={}
+09-27 13:51:41.879  1463  1703 D HintManagerService: Sent cleanup message for uid 10212
+09-27 13:51:41.884  1463  2544 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:41.893  1463  3751 D CoreBackPreview: Window{6962c4b u0 PopupWindow:712fcfb}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@68b3e0f, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+09-27 13:51:41.944  1463  4933 D CoreBackPreview: Window{6962c4b u0 PopupWindow:712fcfb}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@9cb90a5, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+09-27 13:51:41.954  1463  3751 D CoreBackPreview: Window{6962c4b u0 PopupWindow:712fcfb}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@65d0c7a, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+09-27 13:51:42.062  1463  3751 D ActivityManager: sync unfroze 7040 com.google.android.apps.turbo for 7
+09-27 13:51:42.063  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:42.070  1463  2544 D CompatChangeReporter: Compat change id reported: 311402873; UID 10135; state: ENABLED
+09-27 13:51:42.070  1463  2544 D CompatChangeReporter: Compat change id reported: 323349338; UID 10135; state: ENABLED
+09-27 13:51:42.087  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:42.089  1463  3751 D ActivityManager: sync unfroze 29668 com.google.android.turboadapter for 6
+09-27 13:51:42.089  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:42.092  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:42.198  2122  2770 D PowerUI : can't show warning due to - plugged: true status unknown: false
+09-27 13:51:42.473  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:42.562  1463  4933 W BroadcastQueue: Ignoring finishReceiverLocked; no active broadcast for BroadcastProcessQueue{d9fc3af 8188:com.lemon.lvoverseas/u0a316}
+09-27 13:51:42.885  1463  1962 D HintManagerService: Starts cleaning for 10212
+09-27 13:51:43.083  1463  3755 D CoreBackPreview: Window{6962c4b u0 PopupWindow:712fcfb}: Setting back callback null
+09-27 13:51:43.099  1463  1706 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
+09-27 13:51:43.121  1463  4933 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:43.122  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:43.148  1463  3755 D CoreBackPreview: Window{340b369 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@ac7be90, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+09-27 13:51:43.150  2122  2145 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={Rect(0, 2298 - 1080, 2424)}
+09-27 13:51:43.154  2122  2145 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={Rect(0, 1459 - 1080, 2424)}
+09-27 13:51:43.169  1463  3755 D ImeInsetsSourceProvider: showImePostLayout cancelled, serverVisible: true, frozen: false, mWin is: non-null, isDrawn: true, mGivenInsetsPending: false, imeLayeringTarget: Window{340b369 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}, controlTarget: Window{340b369 u0 com.myfitnesspal.android/com.myfitnesspal.feature.search.ui.activity.FoodSearchActivityV2}
+09-27 13:51:43.169  1463  3755 D ImeInsetsSourceProvider: controlTarget == DisplayContent.imeControlTarget: true, hasPendingControls: true, leash is: non-null
+09-27 13:51:43.306  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:43.308  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:43.308  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:43.308  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:44.838  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:44.841  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:44.844  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:44.844  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:46.358  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:46.365  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:46.365  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:46.366  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:47.767  1463  1961 D ActivityManager: freezing 3069 com.google.android.adservices.api
+09-27 13:51:47.877  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:47.878  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:47.878  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:47.879  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:48.233  1463  1722 W ProcessStats: Tracking association SourceState{b06e1f8 com.google.android.gms.persistent/10152 BTop #2544264} whose proc state 2 is better than process ProcessState{a3f050c com.google.android.gms/10152 pkg=com.google.android.gms} proc state 14 (362 skipped)
+09-27 13:51:49.046   488  3848 I keystore2: system/security/keystore2/watchdog/src/lib.rs:371 - Watchdog thread idle -> terminating. Have a great day.
+09-27 13:51:49.400  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:49.401  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:49.401  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:49.402  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:50.934  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:50.935  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:50.936  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:50.936  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:52.127  1463  1961 D ActivityManager: freezing 29668 com.google.android.turboadapter
+09-27 13:51:52.473  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:52.474  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:52.474  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:52.477  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:54.005  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:54.006  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:54.009  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:54.009  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:54.612  1463  3755 W PackageConfigPersister: App-specific configuration not found for packageName: com.myfitnesspal.android and userId: 0
+09-27 13:51:55.147  1463  1946 D ActivityManager: sync unfroze 1550 com.instagram.android for 6
+09-27 13:51:55.183  1463  1946 W JobServiceContext: Sending onNetworkChanged for a job that isn't started. JobStatus{a244 #u0a281/2131434957 com.instagram.android/com.instagram.jobscheduler.bgfetch.scheduler.IgBgFetchSchedulerService u=0 s=10281 TIME=-65ms:none NET PERSISTED READY}
+09-27 13:51:55.518  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:55.518  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:55.518  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:55.518  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:56.059  1463  3745 W JobScheduler: Job didn't exist in JobStore: a244 #u0a281/2131434957 com.instagram.android/com.instagram.jobscheduler.bgfetch.scheduler.IgBgFetchSchedulerService
+09-27 13:51:57.052  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:57.053  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:57.053  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:57.063  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:58.623  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:58.626  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:58.626  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-27 13:51:58.626  1463  2067 D BackgroundInstallControlService: Package event received: 0

@@ -1,0 +1,1 @@
+AT2 RESULT=FAIL (no daily row for 2025-09-26)

@@ -31,9 +31,10 @@ class BootReceiver : BroadcastReceiver() {
             24, TimeUnit.HOURS
         ).addTag("UsageCaptureDaily").build()
 
-        val periodicNotif = PeriodicWorkRequestBuilder<NotificationRollupWorker>(
+        // Use NotificationEngagementWorker as the canonical notification daily rollup
+        val periodicNotif = PeriodicWorkRequestBuilder<NotificationEngagementWorker>(
             24, TimeUnit.HOURS
-        ).addTag("NotificationRollupDaily").build()
+        ).addTag("NotificationEngagementDaily").build()
 
         val wm = WorkManager.getInstance(context)
         wm.enqueueUniquePeriodicWork("mrt_usage_daily", ExistingPeriodicWorkPolicy.UPDATE, periodicUsage)
@@ -59,15 +60,16 @@ class BootReceiver : BroadcastReceiver() {
             .addTag("MovementRollupBoot")
             .build()
 
-        val onceNotif = OneTimeWorkRequestBuilder<NotificationRollupWorker>()
+        // One-time engagement rollup on boot
+        val onceNotif = OneTimeWorkRequestBuilder<NotificationEngagementWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .addTag("NotificationRollupBoot")
+            .addTag("NotificationEngagementBoot")
             .build()
 
         wm.enqueueUniqueWork("once-UsageCaptureBoot", ExistingWorkPolicy.REPLACE, onceUsage)
         wm.enqueueUniqueWork("once-UnlockScanBoot", ExistingWorkPolicy.REPLACE, onceUnlock)
         wm.enqueueUniqueWork("once-SleepRollupBoot", ExistingWorkPolicy.REPLACE, onceSleep)
         wm.enqueueUniqueWork("once-MovementRollupBoot", ExistingWorkPolicy.REPLACE, onceMovement)
-        wm.enqueueUniqueWork("once-NotificationRollupBoot", ExistingWorkPolicy.REPLACE, onceNotif)
+        wm.enqueueUniqueWork("once-EngagementRollupBoot", ExistingWorkPolicy.REPLACE, onceNotif)
     }
 }

@@ -1,0 +1,7 @@
+pre_row=2025-10-06,29
+post_row=2025-10-06,29
+--- CSV tail ---
+date,intensity
+2025-10-05,51
+2025-10-06,29
+AT-1 RESULT=PASS

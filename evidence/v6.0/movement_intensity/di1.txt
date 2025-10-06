@@ -1,0 +1,4 @@
+lock_path=<builtin-default>
+lock_value=date,intensity
+device_header=date,intensity
+DI1 RESULT=PASS

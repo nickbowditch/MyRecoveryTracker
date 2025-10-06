@@ -41,6 +41,24 @@ class TriggerReceiver : BroadcastReceiver() {
                     .then(sleepReq)
                     .then(uploadReq)
                     .enqueue()
+
+                Log.i("TriggerReceiver", "Enqueue NotificationLatencyWorker (once-NotificationLatencyRollup)")
+                val latencyReq = OneTimeWorkRequestBuilder<NotificationLatencyWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("NotificationLatency")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-NotificationLatencyRollup", ExistingWorkPolicy.REPLACE, latencyReq)
+            }
+
+            ACTION_RUN_DISTANCE_DAILY -> {
+                Log.i("TriggerReceiver", "Enqueue DistanceWorker (once-DistanceDaily)")
+                val req = OneTimeWorkRequestBuilder<DistanceWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("DistanceDaily")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-DistanceDaily", ExistingWorkPolicy.REPLACE, req)
             }
 
             ACTION_RUN_UNLOCK_ROLLUP -> {
@@ -147,24 +165,36 @@ class TriggerReceiver : BroadcastReceiver() {
                     .enqueueUniqueWork("once-UsageCapture", ExistingWorkPolicy.REPLACE, req)
             }
 
-            // === NOTIFICATION ENGAGEMENT (matrix = golden) =========================
-            // Route *all* engagement actions (including the legacy NOTIFICATION_ROLLUP)
-            // to NotificationEngagementWorker which writes:
-            // files/daily_notification_engagement.csv
-            // header: date,feature_schema_version,delivered,opened,open_rate
             ACTION_RUN_NOTIFICATION_ROLLUP,
             ACTION_RUN_ENGAGEMENT_ROLLUP,
             ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP,
             ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP -> {
                 Log.i("TriggerReceiver", "Enqueue NotificationEngagementWorker (once-EngagementRollup)")
-                val req = OneTimeWorkRequestBuilder<NotificationEngagementWorker>()
+                val engReq = OneTimeWorkRequestBuilder<NotificationEngagementWorker>()
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .addTag("NotificationEngagement")
                     .build()
                 WorkManager.getInstance(context)
-                    .enqueueUniqueWork("once-EngagementRollup", ExistingWorkPolicy.REPLACE, req)
+                    .enqueueUniqueWork("once-EngagementRollup", ExistingWorkPolicy.REPLACE, engReq)
+
+                Log.i("TriggerReceiver", "Enqueue NotificationLatencyWorker (once-NotificationLatencyRollup)")
+                val latencyReq = OneTimeWorkRequestBuilder<NotificationLatencyWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("NotificationLatency")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-NotificationLatencyRollup", ExistingWorkPolicy.REPLACE, latencyReq)
             }
-            // =======================================================================
+
+            ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP -> {
+                Log.i("TriggerReceiver", "Enqueue NotificationLatencyWorker (once-NotificationLatencyRollup)")
+                val req = OneTimeWorkRequestBuilder<NotificationLatencyWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("NotificationLatency")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-NotificationLatencyRollup", ExistingWorkPolicy.REPLACE, req)
+            }
 
             ACTION_RUN_NOTIFICATION_VALIDATION -> {
                 Log.i("TriggerReceiver", "Enqueue NotificationValidationWorker (once-NotificationValidation)")
@@ -195,12 +225,44 @@ class TriggerReceiver : BroadcastReceiver() {
                 WorkManager.getInstance(context)
                     .enqueueUniqueWork("once-LateNightRollup", ExistingWorkPolicy.REPLACE, req)
             }
+
+            ACTION_RUN_USAGE_EVENTS_DAILY -> {
+                Log.i("TriggerReceiver", "Enqueue UsageEventsDailyWorker (once-UsageEventsDaily)")
+                val req = OneTimeWorkRequestBuilder<UsageEventsDailyWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("UsageEventsDaily")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-UsageEventsDaily", ExistingWorkPolicy.REPLACE, req)
+            }
+
+            ACTION_RUN_APP_CATEGORY_DAILY -> {
+                Log.i("TriggerReceiver", "Enqueue AppUsageByCategoryDailyWorker (once-AppUsageCategoryDaily)")
+                val req = OneTimeWorkRequestBuilder<AppUsageByCategoryDailyWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("AppUsageCategoryDaily")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-AppUsageCategoryDaily", ExistingWorkPolicy.REPLACE, req)
+            }
+
+            ACTION_RUN_APP_SWITCHING_DAILY -> {
+                Log.i("TriggerReceiver", "Enqueue AppSwitchingDailyWorker (once-AppSwitchingDaily)")
+                val req = OneTimeWorkRequestBuilder<AppSwitchingDailyWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .addTag("AppSwitchingDaily")
+                    .build()
+                WorkManager.getInstance(context)
+                    .enqueueUniqueWork("once-AppSwitchingDaily", ExistingWorkPolicy.REPLACE, req)
+            }
         }
     }
 
     companion object {
         const val ACTION_RUN_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
         const val ACTION_RUN_ALL_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+
+        const val ACTION_RUN_DISTANCE_DAILY = "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
 
         const val ACTION_RUN_MOVEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
         const val ACTION_RUN_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
@@ -216,17 +278,23 @@ class TriggerReceiver : BroadcastReceiver() {
         const val ACTION_RUN_UNLOCK_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION"
         const val ACTION_RUN_USAGE_CAPTURE = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE"
 
-        // Legacy name kept but now routes to *engagement* worker per matrix golden
         const val ACTION_RUN_NOTIFICATION_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
 
-        // Explicit engagement aliases
         const val ACTION_RUN_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP"
         const val ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
         const val ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIF_ENGAGEMENT_ROLLUP"
+
+        const val ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP"
 
         const val ACTION_RUN_NOTIFICATION_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
         const val ACTION_RUN_REDCAP_UPLOAD = "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
         const val ACTION_RUN_UNLOCK_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
         const val ACTION_RUN_LNS_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+
+        const val ACTION_RUN_USAGE_EVENTS_DAILY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+
+        const val ACTION_RUN_APP_CATEGORY_DAILY = "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+
+        const val ACTION_RUN_APP_SWITCHING_DAILY = "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
     }
 }

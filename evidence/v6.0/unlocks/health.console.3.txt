@@ -1,0 +1,45 @@
+RUN:at1_v6.0.2.sh
+CHECK:at1_v6.0.2.sh RESULT=FAIL (rc=1)
+RUN:at2_v6.0.1.sh
+CHECK:at2_v6.0.1.sh RESULT=FAIL (rc=2)
+RUN:di1_v6.0.7.sh
+CHECK:di1_v6.0.7.sh RESULT=PASS
+RUN:di2_v6.0.1.sh
+CHECK:di2_v6.0.1.sh RESULT=PASS
+RUN:di3_v6.0.3.sh
+CHECK:di3_v6.0.3.sh RESULT=PASS
+RUN:diag_schema_v6.0.2.sh
+CHECK:diag_schema_v6.0.2.sh RESULT=PASS
+RUN:diag_unlocks_callers_v6.0.3.sh
+CHECK:diag_unlocks_callers_v6.0.3.sh RESULT=PASS
+RUN:diag_unlocks_device_header_v6.0.3.sh
+CHECK:diag_unlocks_device_header_v6.0.3.sh RESULT=PASS
+RUN:diag_unlocks_device_snap_v6.0.3.sh
+CHECK:diag_unlocks_device_snap_v6.0.3.sh RESULT=PASS
+RUN:diag_unlocks_sources_v6.0.3.sh
+CHECK:diag_unlocks_sources_v6.0.3.sh RESULT=PASS
+RUN:diag_unlocks_triggers_v6.0.1.sh
+CHECK:diag_unlocks_triggers_v6.0.1.sh RESULT=PASS
+RUN:diag_unlocks_writers_v6.0.1.sh
+CHECK:diag_unlocks_writers_v6.0.1.sh RESULT=PASS
+RUN:git_push_main_and_tag_v6.0.3.sh
+CHECK:git_push_main_and_tag_v6.0.3.sh RESULT=FAIL (rc=2)
+RUN:git_tag_verify_v6.0.3.sh
+CHECK:git_tag_verify_v6.0.3.sh RESULT=PASS
+RUN:guard_unlocks_header_v6.0.1.sh
+CHECK:guard_unlocks_header_v6.0.1.sh RESULT=PASS
+RUN:tc1_v6.0.2.sh
+CHECK:tc1_v6.0.2.sh RESULT=PASS
+RUN:tc2_v6.0.17.sh
+CHECK:tc2_v6.0.17.sh RESULT=PASS
+RUN:tc3_v6.0.1.sh
+CHECK:tc3_v6.0.1.sh RESULT=PASS
+RUN:tc4_v6.0.2.sh
+CHECK:tc4_v6.0.2.sh RESULT=PASS
+RUN:unlocks_at1_evidence_v6.0.1.sh
+CHECK:unlocks_at1_evidence_v6.0.1.sh RESULT=PASS
+RUN:unlocks_tc4_v6.0.5.sh
+CHECK:unlocks_tc4_v6.0.5.sh RESULT=PASS
+RUN:writers_allowlist_v6.0.5.sh
+CHECK:writers_allowlist_v6.0.5.sh RESULT=PASS
+UNLOCKS-HEALTH RESULT=FAIL (3 failing checks)

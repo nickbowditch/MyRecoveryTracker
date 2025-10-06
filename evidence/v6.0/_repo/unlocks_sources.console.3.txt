@@ -1,0 +1,20 @@
+=== HARD_CODED_HEADERS(date,unlocks) ===
+
+=== WRITES_TO(daily_unlocks.csv) ===
+app/src/main/java/com/nick/myrecoverytracker/Rollups.kt:17:        val out = File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:18:        "unlock_rollup.csv" to "daily_unlocks.csv",
+app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:19:        "daily_unlocks_count.csv" to "daily_unlocks.csv",
+app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt:20:        "daily_unlocks_v0.csv" to "daily_unlocks.csv"
+app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt:26:            val out = File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockRollupWorker.kt:66:            val tmp = File(dir, "daily_unlocks.csv.tmp")
+app/src/main/java/com/nick/myrecoverytracker/RedcapUploadWorker.kt:40:        val rollup = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/LogRetentionWorker.kt:28:            File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/RollupValidator.kt:16:    fun validateUnlocks(context: Context): Boolean = validate(context, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/HealthSnapshotWorker.kt:22:            val unlockRoll = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt:197:        // New: explicit constant to drive rollup of daily_unlocks.csv
+app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:25:        val fUnlocks = File(dir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:32:            reasons += "daily_unlocks.csv missing"
+app/src/main/java/com/nick/myrecoverytracker/UnlockValidationWorker.kt:43:                reasons += "daily_unlocks.csv empty"
+app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:48:            val outFile = File(filesDir, "daily_unlocks.csv")
+app/src/main/java/com/nick/myrecoverytracker/UnlockWorker.kt:49:            val tmpFile = File(filesDir, "daily_unlocks.csv.tmp")
+DIAG-SOURCES RESULT=PASS

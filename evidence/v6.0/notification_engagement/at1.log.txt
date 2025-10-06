@@ -1,0 +1,116 @@
+--------- beginning of system
+10-07 07:19:58.363  1463  1961 D ActivityManager: freezing 7368 com.google.android.partnersetup
+10-07 07:19:58.369  1463  1961 D ActivityManager: freezing 27292 com.google.android.deskclock
+10-07 07:19:58.373  1463  1961 D ActivityManager: freezing 18522 com.google.android.apps.privacy.wildlife
+10-07 07:19:58.375  1463  1961 D ActivityManager: freezing 29219 com.android.settings
+10-07 07:19:58.378  1463  1961 D ActivityManager: freezing 5932 com.google.android.turboadapter
+10-07 07:19:58.381  1463  1961 D ActivityManager: freezing 30835 com.google.android.flipendo
+10-07 07:19:58.383  1463  1961 D ActivityManager: freezing 8944 com.google.android.projection.gearhead:shared
+10-07 07:19:58.385  1463  1961 D ActivityManager: freezing 30849 com.google.android.apps.pixel.dcservice
+10-07 07:19:58.387  1463  1961 D ActivityManager: freezing 4360 com.google.android.calendar
+10-07 07:19:58.396  1463  1961 D ActivityManager: freezing 8953 com.google.android.apps.wellbeing
+10-07 07:19:58.398  1463  1961 D ActivityManager: freezing 19320 com.android.providers.calendar
+10-07 07:19:58.400  1463  1961 D ActivityManager: freezing 28162 com.google.android.googlequicksearchbox:search
+10-07 07:19:58.404  1463  1961 D ActivityManager: freezing 30616 com.instagram.android:mqtt
+10-07 07:19:58.407  1463  1961 D ActivityManager: freezing 15022 android.process.acore
+10-07 07:19:58.409  1463  1961 D ActivityManager: freezing 8854 com.android.DeviceAsWebcam
+10-07 07:19:58.411  1463  1961 D ActivityManager: freezing 8886 android.process.media
+10-07 07:19:58.412  1463  1961 D ActivityManager: freezing 6441 .ShannonImsService
+10-07 07:19:58.414  1463  1961 D ActivityManager: freezing 6481 com.textra
+10-07 07:19:58.416  1463  1961 D ActivityManager: freezing 6522 com.google.android.cellbroadcastreceiver
+10-07 07:19:58.418  1463  1961 D ActivityManager: freezing 6942 com.microsoft.office.outlook
+10-07 07:19:58.424  1463  1961 D ActivityManager: freezing 8915 com.google.android.gm
+10-07 07:19:58.428  1463  1961 D ActivityManager: freezing 28681 org.chromium.webapk.ad9a2382a73821efe_v2
+--------- beginning of main
+10-07 07:19:58.431  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.432  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.432  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10160} in 3ms
+10-07 07:19:58.434  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.434  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.435  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10191} in 2ms
+10-07 07:19:58.436  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.437  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.437  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10168} in 3ms
+10-07 07:19:58.438  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.439  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.439  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10218} in 2ms
+10-07 07:19:58.440  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.441  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.441  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10254} in 2ms
+10-07 07:19:58.443  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.444  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.444  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10228} in 2ms
+10-07 07:19:58.444  1463  1961 D ActivityManager: freezing 7445 com.google.android.projection.gearhead:car
+10-07 07:19:58.445  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.446  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.447  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10217} in 3ms
+10-07 07:19:58.448  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.449  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.449  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10123} in 2ms
+10-07 07:19:58.451  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.452  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.452  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10093} in 3ms
+10-07 07:19:58.454  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.455  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.455  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10082} in 3ms
+10-07 07:19:58.457  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.458  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.458  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10078} in 3ms
+10-07 07:19:58.460  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.461  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.461  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10347} in 3ms
+10-07 07:19:58.463  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.464  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.464  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10255} in 3ms
+10-07 07:19:58.465  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.466  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.466  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10358} in 2ms
+10-07 07:19:58.468  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.469  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.469  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10210} in 3ms
+10-07 07:19:58.470  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.472  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.472  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10354} in 2ms
+10-07 07:19:58.473  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-07 07:19:58.474  1463  2017 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-07 07:19:58.474  1463  2017 D InetDiagMessage: Destroyed live tcp sockets for uids={10141} in 3ms
+10-07 07:19:58.544  1463  3764 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-07 07:19:58.546  1463  3764 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-07 07:19:58.548  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:19:58.552 24535 24535 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP
+10-07 07:19:58.552 24535 24535 I TriggerReceiver: Enqueue NotificationEngagementWorker (once-EngagementRollup)
+10-07 07:19:58.555 24535 24535 I TriggerReceiver: Enqueue NotificationLatencyWorker (once-NotificationLatencyRollup)
+10-07 07:19:58.557  1463  1703 I ActivityManager: Broadcast completed: result=0
+10-07 07:19:58.686 24535 24677 I NotificationEngagementWorker: Engagement rollup wrote 2 date(s) to daily_notification_engagement.csv
+10-07 07:19:58.688 24535 24678 I NotificationLatencyWorker: NotificationLatency: no pairs; wrote empty row for 2025-10-07
+10-07 07:19:58.689 24535 24550 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=c2686d5d-9893-48c4-a71e-1d512e13ac68, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]
+10-07 07:19:58.698 24535 24553 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=17742cae-9ab5-4ec9-9068-f3f6a8f1917f, tags={ com.nick.myrecoverytracker.NotificationLatencyWorker, NotificationLatency } ]
+10-07 07:19:58.887  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:19:58.891  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:19:58.891  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:19:58.891  1463  2067 D BackgroundInstallControlService: Package event received: 0
+10-07 07:19:58.985  7496  7504 E gcblocker: too long GC blocking: 8
+10-07 07:19:58.986  7496  7504 E gcblocker: gc block end, 997136010,100
+10-07 07:19:59.374 14791 14795 I pixel-thermal: VIRTUAL-SKIN-MODEL: model_input: [34443.00 34020.00 35779.00 31216.00 31193.00 31104.00 34466.00 35979.00 ]
+10-07 07:19:59.375 14791 14795 I native  : I0000 00:00:1759781999.374746   14795 thermal_tflite_wrapper.cc:261] ThermalTfliteInvoke
+10-07 07:19:59.376 14791 14795 I pixel-thermal: VIRTUAL-SKIN-MODEL: model_output: [32507.9 ]
+10-07 07:19:59.376 14791 14795 I pixel-thermal: VIRTUAL-SKIN-MODEL: predicted_value: [32507.9 ]
+10-07 07:19:59.376 14791 14795 I pixel-thermal: VIRTUAL-SKIN-CPU-MID:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-CPU-MID:32531.8 VIRTUAL-SKIN-LEGACY:32996.6 VIRTUAL-SKIN-LEGACY-MODEL-DIFF:488.621 VIRTUAL-SKIN-LEGACY-SHUTDOWN:0 VIRTUAL-SKIN-MODEL:32507.9 VIRTUAL-SKIN-MODEL-CLAMPED:32507.9 VIRTUAL-SKIN-MODEL-LEGACY-DIFF:-488.621 VIRTUAL-SKIN-MODEL-UPDATED:32531.8 VIRTUAL-SKIN-MODEL-UPPER-CLAMPED:32507.9 VIRTUAL-SKIN-SUB-0:32022.3 VIRTUAL-SKIN-SUB-1:32549.5 VIRTUAL-SKIN-SUB-2:32767.8 VIRTUAL-SKIN-SUB-3:32996.6 VIRTUAL-SKIN-SUB-4:32466.5 VT_LEGACY_WEIGHT:0 VT_MODEL_WEIGHT:1 battery:32400 btmspkr_therm:31193 charging_therm:35779 disp_therm:31104 north_therm:34466 quiet_therm:34020 rfpa_therm:34443 soc_therm:35979 usb_pwr_therm:31216 
+10-07 07:19:59.384 14791 14795 I pixel-thermal: VIRTUAL-SKIN-SOC:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-SOC:32531.8 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: VIRTUAL-SKIN-DISPLAY:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-DISPLAY:32531.8 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: CPU_THROTTLE_SEVERE:0 raw data: CPU_THROTTLE_SEVERE:0 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: VIRTUAL-SKIN:32.5318 raw data: VIRTUAL-SKIN:32531.8 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: VIRTUAL-SKIN-HINT:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-HINT:32531.8 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: VIRTUAL-SKIN-CPU-LIGHT-ODPM:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-CPU-LIGHT-ODPM:32531.8 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: VIRTUAL-SKIN-CPU-ODPM:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-CPU-ODPM:32531.8 
+10-07 07:19:59.385 14791 14795 I pixel-thermal: VIRTUAL-SKIN-ODPM-MODEL: model_input: [34443.00 34020.00 35779.00 31216.00 31193.00 31104.00 34466.00 35979.00 32400.00 715.44 4.50 383.64 130.69 5.26 98.83 ]
+10-07 07:19:59.385 14791 14795 I native  : I0000 00:00:1759781999.385808   14795 thermal_tflite_wrapper.cc:261] ThermalTfliteInvoke
+10-07 07:19:59.386 14791 14795 I pixel-thermal: VIRTUAL-SKIN-ODPM-MODEL: model_output: [31383.2 ]
+10-07 07:19:59.386 14791 14795 I pixel-thermal: VIRTUAL-SKIN-ODPM-MODEL: predicted_value: [31383.2 ]
+10-07 07:19:59.386 14791 14795 I pixel-thermal: VIRTUAL-SKIN-SPEAKER-MODEL: model_input: [32400.00 31193.00 35779.00 31104.00 34466.00 34020.00 34443.00 35979.00 31216.00 ]
+10-07 07:19:59.386 14791 14795 I native  : I0000 00:00:1759781999.386728   14795 thermal_tflite_wrapper.cc:261] ThermalTfliteInvoke
+10-07 07:19:59.386 14791 14795 I pixel-thermal: VIRTUAL-SKIN-SPEAKER-MODEL: model_output: [31626.4 ]
+10-07 07:19:59.386 14791 14795 I pixel-thermal: VIRTUAL-SKIN-SPEAKER-MODEL: predicted_value: [31626.4 ]
+10-07 07:19:59.387 14791 14795 I pixel-thermal: STATS-UPDATOR:0 raw data: EXTREME-SOC-CONDITION-CHECK:0 MAIN_SOC_POWER:548.341 MODEL_CAMERA_PWR:4.49603 MODEL_DISPLAY_PWR:383.642 MODEL_MISC_PWR:715.441 MODEL_MODEM_PWR:130.688 MODEL_RFFE_PWR:5.25868 MODEL_WLAN_BT_PWR:98.8275 NORTH_THERM-UNDER-THRESHOLD:1 NORTH_THERM-VSKIN-DIFF-DURING-NORTH_THERM-OVER-THRESHOLD:-998066 NORTH_THERM-VSKIN-DIFF-DURING-VSKIN-OVER-52:-998066 QUIET_THERM-UNDER-THRESHOLD:1 QUIET_THERM-VSKIN-DIFF-DURING-QUIET_THERM-OVER-THRESHOLD:-998512 QUIET_THERM-VSKIN-DIFF-DURING-VSKIN-OVER-52:-998512 RFPA_THERM-UNDER-THRESHOLD:1 RFPA_THERM-VSKIN-DIFF-DURING-RFPA_THERM-OVER-THRESHOLD:-998089 RFPA_THERM-VSKIN-DIFF-DURING-VSKIN-OVER-52:-998089 SOC_THERM-UNDER-THRESHOLD:1 SOC_THERM-VSKIN-DIFF-DURING-SOC_THERM-OVER-THRESHOLD:-996553 SOC_THERM-VSKIN-DIFF-DURING-VSKIN-OVER-52:-996553 STATS-UPDATOR:0 TPU_35S:0 VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-LEGACY:32996.6 VIRTUAL-SKIN-MODEL:32507.9 VIRTUAL-SKIN-MODEL-LEGACY-DIFF:-488.621 VIRTUAL-SKIN-ODPM-MODEL:31383.2 VIRTUAL-SKIN-SPEAKER-MODEL:31626.4 VSKIN-SKIN-UNDER-52:1 battery:32400 btmspkr_therm:31193 charging_therm:35779 disp_therm:31104 north_therm:34466 quiet_therm:34020 rfpa_therm:34443 soc_therm:35979 usb_pwr_therm:31216 
+10-07 07:19:59.387 14791 14795 I pixel-thermal: VIRTUAL-SKIN-CPU-HIGH:32.5318 raw data: VIRTUAL-SKIN:32531.8 VIRTUAL-SKIN-CPU-HIGH:32531.8 
+10-07 07:19:59.387 14791 14795 I pixel-thermal: cellular-emergency:32.5318 raw data: VIRTUAL-SKIN:32531.8 cellular-emergency:32531.8 

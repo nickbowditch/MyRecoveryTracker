@@ -1,0 +1,3 @@
+RUN: tools/checks/ee1_v6.0.sh
+EE-1 RESULT: PASS
+RUN: tools/checks/ee2_v6.0.1.sh

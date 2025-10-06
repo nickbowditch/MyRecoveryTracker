@@ -40,7 +40,9 @@ class NotificationEngagementWorker(
                 if (line.isEmpty()) return@forEachLine
                 if (isHeaderLike(line)) return@forEachLine
 
-                val date = line.substringBefore(',', "")
+                // Normalize first column to a date (YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)
+                val firstCol = line.substringBefore(',', "")
+                val date = if (firstCol.length >= 10) firstCol.substring(0, 10) else firstCol
                 if (!DATE_RE.matches(date)) return@forEachLine
 
                 when (classify(line)) {
@@ -69,8 +71,10 @@ class NotificationEngagementWorker(
         agg.keys.sorted().forEach { d ->
             val c = agg[d] ?: Counts()
             val rate = if (c.delivered > 0) c.opened.toDouble() / c.delivered.toDouble() else 0.0
-            byDate[d] = String.format(Locale.US, "%s,%s,%d,%d,%.6f",
-                d, FEATURE_SCHEMA_VERSION, c.delivered, c.opened, rate)
+            byDate[d] = String.format(
+                Locale.US, "%s,%s,%d,%d,%.6f",
+                d, FEATURE_SCHEMA_VERSION, c.delivered, c.opened, rate
+            )
         }
 
         val rebuilt = buildString {
@@ -102,41 +106,40 @@ class NotificationEngagementWorker(
         }
     }
 
+    // Accept both golden schema and legacy listener headers
     private fun isHeaderLike(line: String): Boolean {
         val l = line.lowercase(Locale.US)
         return l.startsWith("timestamp,") || l.startsWith("ts,")
     }
 
+    // Line-based classifier using CSV parsing; supports golden + aliases
     private fun classify(line: String): EventKind {
         val cols = readCols(line)
         if (cols.isEmpty()) return EventKind.OTHER
 
-        val posted = "po" + "sted"
-        val eventEqPosted = "event=" + posted
-        val removed = "re" + "moved"
-        val click = "cli" + "ck"
-        val clicked = click + "ed"
-
-        if (cols.size >= 5) {
-            val ev = cols[4].trim()
-            if (ev.equals(posted, ignoreCase = true) || ev.equals(eventEqPosted, ignoreCase = true)) {
-                return EventKind.DELIVERED
-            }
-            val reason = cols.getOrNull(5)?.trim()?.uppercase(Locale.US)
-            if (ev.equals(removed, ignoreCase = true) && reason == "CLICK") {
-                return EventKind.OPENED
+        // Prefer 2-col (golden) event position if present
+        if (cols.size >= 2) {
+            val ev2 = cols[1].trim().uppercase(Locale.US)
+            when {
+                ev2 == "POSTED" || ev2 == "DELIVERED" -> return EventKind.DELIVERED
+                ev2 == "CLICKED" || ev2 == "OPENED" -> return EventKind.OPENED
             }
         }
 
-        if (cols.size >= 2) {
-            val ev2 = cols[1].trim()
-            if (ev2.equals(posted, ignoreCase = true)) return EventKind.DELIVERED
-            if (ev2.equals(clicked, ignoreCase = true) || ev2.equals(click, ignoreCase = true)) return EventKind.OPENED
+        // Fallback to listener-style columns: event,reason
+        if (cols.size >= 5) {
+            val ev = cols[4].trim().uppercase(Locale.US)
+            if (ev == "POSTED") return EventKind.DELIVERED
+            if (ev == "REMOVED") {
+                val reason = cols.getOrNull(5)?.trim()?.uppercase(Locale.US)
+                if (reason == "CLICK") return EventKind.OPENED
+            }
         }
 
         return EventKind.OTHER
     }
 
+    // CSV splitter (handles quotes/double-quotes)
     private fun readCols(line: String): List<String> {
         val out = ArrayList<String>(8)
         val sb = StringBuilder()

@@ -1,0 +1,19 @@
+header=date,intensity
+bad_date_rows=0
+bad_intensity_type_rows=0
+bad_intensity_range_rows=0
+--- DEBUG: bad date samples ---
+<none>
+--- DEBUG: bad intensity type samples ---
+<none>
+--- DEBUG: bad intensity range samples ---
+<none>
+--- DEBUG: CSV head ---
+date,intensity
+2025-10-06,30
+2025-10-07,0
+--- DEBUG: CSV tail ---
+date,intensity
+2025-10-06,30
+2025-10-07,0
+DI3 RESULT=PASS

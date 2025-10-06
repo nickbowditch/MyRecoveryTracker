@@ -1,0 +1,41 @@
+[INFO] EE2 — MovementIntensity worker scheduled & triggerable
+=== JOBSCHEDULER (pkg slice) ===
+<none>
+
+=== WORKMANAGER (pkg slice) ===
+<none>
+
+=== LOGCAT (tail, filtered) ===
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24535): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x400000 }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x400000 }: 0
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24535): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x400000 }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x400000 }: 0
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24535): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x400000 }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x400000 }: 0
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24535): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DAILY
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x400000 }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x400000 }: 0
+D/BusinessScope( 2251): Start running the #216254 block
+D/BusinessScope( 2251): Finish running the #216254 block
+D/BusinessScope( 2251): Start running the #216255 block
+D/BusinessScope( 2251): Finish running the #216255 block
+E/msys    (13142): E[N mns]_OnDiskCacheGetData(624)=>Start post callback cache refresh DNS resolution
+E/msys    (13142): E[N mns]_OnDiskCacheGetData(624)=>Start post callback cache refresh DNS resolution
+D/WM-GreedyScheduler(31078): Starting tracking for 0b1cc6de-24a7-4ae8-b48a-b21561f09b77
+D/WM-WorkerWrapper(31078): Starting work for com.twitter.analytics.service.core.workmanager.AnalyticsFlushWorker
+D/AppCenterCrashes( 6942): The memory running level (40) was saved.
+I/ReactNativeJNI( 6942): Memory warning (pressure level: TRIM_MEMORY_BACKGROUND) received by JS VM, running a GC
+D/WM-GreedyScheduler(31078): Starting tracking for e822de30-33b7-4cfa-833f-d35fda7c9447
+D/WM-GreedyScheduler(31078): Starting tracking for e822de30-33b7-4cfa-833f-d35fda7c9447
+EE2 RESULT=PASS

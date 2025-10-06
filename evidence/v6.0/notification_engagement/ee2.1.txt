@@ -1,0 +1,23 @@
+=== JOBSCHEDULER MATCH ===
+[none]
+
+=== WORKMANAGER MATCH ===
+[none]
+
+=== LOGCAT (Trigger/Boot/Update/EngagementRollup) ===
+09-24 16:13:55.642  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:55.643  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:55.643  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:55.643  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:55.643  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.170  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.170  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.170  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.170  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.170  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.483 15554 16405 I eczl    : (REDACTED) Ignoring irrelevant audio permission changes for package %s
+09-24 16:13:57.659  7780  7858 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=16747Kbps LinkDnBandwidth>=25579Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /192.168.1.112, Security type: 2, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -39, Link speed: 866Mbps, Tx Link speed: 866Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 866Mbps, Max Supported Rx Link speed: 866Mbps, Frequency: 5180MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -39 UnderlyingNetworks: Null]
+09-24 16:13:57.775  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:13:57.932  5261  5411 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=16747Kbps LinkDnBandwidth>=25579Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /192.168.1.112, Security type: 2, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -39, Link speed: 866Mbps, Tx Link speed: 866Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 866Mbps, Max Supported Rx Link speed: 866Mbps, Frequency: 5180MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -39 UnderlyingNetworks: Null]
+09-24 16:13:58.191 15534 15534 I Dtdi    : (REDACTED) [MediaControllerFilter] packageName=%s resolved=%s
+EE-2 RESULT=FAIL

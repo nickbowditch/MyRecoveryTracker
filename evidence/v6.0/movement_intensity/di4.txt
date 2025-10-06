@@ -1,0 +1,14 @@
+started_at=2025-10-06T20:22:11Z
+repo_root=/Users/nickbowditch/AndroidStudioProjects/MyRecoveryTracker
+--- DEBUG: git check-ignore verbose (dir) ---
+.gitignore:25:!evidence/v6.0/**	evidence/v6.0/movement_intensity
+--- DEBUG: git check-ignore verbose (sentinel) ---
+.gitignore:25:!evidence/v6.0/**	evidence/v6.0/movement_intensity/.di4_track_sentinel
+--- DEBUG: git check-ignore status codes ---
+dir_status=1 (0=ignored,1=not ignored,128=error)
+file_status=1 (0=ignored,1=not ignored,128=error)
+--- DEBUG: git add -n sentinel ---
+add 'evidence/v6.0/movement_intensity/.di4_track_sentinel'
+--- DEBUG: git status --porcelain --ignored (sentinel) ---
+?? evidence/v6.0/movement_intensity/.di4_track_sentinel
+DI4 RESULT=PASS

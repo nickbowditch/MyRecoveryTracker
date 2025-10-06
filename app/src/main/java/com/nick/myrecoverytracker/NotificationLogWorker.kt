@@ -1,3 +1,4 @@
+// app/src/main/java/com/nick/myrecoverytracker/NotificationLogWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -9,9 +10,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 /**
- * Ensures header exists and trims notification_log.csv to last 50k lines.
- * Header: timestamp,pkg,title,text,event,reason,latency_sec
- * (Older rows without header are left as-is; workers handle both.)
+ * Trims notification_log.csv to the last 50k lines and preserves whatever header exists.
+ * Does NOT rewrite the header (supports golden schema and legacy variants).
  */
 class NotificationLogWorker(appContext: Context, params: WorkerParameters)
     : CoroutineWorker(appContext, params) {
@@ -21,24 +21,18 @@ class NotificationLogWorker(appContext: Context, params: WorkerParameters)
             val f = File(applicationContext.filesDir, "notification_log.csv")
             if (!f.exists()) return@withContext Result.success()
 
-            // Ensure header if file starts with a data row
             val lines = f.readLines()
-            val header = "timestamp,pkg,title,text,event,reason,latency_sec"
-            val hasHeader = lines.firstOrNull()?.startsWith("timestamp,") == true
+            if (lines.isEmpty()) return@withContext Result.success()
 
-            val normalized = ArrayList<String>(lines.size + 1)
-            if (!hasHeader) normalized.add(header) else normalized.add(lines.first())
-            normalized.addAll(if (hasHeader) lines.drop(1) else lines)
-
-            // Cap file
             val cap = 50_000
-            val trimmed = if (normalized.size > cap) {
-                val keep = normalized.take(1) + normalized.takeLast(cap - 1)
-                keep
-            } else normalized
+            val trimmed = if (lines.size > cap) {
+                listOf(lines.first()) + lines.takeLast(cap - 1)
+            } else {
+                lines
+            }
 
             f.writeText(trimmed.joinToString("\n") + "\n")
-            Log.i(TAG, "notification_log normalized: lines=${trimmed.size}")
+            Log.i(TAG, "notification_log trimmed: lines=${trimmed.size}")
             Result.success()
         } catch (t: Throwable) {
             Log.e(TAG, "NotificationLogWorker failed", t)

@@ -1,0 +1,10 @@
+HEADER=date,distance_km
+TODAY=2025-10-07 distance_km=0.00
+YESTERDAY= rows=0
+--- CSV HEAD ---
+date,distance_km
+2025-10-07,0.00
+--- CSV TAIL ---
+date,distance_km
+2025-10-07,0.00
+TC2 RESULT=PASS

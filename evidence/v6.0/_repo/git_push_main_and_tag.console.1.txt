@@ -1,0 +1,21 @@
+VERIFY_LOCAL_TAG_BEGIN
+LOCAL_TAG:present
+VERIFY_LOCAL_TAG_END
+PUSH_MAIN_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+To github.com:nickbowditch/MyRecoveryTracker.git
+   2cf02a3..13488b0  HEAD -> main
+updating local tracking ref 'refs/remotes/origin/main'
+PUSH_MAIN_OK
+PUSH_MAIN_END
+PUSH_TAG_BEGIN
+Pushing to github.com:nickbowditch/MyRecoveryTracker.git
+To github.com:nickbowditch/MyRecoveryTracker.git
+ * [new tag]         qa-pass/unlocks-sleep-v6.0 -> qa-pass/unlocks-sleep-v6.0
+PUSH_TAG_OK
+PUSH_TAG_END
+REMOTE_VERIFY_BEGIN
+REMOTE_MAIN_HAS_HEAD
+REMOTE_HAS_TAG
+REMOTE_VERIFY_END
+GIT-PUSH-MAIN-AND-TAG RESULT=PASS
