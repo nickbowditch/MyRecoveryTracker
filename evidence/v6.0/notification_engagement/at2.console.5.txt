@@ -1,0 +1,2 @@
+OK  2025-10-02 raw=3,3 daily=3,3
+AT2 RESULT=PASS

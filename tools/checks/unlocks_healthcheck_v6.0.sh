@@ -33,28 +33,28 @@ unlocks_gv7_v6.0.2.sh
 RESULTS=""
 
 for chk in $CHECKS; do
-  script="tools/checks/$chk"
-  if [ ! -x "$script" ]; then
-    RESULTS="${RESULTS}${chk}: MISSING\n"
-    continue
-  fi
+script="tools/checks/$chk"
+if [ ! -x "$script" ]; then
+RESULTS="${RESULTS}${chk}: MISSING\n"
+continue
+fi
 
-  OUTTXT="$(mktemp)"
-  if "$script" >"$OUTTXT" 2>&1; then
-    verdict="PASS"
-    msg="$(grep -Eo '[A-Z0-9-]+ RESULT[:=][^ ]* PASS.*' "$OUTTXT" | tail -n1 || true)"
-  else
-    verdict="FAIL"
-    msg="$(grep -Eo '[A-Z0-9-]+ RESULT[:=][^ ]* FAIL.*' "$OUTTXT" | tail -n1 || true)"
-  fi
+OUTTXT="$(mktemp)"
+if "$script" >"$OUTTXT" 2>&1; then
+verdict="PASS"
+msg="$(grep -Eo '[A-Z0-9-]+ RESULT[:=][^ ]* PASS.' "$OUTTXT" | tail -n1 || true)"
+else
+verdict="FAIL"
+msg="$(grep -Eo '[A-Z0-9-]+ RESULT[:=][^ ] FAIL.*' "$OUTTXT" | tail -n1 || true)"
+fi
 
-  if [ -n "$msg" ]; then
-    RESULTS="${RESULTS}${chk}: ${verdict} (${msg})\n"
-  else
-    RESULTS="${RESULTS}${chk}: ${verdict}\n"
-  fi
+if [ -n "$msg" ]; then
+RESULTS="${RESULTS}${chk}: ${verdict} (${msg})\n"
+else
+RESULTS="${RESULTS}${chk}: ${verdict}\n"
+fi
 
-  rm -f "$OUTTXT"
+rm -f "$OUTTXT"
 done
 
 printf "%b" "$RESULTS" | tee "$OUT"

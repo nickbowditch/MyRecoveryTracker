@@ -1,0 +1,14 @@
+=== LOG ===
+10-06 22:47:25.096  1463  3746 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LNSU_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-06 22:47:25.098  1463  3746 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LNSU_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-06 22:47:25.105 24535 24535 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_LNSU_ROLLUP
+10-06 22:47:25.184  1463  3746 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ROLLUP_LNSU flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-06 22:47:25.186  1463  3746 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ROLLUP_LNSU flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-06 22:47:25.197 24535 24535 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ROLLUP_LNSU
+
+=== TAIL: files/daily_lnslu.csv ===
+date,late_night_minutes
+2025-09-24,0
+2025-09-25,0
+2025-09-26,0
+GV7 RESULT=PASS

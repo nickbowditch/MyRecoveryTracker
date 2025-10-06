@@ -1,0 +1,28 @@
+CSV HEADER AUDIT (2025-09-24 02:35:32 UTC)
+Package: com.nick.myrecoverytracker
+
+FILE                                         | EXPECTED                                   | ACTUAL                                     | MATCH
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+files/daily_unlocks.csv                      | date,count                                 | date,feature_schema_version,daily_unlocks  | NO
+files/unlock_log.csv                         | ts,event                                   | ts,event                                   | YES
+files/daily_sleep_summary.csv                | date,sleep_time,wake_time,duration_hours   | date,sleep_time,wake_time,duration_hours   | YES
+files/daily_sleep_duration.csv               | date,duration_hours                        | date,hours                                 | NO
+files/screen_log.csv                         | ts,event                                   | ts,state                                   | NO
+files/daily_lnslu.csv                        | date,late_night_minutes                    | date,minutes                               | NO
+files/daily_late_night_screen_usage.csv      | date,minutes                               | date,late_night_YN                         | NO
+
+RAW FIRST LINES:
+---- files/daily_unlocks.csv ----
+date,feature_schema_version,daily_unlocks
+---- files/unlock_log.csv ----
+ts,event
+---- files/daily_sleep_summary.csv ----
+date,sleep_time,wake_time,duration_hours
+---- files/daily_sleep_duration.csv ----
+date,hours
+---- files/screen_log.csv ----
+ts,state
+---- files/daily_lnslu.csv ----
+date,minutes
+---- files/daily_late_night_screen_usage.csv ----
+date,late_night_YN

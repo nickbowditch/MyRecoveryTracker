@@ -1,0 +1,72 @@
+==> 2025-09-19 10:25:45 RUN tools/fixtures/fix_daily_unlocks_header_v6.0.5.sh
+--> 2025-09-19 10:26:05 PASS tools/fixtures/fix_daily_unlocks_header_v6.0.5.sh
+==> 2025-09-19 10:26:05 RUN tools/checks/ee1_sleep_v6.0.sh
+--> 2025-09-19 10:26:25 PASS tools/checks/ee1_sleep_v6.0.sh
+==> 2025-09-19 10:26:25 RUN tools/checks/ee1_v6.0.sh
+--> 2025-09-19 10:26:45 PASS tools/checks/ee1_v6.0.sh
+==> 2025-09-19 10:26:45 RUN tools/checks/ee2_sleep_v6.0.1.sh
+--> 2025-09-19 10:27:05 PASS tools/checks/ee2_sleep_v6.0.1.sh
+==> 2025-09-19 10:27:05 RUN tools/checks/ee2_v6.0.1.sh
+--> 2025-09-19 10:27:26 PASS tools/checks/ee2_v6.0.1.sh
+==> 2025-09-19 10:27:26 RUN tools/checks/ee3_sleep_v6.0.1.sh
+--> 2025-09-19 10:27:46 PASS tools/checks/ee3_sleep_v6.0.1.sh
+==> 2025-09-19 10:27:46 RUN tools/checks/ee3_v6.0.1.sh
+--> 2025-09-19 10:28:06 PASS tools/checks/ee3_v6.0.1.sh
+==> 2025-09-19 10:28:06 RUN tools/checks/tc1_v6.0.2.sh
+--> 2025-09-19 10:28:26 PASS tools/checks/tc1_v6.0.2.sh
+==> 2025-09-19 10:28:26 RUN tools/checks/tc2_v6.0.17.sh
+--> 2025-09-19 10:28:46 PASS tools/checks/tc2_v6.0.17.sh
+==> 2025-09-19 10:28:46 RUN tools/checks/tc3_v6.0.1.sh
+--> 2025-09-19 10:29:06 PASS tools/checks/tc3_v6.0.1.sh
+==> 2025-09-19 10:29:06 RUN tools/checks/tc4_v6.0.2.sh
+--> 2025-09-19 10:29:26 PASS tools/checks/tc4_v6.0.2.sh
+==> 2025-09-19 10:29:27 RUN tools/checks/tc5_v6.0.1.sh
+--> 2025-09-19 10:29:47 PASS tools/checks/tc5_v6.0.1.sh
+==> 2025-09-19 10:29:47 RUN tools/checks/di1_v6.0.5.sh
+--> 2025-09-19 10:30:07 FAIL tools/checks/di1_v6.0.5.sh (rc=1)
+==> 2025-09-19 10:30:07 RUN tools/checks/di2_v6.0.1.sh
+--> 2025-09-19 10:30:27 PASS tools/checks/di2_v6.0.1.sh
+==> 2025-09-19 10:30:27 RUN tools/checks/di3_v6.0.3.sh
+--> 2025-09-19 10:30:47 PASS tools/checks/di3_v6.0.3.sh
+==> 2025-09-19 10:30:47 RUN tools/checks/di4_v6.0.1.sh
+--> 2025-09-19 10:31:07 PASS tools/checks/di4_v6.0.1.sh
+==> 2025-09-19 10:31:07 RUN tools/checks/at1_v6.0.2.sh
+--> 2025-09-19 10:31:27 PASS tools/checks/at1_v6.0.2.sh
+==> 2025-09-19 10:31:28 RUN tools/checks/at2_v6.0.1.sh
+--> 2025-09-19 10:31:48 PASS tools/checks/at2_v6.0.1.sh
+==> 2025-09-19 10:31:48 RUN tools/checks/at3_v6.0.1.sh
+--> 2025-09-19 10:32:08 PASS tools/checks/at3_v6.0.1.sh
+==> 2025-09-19 10:32:08 RUN tools/checks/gv1_v6.0.2.sh
+--> 2025-09-19 10:32:28 PASS tools/checks/gv1_v6.0.2.sh
+==> 2025-09-19 10:32:28 RUN tools/checks/gv2_v6.0.14.sh
+--> 2025-09-19 10:32:48 PASS tools/checks/gv2_v6.0.14.sh
+==> 2025-09-19 10:32:48 RUN tools/checks/gv3_v6.0.1.sh
+--> 2025-09-19 10:33:08 PASS tools/checks/gv3_v6.0.1.sh
+==> 2025-09-19 10:33:08 RUN tools/checks/gv4_v6.0.1.sh
+--> 2025-09-19 10:33:28 PASS tools/checks/gv4_v6.0.1.sh
+==> 2025-09-19 10:33:28 RUN tools/checks/gv5_v6.0.1.sh
+--> 2025-09-19 10:33:48 PASS tools/checks/gv5_v6.0.1.sh
+===== SUMMARY =====
+EE-1 RESULT=PASS
+EE-2 RESULT=PASS
+EE-3 RESULT=PASS
+DI-1 RESULT=UNKNOWN
+DI-1-FIX RESULT=UNKNOWN
+DI-2 RESULT=UNKNOWN
+DI-3 RESULT=UNKNOWN
+DI-4 RESULT=UNKNOWN
+TC-1 RESULT=UNKNOWN
+TC-2 RESULT=UNKNOWN
+TC-3 RESULT=UNKNOWN
+TC-4 RESULT=UNKNOWN
+TC-5 RESULT=PASS
+TC-6 RESULT=UNKNOWN
+AT-1 RESULT=UNKNOWN
+AT-2 RESULT=UNKNOWN
+AT-3 RESULT=UNKNOWN
+GV-1 RESULT=UNKNOWN
+GV-2 RESULT=UNKNOWN
+GV-3 RESULT=UNKNOWN
+GV-4 RESULT=UNKNOWN
+GV-5 RESULT=UNKNOWN
+UNLOCKS-HEALTH RESULT=PASS

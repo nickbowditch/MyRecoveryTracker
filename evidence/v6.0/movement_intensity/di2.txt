@@ -1,0 +1,13 @@
+header=date,intensity
+duplicate_dates_count=0
+--- DEBUG: duplicate dates with counts (up to 20) ---
+<none>
+--- DEBUG: CSV head ---
+date,intensity
+2025-10-05,52
+2025-10-06,29
+--- DEBUG: CSV tail ---
+date,intensity
+2025-10-05,52
+2025-10-06,29
+DI2 RESULT=PASS

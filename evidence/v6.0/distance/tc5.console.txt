@@ -1,0 +1,2 @@
+[INFO] TC5 — Distance No >2-day gaps
+TC5 RESULT=PASS
