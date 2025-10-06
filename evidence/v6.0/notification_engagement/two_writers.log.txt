@@ -1,7 +1,0 @@
-10-02 11:21:36.417 21385 21385 I TriggerReceiver: Enqueue NotificationEngagementWorker (once-EngagementRollup)
-10-02 11:21:36.476 21385 21453 I NotificationEngagementWorker: Engagement rollup wrote 1 date(s) to daily_notification_engagement.csv
-10-02 11:21:36.485 21385 21444 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=a8b9b9ab-cf47-4f33-a68a-2234cc5374ed, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]
-10-02 11:21:36.500 21385 21411 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=8c7bdf51-218f-40ef-95dc-8f93209813f7, tags={ com.nick.myrecoverytracker.NotificationLatencyWorker, NotificationLatency } ]
-10-02 11:21:36.764 21385 21440 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=730b92ce-d021-4c62-aad9-f65167401452, tags={ com.nick.myrecoverytracker.MovementRollupWorker, MovementRollupBoot } ]
-10-02 11:21:37.299 21385 21411 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=ada58290-c587-415f-89f5-9c8863ad7b7e, tags={ com.nick.myrecoverytracker.SleepRollupWorker, SleepRollupBoot } ]
-10-02 11:21:37.313 21385 21411 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=cc7a4367-afbc-41de-9bd5-2081fdd4d43f, tags={ com.nick.myrecoverytracker.SleepRollupWorker } ]

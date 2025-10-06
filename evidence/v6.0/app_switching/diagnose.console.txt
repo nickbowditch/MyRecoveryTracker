@@ -1,1 +1,0 @@
-DIAG RESULT=FAIL (Unexpected headers; investigate writers)

@@ -1,2 +1,0 @@
-date,feature_schema_version,p50_ms,p90_ms,p99_ms,count
-FIX RESULT=OK
