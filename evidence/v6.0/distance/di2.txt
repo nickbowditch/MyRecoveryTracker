@@ -1,0 +1,6 @@
+CSV=files/daily_distance_log.csv
+HEADER=date,distance_km
+DUPLICATES_COUNT=0
+--- DUPLICATES (first 50) ---
+<none>
+DI2 RESULT=PASS

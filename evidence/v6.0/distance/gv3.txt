@@ -1,0 +1,35 @@
+GV3 CHECK: Version matched
+target_version=v6.0
+scripts_total=26
+incompatible_or_missing=0
+latest_any=evidence/v6.0/distance/gv2.txt
+latest_target=evidence/v6.0/distance/gv2.txt
+--- SCRIPT MATRIX ---
+SCRIPT,DECLARED,FROM,TYPE,COMPAT
+tools/checks/distance_at1_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_at2_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_at3_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_deep_diagnose.sh,<generic>,generic,none,OK
+tools/checks/distance_di1_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_di2_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_di3_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_di4_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_ee1_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv1_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv2_v6.0.2.sh,v6.0.2,filename,exact,OK
+tools/checks/distance_gv2_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv3_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv4_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv5_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv6_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_gv7_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_healthcheck_v6.0.1.sh,v6.0.1,filename,exact,OK
+tools/checks/distance_schema_check.sh,<generic>,generic,none,OK
+tools/checks/distance_seed_trigger.sh,<generic>,generic,none,OK
+tools/checks/distance_smoke_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_tc1_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_tc2_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_tc3_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_tc5_v6.0.sh,v6.0,filename,exact,OK
+tools/checks/distance_tc6_v6.0.sh,v6.0,filename,exact,OK
+GV3 RESULT=PASS

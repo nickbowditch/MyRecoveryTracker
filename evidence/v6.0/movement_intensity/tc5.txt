@@ -1,0 +1,13 @@
+today=2025-10-07
+header=date,intensity
+--- DEBUG: CSV head ---
+date,intensity
+2025-10-06,30
+2025-10-07,0
+--- DEBUG: distinct dates (count=2) ---
+2025-10-06
+2025-10-07
+--- DEBUG: max_gap_days=1 ---
+--- DEBUG: gaps >2 days (count=0) ---
+<none>
+TC5 RESULT=PASS

@@ -24,73 +24,53 @@ class AppUsageByCategoryDailyWorker(appContext: Context, params: WorkerParameter
             val filesDir = ctx.filesDir
             if (!filesDir.exists()) filesDir.mkdirs()
 
-            val byCategoryFile = File(filesDir, "daily_app_usage_minutes.csv")
-            if (!byCategoryFile.exists()) {
-                byCategoryFile.writeText("date,category,minutes\n")
-            }
-
-            val byAppFile = File(filesDir, "daily_app_usage_minutes_by_app.csv")
-            if (!byAppFile.exists()) {
-                byAppFile.writeText("date,category,minutes,package\n")
-            }
+            val byCategoryFile = File(filesDir, "app_category_daily.csv")
+            ensureHeader(byCategoryFile, "date,category,minutes")
 
             val day = today()
             val (startMs, endMs) = dayBoundsMillis()
 
-            val usm = ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-            val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startMs, endMs)
-                ?.filter { it.totalTimeInForeground > 0 } ?: emptyList()
+            // Prefer existing per-app/per-category CSVs when present; fall back to UsageStats if none.
+            val fromCsv = readCategoryMinutesFromCsv(filesDir, day)
 
-            val pm = ctx.packageManager
+            val perCatMs: Map<String, Long> = if (fromCsv != null && fromCsv.isNotEmpty()) {
+                // minutes -> ms
+                fromCsv.mapValues { (_, mins) -> (mins * 60000.0).toLong().coerceAtLeast(0L) }
+            } else {
+                val usm = ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startMs, endMs)
+                    ?.filter { it.totalTimeInForeground > 0 } ?: emptyList()
 
-            val perCatMs = HashMap<String, Long>()
-            val perCatPkgMs = HashMap<Pair<String, String>, Long>()
-
-            var packagesCounted = 0
-            for (u: UsageStats in stats) {
-                val pkg = u.packageName ?: continue
-
-                if (shouldSkip(pkg)) continue
-
-                val ai = try { pm.getApplicationInfo(pkg, 0) } catch (_: PackageManager.NameNotFoundException) { null }
-                val cat = classify(pkg, ai)
-                val ms = u.totalTimeInForeground
-                if (ms > 0) {
-                    perCatMs[cat] = (perCatMs[cat] ?: 0L) + ms
-                    val key = cat to pkg
-                    perCatPkgMs[key] = (perCatPkgMs[key] ?: 0L) + ms
-                    packagesCounted++
-                }
-            }
-
-            run {
-                val existing = byCategoryFile.readLines()
-                val kept = existing.filterNot { it.startsWith("$day,") }.toMutableList()
-                val lines = perCatMs.entries
-                    .sortedByDescending { it.value }
-                    .map { e -> String.format(Locale.US, "%s,%s,%.1f", day, e.key, e.value / 60000.0) }
-                if (kept.isEmpty() || !kept.first().startsWith("date,"))
-                    kept.add(0, "date,category,minutes")
-                kept.addAll(lines)
-                byCategoryFile.writeText(kept.joinToString("\n") + "\n")
-            }
-
-            run {
-                val existing = byAppFile.readLines()
-                val kept = existing.filterNot { it.startsWith("$day,") }.toMutableList()
-                val lines = perCatPkgMs.entries
-                    .sortedByDescending { it.value }
-                    .map { (k, v) ->
-                        val (cat, pkg) = k
-                        String.format(Locale.US, "%s,%s,%.1f,%s", day, cat, v / 60000.0, pkg)
+                val pm = ctx.packageManager
+                val agg = HashMap<String, Long>()
+                var packagesCounted = 0
+                for (u: UsageStats in stats) {
+                    val pkg = u.packageName ?: continue
+                    if (shouldSkip(pkg)) continue
+                    val ai = try { pm.getApplicationInfo(pkg, 0) } catch (_: PackageManager.NameNotFoundException) { null }
+                    val cat = classify(pkg, ai)
+                    val ms = u.totalTimeInForeground
+                    if (ms > 0) {
+                        agg[cat] = (agg[cat] ?: 0L) + ms
+                        packagesCounted++
                     }
-                if (kept.isEmpty() || !kept.first().startsWith("date,"))
-                    kept.add(0, "date,category,minutes,package")
-                kept.addAll(lines)
-                byAppFile.writeText(kept.joinToString("\n") + "\n")
+                }
+                Log.i(TAG, "AppUsageByCategory (UsageStats fallback) -> $day categories=${agg.size} (packages=$packagesCounted)")
+                agg
             }
 
-            Log.i(TAG, "AppUsageByCategory -> $day categories=${perCatMs.size} (packages=$packagesCounted)")
+            val existing = if (byCategoryFile.exists()) byCategoryFile.readLines() else emptyList()
+            val kept = existing.filterNot { it.startsWith("$day,") }.toMutableList()
+            val lines = perCatMs.entries
+                .sortedByDescending { it.value }
+                .map { e -> String.format(Locale.US, "%s,%s,%.1f", day, e.key, e.value / 60000.0) }
+
+            if (kept.isEmpty() || !kept.first().startsWith("date,"))
+                kept.add(0, "date,category,minutes")
+            kept.addAll(lines)
+            byCategoryFile.writeText(kept.joinToString("\n") + "\n")
+
+            Log.i(TAG, "AppUsageByCategory -> $day categories=${perCatMs.size}")
             for ((k, v) in perCatMs.entries.sortedByDescending { it.value }) {
                 Log.i(TAG, String.format(Locale.US, "  %s=%.1fm", k, v / 60000.0))
             }
@@ -99,6 +79,67 @@ class AppUsageByCategoryDailyWorker(appContext: Context, params: WorkerParameter
         } catch (t: Throwable) {
             Log.e(TAG, "AppUsageByCategoryDailyWorker error", t)
             Result.retry()
+        }
+    }
+
+    private fun readCategoryMinutesFromCsv(filesDir: File, day: String): Map<String, Double>? {
+        val byApp = File(filesDir, "daily_app_usage_minutes_by_app.csv")
+        val byCat = File(filesDir, "daily_app_usage_minutes.csv")
+
+        // Try per-app: header "date,category,minutes,package" OR "date,category,minutes"
+        if (byApp.exists() && byApp.length() > 0L) {
+            try {
+                val lines = byApp.readLines()
+                if (lines.isNotEmpty() && lines[0].startsWith("date,category,minutes")) {
+                    val sums = HashMap<String, Double>()
+                    lines.drop(1).forEach { line ->
+                        if (line.isBlank()) return@forEach
+                        val cols = line.split(',')
+                        if (cols.size < 3) return@forEach
+                        val d = cols[0].trim()
+                        if (d != day) return@forEach
+                        val cat = cols[1].trim().ifEmpty { "other" }
+                        val mins = cols[2].trim().toDoubleOrNull() ?: return@forEach
+                        sums[cat] = (sums[cat] ?: 0.0) + mins
+                    }
+                    if (sums.isNotEmpty()) return sums
+                }
+            } catch (_: Throwable) { /* ignore */ }
+        }
+
+        // Try pre-aggregated per-category: header "date,category,minutes"
+        if (byCat.exists() && byCat.length() > 0L) {
+            try {
+                val lines = byCat.readLines()
+                if (lines.isNotEmpty() && lines[0].startsWith("date,category,minutes")) {
+                    val sums = HashMap<String, Double>()
+                    lines.drop(1).forEach { line ->
+                        if (line.isBlank()) return@forEach
+                        val cols = line.split(',')
+                        if (cols.size < 3) return@forEach
+                        val d = cols[0].trim()
+                        if (d != day) return@forEach
+                        val cat = cols[1].trim().ifEmpty { "other" }
+                        val mins = cols[2].trim().toDoubleOrNull() ?: return@forEach
+                        sums[cat] = (sums[cat] ?: 0.0) + mins
+                    }
+                    if (sums.isNotEmpty()) return sums
+                }
+            } catch (_: Throwable) { /* ignore */ }
+        }
+
+        return null
+    }
+
+    private fun ensureHeader(file: File, header: String) {
+        if (!file.exists()) {
+            file.writeText(header + "\n")
+            return
+        }
+        val first = try { file.bufferedReader().use { it.readLine() } } catch (_: Throwable) { null }
+        if (first == null || !first.startsWith("date,")) {
+            val body = try { file.readLines().dropWhile { it.startsWith("date,") } } catch (_: Throwable) { emptyList() }
+            file.writeText((sequenceOf(header) + body.asSequence()).joinToString("\n").trimEnd() + "\n")
         }
     }
 

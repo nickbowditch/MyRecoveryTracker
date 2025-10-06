@@ -1,0 +1,1 @@
+TC2 RESULT=FAIL (y_cnt=0 t_cnt=3)

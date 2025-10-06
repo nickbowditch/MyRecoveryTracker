@@ -1,0 +1,7 @@
+[INFO] Distance deep diagnosis
+[INFO] Ensure minimal seed for location_log.csv
+[INFO] Resolve receiver then broadcast
+[INFO] Discover WorkManager jobs for package
+[INFO] Try forcing each job under current state
+[INFO] Wait for evidence (logs or CSV) (deadline 12s)
+RESULT=PASS

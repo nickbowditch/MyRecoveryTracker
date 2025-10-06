@@ -1,0 +1,13 @@
+HEADER=date,distance_km
+distinct_dates=1
+--- first 10 dates ---
+2025-10-07
+--- last 10 dates ---
+2025-10-07
+--- CSV HEAD ---
+date,distance_km
+2025-10-07,0.00
+--- CSV TAIL ---
+date,distance_km
+2025-10-07,0.00
+TC5 RESULT=PASS

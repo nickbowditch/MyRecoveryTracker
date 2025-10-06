@@ -1,0 +1,21 @@
+--- REBUILT ---
+switches=15 entropy=2.7
+--- ACTUAL ---
+switches=15 entropy=2.7
+
+--- DEBUG: TODAY FG EVENT COUNT ---
+25
+--- DEBUG: TAIL usage_events (today) ---
+2025-10-07,07:17:10,NOTIFICATION_INTERRUPTION,android
+2025-10-07,07:17:10,NOTIFICATION_INTERRUPTION,android
+2025-10-07,07:17:10,EVENT_10,android
+2025-10-07,07:17:20,SCREEN_NON_INTERACTIVE,android
+2025-10-07,07:18:52,NOTIFICATION_INTERRUPTION,android
+2025-10-07,07:18:52,NOTIFICATION_INTERRUPTION,android
+2025-10-07,07:19:07,EVENT_11,com.google.android.apps.chromecast.app
+2025-10-07,07:19:20,EVENT_11,com.google.android.gm
+2025-10-07,07:19:49,EVENT_11,com.google.android.apps.chromecast.app
+2025-10-07,07:20:31,EVENT_11,com.google.android.inputmethod.latin
+--- DEBUG: DAILY ROW ---
+3:2025-10-07,15,2.7
+AT2 RESULT=PASS

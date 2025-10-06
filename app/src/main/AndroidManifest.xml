@@ -105,11 +105,16 @@
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY" />
             </intent-filter>
         </receiver>
 

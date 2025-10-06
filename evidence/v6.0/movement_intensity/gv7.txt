@@ -1,0 +1,13 @@
+started_at=2025-10-06T20:22:17Z
+target_day=2025-10-07
+pre_header=date,intensity
+csv_header=date,intensity
+row_today=2025-10-07,0
+--- DEBUG: CSV head/tail ---
+date,intensity
+2025-10-06,30
+2025-10-07,0
+date,intensity
+2025-10-06,30
+2025-10-07,0
+GV7 RESULT=PASS

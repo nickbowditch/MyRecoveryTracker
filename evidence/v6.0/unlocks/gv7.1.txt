@@ -1,0 +1,12 @@
+=== LOG ===
+09-24 14:52:30.383  1463  2448 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-24 14:52:30.385  1463  2448 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-24 14:52:30.398 19446 19446 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP
+09-24 14:52:30.399 19446 19446 I TriggerReceiver: Enqueue UnlockRollupWorker (once-UnlockRollup)
+
+=== TAIL: files/daily_unlocks.csv ===
+2025-09-20,v6.0,0
+2025-09-21,v6.0,0
+2025-09-22,v6.0,2
+2025-09-23,v6.0,15
+2025-09-24,v6.0,9

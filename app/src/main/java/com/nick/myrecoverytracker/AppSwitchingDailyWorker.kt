@@ -1,3 +1,4 @@
+// app/src/main/java/com/nick/myrecoverytracker/AppSwitchingDailyWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -15,7 +16,7 @@ import kotlin.math.ln
 /**
  * AppSwitchingDailyWorker
  *
- * Input:  files/usage_events.csv  (format: YYYY-MM-DD,HH:MM:SS,FOREGROUND|BACKGROUND,package)
+ * Input:  files/usage_events.csv  (format: date,time,event_type,package)
  * Output: files/daily_app_switching.csv
  *         header: date,switches,entropy
  *
@@ -46,10 +47,8 @@ class AppSwitchingDailyWorker(
 
             val today = LocalDate.now(zone)
             val yesterday = today.minusDays(1)
-
             val targets = setOf(yesterday.toString(), today.toString())
 
-            // per-day tallies
             data class DayStats(
                 var lastPkg: String? = null,
                 var switches: Int = 0,
@@ -60,11 +59,9 @@ class AppSwitchingDailyWorker(
             inFile.useLines { seq ->
                 seq.forEach { line ->
                     if (line.isBlank()) return@forEach
-                    // fast-skip header/older formats
-                    if (line.startsWith("date,")) return@forEach
+                    if (line.startsWith("date,")) return@forEach // skip header
 
-                    // Expected: YYYY-MM-DD,HH:MM:SS,TYPE,pkg
-                    // Guard against stray commas in pkg by splitting max 4 parts.
+                    // Expected: date,time,event_type,package (no stray commas before pkg)
                     val parts = line.split(',', limit = 4)
                     if (parts.size < 4) return@forEach
                     val d = parts[0]
@@ -75,7 +72,6 @@ class AppSwitchingDailyWorker(
 
                     val ds = map.getOrPut(d) { DayStats() }
 
-                    // switches: increment when the foreground app changes
                     val last = ds.lastPkg
                     if (last == null) {
                         ds.lastPkg = pkg
@@ -84,12 +80,10 @@ class AppSwitchingDailyWorker(
                         ds.lastPkg = pkg
                     }
 
-                    // frequency for entropy
                     ds.freq[pkg] = (ds.freq[pkg] ?: 0) + 1
                 }
             }
 
-            // Write rows for the two days we care about (even if zero → write 0,0.0)
             listOf(yesterday.toString(), today.toString()).forEach { d ->
                 val ds = map[d]
                 val entropy = if (ds == null || ds.freq.isEmpty()) {

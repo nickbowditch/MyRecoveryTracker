@@ -1,0 +1,8 @@
+raw_path=files/location_log.csv
+raw_mode=LOC
+daily_path=files/daily_distance_log.csv
+days_compared=1 mismatches=0 missing_in_raw=0 missing_in_daily=0
+--- SAMPLE COMPARISONS (first 50) ---
+OK,2025-10-07,0.39,0.392422,0.617193
+SUMMARY,1,0,0,0
+AT2 RESULT=PASS
