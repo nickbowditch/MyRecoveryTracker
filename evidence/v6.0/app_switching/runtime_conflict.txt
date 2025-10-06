@@ -1,4 +1,0 @@
-before=date,package,starts
-after_switch=sed: files/daily_app_switching.csv: No such file or directory
-after_usage=date,package,starts
-RUNTIME RESULT=FAIL (unexpected headers; investigate writers)
