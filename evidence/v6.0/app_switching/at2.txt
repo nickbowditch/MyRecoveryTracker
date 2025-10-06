@@ -1,0 +1,21 @@
+--- REBUILT ---
+switches=178 entropy=2.8
+--- ACTUAL ---
+switches=178 entropy=2.8
+
+--- DEBUG: TODAY FG EVENT COUNT ---
+303
+--- DEBUG: TAIL usage_events (today) ---
+2025-10-06,10:52:50,SCREEN_NON_INTERACTIVE,android
+2025-10-06,10:52:51,BACKGROUND,com.tinder
+2025-10-06,10:52:51,EVENT_17,android
+2025-10-06,10:52:51,ACTIVITY_STOPPED,com.tinder
+2025-10-06,10:56:55,NOTIFICATION_INTERRUPTION,com.instagram.android
+2025-10-06,10:57:04,SCREEN_INTERACTIVE,android
+2025-10-06,10:57:04,EVENT_10,com.instagram.android
+2025-10-06,10:57:14,SCREEN_NON_INTERACTIVE,android
+2025-10-06,10:59:46,EVENT_11,com.google.android.apps.wellbeing
+2025-10-06,10:59:47,EVENT_11,com.google.android.deskclock
+--- DEBUG: DAILY ROW ---
+3:2025-10-06,178,2.8
+AT2 RESULT=PASS
