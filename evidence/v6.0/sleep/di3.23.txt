@@ -1,0 +1,1 @@
+DI-3 RESULT=FAIL (self-check missing mm pattern)

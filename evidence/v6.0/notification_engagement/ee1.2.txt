@@ -1,0 +1,6 @@
+POST_NOTIFICATION: Default mode: allow
+GET_USAGE_STATS: GET_USAGE_STATS: allow; time=+1h29m48s176ms ago; rejectTime=+8d20h44m56s874ms ago
+ALLOW_LISTENER:
+Error occurred. Check logcat for details. Argument expected after "allow_listener"
+LOCK_HEADER: OK0
+EE-1 RESULT=FAIL

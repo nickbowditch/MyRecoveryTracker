@@ -1,0 +1,21 @@
+--- REBUILT ---
+switches=325 entropy=3.5
+--- ACTUAL ---
+switches=325 entropy=3.5
+
+--- DEBUG: TODAY FG EVENT COUNT ---
+636
+--- DEBUG: TAIL usage_events (today) ---
+2025-10-06,22:20:49,EVENT_18,android
+2025-10-06,22:27:53,EVENT_11,com.myfitnesspal.android
+2025-10-06,22:27:53,EVENT_11,com.openai.chatgpt
+2025-10-06,22:27:53,EVENT_11,com.instagram.android
+2025-10-06,22:27:53,EVENT_11,com.google.android.deskclock
+2025-10-06,22:27:53,EVENT_11,com.google.android.apps.docs
+2025-10-06,22:27:53,EVENT_11,com.android.chrome
+2025-10-06,22:27:53,EVENT_11,org.chromium.webapk.ad9a2382a73821efe_v2
+2025-10-06,22:27:53,EVENT_11,com.google.android.apps.chromecast.app
+2025-10-06,22:27:53,EVENT_11,com.google.android.inputmethod.latin
+--- DEBUG: DAILY ROW ---
+3:2025-10-06,325,3.5
+AT2 RESULT=PASS

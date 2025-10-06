@@ -1,0 +1,6 @@
+[INFO] Distance smoke — seed, trigger, verify
+[INFO] Seed minimal location_log.csv for 2025-10-06
+[INFO] Broadcast trigger
+[INFO] Wait for output (deadline 15s)
+[PASS] Found today row in daily_distance_log.csv
+RESULT=PASS

@@ -1,0 +1,17 @@
+LOCKS_DIR: app/locks
+FEATURE=daily_metrics
+  CSV_FILE=files/daily_metrics.csv
+  LOCK_HEADER=date,feature_schema_version,daily_unlocks
+  CSV_HEADER=date,feature_schema_version,daily_unlocks
+  RESULT=PASS
+FEATURE=daily_sleep
+  CSV_FILE=files/daily_sleep.csv
+  LOCK_HEADER=date,sleep_time,wake_time,duration_hours
+  CSV_HEADER=date,sleep_time,wake_time,duration_hours
+  RESULT=PASS
+FEATURE=daily_sleep_duration
+  CSV_FILE=files/daily_sleep_duration.csv
+  LOCK_HEADER=date,hours
+  CSV_HEADER=date,hours
+  RESULT=PASS
+SCHEMA-GUARD RESULT=PASS

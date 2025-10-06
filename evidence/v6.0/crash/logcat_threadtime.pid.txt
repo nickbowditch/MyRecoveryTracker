@@ -1,0 +1,1 @@
+09-27 13:42:14.878  1245  1416 D ProfileInstaller: Installing profile for com.nick.myrecoverytracker

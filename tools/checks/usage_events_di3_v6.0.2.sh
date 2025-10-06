@@ -1,0 +1,33 @@
+#!/bin/sh
+set -eu
+PKG="com.nick.myrecoverytracker"
+OUT="evidence/v6.0/usage_events/di3.2.txt"
+CSV="files/daily_usage_events.csv"
+LOCK="app/locks/daily_usage_events.header"
+mkdir -p "$(dirname "$OUT")"
+
+adb get-state >/dev/null 2>&1 || { echo "DI-3 RESULT=FAIL (no device)" | tee "$OUT"; exit 2; }
+adb shell pm path "$PKG"  >/dev/null 2>&1 || { echo "DI-3 RESULT=FAIL (app not installed)" | tee "$OUT"; exit 3; }
+
+EXP="$(tr -d '\r' < "$LOCK" 2>/dev/null || true)"
+[ -n "$EXP" ] || { echo "DI-3 RESULT=FAIL (missing lock)" | tee "$OUT"; exit 4; }
+
+HDR="$(adb exec-out run-as "$PKG" head -n1 "$CSV" 2>/dev/null | tr -d '\r' || true)"
+[ -n "$HDR" ] || { echo "DI-3 RESULT=FAIL (missing csv)" | tee "$OUT"; exit 5; }
+[ "$HDR" = "$EXP" ] || { echo "DI-3 RESULT=FAIL (header drift)" | tee "$OUT"; exit 6; }
+
+adb exec-out run-as "$PKG" tail -n +2 "$CSV" 2>/dev/null | tr -d '\r' | awk -F',' '
+function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
+function is_int(x){ return x ~ /^-?[0-9]+$/ }
+{
+d=$1; cnt=$2
+if(!date_ok(d)) exit 1
+if(cnt=="") exit 1
+if(!is_int(cnt)) exit 1
+cnt=cnt+0
+if(cnt<0 || cnt>500000) exit 1
+}
+END{ }' || { echo "DI-3 RESULT=FAIL (invalid rows)" | tee "$OUT"; exit 7; }
+
+echo "DI-3 RESULT=PASS" | tee "$OUT"
+exit 0

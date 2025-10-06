@@ -1,0 +1,21 @@
+EE-1 RESULT: PASS
+MISSING: tools/checks/sleep_ee2_v6.0.2.sh
+MISSING: tools/checks/sleep_ee3_v6.0.2.sh
+MISSING: tools/checks/sleep_tc1_v6.0.6.sh
+MISSING: tools/checks/sleep_tc3_v6.0.1.sh
+MISSING: tools/checks/sleep_tc5_v6.0.1.sh
+TC-6 RESULT=PASS
+DI-1 RESULT=PASS
+DI-2 RESULT=PASS
+DI-3 RESULT=PASS
+DI-4 RESULT=PASS
+MISSING: tools/checks/sleep_at1_v6.0.3.sh
+MISSING: tools/checks/sleep_at2_v6.0.2.sh
+AT-3 RESULT=PASS
+GV-1 RESULT=PASS
+GV-2 RESULT=PASS
+GV-3 RESULT=PASS
+GV-4 RESULT=PASS
+GV-5 RESULT=PASS
+GV-6 RESULT=PASS
+SLEEP HEALTH=FAIL

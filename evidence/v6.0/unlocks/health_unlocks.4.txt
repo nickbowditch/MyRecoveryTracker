@@ -1,0 +1,533 @@
+==> 2025-09-18 16:47:18 RUN tools/checks/ee1_v6.0.sh
+EE-1 USAGE_STATS: DECLARED=yes MODE=allow
+EE-1 ACTIVITY_RECOGNITION: DECLARED=yes GRANTED=yes
+EE-1 RESULT: PASS
+==> 2025-09-18 16:47:20 RUN tools/checks/ee2_v6.0.1.sh
+EE-2 JOBSCHEDULER:   JOB #u0a401/365: 3e4f8a6 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +11h4m35s140ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/377: 937ec4c com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s963ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/399: 78eb825 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s935ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/401: c409bce com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s966ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/550: 7ff297a com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +14m59s943ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+    JobStatus{7ff297a #u0a401/550 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+8m37s947ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 95929369
+    JobStatus{e51eacf androidx.work.systemjobscheduler:u0a129/4430 @androidx.work.systemjobscheduler@com.google.android.apps.safetyhub/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10129 TIME=+1h44m35s763ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x11600000 unsatisfied:0x82000000}: 55427185
+    JobStatus{489e282 SyncManager:1000/103 @SyncManager@com.google.android.keep/com.google:android u=0 s=10294 TIME=-6m58s856ms:none NET STORENOTLOW PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x81600008 unsatisfied:0x12000000}: 53592566
+    JobStatus{b4e68f0 #1000/237039804 android/com.android.server.notification.NotificationHistoryJobService u=0 s=1000 TIME=-4m13s774ms:+13m59s217ms PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x81600000 unsatisfied:0x2000000}: 54604143
+    JobStatus{7d80ba7 androidx.work.systemjobscheduler:u0a179/36824 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10179 TIME=+47m31s795ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 57763217
+    JobStatus{6f464e2 androidx.work.systemjobscheduler:u0a323/5793 #RecommendationsSyncWorker#@androidx.work.systemjobscheduler@au.com.shiftyjelly.pocketcasts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10323 TIME=+4h19m34s357ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 68685779
+    JobStatus{c9421f8 #u0a217/10 com.google.android.calendar/.jobservices.CalendarProviderObserverForNotificationsJobService u=0 s=10217 WAIT:DEV_NOT_DOZING URIS=[android.app.job.JobInfo$TriggerContentUri@ddadaaa] satisfied:0x1600000 unsatisfied:0x6000000}: 53369488
+    JobStatus{b9ae156 androidx.work.systemjobscheduler:u0a156/3824 #TikTokWorker#com.google.android.libraries.mdi.download.workmanager.tiktok.TikTokPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10156 TIME=+1h16m31s566ms:none CHARGING IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 53382988
+    JobStatus{2c4a7a7 #u0a136/360265855 com.google.android.as/com.google.android.apps.miphone.aiai.smartrec.pixelsearch.cronjob.PixelSearchCronJobService u=0 s=10136 TIME=+16h54m9s830ms:+1d16h54m9s830ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129621252
+    JobStatus{621475e androidx.work.systemjobscheduler:u0a179/36757 #TikTokWorker#com.google.android.libraries.mdi.download.workmanager.tiktok.TikTokPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10179 TIME=+6m22s855ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 54754277
+    JobStatus{7c5404c SyncManager:1000/17 @SyncManager@com.google.android.gms.fitness/com.google:android u=0 s=10152 TIME=+16h52m35s824ms:+18h4m35s824ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 107927246
+    JobStatus{bdcadc1 androidx.work.systemjobscheduler:u0a173/2518 @androidx.work.systemjobscheduler@com.google.android.apps.pixel.support/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10173 TIME=+5d10h23m8s569ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 517639991
+    JobStatus{535292b #u0a119/-1458638241 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+9m36s667ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 109848089
+    JobStatus{c409bce #u0a401/401 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+19h35m21s449ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 124412871
+    JobStatus{355c802 SyncManager:1000/51 @SyncManager@com.google.android.apps.docs/com.google:android u=0 s=10204 TIME=+3d7h0m4s270ms:+3d11h50m45s170ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 331575692
+    JobStatus{da272db #u0a119/-661409924 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+9m19s277ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 111810699
+    JobStatus{9b86c67 #u0a271/16 com.google.android.adservices.api/com.android.adservices.service.measurement.DeleteUninstalledJobService u=0 s=10271 TIME=+4h48m36s423ms:+1d4h48m36s423ms PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 86087845
+    JobStatus{370003f androidx.work.systemjobscheduler:u0a136/682 #UpdateDataCacheStorageWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10136 TIME=+16h54m11s941ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 108023363
+    JobStatus{b2e5e77 #u0a135/3 com.google.android.apps.turbo/.nudges.battery.LoggingPermissionsJobService u=0 s=10135 TIME=+18h54m12s844ms:+1d18h54m12s844ms CHARGING IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 136824266
+    JobStatus{d1fe1e8 #u0a136/249456912 com.google.android.as/com.google.android.apps.miphone.aiai.common.brella.service.AiAiExampleStoreTtlService u=0 s=10136 TIME=+16h54m9s668ms:+1d16h54m9s668ms CHARGING PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 129621090
+    JobStatus{b91c6d5 androidx.work.systemjobscheduler:u0a123/9936 @androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10123 TIME=+17h45m2s763ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 111974185
+    JobStatus{ac81b52 androidx.work.systemjobscheduler:u0a209/107995 #ContactsLightPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10209 TIME=+7h36m6s44ms:none CHARGING IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 76337466
+    JobStatus{1006a29 #u0a136/486216969 com.google.android.as/com.google.android.apps.miphone.aiai.echo.scheduler.EchoJobService u=0 s=10136 TIME=+16h54m8s373ms:+1d16h54m8s373ms IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 129619795
+    JobStatus{4214d7a androidx.work.systemjobscheduler:u0a136/692 #DataMaintainer#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10136 TIME=+10h12m36s149ms:none IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 84827571
+    JobStatus{e003753 #u0a271/4 com.google.android.adservices.api/com.android.adservices.service.measurement.DeleteExpiredJobService u=0 s=10271 TIME=+16h30m0s259ms:+1d16h30m0s259ms IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 128171681
+    JobStatus{22477d9 SyncManager:1000/2717 @SyncManager@gmail-ls/com.google:android u=0 s=10210 TIME=+12h42m31s116ms:+13h54m31s116ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 92922538
+    JobStatus{937ec4c #u0a401/377 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+19h25m19s599ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 123811021
+    JobStatus{ba5b8aa #1000/765123 android/com.android.server.PruneInstantAppsJobService u=0 s=1000 TIME=+16h53m58s283ms:+1d16h53m58s283ms IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 129609705
+    JobStatus{d05c06b #u0a136/272538963 com.google.android.as/com.google.android.apps.miphone.aiai.common.superpacks.impl.PeriodicCleanupService u=0 s=10136 TIME=+16h54m11s205ms:+1d16h54m11s205ms PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 129622627
+    JobStatus{8f22215 #u0a119/-605916168 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+7m47s94ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 110098516
+    JobStatus{aa8d0b8 androidx.work.systemjobscheduler:u0a204/595 #GnpWorker#@androidx.work.systemjobscheduler@com.google.android.apps.docs/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10204 TIME=+20h10m1s384ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 121212806
+    JobStatus{25f847b #u0a209/10032 com.google.android.contacts/com.google.android.apps.contacts.operation.ContactsService u=0 s=10209 TIME=+18h54m0s3ms:+1d18h54m0s3ms CHARGING IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 136811425
+    JobStatus{99143ab SyncManager:1000/2747 @SyncManager@com.android.contacts/com.google:android u=0 s=10152 TIME=+2d11h30m28s129ms:+2d19h54m28s129ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 261399551
+    JobStatus{88ad18a androidx.work.systemjobscheduler:u0a195/555025357 #LPBJ_CHARGING_ONLY_WORKER#@androidx.work.systemjobscheduler@com.google.android.apps.photos/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10195 TIME=+18h7m43s159ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 112974581
+    JobStatus{bf63d50 SyncManager:1000/2710 @SyncManager@com.google.android.gms.chromesync/com.google:android u=0 s=10152 TIME=+18h42m22s370ms:+19h54m22s370ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 124413792
+    JobStatus{623b6a2 #u0a159/17 com.google.android.settings.intelligence/.libs.instrumentation.snapshot.SnapshotJobService u=0 s=10159 TIME=+16h55m2s396ms:+1d16h55m2s396ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129673818
+    JobStatus{a7acc0d #u0a217/111007999 com.google.android.calendar/com.google.android.libraries.notifications.entrypoints.scheduled.ScheduledTaskService u=0 s=10217 TIME=+18h54m15s183ms:+1d18h54m15s183ms NET PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 136826605
+    JobStatus{5b2d71e #u0a254/5000 com.google.android.flipendo/.suspend.AllowedAppListCleaningJobService u=0 s=10254 TIME=+16h54m14s710ms:+1d16h54m14s710ms CHARGING PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 129626133
+    JobStatus{36293ed #u0a119/-1967367952 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+4m37s797ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 112069220
+    JobStatus{3e4f8a6 #u0a401/365 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+3h59m11s297ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 61522720
+    JobStatus{85ae7d7 #u0a119/-1517128893 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+4m39s642ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 112611065
+    JobStatus{7fcae50 androidx.work.systemjobscheduler:u0a115/303 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.pixel.creativeassistant/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10115 TIME=+5d15h14m27s925ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 534039348
+    JobStatus{8b02220 #1000/16964307 android/com.android.server.appsearch.contactsindexer.ContactsIndexerMaintenanceService u=0 s=1000 TIME=+5d6h20m8s2ms:+20d6h20m8s2ms BATNOTLOW IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600002 unsatisfied:0x82000004}: 1128379425
+    JobStatus{7cf6655 androidx.work.systemjobscheduler:u0a166/1525 @androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+1d9h51m6s87ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x93000000}: 169037510
+    JobStatus{4875241 androidx.work.systemjobscheduler:u0a166/1397 @androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+5d14h11m23s533ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x93000000}: 530254956
+    JobStatus{db64713 SyncManager:1000/2736 @SyncManager@com.google.android.gms.subscribedfeeds/com.google:android u=0 s=10152 TIME=+18h42m23s671ms:+19h54m23s671ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 124415094
+    JobStatus{e2e369b androidx.work.systemjobscheduler:u0a195/555025762 #ModelDownloadWorker#@androidx.work.systemjobscheduler@com.google.android.apps.photos/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10195 TIME=+5h37m6s82ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 78977505
+    JobStatus{c20555a SyncManager:1000/49 @SyncManager@gmail-ls/com.google:android u=0 s=10210 TIME=+13h29m4s379ms:+14h41m4s379ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 95715802
+    JobStatus{6cc4a70 androidx.work.systemjobscheduler:u0a166/1529 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+5d7h10m54s293ms:none WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x83000000}: 505025716
+    JobStatus{64a01e9 androidx.work.systemjobscheduler:u0a166/1530 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+1d7h10m54s303ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x83000000}: 159425726
+    JobStatus{4bdeeca androidx.work.systemjobscheduler:u0a323/5735 #NotificationWorker#@androidx.work.systemjobscheduler@au.com.shiftyjelly.pocketcasts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10323 TIME=+6d23h12m36s214ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 650747637
+    JobStatus{f2c1538 SyncManager:1000/37 @SyncManager@com.android.contacts/com.google:android u=0 s=10152 TIME=+14h13m30s347ms:+15h25m30s347ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 98381770
+    JobStatus{78eb825 #u0a401/399 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+19h25m19s319ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 123810743
+    JobStatus{30def83 androidx.work.systemjobscheduler:u0a156/3829 #TikTokWorker#com.android.dialer.callscreen.impl.donation.scotty.CallScreenMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10156 TIME=+8h54m37s349ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 80868773
+    JobStatus{58c4911 SyncManager:1000/2715 @SyncManager@com.google.android.location.reporting/com.google:android u=0 s=10152 TIME=+14h57m58s6ms:+16h9m58s6ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 101049430
+    JobStatus{c4924c7 #1000/2030028 android/com.android.server.pm.DynamicCodeLoggingService u=0 s=1000 TIME=+16h53m58s280ms:+1d16h53m58s280ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129609704
+    JobStatus{de5daf5 androidx.work.systemjobscheduler:u0a194/8884 @androidx.work.systemjobscheduler@com.google.android.apps.tachyon/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10194 TIME=+4d15h37m12s658ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 449004082
+    JobStatus{98ee718 #u0a271/14 com.google.android.adservices.api/com.android.adservices.spe.AdServicesJobService u=0 s=10271 TIME=+1h14m8s632ms:+3h14m8s632ms NET CHARGING PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 61340056
+    JobStatus{34d304f VirtualizationSystemService:1000/1 @VirtualizationSystemService@android/com.android.system.virtualmachine.SecretkeeperJobService u=0 s=1000 TIME=+16h54m0s611ms:+1d16h54m0s611ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129612035
+    JobStatus{2889da9 #u0a135/105 com.google.android.apps.turbo/com.google.android.libraries.smartbattery.common.phenotype.UpdatePhenotypeFlagsJob u=0 s=10135 TIME=+16h54m32s963ms:+1d16h54m32s963ms PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 129644387
+    JobStatus{1981010 #u0a358/2601 com.microsoft.office.outlook/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10358 TIME=+14h55m5s566ms:none NET IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000004}: 100876990
+    JobStatus{98f8045 androidx.work.systemjobscheduler:u0a194/8914 @androidx.work.systemjobscheduler@com.google.android.apps.tachyon/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10194 TIME=+7h19m0s518ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 73511942
+    JobStatus{a860949 SyncManager:1000/967 @SyncManager@com.google.android.calendar.tasks/com.google:android u=0 s=10217 TIME=+14h9m15s341ms:+15h21m15s341ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 98126765
+    JobStatus{640dc30 #u0a209/1007999 com.google.android.contacts/com.google.android.libraries.notifications.entrypoints.scheduled.ScheduledTaskService u=0 s=10209 TIME=+18h54m12s931ms:+1d18h54m12s931ms NET PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 136824355
+    JobStatus{9c2b289 androidx.work.systemjobscheduler:u0a179/36827 @androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10179 TIME=+5h50m8s563ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x11600000 unsatisfied:0x82000000}: 75919987
+  0-ComponentInfo{com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService}: com.nick.myrecoverytracker
+  0-ComponentInfo{com.google.euiccpixel/com.google.euiccpixel.service.StartOtaService}: com.google.euiccpixel
+  0-ComponentInfo{com.google.android.rkpdapp/androidx.work.impl.background.systemjob.SystemJobService}: com.google.android.rkpdapp
+  0-ComponentInfo{com.instagram.android/com.instagram.notifications.push.IgPushRegistrationService}: com.instagram.android
+  0-ComponentInfo{com.whatsapp/com.whatsapp.media.ExternalMediaManager}: com.whatsapp
+  0-ComponentInfo{com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService}: com.google.android.contacts
+  0-ComponentInfo{com.google.android.partnersetup/com.google.android.partnersetup.ClientIdJobService}: com.google.android.partnersetup
+  0-ComponentInfo{com.google.android.partnersetup/com.google.android.partnersetup.AppHidingJobService}: com.google.android.partnersetup
+  0-ComponentInfo{com.ubercab.eats/com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService}: com.ubercab.eats
+  0-ComponentInfo{android/com.android.server.PruneInstantAppsJobService}: system
+  0-ComponentInfo{au.com.podcastoneaustralia/com.salesforce.marketingcloud.MCService}: au.com.podcastoneaustralia
+  0-ComponentInfo{au.com.spriggy.app/com.transistorsoft.tsbackgroundfetch.FetchJobService}: au.com.spriggy.app
+  0-ComponentInfo{com.instagram.android/com.instagram.publisher.HeartbeatJobService}: com.instagram.android
+        -6m48s054ms   START: #u0a401/548 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -6m47s930ms    STOP: #u0a401/548 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -6m45s882ms   START: #u0a401/549 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -6m45s822ms    STOP: #u0a401/549 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -5m58s558ms   START: #u0a401/551 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -5m58s495ms    STOP: #u0a401/551 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -5m56s380ms   START: #u0a401/552 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -5m56s320ms    STOP: #u0a401/552 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -3m28s981ms   START: #u0a401/553 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -3m28s922ms    STOP: #u0a401/553 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -3m26s825ms   START: #u0a401/554 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -3m26s769ms    STOP: #u0a401/554 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+
+      69447e2 #u0a401/554 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      b564939 #u0a401/553 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      49d23dd #u0a401/552 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      15eb5a2 #u0a401/551 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      6d9fb49 #u0a401/549 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      9821c20 #u0a401/548 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+EE-2 RESULT: PASS
+==> 2025-09-18 16:47:23 RUN tools/checks/ee3_v6.0.1.sh
+EE-3 DEVICEIDLE JOBSCHEDULER:   JOB #u0a401/365: 3e4f8a6 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +11h4m35s140ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/377: 937ec4c com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s963ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/399: 78eb825 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s935ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/401: c409bce com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s966ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+  JOB #u0a401/550: 7ff297a com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a401 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +14m59s943ms
+      Backoff: policy=1 initial=+30s0ms
+      Has early constraint
+    Required constraints: TIMING_DELAY FLEXIBILITY [0x80200000]
+    Dynamic constraints:
+    JobStatus{7ff297a #u0a401/550 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+8m29s260ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 95929369
+    JobStatus{e51eacf androidx.work.systemjobscheduler:u0a129/4430 @androidx.work.systemjobscheduler@com.google.android.apps.safetyhub/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10129 TIME=+1h44m27s76ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x11600000 unsatisfied:0x82000000}: 55427185
+    JobStatus{489e282 SyncManager:1000/103 @SyncManager@com.google.android.keep/com.google:android u=0 s=10294 TIME=-7m7s543ms:none NET STORENOTLOW PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x81600008 unsatisfied:0x12000000}: 53592566
+    JobStatus{b4e68f0 #1000/237039804 android/com.android.server.notification.NotificationHistoryJobService u=0 s=1000 TIME=-4m22s461ms:+13m50s530ms PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x81600000 unsatisfied:0x2000000}: 54604143
+    JobStatus{7d80ba7 androidx.work.systemjobscheduler:u0a179/36824 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10179 TIME=+47m23s108ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 57763217
+    JobStatus{6f464e2 androidx.work.systemjobscheduler:u0a323/5793 #RecommendationsSyncWorker#@androidx.work.systemjobscheduler@au.com.shiftyjelly.pocketcasts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10323 TIME=+4h19m25s670ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 68685779
+    JobStatus{c9421f8 #u0a217/10 com.google.android.calendar/.jobservices.CalendarProviderObserverForNotificationsJobService u=0 s=10217 WAIT:DEV_NOT_DOZING URIS=[android.app.job.JobInfo$TriggerContentUri@ddadaaa] satisfied:0x1600000 unsatisfied:0x6000000}: 53369488
+    JobStatus{b9ae156 androidx.work.systemjobscheduler:u0a156/3824 #TikTokWorker#com.google.android.libraries.mdi.download.workmanager.tiktok.TikTokPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10156 TIME=+1h16m22s879ms:none CHARGING IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 53382988
+    JobStatus{2c4a7a7 #u0a136/360265855 com.google.android.as/com.google.android.apps.miphone.aiai.smartrec.pixelsearch.cronjob.PixelSearchCronJobService u=0 s=10136 TIME=+16h54m1s143ms:+1d16h54m1s143ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129621252
+    JobStatus{621475e androidx.work.systemjobscheduler:u0a179/36757 #TikTokWorker#com.google.android.libraries.mdi.download.workmanager.tiktok.TikTokPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10179 TIME=+6m14s168ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 54754277
+    JobStatus{7c5404c SyncManager:1000/17 @SyncManager@com.google.android.gms.fitness/com.google:android u=0 s=10152 TIME=+16h52m27s137ms:+18h4m27s137ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 107927246
+    JobStatus{bdcadc1 androidx.work.systemjobscheduler:u0a173/2518 @androidx.work.systemjobscheduler@com.google.android.apps.pixel.support/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10173 TIME=+5d10h22m59s882ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 517639991
+    JobStatus{535292b #u0a119/-1458638241 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+9m27s980ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 109848089
+    JobStatus{c409bce #u0a401/401 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+19h35m12s761ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 124412871
+    JobStatus{355c802 SyncManager:1000/51 @SyncManager@com.google.android.apps.docs/com.google:android u=0 s=10204 TIME=+3d6h59m55s582ms:+3d11h50m36s482ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 331575692
+    JobStatus{da272db #u0a119/-661409924 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+9m10s589ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 111810699
+    JobStatus{9b86c67 #u0a271/16 com.google.android.adservices.api/com.android.adservices.service.measurement.DeleteUninstalledJobService u=0 s=10271 TIME=+4h48m27s735ms:+1d4h48m27s735ms PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 86087845
+    JobStatus{370003f androidx.work.systemjobscheduler:u0a136/682 #UpdateDataCacheStorageWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10136 TIME=+16h54m3s253ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 108023363
+    JobStatus{b2e5e77 #u0a135/3 com.google.android.apps.turbo/.nudges.battery.LoggingPermissionsJobService u=0 s=10135 TIME=+18h54m4s156ms:+1d18h54m4s156ms CHARGING IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 136824266
+    JobStatus{d1fe1e8 #u0a136/249456912 com.google.android.as/com.google.android.apps.miphone.aiai.common.brella.service.AiAiExampleStoreTtlService u=0 s=10136 TIME=+16h54m0s980ms:+1d16h54m0s980ms CHARGING PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 129621090
+    JobStatus{b91c6d5 androidx.work.systemjobscheduler:u0a123/9936 @androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10123 TIME=+17h44m54s75ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 111974185
+    JobStatus{ac81b52 androidx.work.systemjobscheduler:u0a209/107995 #ContactsLightPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10209 TIME=+7h35m57s356ms:none CHARGING IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 76337466
+    JobStatus{1006a29 #u0a136/486216969 com.google.android.as/com.google.android.apps.miphone.aiai.echo.scheduler.EchoJobService u=0 s=10136 TIME=+16h53m59s685ms:+1d16h53m59s685ms IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 129619795
+    JobStatus{4214d7a androidx.work.systemjobscheduler:u0a136/692 #DataMaintainer#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10136 TIME=+10h12m27s461ms:none IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 84827571
+    JobStatus{e003753 #u0a271/4 com.google.android.adservices.api/com.android.adservices.service.measurement.DeleteExpiredJobService u=0 s=10271 TIME=+16h29m51s571ms:+1d16h29m51s571ms IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 128171681
+    JobStatus{22477d9 SyncManager:1000/2717 @SyncManager@gmail-ls/com.google:android u=0 s=10210 TIME=+12h42m22s428ms:+13h54m22s428ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 92922538
+    JobStatus{937ec4c #u0a401/377 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+19h25m10s911ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 123811021
+    JobStatus{ba5b8aa #1000/765123 android/com.android.server.PruneInstantAppsJobService u=0 s=1000 TIME=+16h53m49s595ms:+1d16h53m49s595ms IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000004}: 129609705
+    JobStatus{d05c06b #u0a136/272538963 com.google.android.as/com.google.android.apps.miphone.aiai.common.superpacks.impl.PeriodicCleanupService u=0 s=10136 TIME=+16h54m2s517ms:+1d16h54m2s517ms PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 129622627
+    JobStatus{8f22215 #u0a119/-605916168 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+7m38s406ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 110098516
+    JobStatus{aa8d0b8 androidx.work.systemjobscheduler:u0a204/595 #GnpWorker#@androidx.work.systemjobscheduler@com.google.android.apps.docs/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10204 TIME=+20h9m52s696ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 121212806
+    JobStatus{25f847b #u0a209/10032 com.google.android.contacts/com.google.android.apps.contacts.operation.ContactsService u=0 s=10209 TIME=+18h53m51s315ms:+1d18h53m51s315ms CHARGING IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 136811425
+    JobStatus{99143ab SyncManager:1000/2747 @SyncManager@com.android.contacts/com.google:android u=0 s=10152 TIME=+2d11h30m19s441ms:+2d19h54m19s441ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 261399551
+    JobStatus{88ad18a androidx.work.systemjobscheduler:u0a195/555025357 #LPBJ_CHARGING_ONLY_WORKER#@androidx.work.systemjobscheduler@com.google.android.apps.photos/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10195 TIME=+18h7m34s471ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 112974581
+    JobStatus{bf63d50 SyncManager:1000/2710 @SyncManager@com.google.android.gms.chromesync/com.google:android u=0 s=10152 TIME=+18h42m13s682ms:+19h54m13s682ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 124413792
+    JobStatus{623b6a2 #u0a159/17 com.google.android.settings.intelligence/.libs.instrumentation.snapshot.SnapshotJobService u=0 s=10159 TIME=+16h54m53s708ms:+1d16h54m53s708ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129673818
+    JobStatus{a7acc0d #u0a217/111007999 com.google.android.calendar/com.google.android.libraries.notifications.entrypoints.scheduled.ScheduledTaskService u=0 s=10217 TIME=+18h54m6s495ms:+1d18h54m6s495ms NET PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 136826605
+    JobStatus{5b2d71e #u0a254/5000 com.google.android.flipendo/.suspend.AllowedAppListCleaningJobService u=0 s=10254 TIME=+16h54m6s23ms:+1d16h54m6s23ms CHARGING PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000000}: 129626133
+    JobStatus{36293ed #u0a119/-1967367952 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+4m29s110ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 112069220
+    JobStatus{3e4f8a6 #u0a401/365 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+3h59m2s609ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 61522720
+    JobStatus{85ae7d7 #u0a119/-1517128893 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+4m30s954ms:none NET CHARGING PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 112611065
+    JobStatus{7fcae50 androidx.work.systemjobscheduler:u0a115/303 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.pixel.creativeassistant/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10115 TIME=+5d15h14m19s237ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 534039348
+    JobStatus{8b02220 #1000/16964307 android/com.android.server.appsearch.contactsindexer.ContactsIndexerMaintenanceService u=0 s=1000 TIME=+5d6h19m59s314ms:+20d6h19m59s314ms BATNOTLOW IDLE PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600002 unsatisfied:0x82000004}: 1128379425
+    JobStatus{7cf6655 androidx.work.systemjobscheduler:u0a166/1525 @androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+1d9h50m57s399ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x93000000}: 169037510
+    JobStatus{4875241 androidx.work.systemjobscheduler:u0a166/1397 @androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+5d14h11m14s845ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x93000000}: 530254956
+    JobStatus{db64713 SyncManager:1000/2736 @SyncManager@com.google.android.gms.subscribedfeeds/com.google:android u=0 s=10152 TIME=+18h42m14s983ms:+19h54m14s983ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 124415094
+    JobStatus{e2e369b androidx.work.systemjobscheduler:u0a195/555025762 #ModelDownloadWorker#@androidx.work.systemjobscheduler@com.google.android.apps.photos/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10195 TIME=+5h36m57s394ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 78977505
+    JobStatus{c20555a SyncManager:1000/49 @SyncManager@gmail-ls/com.google:android u=0 s=10210 TIME=+13h28m55s691ms:+14h40m55s691ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 95715802
+    JobStatus{6cc4a70 androidx.work.systemjobscheduler:u0a166/1529 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+5d7h10m45s605ms:none WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x83000000}: 505025716
+    JobStatus{64a01e9 androidx.work.systemjobscheduler:u0a166/1530 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.nbu.files/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10166 TIME=+1d7h10m45s615ms:none CHARGING WAIT:DEV_NOT_DOZING satisfied:0x600003 unsatisfied:0x83000000}: 159425726
+    JobStatus{4bdeeca androidx.work.systemjobscheduler:u0a323/5735 #NotificationWorker#@androidx.work.systemjobscheduler@au.com.shiftyjelly.pocketcasts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10323 TIME=+6d23h12m27s526ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 650747637
+    JobStatus{f2c1538 SyncManager:1000/37 @SyncManager@com.android.contacts/com.google:android u=0 s=10152 TIME=+14h13m21s659ms:+15h25m21s659ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 98381770
+    JobStatus{78eb825 #u0a401/399 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10401 TIME=+19h25m10s632ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 123810743
+    JobStatus{30def83 androidx.work.systemjobscheduler:u0a156/3829 #TikTokWorker#com.android.dialer.callscreen.impl.donation.scotty.CallScreenMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10156 TIME=+8h54m28s662ms:none WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 80868773
+    JobStatus{58c4911 SyncManager:1000/2715 @SyncManager@com.google.android.location.reporting/com.google:android u=0 s=10152 TIME=+14h57m49s319ms:+16h9m49s319ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x11600008 unsatisfied:0x82000000}: 101049430
+    JobStatus{c4924c7 #1000/2030028 android/com.android.server.pm.DynamicCodeLoggingService u=0 s=1000 TIME=+16h53m49s593ms:+1d16h53m49s593ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129609704
+    JobStatus{de5daf5 androidx.work.systemjobscheduler:u0a194/8884 @androidx.work.systemjobscheduler@com.google.android.apps.tachyon/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10194 TIME=+4d15h37m3s971ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 449004082
+    JobStatus{98ee718 #u0a271/14 com.google.android.adservices.api/com.android.adservices.spe.AdServicesJobService u=0 s=10271 TIME=+1h13m59s945ms:+3h13m59s945ms NET CHARGING PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x92000000}: 61340056
+    JobStatus{34d304f VirtualizationSystemService:1000/1 @VirtualizationSystemService@android/com.android.system.virtualmachine.SecretkeeperJobService u=0 s=1000 TIME=+16h53m51s924ms:+1d16h53m51s924ms CHARGING IDLE PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600003 unsatisfied:0x82000004}: 129612035
+    JobStatus{2889da9 #u0a135/105 com.google.android.apps.turbo/com.google.android.libraries.smartbattery.common.phenotype.UpdatePhenotypeFlagsJob u=0 s=10135 TIME=+16h54m24s276ms:+1d16h54m24s276ms PERIODIC WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x82000000}: 129644387
+    JobStatus{1981010 #u0a358/2601 com.microsoft.office.outlook/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10358 TIME=+14h54m56s879ms:none NET IDLE WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000004}: 100876990
+    JobStatus{98f8045 androidx.work.systemjobscheduler:u0a194/8914 @androidx.work.systemjobscheduler@com.google.android.apps.tachyon/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10194 TIME=+7h18m51s831ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 73511942
+    JobStatus{a860949 SyncManager:1000/967 @SyncManager@com.google.android.calendar.tasks/com.google:android u=0 s=10217 TIME=+14h9m6s654ms:+15h21m6s654ms NET STORENOTLOW PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600008 unsatisfied:0x92000000}: 98126765
+    JobStatus{640dc30 #u0a209/1007999 com.google.android.contacts/com.google.android.libraries.notifications.entrypoints.scheduled.ScheduledTaskService u=0 s=10209 TIME=+18h54m4s243ms:+1d18h54m4s243ms NET PERIODIC PERSISTED WAIT:DEV_NOT_DOZING satisfied:0x1600000 unsatisfied:0x92000000}: 136824355
+    JobStatus{9c2b289 androidx.work.systemjobscheduler:u0a179/36827 @androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10179 TIME=+5h49m59s875ms:none NET WAIT:DEV_NOT_DOZING satisfied:0x11600000 unsatisfied:0x82000000}: 75919987
+  0-ComponentInfo{com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService}: com.nick.myrecoverytracker
+  0-ComponentInfo{com.google.euiccpixel/com.google.euiccpixel.service.StartOtaService}: com.google.euiccpixel
+  0-ComponentInfo{com.google.android.rkpdapp/androidx.work.impl.background.systemjob.SystemJobService}: com.google.android.rkpdapp
+  0-ComponentInfo{com.instagram.android/com.instagram.notifications.push.IgPushRegistrationService}: com.instagram.android
+  0-ComponentInfo{com.whatsapp/com.whatsapp.media.ExternalMediaManager}: com.whatsapp
+  0-ComponentInfo{com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService}: com.google.android.contacts
+  0-ComponentInfo{com.google.android.partnersetup/com.google.android.partnersetup.ClientIdJobService}: com.google.android.partnersetup
+  0-ComponentInfo{com.google.android.partnersetup/com.google.android.partnersetup.AppHidingJobService}: com.google.android.partnersetup
+  0-ComponentInfo{com.ubercab.eats/com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService}: com.ubercab.eats
+  0-ComponentInfo{android/com.android.server.PruneInstantAppsJobService}: system
+  0-ComponentInfo{au.com.podcastoneaustralia/com.salesforce.marketingcloud.MCService}: au.com.podcastoneaustralia
+  0-ComponentInfo{au.com.spriggy.app/com.transistorsoft.tsbackgroundfetch.FetchJobService}: au.com.spriggy.app
+  0-ComponentInfo{com.instagram.android/com.instagram.publisher.HeartbeatJobService}: com.instagram.android
+        -6m56s688ms   START: #u0a401/548 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -6m56s564ms    STOP: #u0a401/548 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -6m54s516ms   START: #u0a401/549 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -6m54s456ms    STOP: #u0a401/549 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -6m07s192ms   START: #u0a401/551 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -6m07s129ms    STOP: #u0a401/551 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -6m05s014ms   START: #u0a401/552 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -6m04s954ms    STOP: #u0a401/552 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -3m37s615ms   START: #u0a401/553 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -3m37s556ms    STOP: #u0a401/553 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+        -3m35s459ms   START: #u0a401/554 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        -3m35s403ms    STOP: #u0a401/554 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+
+      69447e2 #u0a401/554 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      b564939 #u0a401/553 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      49d23dd #u0a401/552 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      15eb5a2 #u0a401/551 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      6d9fb49 #u0a401/549 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+      9821c20 #u0a401/548 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      u0a401 tag=*job*e/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Source: uid=u0a401 user=0 pkg=com.nick.myrecoverytracker
+      JobInfo:
+        Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+        Priority: 500 [MAX]
+        Flags: 10
+        Internal flags: 1 HAS_FOREGROUND_EXEMPTION
+        Requires: charging=false batteryNotLow=false deviceIdle=false
+        Extras: mParcelledData.dataSize=248
+        Backoff: policy=1 initial=+30s0ms
+      Required constraints:
+      Dynamic constraints:
+EE-3 RESULT: PASS
+==> 2025-09-18 16:47:32 RUN tools/checks/tc1_v6.0.2.sh
+TC-1 RESULT=PASS
+==> 2025-09-18 16:47:32 RUN tools/checks/tc2_v6.0.14.sh
+TC-2 EXPECT +2 EACH — Y:2025-09-17 before=57 after=59 delta=2 ; T:2025-09-18 before=97 after=99 delta=2
+TC-2 RESULT=PASS
+==> 2025-09-18 16:47:38 RUN tools/checks/tc3_v6.0.1.sh
+TC-3 RESULT=PASS
+==> 2025-09-18 16:47:38 RUN tools/checks/tc4_v6.0.2.sh
+TC-4 RESULT=PASS
+==> 2025-09-18 16:47:43 RUN tools/checks/di1_v6.0.5.sh
+DI-1 RESULT=FAIL
+LOCK=date,feature_schema_version,daily_unlocks
+HEAD=date,unlocks
+==> 2025-09-18 16:47:43 RUN tools/checks/di2_v6.0.1.sh
+DI-2 RESULT=PASS
+==> 2025-09-18 16:47:44 RUN tools/checks/di3_v6.0.3.sh
+DI-3 RESULT=PASS
+==> 2025-09-18 16:47:44 RUN tools/checks/di4_v6.0.1.sh
+DI-4 RESULT=PASS
+==> 2025-09-18 16:47:44 RUN tools/checks/at1_v6.0.2.sh
+AT-1 RESULT=PASS
+==> 2025-09-18 16:47:50 RUN tools/checks/at2_v6.0.1.sh
+AT-2 RESULT=PASS
+==> 2025-09-18 16:47:50 RUN tools/checks/at3_v6.0.1.sh
+AT-3 RESULT=PASS
+==> 2025-09-18 16:47:50 RUN tools/checks/gv1_v6.0.2.sh
+GV-1 RESULT=PASS
+==> 2025-09-18 16:47:50 RUN tools/checks/gv2_v6.0.14.sh
+GV-2 RESULT=PASS
+==> 2025-09-18 16:47:52 RUN tools/checks/gv3_v6.0.1.sh
+GV-3 RESULT=PASS (must re-run all checks on version bump)
+==> 2025-09-18 16:47:52 RUN tools/checks/gv4_v6.0.1.sh
+GV-4 RESULT=PASS
+==> 2025-09-18 16:47:52 RUN tools/checks/gv5_v6.0.1.sh
+GV-5 RESULT=PASS
+
+===== SUMMARY =====
+AT-1 RESULT=PASS
+AT-2 RESULT=PASS
+AT-3 RESULT=PASS
+DI-1 RESULT=FAIL
+DI-2 RESULT=PASS
+DI-3 RESULT=PASS
+DI-4 RESULT=PASS
+GV-1 RESULT=PASS
+GV-2 RESULT=PASS
+GV-3 RESULT=PASS
+GV-4 RESULT=PASS
+GV-5 RESULT=PASS
+RESULT=UNKNOWN RESULT=UNKNOWN
+RESULT=UNKNOWN RESULT=UNKNOWN
+RESULT=UNKNOWN RESULT=UNKNOWN
+TC-1 RESULT=PASS
+TC-2 RESULT=PASS
+TC-3 RESULT=PASS
+TC-4 RESULT=PASS
+UNLOCKS-HEALTH RESULT=FAIL

@@ -1,0 +1,2 @@
+[INFO] TC2 — Distance Midnight Boundary (split by local date; no cross-day leakage)
+TC2 RESULT=PASS
