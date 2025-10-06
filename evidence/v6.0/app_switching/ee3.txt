@@ -1,0 +1,15 @@
+=== HEADER ===
+date,switches,entropy
+
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+10-06 11:00:33.031  1463  1939 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-06 11:00:33.033  1463  1939 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-06 11:00:33.043 18456 18456 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY
+10-06 11:00:33.043 18456 18456 I TriggerReceiver: Enqueue AppSwitchingDailyWorker (once-AppSwitchingDaily)
+10-06 11:00:33.160 18456 18507 I AppSwitchingDailyWorker: AppSwitchingDaily 2025-10-05 -> switches=0 entropy=0.0
+10-06 11:00:33.163 18456 18507 I AppSwitchingDailyWorker: AppSwitchingDaily 2025-10-06 -> switches=2 entropy=0.9
+10-06 11:00:33.167 18456 18504 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=e2a1b0cc-26cc-41eb-b341-07794e8df245, tags={ com.nick.myrecoverytracker.AppSwitchingDailyWorker, AppSwitchingDaily } ]
+EE-3 RESULT=PASS
