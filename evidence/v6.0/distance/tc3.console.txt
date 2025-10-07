@@ -1,2 +1,0 @@
-[INFO] TC3 — Distance No Future Dates
-TC3 RESULT=PASS

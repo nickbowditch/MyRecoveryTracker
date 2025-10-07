@@ -1,4 +1,0 @@
-EXPECTED(location_log.csv)=ts,lat,lon,accuracy
-EXPECTED(daily_distance_log.csv)=date,distance_km
-ACTUAL(location_log.csv)=ts,lat,lon,accuracy
-ACTUAL(daily_distance_log.csv)=sed: files/daily_distance_log.csv: No such file or directory

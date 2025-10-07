@@ -1,3 +1,0 @@
-SUMMARY: PASS=39 FAIL=10 TOTAL=49
-UNLOCKS-HEALTH RESULT=FAIL
-FAILED: git_hooks_status_v6.0.1.sh git_pre_push_guard_v6.0.2.sh git_pre_push_inspect_v6.0.1.sh git_pre_push_reveal_v6.0.1.sh git_pre_push_trace_v6.0.1.sh git_push_diag_v6.0.2.sh git_push_main_and_tag_v6.0.3.sh git_push_probe_v6.0.4.sh git_push_without_hooks_v6.0.1.sh tc3_v6.0.1.sh

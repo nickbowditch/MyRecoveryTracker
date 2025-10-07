@@ -1,2 +1,0 @@
--rw------- 1 10407 10407 107 2025-10-07 07:19 files/daily_notification_engagement.csv
-drwx------ 2 10407 10407 8192 2025-10-07 07:19 files
