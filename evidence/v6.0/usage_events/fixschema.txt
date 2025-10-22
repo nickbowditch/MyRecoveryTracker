@@ -1,3 +1,0 @@
-RAW_HEADER_OK=date,time,event_type,package
-NO_MIGRATION_NEEDED
-FIXSCHEMA RESULT=PASS
