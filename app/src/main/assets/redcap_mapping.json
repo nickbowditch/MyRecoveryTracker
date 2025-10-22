@@ -1,0 +1,4 @@
+{
+  "distance_today": { "redcap_field": "distance_today_km" },
+  "sleep_hours":    { "redcap_field": "sleep_hours" }
+}
