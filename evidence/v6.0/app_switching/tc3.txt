@@ -1,9 +1,0 @@
-=== HEADER ===
-date,switches,entropy
-
-=== TODAY ===
-2025-10-22
-
-=== FUTURE ROWS ===
-[none]
-TC-3 RESULT=PASS
