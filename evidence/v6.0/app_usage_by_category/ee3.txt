@@ -1,0 +1,9 @@
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+10-23 11:02:30.378  1787  3789 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-23 11:02:30.395 27467 27467 I TriggerReceiver: Enqueued AppUsageCategoryDaily (once-AppUsageCategoryDaily)
+10-23 11:02:30.531  1787  2796 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-23 11:02:30.556 27467 27489 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=fbdf9707-90dc-4963-9f9b-f55de1d8aec1, tags={ com.nick.myrecoverytracker.AppUsageByCategoryDailyWorker, AppUsageCategoryDaily } ]
+EE-3 RESULT=PASS
