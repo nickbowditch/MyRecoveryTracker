@@ -1,0 +1,21 @@
+=== JOBSCHEDULER ===
+[none]
+
+=== WORKMANAGER ===
+[none]
+
+=== LOGCAT ===
+10-24 17:07:26.921  1787 14280 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-24 17:07:26.922  1787 14280 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-24 17:07:26.925 27246 27246 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY
+10-24 17:07:26.926 27246 27246 I TriggerReceiver: Enqueued UsageEventsDaily (once-UsageEventsDaily)
+10-24 17:07:26.990 27246 27352 I UsageEventsDailyWorker: UsageEventsDaily -> 2025-10-23=0, 2025-10-24=3637
+10-24 17:07:27.001 27246 27306 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=f59e9991-667e-435d-a2c9-624a855da936, tags={ com.nick.myrecoverytracker.UsageEventsDailyWorker, UsageEventsDaily } ]
+10-24 17:07:28.477 17118 17150 I enwk    : Scheduling next periodic WorkManager workers
+10-24 17:07:28.477 17118 17151 I enwk    : Scheduling next periodic WorkManager workers
+10-24 17:07:28.652 17118 17134 D WM-Processor: Work WorkGenerationalId(workSpecId=2995c471-d06e-4311-b8d0-6b4599ff2ca7, generation=2143) is already enqueued for processing
+10-24 17:07:28.653 17118 17151 I enwk    : Scheduling next periodic WorkManager workers
+10-24 17:07:28.679 17118 17145 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=9518e5f4-1ca9-410f-8dc2-fdd963bfc394, tags={ com.google.apps.tiktok.contrib.work.TikTokListenableWorker,com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker_proc<search>,TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker } ]
+10-24 17:07:28.742 17118 17145 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=e9eaeed5-58ff-40c3-b9de-6d8201518d0c, tags={ com.google.apps.tiktok.contrib.work.TikTokListenableWorker,com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker_proc<search>,TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker } ]
+10-24 17:07:28.758 17118 17145 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=2995c471-d06e-4311-b8d0-6b4599ff2ca7, tags={ com.google.apps.tiktok.contrib.work.TikTokListenableWorker,com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker_proc<search>,TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker } ]
+EE-2 RESULT=PASS
