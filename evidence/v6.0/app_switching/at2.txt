@@ -1,0 +1,21 @@
+--- REBUILT ---
+switches=329 entropy=3.8
+--- ACTUAL ---
+switches=329 entropy=3.8
+
+--- DEBUG: TODAY FG EVENT COUNT ---
+599
+--- DEBUG: TAIL usage_events (today) ---
+2025-10-24,17:01:57,EVENT_20,com.nick.myrecoverytracker
+2025-10-24,17:01:59,FOREGROUND,com.nick.myrecoverytracker
+2025-10-24,17:01:59,BACKGROUND,com.nick.myrecoverytracker
+2025-10-24,17:01:59,EVENT_19,com.nick.myrecoverytracker
+2025-10-24,17:01:59,ACTIVITY_STOPPED,com.nick.myrecoverytracker
+2025-10-24,17:01:59,NOTIFICATION_INTERRUPTION,com.nick.myrecoverytracker
+2025-10-24,17:02:00,EVENT_10,com.nick.myrecoverytracker
+2025-10-24,17:02:01,FOREGROUND,com.textra
+2025-10-24,17:02:01,BACKGROUND,com.textra
+2025-10-24,17:02:01,ACTIVITY_STOPPED,com.textra
+--- DEBUG: DAILY ROW ---
+3:2025-10-24,329,3.8
+AT2 RESULT=PASS
