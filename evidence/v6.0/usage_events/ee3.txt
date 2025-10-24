@@ -1,7 +1,0 @@
-=== WORKMANAGER SUCCESS MATCH ===
-[none]
-
-=== LOGCAT SUCCESS MATCH ===
-10-24 13:01:40.693 21954 21954 I TriggerReceiver: Enqueued UsageEventsDaily (once-UsageEventsDaily)
-10-24 13:01:40.839 21954 21994 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=6c1b1c34-30bd-4cfc-bbcd-d80202002204, tags={ com.nick.myrecoverytracker.UsageEventsDailyWorker, UsageEventsDaily } ]
-EE-3 RESULT=PASS
