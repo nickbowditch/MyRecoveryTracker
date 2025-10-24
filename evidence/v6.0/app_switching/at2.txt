@@ -1,0 +1,21 @@
+--- REBUILT ---
+switches=311 entropy=3.8
+--- ACTUAL ---
+switches=311 entropy=3.8
+
+--- DEBUG: TODAY FG EVENT COUNT ---
+576
+--- DEBUG: TAIL usage_events (today) ---
+2025-10-24,16:54:39,EVENT_11,com.garmin.android.apps.connectmobile
+2025-10-24,16:54:41,FOREGROUND,com.nick.myrecoverytracker
+2025-10-24,16:54:41,BACKGROUND,com.nick.myrecoverytracker
+2025-10-24,16:54:41,EVENT_19,com.nick.myrecoverytracker
+2025-10-24,16:54:41,ACTIVITY_STOPPED,com.nick.myrecoverytracker
+2025-10-24,16:54:42,NOTIFICATION_INTERRUPTION,com.nick.myrecoverytracker
+2025-10-24,16:54:42,EVENT_10,com.nick.myrecoverytracker
+2025-10-24,16:54:43,FOREGROUND,com.textra
+2025-10-24,16:54:43,BACKGROUND,com.textra
+2025-10-24,16:54:44,ACTIVITY_STOPPED,com.textra
+--- DEBUG: DAILY ROW ---
+3:2025-10-24,311,3.8
+AT2 RESULT=PASS
