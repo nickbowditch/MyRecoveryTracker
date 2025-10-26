@@ -35,12 +35,12 @@ T="$(adb shell date +%F | tr -d '\r')"
 deadline=$(( $(date +%s) + 25 ))
 ok=1
 while :; do
-  adb shell cmd activity broadcast -n "$RCV" -a "$ACT" --receiver-foreground --user 0 >/dev/null 2>&1 || true
-  sleep 1
-  row_y="$(adb exec-out run-as "$PKG" awk -F, -v d="$Y" 'NR>1&&$1==d{print;exit}' "$DAILY" | tr -d '\r')"
-  row_t="$(adb exec-out run-as "$PKG" awk -F, -v d="$T" 'NR>1&&$1==d{print;exit}' "$DAILY" | tr -d '\r')"
-  [ -n "$row_y" ] && [ -n "$row_t" ] && { ok=0; break; }
-  [ "$(date +%s)" -ge "$deadline" ] && break
+adb shell cmd activity broadcast -n "$RCV" -a "$ACT" --receiver-foreground --user 0 >/dev/null 2>&1 || true
+sleep 1
+row_y="$(adb exec-out run-as "$PKG" awk -F, -v d="$Y" 'NR>1&&$1==d{print;exit}' "$DAILY" | tr -d '\r')"
+row_t="$(adb exec-out run-as "$PKG" awk -F, -v d="$T" 'NR>1&&$1==d{print;exit}' "$DAILY" | tr -d '\r')"
+[ -n "$row_y" ] && [ -n "$row_t" ] && { ok=0; break; }
+[ "$(date +%s)" -ge "$deadline" ] && break
 done
 
 [ $ok -eq 0 ] && echo "TC2 RESULT=PASS" | tee "$OUT" || echo "TC2 RESULT=FAIL" | tee "$OUT"

@@ -37,6 +37,6 @@ row="$(adb exec-out run-as "$PKG" awk -F, -v d="$T" 'NR>1&&$1==d{print;exit}' "$
 
 [ "$hdr" = "date,feature_schema_version,delivered,opened,open_rate" ] || { echo "GV7 RESULT=FAIL (bad header: $hdr)" | tee "$OUT"; exit 1; }
 case "$row" in
-  "$T",1,1,1,1.000000) echo "GV7 RESULT=PASS" | tee "$OUT" ;;
-  *) echo "GV7 RESULT=FAIL (row=$row)" | tee "$OUT"; exit 1 ;;
+"$T",1,1,1,1.000000) echo "GV7 RESULT=PASS" | tee "$OUT" ;;
+*) echo "GV7 RESULT=FAIL (row=$row)" | tee "$OUT"; exit 1 ;;
 esac

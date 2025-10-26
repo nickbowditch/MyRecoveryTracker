@@ -1,0 +1,2 @@
+[INFO] TC1 — Distance Correct Day Boundary (one row per local day; tz tolerance ±1)
+TC1 RESULT=PASS

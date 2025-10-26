@@ -1,0 +1,243 @@
+--------- beginning of main
+10-24 12:42:42.223  1787  2318 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-24 12:42:42.225  1787  2318 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-24 12:42:42.230  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-24 12:42:42.235 18725 18725 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP
+10-24 12:42:42.237 18725 18725 I TriggerReceiver: Enqueued NotificationEngagement (once-NotificationEngagementRollup)
+10-24 12:42:42.239  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-24 12:42:42.278  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-24 12:42:42.280  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-24 12:42:42.282  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-24 12:42:42.332 18725 18800 I NotificationEngagementWorker: Engagement rollup wrote 1 date(s) to daily_notification_engagement.csv
+10-24 12:42:42.336 18725 18744 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=3e083ad1-b649-46c7-8045-97e43821fa28, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]
+10-24 12:42:42.368 21270 21279 E gcblocker: too long GC blocking: 8
+10-24 12:42:42.369 21270 21279 E gcblocker: gc block end, 464845623,101
+10-24 12:42:42.420  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4358: USF: TMD3733: R/C:0.49 2D->1CD d_lux:121.1 c_lux:127.9/-1.0 c_coeff:0.50/-1.00
+10-24 12:42:42.420  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4361: USF: TMD3733:  w:0.00 C:86.00 d_leak:1.5 c_leak:0.6 lux:121.1 leak:1.5
+10-24 12:42:42.493  1662  1662 D AOC     : A3:MSG: lsm6dsv_device.cc, 732: USF: Lsm6dsvDevice: Sensor 4: Enabled 0, odr_index 0, period_ns 0.
+10-24 12:42:42.494  1662  1662 D AOC     : A3:MSG: lsm6dsv_fifo.cc, 755: USF: Lsm6dsvFifo: ODR: XL/G/T/TS: 120/240/15/30 WM: 4 Intr: 102.
+10-24 12:42:42.494  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 602: VSC: [Lift to Wake Sensor] stopSensorEvents: sensor 0x10001
+10-24 12:42:42.496  1662  1662 D AOC     : A3:MSG: lsm6dsv_device.cc, 641: USF: Lsm6dsvDevice: Fifo was disabled for 1805827ns.
+10-24 12:42:42.498  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for LSM6DSV Stationary Detect (active:-1).
+10-24 12:42:42.499  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 2354: USF: Sampling configuration 92592 not found.
+10-24 12:42:42.499  1662  1662 D AOC     : A3:MSG: usf_sensor_client.cc, 173: USF: Received kErrNotFound when disabling one shot sensor.
+10-24 12:42:42.500  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for LSM6DSV Motion Detect (active:2).
+10-24 12:42:42.501  1662  1662 D AOC     : A3:MSG: motion_state_sensor.cc, 328: USF: MoSt: MotionDetect sampling started with sampling ID 92600.
+10-24 12:42:42.502  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for LSM6DSV Accelerometer (active:7).
+10-24 12:42:42.505  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 602: VSC: [Lift to Wake Sensor] stopSensorEvents: sensor 0x10004
+10-24 12:42:42.506  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for LSM6DSV Motion Detect (active:3).
+10-24 12:42:42.509  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for LSM6DSV Gyroscope (active:2).
+10-24 12:42:42.510  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 584: VSC: [Lift to Wake Sensor] requestSensorEvents: sensor 0x20002, period=18446744073709 
+10-24 12:42:42.511  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 602: VSC: [Lift to Wake Sensor] stopSensorEvents: sensor 0x20003
+10-24 12:42:42.512  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for LSM6DSV FreeFall Detect (active:0).
+10-24 12:42:42.513  1662  1662 D AOC     : A3:MSG: lsm6dsv_device.cc, 732: USF: Lsm6dsvDevice: Sensor 5: Enabled 0, odr_index 0, period_ns 0.
+10-24 12:42:42.514  1662  1662 D AOC     : A3:MSG: lsm6dsv_fifo.cc, 755: USF: Lsm6dsvFifo: ODR: XL/G/T/TS: 120/240/15/30 WM: 4 Intr: 102.
+10-24 12:42:42.514  1662  1662 D AOC     : A3:MSG: lsm6dsv_device.cc, 641: USF: Lsm6dsvDevice: Fifo was disabled for 963663ns.
+10-24 12:42:42.519  1390  1412 I CHRE    : @ 556049.732: Received a sampling status update for one shot sensor LSM6DSV Motion Detect
+10-24 12:42:42.670 18725 18856 D ProfileInstaller: Installing profile for com.nick.myrecoverytracker
+10-24 12:42:42.775  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for LSM6DSV Gyroscope (active:3).
+10-24 12:42:42.777  1662  1662 D AOC     : A3:MSG: lsm6dsv_device.cc, 732: USF: Lsm6dsvDevice: Sensor 1: Enabled 1, odr_index 6, period_ns 15000000.
+10-24 12:42:42.777  1662  1662 D AOC     : A3:MSG: lsm6dsv_fifo.cc, 755: USF: Lsm6dsvFifo: ODR: XL/G/T/TS: 120/120/15/15 WM: 2 Intr: 120.
+10-24 12:42:42.778  1662  1662 D AOC     : A3:MSG: lsm6dsv_device.cc, 641: USF: Lsm6dsvDevice: Fifo was disabled for 886230ns.
+10-24 12:42:42.781  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for MMC5616 Magnetometer (active:2).
+10-24 12:42:42.782  1662  1662 D AOC     : A3:MSG: mmc5616_device.cc, 448: USF: MMC56160: mmc5616_enable_measure odr = 10.
+10-24 12:42:42.804 17689 17699 I pixel-thermal: disp_therm:27.431 raw data: disp_therm:27431 
+10-24 12:42:42.813 17689 17699 I pixel-thermal: btmspkr_therm:27.521 raw data: btmspkr_therm:27521 
+10-24 12:42:42.976  2641  2641 E NotifRow: Magnetic state changed from IDLE to IDLE on a null swiped listener, or the logging key of the listener is null
+10-24 12:42:42.980  2641  2641 V DreamService[DozeService]: UpdateDoze mDozeScreenState=1 mDozeScreenBrightness=8 mDozeScreenBrightnessFloat=NaN
+10-24 12:42:42.980  1787  3174 D DreamManagerService: Dream requested to start dozing: android.os.Binder@c45cec, screenState=OFF, reason=UNKNOWN, screenBrightnessFloat=NaN, screenBrightnessInt=8, useNormalBrightnessForDoze=false
+10-24 12:42:42.981  1402  1402 D usf_sensor_hal: proximity gated single tap: Enter Batch. Period = 1000000, latency = 0.
+10-24 12:42:42.981  1402  1402 D usf_sensor_hal: proximity gated single tap: Enter Activate. Enable = 1.
+10-24 12:42:42.981  2641  2641 D InsetsController: Setting requestedVisibleTypes to -11 (was -9)
+10-24 12:42:42.982  1402  2126 I sensor-suez: Vendor atom [id = 100243] reported.
+10-24 12:42:42.982  2641  2841 V DreamService[DozeService]: UpdateDoze mDozeScreenState=1 mDozeScreenBrightness=34 mDozeScreenBrightnessFloat=NaN
+10-24 12:42:42.984  1787  2328 D DreamManagerService: Dream requested to start dozing: android.os.Binder@c45cec, screenState=OFF, reason=UNKNOWN, screenBrightnessFloat=NaN, screenBrightnessInt=34, useNormalBrightnessForDoze=false
+10-24 12:42:42.984  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for Proximity Gated Single Tap Gesture (active:1).
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: vsc_sensor.cc, 37: VSC: [Proximity Gated Single Tap Gesture] enable: period 1, latency = 0
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: usf_vsc_log.cc, 45: USF: gti: [STTW] configuring sensor with interval: 1, latency: 0
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 584: VSC: [Proximity Gated Single Tap Gesture] requestSensorEvents: sensor 0x10008, period=
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 584: VSC: [Proximity Gated Single Tap Gesture] requestSensorEvents: sensor 0x20006, period=
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1784: USF: Received start sampling request for Touch Single Tap Sensor (active:1).
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: usf_touch_device.cc, 198: gtd: Host enables sensor, type: 1.
+10-24 12:42:42.989  1662  1662 D AOC     : A3:MSG: usf_touch_device.cc, 572: gtd: Bus: 0, Host: 1; Enabled: 0.
+10-24 12:42:42.990  1787  1964 I DisplayPowerController[0]: Blocking screen off
+10-24 12:42:42.991  1402  2126 I sensor-suez: Vendor atom [id = 100242] reported.
+10-24 12:42:42.991  1402  2126 I sensor-suez: Vendor atom [id = 100243] reported.
+10-24 12:42:42.991  1662  1662 D AOC     : A3:MSG: usf_vsc_log.cc, 45: USF: gti: [STTW] prox state far
+10-24 12:42:42.994   678   727 I hwc-display: path=drm, id=0, level=0, nits=0.000000, brightness=-1.000000, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+10-24 12:42:42.995  1402  1402 D usf_sensor_hal: binned brightness: Enter Activate. Enable = 0.
+10-24 12:42:42.997  4156  4874 I AiAiEcho: (REDACTED) Predicting[%d]: %s
+10-24 12:42:42.998  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for Binned Brightness (active:0).
+10-24 12:42:42.998  1662  1662 D AOC     : A3:MSG: vsc_sensor.cc, 68: VSC: [Binned Brightness] disable.
+10-24 12:42:42.998  1662  1662 D AOC     : A3:MSG: vsc_controller.cc, 602: VSC: [Binned Brightness] stopSensorEvents: sensor 0x10005
+10-24 12:42:42.998  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for TMD3733 Ambient Light (active:1).
+10-24 12:42:42.999  4156  4874 I AiAiEcho: (REDACTED) EchoTargets: %s
+10-24 12:42:42.999  4156  4874 I AiAiEcho: Filtered by AiAi flag check: %s
+10-24 12:42:43.001  1662  1662 D AOC     : A3:MSG: usf_vsc_log.cc, 45: USF: [BINNED_BRIGHTNESS] Deleted instance at 0x4014e6f0
+10-24 12:42:43.003  1402  2126 I sensor-suez: Vendor atom [id = 100242] reported.
+10-24 12:42:43.003  1402  2126 I sensor-suez: Vendor atom [id = 100243] reported.
+10-24 12:42:43.004  1787  1964 D WindowManager: Create SleepToken: tag=Display-off, displayId=0
+10-24 12:42:43.006  4156  4874 I AiAiEcho: (REDACTED) #weatherSubItemsTwiddler: Weather removes SubtitleSupplementalItem in surface: %s
+10-24 12:42:43.008  1787  1964 I DisplayPowerController[0]: BrightnessEvent: brt=0.12992126(69.0%), nits=234.00108, lux=-1.0, reason=doze, strat=DozeBrightnessStrategy, state=ON, stateReason=UNKNOWN, policy=DOZE, flags=, initBrt=0.027559055, rcmdBrt=NaN, preBrt=NaN, preLux=0.0, wasShortTermModelActive=false, autoBrightness=false (default), unclampedBrt=0.12992126, hbmMax=0.67, hbmMode=off, thrmMax=1.0, rbcStrength=35, powerFactor=1.0, physDisp=Built-in Screen(local:4619827612623940864), logicalId=0, slowChange=false, rampSpeed=0.0
+10-24 12:42:43.008  1787  1964 I DisplayPowerController[0]: Unblocked screen off after 19 ms
+10-24 12:42:43.008  4156  4874 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+10-24 12:42:43.009  1787  1964 I DisplayBrightnessStrategySelector: Changing the DisplayBrightnessStrategy from DozeBrightnessStrategy to ScreenOffBrightnessStrategy for display 0
+10-24 12:42:43.012  1787  1964 V DisplayPowerController[0]: Brightness [0.0] reason changing to: 'screen_off', previous reason: 'doze'.
+10-24 12:42:43.012  1787  1964 I DisplayPowerController[0]: BrightnessEvent: brt=0.0(0.0%), nits=2.0, lux=-1.0, reason=screen_off, strat=ScreenOffBrightnessStrategy, state=OFF, stateReason=UNKNOWN, policy=DOZE, flags=, initBrt=0.12992126, rcmdBrt=NaN, preBrt=NaN, preLux=0.0, wasShortTermModelActive=false, autoBrightness=false (default), unclampedBrt=-1.0, hbmMax=0.67, hbmMode=off, thrmMax=1.0, rbcStrength=35, powerFactor=1.0, physDisp=Built-in Screen(local:4619827612623940864), logicalId=0, slowChange=false, rampSpeed=0.0
+10-24 12:42:43.014  2922  3493 I PixelDisplayManager: onDisplayChanged(Built-in Screen, 0, local:4619827612623940864): screenOn=false, hbmMode=0, br=0.0, product=DeviceProductInfo{name=TG4C-40B-00, manufacturerPnpId=GGL, productId=0, modelYear=null, manufactureDate=ManufactureDate{week=1, year=1990}, connectionToSinkType=1}
+10-24 12:42:43.015   676   676 D SurfaceFlinger: Setting power mode 0 on physical display 4619827612623940864
+10-24 12:42:43.015   676   676 D SurfaceFlinger: setPhysicalDisplayPowerMode: Optimizing thread scheduling: optimizeForPower
+10-24 12:42:43.015   676   676 D EventThread: Enabling synthetic vsync
+10-24 12:42:43.015   678   752 D hwc-display: setPowerMode:: FBIOBLANK mode(0), blank(4)
+10-24 12:42:43.015   676  3148 I libbinder.BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-24 12:42:43.018  1402  1402 D usf_sensor_hal: proximity: Enter Activate. Enable = 0.
+10-24 12:42:43.019  1787  1882 I DisplayDeviceRepository: Display device changed state: "Built-in Screen", OFF
+10-24 12:42:43.020  1787  1964 D BrightnessThermalClamper: Thermal status observer already started
+10-24 12:42:43.020  4156  4874 I AiAiEcho: (REDACTED) Predicting[%d]: %s
+10-24 12:42:43.021  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for TMD3733 Proximity (active:1).
+10-24 12:42:43.021  1787  1882 I InputManager-JNI: Viewport [0] to add: local:4619827612623940864, isActive: false
+10-24 12:42:43.021  2922  3493 I PixelDisplayManager: onDisplayChanged(Built-in Screen, 0, local:4619827612623940864): screenOn=false, hbmMode=0, br=0.0, product=DeviceProductInfo{name=TG4C-40B-00, manufacturerPnpId=GGL, productId=0, modelYear=null, manufactureDate=ManufactureDate{week=1, year=1990}, connectionToSinkType=1}
+10-24 12:42:43.021  1402  2126 I sensor-suez: Vendor atom [id = 100242] reported.
+10-24 12:42:43.021  1402  2126 I sensor-suez: Vendor atom [id = 100243] reported.
+10-24 12:42:43.022  1787  2356 I InputReader: Reconfiguring input devices, changes=DISPLAY_INFO
+10-24 12:42:43.022  1787  2356 I InputReader: Disabling synaptics_tcm_touch (device 4) because the associated viewport is not active
+10-24 12:42:43.022  1787  2356 I InputReader: Device reconfigured: id=4, name='synaptics_tcm_touch', size 10800x24240, orientation Rotation0, mode DISABLED, display id 0
+10-24 12:42:43.022  4156  4874 I AiAiEcho: (REDACTED) EchoTargets: %s
+10-24 12:42:43.022  4156  4874 I AiAiEcho: Filtered by AiAi flag check: %s
+10-24 12:42:43.023  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 3249: USF: TMD3733: dbv:0 luma:9 leak:0.00/0.00 rr:60 te2:0 status:1 op_hz:0[1]
+10-24 12:42:43.023  1444  1512 D DeviceHalAidl: [default] setParameters: parameters: "screen_state=off"
+10-24 12:42:43.023  1787  1880 D WindowManager: DeferredDisplayUpdater: partially applying DisplayInfo(1080 x 2424) immediately
+10-24 12:42:43.023  1380 27461 D ASvc::Module: updateScreenState: 0
+10-24 12:42:43.024  4156  4874 I AiAiEcho: (REDACTED) #weatherSubItemsTwiddler: Weather removes SubtitleSupplementalItem in surface: %s
+10-24 12:42:43.026  1444  1512 D DeviceHalAidl: [r_submix] setParameters: parameters: "screen_state=off"
+10-24 12:42:43.026  1380  1468 D AHAL_Module: updateScreenState: r_submix: 0
+10-24 12:42:43.026  1444  1512 D DeviceHalAidl: [bluetooth] setParameters: parameters: "screen_state=off"
+10-24 12:42:43.026  1380  1468 D AHAL_Module: updateScreenState: bluetooth: 0
+10-24 12:42:43.027  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 3186: USF: TMD3733: vsync_delay_usec: 11700
+10-24 12:42:43.030  1787  1880 W SurfaceControl: Invalid layer stack -1
+10-24 12:42:43.030  1787  1880 I DisplayDevice: [0] Layerstack set to -1 for local:4619827612623940864
+10-24 12:42:43.033  2922  3493 I PixelDisplayManager: onDisplayChanged(Built-in Screen, 0, local:4619827612623940864): screenOn=false, hbmMode=0, br=0.0, product=DeviceProductInfo{name=TG4C-40B-00, manufacturerPnpId=GGL, productId=0, modelYear=null, manufactureDate=ManufactureDate{week=1, year=1990}, connectionToSinkType=1}
+10-24 12:42:43.034  2812  3249 I bt_shim_scanner: system/main/shim/le_scanning_manager.cc:149 Scan: in shim layer stopped
+10-24 12:42:43.034  2840  2840 D GRIL-S  : [16190]> UPDATE_DEVICE_STATE DeviceState: Usb:1, Wifi: 1, Wifi AP: 0, Earpiece: 0, Bluetooth: 1, Wireless charging: 0, Screen: 0, Camera: 0, 0, -, -, Motion: 1, Bluetooth tethering: 0, Voice: 0, Wifi 2.4G: 0, Radio: 1, Bluetooth connected: 0, Bluetooth media: 0, Wifi Band: 2, Wifi AP Band: 0, Wifi call: 0, mmWave: 0, mCellBackhaul: 0, mHallSensor: 0, mDozeStatus: 2, mAppClassInfo: 0, mWifiCapSensorStatus: 0, mCellCapSensorStatus: 0, mBesideHeadHandStatus: 0, mSpeakerStatus: 0, mProtectiveCaseStatus: 0, mWifiSettingStatus: 0, mGpsStatus: 0
+10-24 12:42:43.034  2812  3194 I bluetooth: system/gd/hci/le_address_manager.cc:277 unregister_client: Client unregistered
+10-24 12:42:43.034  1382  1433 I bthal.activity: LogActivities: Disable LE Scanning, 0x2042
+10-24 12:42:43.036  4156  4874 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+10-24 12:42:43.040 26656 26656 I PkDeviceHelper: PkDeviceHelper.refreshDevices():93 refreshing devices
+10-24 12:42:43.041   476   476 I NearbyDiscovery: (REDACTED) FastPairDisplayObserver: %s -> %s
+10-24 12:42:43.042   476 19342 I NearbyDiscovery: (REDACTED) FastPairScanner: isScreenOn=%s, isLocationEnabled=%s, disableLocationRequirement=%s, isDiscoveryScanningEnabled=%s, during24GhzWifiWarmingUpPeriod=%s
+10-24 12:42:43.042   476 19342 D BluetoothAdapter: isLeEnabled(): ON
+10-24 12:42:43.042  2812  3249 W ScanManager: There is no scan radio to stop
+10-24 12:42:43.043  2812  3249 I bt_shim_scanner: system/main/shim/le_scanning_manager.cc:313 SetScanParameters: in shim layer, scannerId1m=1, scannerIdCoded=0
+10-24 12:42:43.043  2812  3249 I bt_shim_scanner: system/main/shim/le_scanning_manager.cc:149 Scan: in shim layer started
+10-24 12:42:43.043  4156  4874 I AiAiEcho: (REDACTED) #postPredictionTargets: Sending updates to UISurface %s with targets# %s (types=[%s])
+10-24 12:42:43.046  2641  2641 I WeatherSmartspaceView: setFormattedContentDescription: text=24°C, iconDescription=Clear day, contentDescription=Clear day 24°C
+10-24 12:42:43.046  2641  2641 I WeatherSmartspaceView: setFormattedContentDescription: text=24°C, iconDescription=Clear day, contentDescription=Clear day 24°C
+10-24 12:42:43.046  2641  2641 I WeatherData: Weather data parsed SUNNY ("Clear day") 24°C from Bundle[{description=Clear day, feedback_intent=null, explanation_intent=Supplier{VAL_PARCELABLE@144+1920}, is_gaia_linked_data=true, use_celsius=true, state=1, temperature=24}]
+10-24 12:42:43.046  2641  2641 W SsPagerDots: Total number of pages invalid: 0. Assuming 1 page.
+10-24 12:42:43.046   476 19342 I NearbyDiscovery: (REDACTED) FastPairScanner: eventType=%s, intReq=%s, scanning=%s, scanAllowed=%s, bleEnabled=%s, lockScanRate=%s, startScanningByLowPowerMode=%s
+10-24 12:42:43.049  4156  4874 I AiAiEcho: (REDACTED) #postPredictionTargets: Sending updates to UISurface %s with targets# %s (types=[%s])
+10-24 12:42:43.050  2961  3309 D SatelliteController: handleCmdUpdateNtnSignalStrengthReporting: ignore request, satellite is disabled
+10-24 12:42:43.051  1382  2167 I bthal.debug_central: Command Complete Event of LE_SET_EXTENDED_SCAN_ENABLE, opcode:2042
+10-24 12:42:43.051  1382  2167 I bthal.flowcontrol: HciEventPreProcess: HCI Event 0xe Opcode 0x2042 Length 6 unhandled by LeSetExtentedScanEnableEvent
+10-24 12:42:43.053  2812  3194 I bluetooth: system/gd/hci/le_scanning_manager_impl.cc:595 stop_scan: Scanning already stopped, return!
+10-24 12:42:43.056  1382  1433 I bthal.activity: LogActivities: Other ScanMode, ratio:20
+10-24 12:42:43.056  2812  3194 I bluetooth: system/gd/hci/le_address_manager.cc:262 register_client: Client registered
+10-24 12:42:43.057  1382  1433 I bthal.activity: LogActivities: Enable LE Scanning, 0x2042
+10-24 12:42:43.058  1382  2167 I bthal.debug_central: Command Complete Event of LE_SET_EXTENDED_SCAN_ENABLE, opcode:2042
+10-24 12:42:43.058  1382  2167 I bthal.flowcontrol: HciEventPreProcess: HCI Event 0xe Opcode 0x2042 Length 6 unhandled by LeSetExtentedScanEnableEvent
+10-24 12:42:43.073  2840 24715 D GRIL-S  : [16190]< UPDATE_DEVICE_STATE 
+10-24 12:42:43.075  1787  3177 D TelephonyManager: requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=556041376 mSleepTimeMs=350003032 mIdleTimeMs=9445277 mActivityStatsTechSpecificInfo=[{mRat=GERAN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=267}, {mRat=UTRAN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=0}, {mRat=EUTRAN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[485797, 277594, 746068, 547805, 748326],mRxTimeMs=444882018}, {mRat=NGRAN,mFrequencyRange=HIGH,mTxTimeMs[]=[35010, 20149, 59455, 59635, 375749],mRxTimeMs=71537000}, {mRat=NGRAN,mFrequencyRange=MMWAVE,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=0}, {mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=0}]}
+10-24 12:42:43.089  1662  1662 D AOC     : A3:MSG: usf_tbn_server.cc, 263: gti: Receive TBN event id: 2808, op: 1
+10-24 12:42:43.090  1662  1662 D AOC     : A3:MSG: usf_tbn_server.cc, 57: gti: Change bus owner to AOC.
+10-24 12:42:43.091  1662  1662 D AOC     : A3:MSG: usf_touch_device.cc, 572: gtd: Bus: 1, Host: 1; Enabled: 0.
+10-24 12:42:43.092  1662  1662 D AOC     : A3:MSG: s3908_hw.cc, 398: UTD: Enter gesture mode
+10-24 12:42:43.093  1662  1662 D AOC     : A3:MSG: s3908_hw.cc, 334: UTD: Exit deep sleep mode
+10-24 12:42:43.112  1787  4634 D ConnectivityService: requestNetwork for uid/pid:10332/15718 activeRequest: null callbackRequest: 43286 [NetworkRequest [ REQUEST id=43287, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false declaredMethods: AVAIL|LOSING|LOST|UNAVAIL|NC|LP
+10-24 12:42:43.115  1787  2534 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=43287, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.115  1787  2542 D ConnectivityService: NetReassign [43287 : null → 196] [c 0] [a 1] [i 1]
+10-24 12:42:43.115  1787  2534 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=43287, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.115  1787  2534 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=43287, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.115  1787  2534 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=43287, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.115 15718 15807 W ConnectivityManager.CallbackHandler: callback not found for CALLBACK_AVAILABLE message
+10-24 12:42:43.117  1787  4634 D ConnectivityService: requestNetwork for uid/pid:10332/15718 activeRequest: null callbackRequest: 43288 [NetworkRequest [ REQUEST id=43289, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false declaredMethods: AVAIL|LOSING|LOST|UNAVAIL|NC|LP
+10-24 12:42:43.119  1787  2534 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=43289, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.120  1787  2534 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=43289, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.120  1787  2534 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=43289, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.120  1787  2534 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=43289, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10332 RequestorUid: 10332 RequestorPkg: com.snapchat.android UnderlyingNetworks: Null] ]
+10-24 12:42:43.120  1787  2542 D ConnectivityService: NetReassign [43289 : null → 196] [c 0] [a 1] [i 1]
+10-24 12:42:43.128  1439  3556 I WifiHAL : Creating message to get link statistics; iface = 47
+10-24 12:42:43.132  1662  1662 D AOC     : A3:MSG: usf_touch_device.cc, 335: gtd: Device is enabled.
+10-24 12:42:43.132  1662  1662 D AOC     : A3:MSG: usf_tbn_server.cc, 236: gti: Send TBN event response id: 2808, op: 1
+10-24 12:42:43.177 15718 15740 D CursorWindow: Inflated: original size 16384, new size 2097152
+10-24 12:42:43.227  1439  3556 I WifiHAL : index: 0 per_rate_size 32, data_rem_len 1152
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 1 per_rate_size 32, data_rem_len 1120
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 2 per_rate_size 32, data_rem_len 1088
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 3 per_rate_size 32, data_rem_len 1056
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 4 per_rate_size 32, data_rem_len 1024
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 5 per_rate_size 32, data_rem_len 992
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 6 per_rate_size 32, data_rem_len 960
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 7 per_rate_size 32, data_rem_len 928
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 8 per_rate_size 32, data_rem_len 896
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 9 per_rate_size 32, data_rem_len 864
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 10 per_rate_size 32, data_rem_len 832
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 11 per_rate_size 32, data_rem_len 800
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 12 per_rate_size 32, data_rem_len 768
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 13 per_rate_size 32, data_rem_len 736
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 14 per_rate_size 32, data_rem_len 704
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 15 per_rate_size 32, data_rem_len 672
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 16 per_rate_size 32, data_rem_len 640
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 17 per_rate_size 32, data_rem_len 608
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 18 per_rate_size 32, data_rem_len 576
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 19 per_rate_size 32, data_rem_len 544
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 20 per_rate_size 32, data_rem_len 512
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 21 per_rate_size 32, data_rem_len 480
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 22 per_rate_size 32, data_rem_len 448
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 23 per_rate_size 32, data_rem_len 416
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 24 per_rate_size 32, data_rem_len 384
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 25 per_rate_size 32, data_rem_len 352
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 26 per_rate_size 32, data_rem_len 320
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 27 per_rate_size 32, data_rem_len 288
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 28 per_rate_size 32, data_rem_len 256
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 29 per_rate_size 32, data_rem_len 224
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 30 per_rate_size 32, data_rem_len 192
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 31 per_rate_size 32, data_rem_len 160
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 32 per_rate_size 32, data_rem_len 128
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 33 per_rate_size 32, data_rem_len 96
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 34 per_rate_size 32, data_rem_len 64
+10-24 12:42:43.228  1439  3556 I WifiHAL : index: 35 per_rate_size 32, data_rem_len 32
+10-24 12:42:43.229  1439  3556 E libbinder.IPCThreadState: binder thread pool (1 threads) starved for 100 ms
+10-24 12:42:43.231  1439  3556 I WifiHAL : Getting cached scan results, iface handle = 0xb4000078119ff1d0
+10-24 12:42:43.231  1439  3556 E WifiHAL : Creating message to get cached scan results
+10-24 12:42:43.237  1439  3556 I WifiHAL : In GetCachedScanResultsCommand::handleResponse
+10-24 12:42:43.256   676   676 D SurfaceFlinger: Finished setting power mode 0 on physical display 4619827612623940864
+10-24 12:42:43.258  1787  2603 D SurfaceControl: Excessive delay in setPowerMode()
+10-24 12:42:43.258  1787  2603 I LocalDisplayAdapter: SF.setDisplayPowerMode took 243ms
+10-24 12:42:43.259  1388  2081 E Lyric   : quota_allocator.cc:90: 1 calls in 35 sec(s): Quota allocator resource exausted:  - lifetime allocations: 5550, deallocations: 5545, outstanding: 5, peak outstanding: 5
+10-24 12:42:43.259  1388  2081 E Lyric   :  - current bytes allocated: 35880960, peak bytes allocated: 35880960 (framework buffers not tracked)
+10-24 12:42:43.259  1388  2081 E Lyric   :  -  5 instances of {type: AllocationSpec, image: {type: ImageFormat, HalImageFormat: HalImageFormat{ pixel_format = RAW16_BAYER_SBWC, stride_alignment = 64, num_buffers = 1, header_stride_alignment = 16 }, Width: 2104, Height: 1536}, flags: 16} allocated at recycling_allocator.cc:223
+10-24 12:42:43.259  1388  2081 I Lyric   : face_authentication_controller.cc:68: FaceAuthPreAllocation Finished
+10-24 12:42:43.256  1402  2234 I suez-nanoapp-clients: Disabling ip_health nanoapp.
+10-24 12:42:43.266  1662  1662 D AOC     : A3:MSG: usf_sensor.cc, 1792: USF: Received stop sampling request for SPL07003 Barometer (active:0).
+10-24 12:42:43.266  1402  2234 I suez-nanoapp-clients: Vendor atom [id = 100046] reported.
+10-24 12:42:43.267  1662  1662 D AOC     : A3:MSG: spl07003_sensor.cc, 135: USF: Spl07003Sensor: Stop 1 sensor.
+10-24 12:42:43.268  1662  1662 D AOC     : A3:MSG: spl07003_device.cc, 155: USF: Spl07003Device: SPL07003 registry val :0, period: 0 ns.
+10-24 12:42:43.270  1662  1662 D AOC     : A3:MSG: spl07003_sensor.cc, 135: USF: Spl07003Sensor: Stop 0 sensor.
+10-24 12:42:43.270  1662  1662 D AOC     : A3:MSG: spl07003_device.cc, 155: USF: Spl07003Device: SPL07003 registry val :0, period: 0 ns.
+10-24 12:42:43.271  1390  1412 D CHRE    : @ 556050.486: Parsed nanoapp message from host: app ID 0x476f6f676c001022 endpoint 0x8042 msgType 2 payload size 0
+10-24 12:42:43.271  1390  1412 I CHRE    : @ 556050.486: [ip] Received message from host endpoint 0x8042 of type 2 and size 0.
+10-24 12:42:43.271  1390  1412 I CHRE    : @ 556050.486: [ip] App disabled by host.
+10-24 12:42:43.305   678   727 W hwc-display: [PrimaryDisplay,pid=1402,blob#417,chan#0] HistogramDevice::checkQueryResult: DISPLAY_POWEROFF, data is not available
+10-24 12:42:43.305  1402  2198 D usf_sensor_hal: [p0]DISPLAY_POWEROFF
+10-24 12:42:43.307  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 3249: USF: TMD3733: dbv:0 luma:0 leak:0.00/0.00 rr:0 te2:0 status:0 op_hz:0[1]
+10-24 12:42:43.309  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 648: USF: TMD3733: Updated VSYNC Emulation Mode(=0).
+10-24 12:42:43.310  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 3051: USF: TMD3733: [ALS]sync_delay_adjustment: 24700000
+10-24 12:42:43.314  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 712: USF: TMD3733: Updated PERS values PPERS=1 APERS=1
+10-24 12:42:43.344  1787  4634 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-24 12:42:43.346  1787  4634 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-24 12:42:43.350  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-24 12:42:43.355 18725 18725 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP
+10-24 12:42:43.358 18725 18725 I TriggerReceiver: Enqueued NotificationEngagement (once-NotificationEngagementRollup)
+10-24 12:42:43.361  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-24 12:42:43.467 18725 18800 I NotificationEngagementWorker: Engagement rollup wrote 1 date(s) to daily_notification_engagement.csv
+10-24 12:42:43.473 18725 18771 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=2ea68c83-5579-45ec-bd9c-1334993e0190, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]

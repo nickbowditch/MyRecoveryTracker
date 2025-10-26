@@ -1,0 +1,40 @@
+PKG=com.nick.myrecoverytracker
+DEVICE_TIME=Sat Sep 27 14:00:27 AEST 2025
+
+--- CRASH MATCH (logcat crash buffer) ---
+[none]
+
+--- ANR MATCH (events buffer) ---
+[none]
+
+--- ANR MATCH (threadtime/all) ---
+[none]
+
+--- LAST 100 LINES: crash buffer ---
+
+FILES:
+ - anr_dir_listing.txt
+ - anr_ls.txt
+ - diag.console.txt
+ - dropbox.txt
+ - dumpsys_activity_crashes.txt
+ - dumpsys_activity_processes.txt
+ - dumpsys_dropbox.txt
+ - dumpsys_package.txt
+ - last_stack_for_pid.txt
+ - logcat_all.txt
+ - logcat_crash.txt
+ - logcat_events.txt
+ - logcat_live.txt
+ - logcat_system.txt
+ - logcat_threadtime.pid.txt
+ - logcat_threadtime.txt
+ - pid.txt
+ - snapshot.console.txt
+ - snapshot.log
+ - snapshot.txt
+ - summary.txt
+ - tombstones_dir_listing.txt
+ - watch.console.txt
+ - watch.txt
+CRASH-SNAPSHOT RESULT=NONE

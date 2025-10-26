@@ -4,72 +4,92 @@ package com.nick.myrecoverytracker
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import java.util.concurrent.TimeUnit
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        ContextCompat.startForegroundService(
-            context,
-            Intent(context, ForegroundUnlockService::class.java)
-        )
-        ContextCompat.startForegroundService(
-            context,
-            Intent(context, ForegroundSleepService::class.java)
-        )
-
-        WorkScheduler.scheduleDailySleepRollup(context)
-        WorkScheduler.enqueueOneTimeSleepRollup(context)
-
-        val periodicUsage = PeriodicWorkRequestBuilder<UsageCaptureWorker>(
-            24, TimeUnit.HOURS
-        ).addTag("UsageCaptureDaily").build()
-
-        // Use NotificationEngagementWorker as the canonical notification daily rollup
-        val periodicNotif = PeriodicWorkRequestBuilder<NotificationEngagementWorker>(
-            24, TimeUnit.HOURS
-        ).addTag("NotificationEngagementDaily").build()
+        try {
+            context.startService(Intent(context, ForegroundUnlockService::class.java))
+        } catch (_: Throwable) { }
 
         val wm = WorkManager.getInstance(context)
-        wm.enqueueUniquePeriodicWork("mrt_usage_daily", ExistingPeriodicWorkPolicy.UPDATE, periodicUsage)
-        wm.enqueueUniquePeriodicWork("mrt_notification_daily", ExistingPeriodicWorkPolicy.UPDATE, periodicNotif)
 
-        val onceUsage = OneTimeWorkRequestBuilder<UsageCaptureWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .addTag("UsageCaptureBoot")
+        wm.cancelUniqueWork("mrt_notification_daily")
+        wm.cancelAllWorkByTag("NotificationEngagementDaily")
+        wm.pruneWork()
+
+        WorkScheduler.registerAllDaily(context)
+        WorkScheduler.enqueueOneTimeSleepRollup(context)
+
+        val distancePeriodic = PeriodicWorkRequestBuilder<DistanceWorker>(24, TimeUnit.HOURS)
+            .addTag("DistanceDaily")
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
             .build()
+        wm.enqueueUniquePeriodicWork("mrt_distance_daily", ExistingPeriodicWorkPolicy.UPDATE, distancePeriodic)
 
-        val onceUnlock = OneTimeWorkRequestBuilder<UnlockWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .addTag("UnlockScanBoot")
+        val notifPeriodic = PeriodicWorkRequestBuilder<NotificationEngagementWorker>(24, TimeUnit.HOURS)
+            .addTag("NotificationEngagementDaily")
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
             .build()
+        wm.enqueueUniquePeriodicWork("mrt_notification_engagement_daily", ExistingPeriodicWorkPolicy.UPDATE, notifPeriodic)
 
-        val onceSleep = OneTimeWorkRequestBuilder<SleepRollupWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .addTag("SleepRollupBoot")
+        val sleepDurationPeriodic = PeriodicWorkRequestBuilder<SleepDurationWorker>(24, TimeUnit.HOURS)
+            .addTag("SleepDurationDaily")
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
             .build()
+        wm.enqueueUniquePeriodicWork("mrt_sleep_duration_daily", ExistingPeriodicWorkPolicy.UPDATE, sleepDurationPeriodic)
 
-        val onceMovement = OneTimeWorkRequestBuilder<MovementRollupWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .addTag("MovementRollupBoot")
+        val dailySummaryPeriodic = PeriodicWorkRequestBuilder<DailySummaryWorker>(24, TimeUnit.HOURS)
+            .addTag("DailySummaryDaily")
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
             .build()
+        wm.enqueueUniquePeriodicWork("mrt_daily_summary", ExistingPeriodicWorkPolicy.UPDATE, dailySummaryPeriodic)
 
-        // One-time engagement rollup on boot
-        val onceNotif = OneTimeWorkRequestBuilder<NotificationEngagementWorker>()
+        val logExportPeriodic = PeriodicWorkRequestBuilder<LogExportWorker>(24, TimeUnit.HOURS)
+            .addTag("LogExportDaily")
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
+            .build()
+        wm.enqueueUniquePeriodicWork("mrt_log_export_daily", ExistingPeriodicWorkPolicy.UPDATE, logExportPeriodic)
+
+        // NEW: Log retention periodic
+        val logRetentionPeriodic = PeriodicWorkRequestBuilder<LogRetentionWorker>(24, TimeUnit.HOURS)
+            .addTag("LogRetentionDaily")
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
+            .build()
+        wm.enqueueUniquePeriodicWork("mrt_log_retention_daily", ExistingPeriodicWorkPolicy.UPDATE, logRetentionPeriodic)
+
+        val distanceOnce = OneTimeWorkRequestBuilder<DistanceWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("DistanceBoot")
+            .build()
+        val notifOnce = OneTimeWorkRequestBuilder<NotificationEngagementWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .addTag("NotificationEngagementBoot")
             .build()
+        val sleepDurOnce = OneTimeWorkRequestBuilder<SleepDurationWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("SleepDurationBoot")
+            .build()
+        val dailySummaryOnce = OneTimeWorkRequestBuilder<DailySummaryWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("DailySummaryBoot")
+            .build()
+        val logExportOnce = OneTimeWorkRequestBuilder<LogExportWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("LogExportBoot")
+            .build()
+        // NEW: Log retention once
+        val logRetentionOnce = OneTimeWorkRequestBuilder<LogRetentionWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("LogRetentionBoot")
+            .build()
 
-        wm.enqueueUniqueWork("once-UsageCaptureBoot", ExistingWorkPolicy.REPLACE, onceUsage)
-        wm.enqueueUniqueWork("once-UnlockScanBoot", ExistingWorkPolicy.REPLACE, onceUnlock)
-        wm.enqueueUniqueWork("once-SleepRollupBoot", ExistingWorkPolicy.REPLACE, onceSleep)
-        wm.enqueueUniqueWork("once-MovementRollupBoot", ExistingWorkPolicy.REPLACE, onceMovement)
-        wm.enqueueUniqueWork("once-EngagementRollupBoot", ExistingWorkPolicy.REPLACE, onceNotif)
+        wm.enqueueUniqueWork("once-DistanceBoot", ExistingWorkPolicy.REPLACE, distanceOnce)
+        wm.enqueueUniqueWork("once-NotificationEngagementBoot", ExistingWorkPolicy.REPLACE, notifOnce)
+        wm.enqueueUniqueWork("once-SleepDurationBoot", ExistingWorkPolicy.REPLACE, sleepDurOnce)
+        wm.enqueueUniqueWork("once-DailySummaryBoot", ExistingWorkPolicy.REPLACE, dailySummaryOnce)
+        wm.enqueueUniqueWork("once-LogExportBoot", ExistingWorkPolicy.REPLACE, logExportOnce)
+        wm.enqueueUniqueWork("once-LogRetentionBoot", ExistingWorkPolicy.REPLACE, logRetentionOnce)
     }
 }

@@ -1,0 +1,36 @@
+--------- beginning of main
+10-23 11:16:45.361  1390  1412 D CHRE    : @ 464490.111: timepulse GPI 49, timestamp:11415307538688
+10-23 11:16:45.361  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x6 size 9 
+10-23 11:16:45.362  1390  1412 D CHRE    : @ 464490.111: [TimeSync] ProcessPpsPulse: fiq counter 11415307538688
+10-23 11:16:45.542  1787  2796 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-23 11:16:45.545  1787  2796 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-23 11:16:45.548  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 11:16:45.553 27467 27467 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP
+10-23 11:16:45.554  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-23 11:16:45.665  1787  2796 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-23 11:16:45.670  1787  2796 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-23 11:16:45.671  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 11:16:45.677 27467 27467 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP
+10-23 11:16:45.679  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-23 11:16:45.689  1661  1661 W TracingMuxer: type=1400 audit(0.0:205162): avc:  denied  { write } for  name="traced_producer" dev="tmpfs" ino=1353 scontext=u:r:gxp_logging:s0 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0
+10-23 11:16:46.073  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 11:16:46.075  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 11:16:46.165 21270 21279 E gcblocker: too long GC blocking: 8
+10-23 11:16:46.166 21270 21279 E gcblocker: gc block end, 373344553,100
+10-23 11:16:46.359  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x8 size 4 
+10-23 11:16:46.360  1390  1412 I CHRE    : @ 464491.108: [TimeSyncManager] AR=2 confidence=846 motion confidence=978
+10-23 11:16:46.360  1390  1412 W CHRE    : @ 464491.109: [TimeSyncManager] Unexpected event type 33026
+10-23 11:16:46.360  1390  1412 D CHRE    : @ 464491.111: timepulse GPI 49, timestamp:11415332115185
+10-23 11:16:46.361  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x6 size 9 
+10-23 11:16:46.361  1390  1412 D CHRE    : @ 464491.111: [TimeSync] ProcessPpsPulse: fiq counter 11415332115185
+10-23 11:16:46.537  1390  1412 I CHRE    : @ 464491.287: [ImuCal] [GYRO_RPS] (s0, c0) Offset | Temp [C] | Quality: -0.000260, -0.000383, -0.001419 | 30.25 | 4
+10-23 11:16:46.537  1390  1412 I CHRE    : @ 464491.287: [ImuCal] [GYRO_RPS] (s0) Temp Sensitivity: 0.000100, 0.000039, 0.000026
+10-23 11:16:46.537  1390  1412 I CHRE    : @ 464491.287: [ImuCal] [GYRO_RPS] (s0) Temp Intercept: -0.003284, -0.001554, -0.002198
+10-23 11:16:47.361  1390  1412 D CHRE    : @ 464492.111: timepulse GPI 49, timestamp:11415356691683
+10-23 11:16:47.361  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x6 size 9 
+10-23 11:16:47.362  1390  1412 D CHRE    : @ 464492.111: [TimeSync] ProcessPpsPulse: fiq counter 11415356691683
+10-23 11:16:47.599  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 11:16:47.604  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 11:16:47.690 21270 21279 E gcblocker: too long GC blocking: 8
+10-23 11:16:47.690 21270 21279 E gcblocker: gc block end, 373346077,101

@@ -1,0 +1,7 @@
+CSV=files/daily_distance_log.csv
+HEADER=date,distance_km
+ROWS_TOTAL=1
+INVALID_COUNT=0
+--- INVALID SAMPLES (max 50) ---
+
+DI3 RESULT=PASS

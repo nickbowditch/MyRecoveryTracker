@@ -1,0 +1,9 @@
+✅ ForegroundUnlockService start logged
+✅ LocationCaptureService start logged
+✅ NotificationEngagement periodic enqueued
+✅ RedcapDiag log executed
+✅ ForegroundUnlockService alive
+✅ LocationCaptureService alive
+✅ Jobs present in JobScheduler (256)
+✅ Trigger ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP enqueued worker
+✅ Trigger ACTION_RUN_DISTANCE_DAILY enqueued worker

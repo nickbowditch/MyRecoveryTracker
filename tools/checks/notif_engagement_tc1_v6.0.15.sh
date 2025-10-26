@@ -35,6 +35,6 @@ sleep 2
 
 row="$(adb exec-out run-as "$PKG" awk -F, -v d="$T" 'NR>1&&$1==d{print;exit}' "$DAILY" | tr -d '\r')"
 case "$row" in
-  "$T",1,2,1,0.500000) echo "TC1 RESULT=PASS" | tee "$OUT" ;;
-  *) echo "TC1 RESULT=FAIL (row=$row)" | tee "$OUT"; exit 1 ;;
+"$T",1,2,1,0.500000) echo "TC1 RESULT=PASS" | tee "$OUT" ;;
+*) echo "TC1 RESULT=FAIL (row=$row)" | tee "$OUT"; exit 1 ;;
 esac

@@ -1,0 +1,14 @@
+=== LOG ===
+10-25 08:57:16.442  1787  5056 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-25 08:57:16.444  1787  5056 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-25 08:57:16.451 31489 31489 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP
+10-25 08:57:16.453 31489 31489 I TriggerReceiver: Enqueued UnlockRollup (once-UnlockRollup)
+10-25 08:57:16.591 31489 31516 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=e8c713e5-0ad9-416a-84d7-5220fe34a800, tags={ com.nick.myrecoverytracker.UnlockRollupWorker, UnlockRollup } ]
+
+=== TAIL: files/daily_unlocks.csv ===
+2025-10-20,v6.0,0
+2025-10-21,v6.0,0
+2025-10-22,v6.0,1
+2025-10-23,v6.0,50
+2025-10-25,v6.0,4
+GV7 RESULT=PASS

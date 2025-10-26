@@ -1,0 +1,7 @@
+=== BEFORE ===
+app/src/main/java/com/nick/myrecoverytracker/ForegroundSleepService.kt:29://startForeground(NOTI_ID, noti, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+app/src/main/java/com/nick/myrecoverytracker/ForegroundSleepService.kt:31://startForeground(NOTI_ID, noti)
+
+=== AFTER ===
+app/src/main/java/com/nick/myrecoverytracker/ForegroundSleepService.kt:29://startForeground(NOTI_ID, noti, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+app/src/main/java/com/nick/myrecoverytracker/ForegroundSleepService.kt:31://startForeground(NOTI_ID, noti)

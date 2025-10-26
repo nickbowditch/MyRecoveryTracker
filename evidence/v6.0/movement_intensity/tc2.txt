@@ -1,0 +1,7 @@
+today=2025-10-25
+yesterday=Sat 25 Oct 2025 09:00:38 AEDT
+--- DEBUG: YDAY 23:50-23:59 ---
+--- DEBUG: TODAY 00:00-00:10 ---
+--- DEBUG: BAD after-midnight labeled YDAY (count=0) ---
+--- DEBUG: BAD before-midnight labeled TODAY (count=0) ---
+TC2 RESULT=PASS

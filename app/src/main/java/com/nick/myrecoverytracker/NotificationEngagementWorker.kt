@@ -19,7 +19,7 @@ class NotificationEngagementWorker(
         val ctx = applicationContext
         val files = ctx.filesDir
 
-        val inFile  = File(files, IN_FILE)
+        val inFile = File(files, IN_FILE)
         val outFile = File(files, OUT_FILE)
         val lockFile = File(ctx.filesDir.parentFile, LOCK_FILE)
 
@@ -28,7 +28,7 @@ class NotificationEngagementWorker(
 
         if (!inFile.exists()) {
             ensureHeader(outFile, header)
-            Log.i(TAG, "No $IN_FILE; wrote header only.")
+            Log.i(TAG, "No $IN_FILE found; wrote header only.")
             return@withContext Result.success()
         }
 
@@ -40,15 +40,14 @@ class NotificationEngagementWorker(
                 if (line.isEmpty()) return@forEachLine
                 if (isHeaderLike(line)) return@forEachLine
 
-                // Normalize first column to a date (YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)
                 val firstCol = line.substringBefore(',', "")
                 val date = if (firstCol.length >= 10) firstCol.substring(0, 10) else firstCol
                 if (!DATE_RE.matches(date)) return@forEachLine
 
                 when (classify(line)) {
                     EventKind.DELIVERED -> agg.getOrPut(date) { Counts() }.delivered++
-                    EventKind.OPENED    -> agg.getOrPut(date) { Counts() }.opened++
-                    EventKind.OTHER     -> Unit
+                    EventKind.OPENED -> agg.getOrPut(date) { Counts() }.opened++
+                    EventKind.OTHER -> Unit
                 }
             }
         } catch (t: Throwable) {
@@ -88,7 +87,11 @@ class NotificationEngagementWorker(
     }
 
     private fun readHeaderLock(lock: File): String =
-        try { if (lock.exists()) lock.readText().trim().replace("\r", "") else "" } catch (_: Throwable) { "" }
+        try {
+            if (lock.exists()) lock.readText().trim().replace("\r", "") else ""
+        } catch (_: Throwable) {
+            ""
+        }
 
     private fun ensureHeader(out: File, header: String) {
         if (!out.exists() || out.length() == 0L) {
@@ -106,18 +109,15 @@ class NotificationEngagementWorker(
         }
     }
 
-    // Accept both golden schema and legacy listener headers
     private fun isHeaderLike(line: String): Boolean {
         val l = line.lowercase(Locale.US)
         return l.startsWith("timestamp,") || l.startsWith("ts,")
     }
 
-    // Line-based classifier using CSV parsing; supports golden + aliases
     private fun classify(line: String): EventKind {
         val cols = readCols(line)
         if (cols.isEmpty()) return EventKind.OTHER
 
-        // Prefer 2-col (golden) event position if present
         if (cols.size >= 2) {
             val ev2 = cols[1].trim().uppercase(Locale.US)
             when {
@@ -126,7 +126,6 @@ class NotificationEngagementWorker(
             }
         }
 
-        // Fallback to listener-style columns: event,reason
         if (cols.size >= 5) {
             val ev = cols[4].trim().uppercase(Locale.US)
             if (ev == "POSTED") return EventKind.DELIVERED
@@ -139,7 +138,6 @@ class NotificationEngagementWorker(
         return EventKind.OTHER
     }
 
-    // CSV splitter (handles quotes/double-quotes)
     private fun readCols(line: String): List<String> {
         val out = ArrayList<String>(8)
         val sb = StringBuilder()
@@ -150,7 +148,8 @@ class NotificationEngagementWorker(
             when (c) {
                 '"' -> {
                     if (inQuotes && i + 1 < line.length && line[i + 1] == '"') {
-                        sb.append('"'); i += 1
+                        sb.append('"')
+                        i += 1
                     } else {
                         inQuotes = !inQuotes
                     }
@@ -158,7 +157,8 @@ class NotificationEngagementWorker(
                 ',' -> if (inQuotes) {
                     sb.append(c)
                 } else {
-                    out.add(sb.toString()); sb.setLength(0)
+                    out.add(sb.toString())
+                    sb.setLength(0)
                 }
                 '\r' -> {}
                 else -> sb.append(c)

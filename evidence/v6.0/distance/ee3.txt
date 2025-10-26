@@ -1,0 +1,23 @@
+[INFO] EE3 Runs under Doze/idle
+[INFO] Forcing device into idle
+[INFO] Seeding files/location_log.csv for 2025-10-25
+[INFO] Broadcasting app trigger
+[INFO] Capturing jobscheduler slice (for debug only)
+[INFO] Waiting for SUCCESS evidence (CSV/logs) under idle (deadline 15s)
+=== location_log.csv (head) ===
+ts,lat,lon,accuracy
+2025-10-25 08:00:00,-33.8675,151.2070,12
+2025-10-25 08:30:00,-33.8700,151.2100,10
+2025-10-25 09:00:00,-33.8730,151.2150,9
+=== daily_distance_log.csv (head) ===
+date,distance_km
+2025-10-25,0.96
+=== logcat (tail, filtered) ===
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver( 4551): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+I/TriggerReceiver( 4551): Enqueued DistanceDaily (once-DistanceDaily)
+I/DistanceWorker( 4551): DistanceWorker SUCCESS: 2025-10-25 distance_km=0.96 points=3 timeMs=6
+I/WM-WorkerWrapper( 4551): Worker result SUCCESS for Work [ id=2fa8d005-6c6c-420a-a0c6-2a120de9257b, tags={ com.nick.myrecoverytracker.DistanceWorker, DistanceDaily } ]
+[PASS] CSV row present for 2025-10-25: 2025-10-25,0.96
+RESULT=PASS

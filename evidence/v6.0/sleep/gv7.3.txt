@@ -1,0 +1,52 @@
+=== LOG ===
+10-25 08:57:34.626  1787  4634 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-25 08:57:34.630  1787  4634 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-25 08:57:34.638 32033 32033 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP
+10-25 08:57:34.641 32033 32033 I TriggerReceiver: Enqueued SleepRollup (once-SleepRollup)
+10-25 08:57:34.726 32033 32084 I SleepRollupWorker: filesDir=/data/user/0/com.nick.myrecoverytracker/files
+10-25 08:57:34.728 32033 32084 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_summary.csv size=793
+10-25 08:57:34.728 32033 32084 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_summary_legacy.csv size=1163
+10-25 08:57:34.728 32033 32084 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_duration.csv size=1016
+10-25 08:57:34.729 32033 32084 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_time.csv size=958
+10-25 08:57:34.729 32033 32084 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_wake_time.csv size=974
+10-25 08:57:34.729 32033 32084 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_quality.csv size=1368
+10-25 08:57:34.878 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-09-25T07:35:43+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:57:35.048 32033 32084 I SleepRollupWorker: SLEEP_ACCEPT at=2025-09-25T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:57:35.071 32033 32084 I SleepRollupWorker: Sleep 2025-09-25 -> sleep=01:05:00 wake=07:35:43 hours=6.51 quality=OK
+10-25 08:57:35.152 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-09-26T06:47:10+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:57:35.404 32033 32084 I SleepRollupWorker: SLEEP_ACCEPT at=2025-09-26T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:57:35.419 32033 32084 I SleepRollupWorker: Sleep 2025-09-26 -> sleep=01:05:00 wake=06:47:10 hours=5.70 quality=OK
+10-25 08:57:35.502 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-09-27T06:22:42+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:57:35.691 32033 32084 I SleepRollupWorker: SLEEP_ACCEPT at=2025-09-27T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:57:35.702 32033 32084 I SleepRollupWorker: Sleep 2025-09-27 -> sleep=01:05:00 wake=06:22:42 hours=5.30 quality=OK
+10-25 08:57:35.779 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-09-28T08:05:08+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:57:35.953 32033 32084 I SleepRollupWorker: SLEEP_ACCEPT at=2025-09-28T03:40:37+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:57:36.009 32033 32084 I SleepRollupWorker: Sleep 2025-09-28 -> sleep=03:40:37 wake=08:05:08 hours=4.41 quality=OK
+10-25 08:57:36.093 32033 32084 I SleepRollupWorker: WAKE_REJECT unlock=2025-09-29T08:36:37+10:00[Australia/Sydney] reason=SCREEN_OFF at 2025-09-29T08:36:40+10:00[Australia/Sydney] (+3s < 20s)
+10-25 08:57:36.093 32033 32084 I SleepRollupWorker: WAKE_REJECT unlock=2025-09-29T08:56:53+10:00[Australia/Sydney] reason=SCREEN_OFF at 2025-09-29T08:57:12+10:00[Australia/Sydney] (+19s < 20s)
+10-25 08:57:36.093 32033 32084 I SleepRollupWorker: WAKE_REJECT unlock=2025-09-29T09:20:03+10:00[Australia/Sydney] reason=SCREEN_OFF at 2025-09-29T09:20:15+10:00[Australia/Sydney] (+12s < 20s)
+10-25 08:57:36.094 32033 32084 I SleepRollupWorker: WAKE_REJECT unlock=2025-09-29T09:36:58+10:00[Australia/Sydney] reason=SCREEN_OFF at 2025-09-29T09:37:06+10:00[Australia/Sydney] (+8s < 20s)
+10-25 08:57:36.095 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-09-29T09:46:19+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:57:36.289 32033 32084 I SleepRollupWorker: SLEEP_ACCEPT at=2025-09-28T22:58:43+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:57:36.301 32033 32084 I SleepRollupWorker: Sleep 2025-09-29 -> sleep=22:58:43 wake=09:46:19 hours=10.79 quality=OK
+10-25 08:57:36.374 32033 32084 I SleepRollupWorker: WAKE_NONE date=2025-09-30 reason=No UNLOCK that survives 20s
+10-25 08:57:36.387 32033 32084 I SleepRollupWorker: Sleep 2025-09-30 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+10-25 08:57:36.492 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-01T17:58:59+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:57:36.668 32033 32084 I SleepRollupWorker: SLEEP_ACCEPT at=2025-10-01T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:57:36.681 32033 32084 I SleepRollupWorker: Sleep 2025-10-01 -> sleep=01:05:00 wake=17:58:59 hours=12.00 quality=OK
+10-25 08:57:36.747 32033 32084 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-02T07:40:26+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+
+=== TAIL: files/daily_sleep_summary.csv ===
+2025-10-19,319,1.00
+2025-10-21,0,0.00
+2025-10-23,602,1.00
+2025-10-22,0,0.00
+2025-10-25,389,1.00
+
+=== TAIL: files/daily_sleep_duration.csv ===
+2025-10-19,5.32
+2025-10-21,0.00
+2025-10-23,10.03
+2025-10-22,0.00
+2025-10-25,6.49
+GV7 RESULT=FAIL (bad or missing CSV rows)

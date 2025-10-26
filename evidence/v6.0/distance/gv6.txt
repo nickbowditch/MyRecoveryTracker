@@ -1,0 +1,5 @@
+lock_repo_path=app/locks/daily_distance_log.header
+csv_device_path=files/daily_distance_log.csv
+lock_header=date,distance_km
+csv_header=date,distance_km
+GV6 RESULT=PASS

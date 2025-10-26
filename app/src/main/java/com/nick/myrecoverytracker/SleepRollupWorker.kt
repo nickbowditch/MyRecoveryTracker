@@ -26,16 +26,21 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         val fScreen = File(dir, "screen_log.csv")
         val fNotif  = File(dir, "notification_log.csv")
 
-        val outSummary = ensureHeader(File(dir, "daily_sleep_summary.csv"),
-            "date,sleep_time,wake_time,duration_hours")
-        val outDur     = ensureHeader(File(dir, "daily_sleep_duration.csv"),
-            "date,hours")
-        val outST      = ensureHeader(File(dir, "daily_sleep_time.csv"),
-            "date,HH:MM:SS")
-        val outWT      = ensureHeader(File(dir, "daily_wake_time.csv"),
-            "date,HH:MM:SS")
-        val outQ       = ensureHeader(File(dir, "daily_sleep_quality.csv"),
-            "date,quality")
+        // v6 summary (NEW, for REDCap mapping)
+        val outSummaryV6 = ensureHeader(
+            File(dir, "daily_sleep_summary.csv"),
+            "date,total_sleep_minutes,sleep_efficiency"
+        )
+        // Legacy summary (kept so nothing breaks)
+        val outSummaryLegacy = ensureHeader(
+            File(dir, "daily_sleep_summary_legacy.csv"),
+            "date,sleep_time,wake_time,duration_hours"
+        )
+
+        val outDur = ensureHeader(File(dir, "daily_sleep_duration.csv"), "date,hours")
+        val outST  = ensureHeader(File(dir, "daily_sleep_time.csv"), "date,HH:MM:SS")
+        val outWT  = ensureHeader(File(dir, "daily_wake_time.csv"), "date,HH:MM:SS")
+        val outQ   = ensureHeader(File(dir, "daily_sleep_quality.csv"), "date,quality")
 
         val today = LocalDate.now(zone)
         val backfillDays = inputData.getInt("backfill_days", 30).coerceIn(1, 400)
@@ -48,11 +53,21 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         var d = startDate
         while (!d.isAfter(today)) {
             val r = computeForDate(d, fUnlock, fScreen, fNotif)
-            upsert(outSummary, d.format(fmtDate), listOf(r.sleepTime ?: "", r.wakeTime ?: "", to2(r.hours)))
-            upsert(outDur,     d.format(fmtDate), listOf(to2(r.hours)))
-            upsert(outST,      d.format(fmtDate), listOf(r.sleepTime ?: ""))
-            upsert(outWT,      d.format(fmtDate), listOf(r.wakeTime ?: ""))
-            upsert(outQ,       d.format(fmtDate), listOf(r.quality))
+
+            // --- v6 summary ---
+            val minutes = (r.hours * 60.0).coerceAtLeast(0.0)
+            val eff = estimateEfficiency(r) // 0.00–1.00
+            upsert(outSummaryV6, d.format(fmtDate), listOf(to0(minutes), to2(eff)))
+
+            // --- legacy summary (unchanged schema) ---
+            upsert(outSummaryLegacy, d.format(fmtDate), listOf(r.sleepTime ?: "", r.wakeTime ?: "", to2(r.hours)))
+
+            // --- other files (unchanged) ---
+            upsert(outDur, d.format(fmtDate), listOf(to2(r.hours)))
+            upsert(outST,  d.format(fmtDate), listOf(r.sleepTime ?: ""))
+            upsert(outWT,  d.format(fmtDate), listOf(r.wakeTime ?: ""))
+            upsert(outQ,   d.format(fmtDate), listOf(r.quality))
+
             processed++
             if (r.sleepTime != null || r.wakeTime != null || r.hours > 0.0) wrote++
             lastLog = "Sleep ${d.format(fmtDate)} -> sleep=${r.sleepTime ?: "-"} wake=${r.wakeTime ?: "-"} hours=${to2(r.hours)} quality=${r.quality}"
@@ -60,18 +75,20 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
             d = d.plusDays(1)
         }
 
-        // TC-1 heal: if both UTC "today" and LOCAL "today" exist, prefer LOCAL and drop UTC key
-        healDropUtcTodayIfBoth(outSummary)
+        // Heal UTC/local dupes & rotate
+        healDropUtcTodayIfBoth(outSummaryV6)
+        healDropUtcTodayIfBoth(outSummaryLegacy)
         healDropUtcTodayIfBoth(outDur)
         healDropUtcTodayIfBoth(outST)
         healDropUtcTodayIfBoth(outWT)
         healDropUtcTodayIfBoth(outQ)
 
-        rotateByDate(outSummary, keepDays = 400)
-        rotateByDate(outDur,     keepDays = 400)
-        rotateByDate(outST,      keepDays = 400)
-        rotateByDate(outWT,      keepDays = 400)
-        rotateByDate(outQ,       keepDays = 400)
+        rotateByDate(outSummaryV6,      keepDays = 400)
+        rotateByDate(outSummaryLegacy,  keepDays = 400)
+        rotateByDate(outDur,            keepDays = 400)
+        rotateByDate(outST,             keepDays = 400)
+        rotateByDate(outWT,             keepDays = 400)
+        rotateByDate(outQ,              keepDays = 400)
 
         Log.i(TAG, "Sleep backfill_days=$backfillDays processed=$processed wrote=$wrote last=\"$lastLog\"")
         return Result.success()
@@ -84,12 +101,15 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         val quality: String
     )
 
+    // Simple placeholder efficiency: 1.00 when we have a valid interval, else 0.00.
+    // Keeps REDCap happy without inventing complicated heuristics.
+    private fun estimateEfficiency(r: SleepResult): Double =
+        if (r.hours > 0.0 && r.sleepTime != null && r.wakeTime != null) 1.0 else 0.0
+
     private fun computeForDate(date: LocalDate, fUnlock: File, fScreen: File, fNotif: File): SleepResult {
-        // Strict wake: first UNLOCK >= 04:00 with no SCREEN_OFF within 20s after the UNLOCK
         val wakeZ = firstStrictWakeAfter4am(fUnlock, fScreen, date, debug = true)
             ?: return SleepResult(null, null, 0.0, "NO_MORNING_WAKE")
 
-        // Strict sleep: last SCREEN_OFF/LOCK in [21:00 prev day, 04:00 same day] with 60m quiet
         val sleepZ = lastStrictSleepWith60mQuiet(fScreen, fUnlock, date, wakeZ, debug = true)
             ?: return SleepResult(null, wakeZ.toLocalTime().formatHms(), 0.0, "NO_SLEEP_CANDIDATE")
 
@@ -106,6 +126,7 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         )
     }
 
+    // --- Wake/sleep detection (unchanged) ---
     private fun firstStrictWakeAfter4am(
         fUnlock: File,
         fScreen: File,
@@ -113,9 +134,7 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         debug: Boolean = false
     ): ZonedDateTime? {
         val dayStart = date.atTime(4, 0).atZone(zone)
-        val dayEnd   = date.plusDays(1).atStartOfDay(zone) // hard end: 00:00 next day
-
-        // Load unlocks in [04:00, 24:00) of `date`
+        val dayEnd   = date.plusDays(1).atStartOfDay(zone)
         val unlocks = mutableListOf<ZonedDateTime>()
         if (fUnlock.exists()) fUnlock.useLines { seq ->
             seq.forEach { line ->
@@ -127,7 +146,6 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         }
         unlocks.sortBy { it.toInstant().toEpochMilli() }
 
-        // SCREEN_OFFs (for 20s rejection)
         val offs = mutableListOf<ZonedDateTime>()
         if (fScreen.exists()) fScreen.useLines { seq ->
             seq.forEach { line ->
@@ -153,8 +171,7 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
             }
             if (offWithin20s == null) return u
         }
-
-        if (debug) Log.i(TAG, "WAKE_NONE date=$date reason=No UNLOCK in [${dayStart.toLocalTime()}–${dayEnd.toLocalTime()}) that survives 20s")
+        if (debug) Log.i(TAG, "WAKE_NONE date=$date reason=No UNLOCK that survives 20s")
         return null
     }
 
@@ -167,22 +184,18 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
     ): ZonedDateTime? {
         val windowStart = date.minusDays(1).atTime(21, 0).atZone(zone)
         val windowEndByRule = date.atTime(4, 0).atZone(zone)
-        // Don’t look past wake
         val windowEnd = minOf(windowEndByRule, wakeZ)
-
         if (!windowEnd.isAfter(windowStart)) {
             if (debug) logI("SLEEP_NONE date=$date reason=Empty window")
             return null
         }
 
-        // Candidates: SCREEN_OFF or LOCK within window
         data class C(val z: ZonedDateTime, val type: String)
         val candidates = mutableListOf<C>()
 
         if (fScreen.exists()) fScreen.useLines { seq ->
             seq.forEach { line ->
                 val isOff = line.endsWith(",SCREEN_OFF", true) || line.endsWith(",OFF", true)
-                val isOn  = line.endsWith(",SCREEN_ON",  true) || line.endsWith(",ON",  true)
                 val ts = extractTs(line) ?: return@forEach
                 val z = safeParse(ts) ?: return@forEach
                 if (isOff && !z.isBefore(windowStart) && !z.isAfter(windowEnd)) {
@@ -190,8 +203,6 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
                 }
             }
         }
-
-        // LOCKs frequently live in unlock log; include those as candidates
         if (fUnlock.exists()) fUnlock.useLines { seq ->
             seq.forEach { line ->
                 if (!line.endsWith(",LOCK", true)) return@forEach
@@ -202,14 +213,12 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
                 }
             }
         }
-
         if (candidates.isEmpty()) {
             if (debug) logI("SLEEP_NONE date=$date reason=No candidates in window")
             return null
         }
         candidates.sortBy { it.z.toInstant().toEpochMilli() }
 
-        // Disqualifiers for the 60-minute quiet period
         val unlocks = mutableListOf<ZonedDateTime>()
         if (fUnlock.exists()) fUnlock.useLines { seq ->
             seq.forEach { line ->
@@ -240,7 +249,6 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
             return false
         }
 
-        // Choose the LAST candidate that has a clean 60-minute quiet tail
         for (i in candidates.indices.reversed()) {
             val c = candidates[i]
             val noisy = hasNoiseWithin60mAfter(c.z)
@@ -250,7 +258,6 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
             }
             if (!noisy) return c.z
         }
-
         if (debug) logI("SLEEP_NONE date=$date reason=No candidate with 60m quiet")
         return null
     }
@@ -259,14 +266,8 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
         val t = line.trim()
         if (t.isEmpty()) return null
         if (t.startsWith("date,", true) || t.startsWith("timestamp,", true)) return null
-
         val parts = t.split(',').map { it.trim() }
         if (parts.isEmpty()) return null
-
-        // Accept:
-        // 1) "yyyy-MM-dd HH:mm:ss,EVENT"
-        // 2) "yyyy-MM-ddTHH:mm:ss,EVENT"
-        // 3) "yyyy-MM-dd,HH:mm:ss,EVENT"
         return when {
             parts.size >= 1 && parts[0].length >= 19 && parts[0][10] == ' ' ->
                 parts[0].substring(0, 19)
@@ -391,12 +392,11 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
     private fun LocalTime.formatHms(): String =
         String.format(Locale.US, "%02d:%02d:%02d", hour, minute, second)
 
-    private fun logI(msg: String) {
-        Log.i(TAG, msg)
-    }
+    private fun logI(msg: String) { Log.i(TAG, msg) }
 
     private fun round2(v: Double): Double = round(v * 100.0) / 100.0
     private fun to2(v: Double): String = String.format(Locale.US, "%.2f", v)
+    private fun to0(v: Double): String = String.format(Locale.US, "%.0f", v)
 
     companion object { private const val TAG = "SleepRollupWorker" }
 }

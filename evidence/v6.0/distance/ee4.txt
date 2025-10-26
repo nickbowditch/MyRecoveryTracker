@@ -1,0 +1,44 @@
+=== Raw whitelist dump (head) ===
+system-excidle,com.android.sdm.plugins.connmo,10164
+system-excidle,com.android.providers.calendar,10093
+system-excidle,com.go[PASS] com.nick.myrecoverytracker present in idle whitelist (evidence/ access allowed)
+RESULT=PASS
+.google.android.apps.safetyhub,10129
+system-excidle,com.android.vending,10178
+system-excidle,com.google.android.apps.work.oobconfig,10151
+system-excidle,com.google.android.apps.privacy.wildlife,10168
+system-excidle,com.google.android.carrier,10131
+system-excidle,com.google.android.iwlan,1000
+system-excidle,com.android.sdm.plugins.diagmon,10143
+system-excidle,com.google.android.devicelockcontroller,10270
+system-excidle,com.google.ambient.streaming,10133
+system-excidle,com.android.cellbroadcastreceiver,10079
+system-excidle,com.google.android.apps.carrier.log,10157
+system-excidle,com.google.android.rkpdapp,10267
+system-excidle,com.google.android.gms,10152
+system-excidle,com.android.proxyhandler,10083
+system-excidle,com.google.SSRestartDetector,1000
+system-excidle,com.android.sdm.plugins.dcmo,10139
+system-excidle,com.android.imsserviceentitlement,10121
+system-excidle,com.google.android.wfcactivation,10145
+system-excidle,com.google.android.apps.scone,10126
+system-excidle,com.google.android.apps.turbo,10135
+system-excidle,com.google.android.tetheringentitlement,10170
+system-excidle,com.android.omadm.service,10122
+system-excidle,com.google.pixel.iwlan,1000
+system-excidle,com.google.android.connectivitythermalpowermanager,10237
+system-excidle,com.android.shell,2000
+system-excidle,com.google.android.apps.carrier.carrierwifi,10163
+system-excidle,com.android.emergency,10252
+system-excidle,com.google.android.cellbroadcastreceiver,10255
+system-excidle,com.android.providers.contacts,10082
+system-excidle,com.google.android.GoogleCamera,10177
+system,com.android.sdm.plugins.connmo,10164
+system,com.android.providers.calendar,10093
+system,com.android.providers.downloads,10078
+system,com.google.android.apps.safetyhub,10129
+system,com.google.android.apps.work.oobconfig,10151
+system,com.google.android.apps.privacy.wildlife,10168
+
+=== Filtered entries for com.nick.myrecoverytracker ===
+user,com.nick.myrecoverytracker,10421

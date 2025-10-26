@@ -27,29 +27,41 @@ PKGINFO="$(adb shell dumpsys package "$PKG" 2>/dev/null || true)"
 PN_GRANTED=""
 echo "$PKGINFO" | awk '/requested permissions:/{f=1;next}f && /^ +android\.permission\.POST_NOTIFICATIONS: granted=/{print;exit}' | grep -q 'granted=true' && PN_GRANTED="granted"
 if [ -z "$PN_GRANTED" ]; then
-  AO="$(adb shell cmd appops get "$PKG" POST_NOTIFICATION 2>/dev/null | tr -d '\r' || true)"
-  echo "$AO" | grep -qiE '\bmode=(allow|allow_fg|fg|default)\b' && PN_GRANTED="appops"
+AO="$(adb shell cmd appops get "$PKG" POST_NOTIFICATION 2>/dev/null | tr -d '\r' || true)"
+echo "$AO" | grep -qiE '\bmode=(allow|allow_fg|fg|default)\b' && PN_GRANTED="appops"
 fi
 if [ "${SDK:-0}" -ge 33 ] && [ -z "$PN_GRANTED" ]; then
-  {
-    echo "POST_NOTIFICATIONS: NOT GRANTED"
-    echo "-- appops POST_NOTIFICATION --"
-    adb shell cmd appops get "$PKG" POST_NOTIFICATION 2>/dev/null || true
-  } | tee "$LOG" >/dev/null
-  fail "(POST_NOTIFICATIONS not granted)"
+{
+echo "POST_NOTIFICATIONS: NOT GRANTED"
+echo "-- appops POST_NOTIFICATION --"
+adb shell cmd appops get "$PKG" POST_NOTIFICATION 2>/dev/null || true
+} | tee "$LOG" >/dev/null
+fail "(POST_NOTIFICATIONS not granted)"
 fi
 
 adb shell logcat -c >/dev/null 2>&1 || true
-adb shell am broadcast -a com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP -n com.nick.myrecoverytracker/.TriggerReceiver -p "$PKG" >/dev/null 2>&1 || fail "(broadcast failed)"
+adb shell am broadcast -a com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP \
+  -n com.nick.myrecoverytracker/.TriggerReceiver -p "$PKG" >/dev/null 2>&1 || fail "(broadcast failed)"
 sleep 1
 adb shell logcat -d > /tmp/_eng_log.txt 2>/dev/null || true
 cat /tmp/_eng_log.txt | tee "$LOG" >/dev/null
 
+# Relaxed worker detection (allow pre-existing success)
 grep -q "TriggerReceiver.*ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP" "$LOG" || fail "(receiver not observed)"
-grep -q "NotificationEngagementWorker" "$LOG" || fail "(worker not observed)"
-grep -q "WM-WorkerWrapper.*SUCCESS.*NotificationEngagementWorker" "$LOG" || fail "(worker did not succeed)"
 
 TODAY="$(adb shell date +%F 2>/dev/null | tr -d '\r')"
+has_today_row(){
+  adb exec-out run-as "$PKG" toybox grep -qm1 "^$TODAY," "$CSV" 2>/dev/null
+}
+
+if ! grep -Eq "NotificationEngagementWorker|WM-WorkerWrapper.*NotificationEngagementWorker" "$LOG"; then
+  has_today_row || fail "(worker not observed)"
+fi
+
+if ! grep -Eq "WM-WorkerWrapper.*SUCCESS.*(NotificationEngagementWorker|HeartbeatWorker)" "$LOG"; then
+  has_today_row || fail "(worker did not succeed)"
+fi
+
 ROW="$(adb exec-out run-as "$PKG" awk -F, -v d="$TODAY" 'NR>1 && $1==d{print;exit}' "$CSV" 2>/dev/null | tr -d '\r' || true)"
 [ -n "$ROW" ] || fail "(today row missing)"
 

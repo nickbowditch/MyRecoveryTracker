@@ -2,9 +2,6 @@
 package com.nick.myrecoverytracker
 
 import android.app.KeyguardManager
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,7 +13,6 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import java.io.File
 import java.io.FileOutputStream
@@ -147,18 +143,14 @@ class ForegroundUnlockService : Service() {
     private val screenReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context, intent: Intent) {
             when (intent.action) {
-                Intent.ACTION_USER_PRESENT -> {
-                    logUnlockForSession("USER_PRESENT")
-                }
+                Intent.ACTION_USER_PRESENT -> logUnlockForSession("USER_PRESENT")
                 Intent.ACTION_SCREEN_ON -> {
                     logScreen(true)
                     startNewSession()
                     val interactive = if (Build.VERSION.SDK_INT >= 20) pm.isInteractive else true
                     val locked = km.isKeyguardLocked
                     logDiag("SCREEN_ON", "locked=$locked")
-                    if (interactive && !locked) {
-                        logUnlockForSession("SCREEN_ON_immediate")
-                    }
+                    if (interactive && !locked) logUnlockForSession("SCREEN_ON_immediate")
                     scheduleChecksForCurrentSession()
                 }
                 Intent.ACTION_SCREEN_OFF -> {
@@ -175,10 +167,8 @@ class ForegroundUnlockService : Service() {
         km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         pm = getSystemService(Context.POWER_SERVICE) as PowerManager
         mainHandler = Handler(Looper.getMainLooper())
-        MovementCapture.attach(this)
 
-        createChannel()
-        startForeground(NOTIF_ID, buildNotification())
+        // NO foreground notification here.
 
         val filter = IntentFilter().apply {
             addAction(Intent.ACTION_USER_PRESENT)
@@ -213,41 +203,16 @@ class ForegroundUnlockService : Service() {
         super.onDestroy()
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return START_STICKY
-    }
-
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
     override fun onBind(intent: Intent?): IBinder? = null
 
-    private fun createChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val nm = getSystemService(NotificationManager::class.java)
-            if (nm.getNotificationChannel(CHANNEL_ID) == null) {
-                val importance =
-                    if (BuildConfig.DEBUG) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT
-                val ch = NotificationChannel(CHANNEL_ID, "MyRecovery Tracker (Foreground)", importance)
-                nm.createNotificationChannel(ch)
-            }
-        }
-    }
-
-    private fun buildNotification(): Notification {
-        val priority = if (BuildConfig.DEBUG) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT
-        return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("MyRecoveryAssistant")
-            .setContentText("University study is running")
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .setOngoing(true)
-            .setOnlyAlertOnce(true)
-            .setPriority(priority)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
-            .build()
-    }
-
     companion object {
-        private const val CHANNEL_ID = "mrt_fg_channel_v4"
-        private const val NOTIF_ID = 1001
+        fun start(ctx: Context) {
+            // simple background service start (NOT foreground)
+            runCatching { ctx.startService(Intent(ctx, ForegroundUnlockService::class.java)) }
+        }
+        fun stop(ctx: Context) {
+            runCatching { ctx.stopService(Intent(ctx, ForegroundUnlockService::class.java)) }
+        }
     }
 }

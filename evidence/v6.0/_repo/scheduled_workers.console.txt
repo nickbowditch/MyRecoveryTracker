@@ -1,0 +1,196 @@
+SCHEDULED_WORKERS v6.0
+
+-- JobScheduler --
+    <0>com.nick.myrecoverytracker::timeout-reg:
+      expirationTime=1667031816, windowSizeMs=86400000, countLimit=3, countInWindow=0, inQuotaTime=0
+    <0>com.nick.myrecoverytracker::.schedulePersisted():
+      expirationTime=1667031805, windowSizeMs=60000, countLimit=250, countInWindow=0, inQuotaTime=0
+    <0>com.nick.myrecoverytracker::anr:
+      expirationTime=9223372036854775807, windowSizeMs=21600000, countLimit=3, countInWindow=0, inQuotaTime=0
+    <0>com.nick.myrecoverytracker::timeout-total:
+      expirationTime=1667031805, windowSizeMs=86400000, countLimit=10, countInWindow=0, inQuotaTime=0
+    <0>com.nick.myrecoverytracker::timeout-ej:
+      expirationTime=1633783189, windowSizeMs=86400000, countLimit=5, countInWindow=0, inQuotaTime=0
+    <0>com.google.android.apps.carrier.log::timeout-reg:
+      expirationTime=1608318388, windowSizeMs=86400000, countLimit=3, countInWindow=0, inQuotaTime=0
+    <0>com.google.android.apps.carrier.log::.schedulePersisted():
+--
+  JOB #u0a407/1427: e7c34e1 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s979ms
+--
+  JOB #u0a407/1428: 100b0e3 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s967ms
+--
+  JOB #u0a407/1462: e124b74 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s915ms
+--
+  JOB #u0a407/1463: 228d112 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +23h59m59s931ms
+--
+  JOB #u0a407/1660: f339acc com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+    JobInfo:
+      Service: com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+      Priority: 300 [DEFAULT]
+      Requires: charging=false batteryNotLow=false deviceIdle=false
+      Extras: mParcelledData.dataSize=248
+      Minimum latency: +14m59s947ms
+--
+    10407/com.nick.myrecoverytracker: {-1d8h44m26s742ms=15, -1d7h41m59s348ms=9, -1d5h25m26s866ms=442, -1d4h17m36s526ms=115, -1d3h14m3s73ms=210, -1d1h45m38s844ms=119, -1d0h40m16s916ms=6, -23h25m56s297ms=35, -21h48m49s103ms=18, -20h18m32s762ms=12, -19h1m40s435ms=9, -17h59m26s998ms=9, -16h57m29s642ms=11, -15h53m6s986ms=500, -14h6m55s550ms=3, -12h5m9s869ms=6, -10h39m7s620ms=9, -7h56m22s901ms=12, -6h34m41s574ms=320, -4h57m32s625ms=6, -3h56m27s515ms=12, -2h53m38s370ms=3, -1h53m38s18ms=3, -23m34s130ms=3}
+    10394/com.lumenate.lumenateaa: {-8d1h37m20s671ms=3, -7d2h45m19s564ms=3, -5d1h59m18s275ms=9, -4d2h57m49s398ms=3, -4d1h32m35s676ms=3, -4d0h18m11s947ms=3, -3d19h24m18s966ms=9, -3d18h16m24s821ms=3, -3d2h40m52s162ms=3, -3d1h26m49s40ms=3, -3d0h11m47s449ms=3, -2d18h20m31s14ms=12, -2d2h37m0s112ms=12, -2h52m56s639ms=3}
+    10389/com.yinzcam.nbl.league: {-17d13h18m25s237ms=3, -10d16h16m29s574ms=9, -4d16h57m43s780ms=6, -3d17h8m34s559ms=6, -3d12h54m21s535ms=3}
+    10386/au.com.ticketek: {-2d18h30m27s393ms=3}
+    10369/com.anz.lotus: {-11d13h17m53s876ms=3, -11d9h29m55s130ms=3, -10d12h56m37s435ms=3, -8d14h28m21s407ms=3, -8d0h40m57s240ms=3, -7d13h34m39s732ms=3, -7d4h48m41s103ms=3, -6d13h10m42s481ms=3, -6d6h43m20s133ms=3, -6d0h24m40s398ms=3, -5d19h24m41s16ms=3, -5d12h56m9s235ms=3, -5d8h54m29s329ms=3, -4d22h8m52s516ms=3, -4d18h49m53s608ms=3, -4d13h11m31s26ms=3, -4d9h35m30s124ms=3, -4d2h45m4s46ms=3, -3d12h54m2s281ms=3, -3d8h16m26s424ms=3, -2d12h7m29s605ms=3, -1d20h40m38s895ms=3, -1d12h26m53s841ms=3, -7h54m15s301ms=3}
+--
+    JobStatus{e124b74 #u0a407/1462 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+3h51m15s611ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1752711768
+    JobStatus{d20f5e2 androidx.work.systemjobscheduler:u0a286/1000331 @androidx.work.systemjobscheduler@com.google.android.apps.chromecast.app/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10286 TIME=+2d6h18m13s40ms:none NET satisfied:0x13600002 unsatisfied:0x80000000}: 1871149197
+    JobStatus{3cab1b4 androidx.work.systemjobscheduler:u0a115/569 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.pixel.creativeassistant/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10115 TIME=+5d12h17m17s830ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 2152253987
+    JobStatus{134e0b2 SyncManager:1000/918 @SyncManager@gmail-ls/com.google:android u=0 s=10210 TIME=+17h34m17s389ms:+18h46m17s389ms NET STORENOTLOW PERIODIC PERSISTED satisfied:0x13600008 unsatisfied:0x80000000}: 1764173546
+    JobStatus{a730c50 #u0a119/-546068258 com.google.android.as.oss/com.google.android.gms.learning.internal.training.InAppJobService u=0 s=10119 TIME=+16m9s36ms:none NET CHARGING PERSISTED satisfied:0x13600003 unsatisfied:0x80000000}: 1721625193
+--
+    JobStatus{f339acc #u0a407/1660 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+6m25s986ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1733402144
+    JobStatus{71c27ac SyncManager:1000/102 @SyncManager@gmail-ls/com.google:android u=0 s=10210 TIME=+14h53m44s61ms:+16h5m44s61ms NET STORENOTLOW PERIODIC PERSISTED satisfied:0x13600008 unsatisfied:0x80000000}: 1755920219
+    JobStatus{b6daefb androidx.work.systemjobscheduler:u0a228/5323 #TikTokWorker#com.google.android.libraries.mdi.download.workmanager.tiktok.TikTokPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.apps.pixel.dcservice/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10228 TIME=+18h25m31s130ms:none CHARGING IDLE satisfied:0x3600003 unsatisfied:0x80000004}: 1742707288
+    JobStatus{bb77cd1 #u0a159/1981 com.google.android.settings.intelligence/.modules.routines.impl.ComputeNewInferencesJobService u=0 s=10159 TIME=+22h47m43s841ms:+1d22h47m43s841ms PERIODIC PERSISTED satisfied:0x3600000 unsatisfied:0x80000000}: 1778419999
+    JobStatus{2bea889 androidx.work.systemjobscheduler:u0a209/108981 #ContactsHeavyPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10209 TIME=+22d13h48m17s288ms:none CHARGING IDLE satisfied:0x3600003 unsatisfied:0x80000004}: 3629393446
+--
+    JobStatus{228d112 #u0a407/1463 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+3h51m15s707ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1752711866
+    JobStatus{b6ab775 androidx.work.systemjobscheduler:u0a209/108781 @androidx.work.systemjobscheduler@com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10209 TIME=+2d11h29m47s204ms:none NET satisfied:0x13600000 unsatisfied:0x80000000}: 1889843363
+    JobStatus{82201c0 #u0a126/201471527 com.google.android.apps.scone/.awareness.OosObserver u=0 s=10126 URIS=[android.app.job.JobInfo$TriggerContentUri@854f0d06] satisfied:0x3600000 unsatisfied:0x4000000}: 1736593942
+    JobStatus{ac4421c androidx.work.systemjobscheduler:u0a191/842 #NoOpHackWorker#@androidx.work.systemjobscheduler@com.google.android.deskclock/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10191 TIME=+3609d13h2m8s721ms:none CHARGING satisfied:0x3600003 unsatisfied:0x80000000}: 313540004880
+    JobStatus{21d5423 androidx.work.systemjobscheduler:u0a294/555011268 @androidx.work.systemjobscheduler@com.google.android.keep/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10294 TIME=+3d13h49m46s159ms:none NET satisfied:0x13600000 unsatisfied:0x80000000}: 1994182318
+--
+    JobStatus{100b0e3 #u0a407/1428 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+3h51m15s791ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1752711950
+    JobStatus{89c9a8a androidx.work.systemjobscheduler:u0a194/9949 #GnpWorker#@androidx.work.systemjobscheduler@com.google.android.apps.tachyon/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10194 TIME=+16h5m46s841ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1740443000
+    JobStatus{e0f08dc SyncManager:1000/12 @SyncManager@com.google.android.location.reporting/com.google:android u=0 s=10152 TIME=+14h9m10s717ms:+15h21m10s717ms NET STORENOTLOW PERIODIC PERSISTED satisfied:0x13600008 unsatisfied:0x80000000}: 1750906876
+    JobStatus{a1c682e SyncManager:1000/146 @SyncManager@com.google.android.gms.chromesync/com.google:android u=0 s=10152 TIME=+3h52m11s884ms:+5h4m11s884ms NET STORENOTLOW PERIODIC PERSISTED satisfied:0x13600008 unsatisfied:0x80000000}: 1729548043
+    JobStatus{774f0cf androidx.work.systemjobscheduler:u0a204/667 @androidx.work.systemjobscheduler@com.google.android.apps.docs/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10204 TIME=+6d20h3m48s951ms:none NET satisfied:0x13600002 unsatisfied:0x80000000}: 2266105110
+--
+    JobStatus{e7c34e1 #u0a407/1427 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+16h3m39s711ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1823715870
+    JobStatus{f17205a #u0a135/202 com.google.android.apps.turbo/.deadline.library.DeadlineUpdateJobService u=0 s=10135 URIS=[android.app.job.JobInfo$TriggerContentUri@74bf28f] satisfied:0x3600000 unsatisfied:0x4000000}: 1782328141
+    JobStatus{ae4ded4 androidx.work.systemjobscheduler:u0a196/4840 #GmmWorkerWrapper#@androidx.work.systemjobscheduler@com.google.android.apps.maps/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10196 TIME=+17h18m7s251ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1738663410
+    JobStatus{eae90f1 androidx.work.systemjobscheduler:u0a150/89 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker#@androidx.work.systemjobscheduler@com.google.android.apps.pixel.relationships/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10150 TIME=+2d18h33m21s386ms:none CHARGING satisfied:0x3600003 unsatisfied:0x80000000}: 1914537545
+    JobStatus{7b6f843 androidx.work.systemjobscheduler:u0a123/10939 #TikTokWorker#com.google.android.apps.wellbeing.widget.WidgetFlagCheckWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10123 TIME=+23h18m14s116ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1762430275
+--
+        com.nick.myrecoverytracker
+    
+    Restricted packages:
+    Stats:
+      UID_FG_STATE_CHANGED: count=0, total=0.0ms, avg=0.000ms, max calls/s=0 max dur/s=0.0ms max time=0.0ms
+--
+    10407:com.nick.myrecoverytracker=false
+    10394:com.lumenate.lumenateaa=false
+    10389:com.yinzcam.nbl.league=false
+    10386:au.com.ticketek=false
+    10369:com.anz.lotus=false
+--
+    ##u0a407/1660 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1427 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1462 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1463 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1428 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a369/1901080357 from u0a369 idle: com.anz.lotus [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a358/3300 from u0a358 idle: com.microsoft.office.outlook [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a358/3298 from u0a358 idle: com.microsoft.office.outlook [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a358/3286 from u0a358 idle: com.microsoft.office.outlook [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+--
+    ##u0a407/1660 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1427 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1462 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1463 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1428 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a369/1901080357 from u0a369: com.anz.lotus RUNNABLE
+    ##u0a358/3300 from u0a358: com.microsoft.office.outlook RUNNABLE
+    ##u0a358/3298 from u0a358: com.microsoft.office.outlook RUNNABLE
+    ##u0a358/3286 from u0a358: com.microsoft.office.outlook RUNNABLE
+--
+    Timer<REG>{<0>com.nick.myrecoverytracker} NOT active, 0 running bg jobs
+    
+      Saved events:
+        1651742017 -> 1651742110 (93), 1 bg jobs.
+        1646338129 -> 1646338171 (42), 1 bg jobs.
+--
+    Timer<EJ>{<0>com.nick.myrecoverytracker} NOT active, 0 running bg jobs (debit adj=0)
+    
+      Saved sessions:
+        1629688931 -> 1629689004 (73), 1 bg jobs.
+        1629683820 -> 1629683864 (44), 1 bg jobs.
+--
+    TopAppTimer{<0>com.nick.myrecoverytracker} NOT active
+    TopAppTimer{<0>br.com.blackmountain.photo.tattoosimulator} NOT active
+    TopAppTimer{<0>com.google.android.apps.maps} NOT active
+    TopAppTimer{<0>com.google.android.apps.docs} NOT active
+    TopAppTimer{<0>com.twitter.android} NOT active
+--
+      <0>com.nick.myrecoverytracker
+        ACTIVE: expirationTime=1651742110, allowedTimePerPeriodMs=1200000, windowSizeMs=3600000, jobCountLimit=75, sessionCountLimit=75, executionTimeInWindow=0, bgJobCountInWindow=201, executionTimeInMaxPeriod=0, bgJobCountInMaxPeriod=0, sessionCountInWindow=0, inQuotaTime=0, rateLimitJobCountExpirationTime=1651802017, rateLimitJobCountWindow=1, rateLimitSessionCountExpirationTime=1651802110, rateLimitSessionCountWindow=1
+        WORKING_SET: expirationTime=1651742110, allowedTimePerPeriodMs=0, windowSizeMs=0, jobCountLimit=0, sessionCountLimit=0, executionTimeInWindow=0, bgJobCountInWindow=201, executionTimeInMaxPeriod=0, bgJobCountInMaxPeriod=0, sessionCountInWindow=0, inQuotaTime=0, rateLimitJobCountExpirationTime=1651802017, rateLimitJobCountWindow=1, rateLimitSessionCountExpirationTime=1651802110, rateLimitSessionCountWindow=1
+        FREQUENT: expirationTime=1651742110, allowedTimePerPeriodMs=0, windowSizeMs=0, jobCountLimit=0, sessionCountLimit=0, executionTimeInWindow=0, bgJobCountInWindow=201, executionTimeInMaxPeriod=0, bgJobCountInMaxPeriod=0, sessionCountInWindow=0, inQuotaTime=0, rateLimitJobCountExpirationTime=1651802017, rateLimitJobCountWindow=1, rateLimitSessionCountExpirationTime=1651802110, rateLimitSessionCountWindow=1
+        RARE: expirationTime=1651742110, allowedTimePerPeriodMs=0, windowSizeMs=0, jobCountLimit=0, sessionCountLimit=0, executionTimeInWindow=0, bgJobCountInWindow=201, executionTimeInMaxPeriod=0, bgJobCountInMaxPeriod=0, sessionCountInWindow=0, inQuotaTime=0, rateLimitJobCountExpirationTime=1651802017, rateLimitJobCountWindow=1, rateLimitSessionCountExpirationTime=1651802110, rateLimitSessionCountWindow=1
+--
+      <0>com.nick.myrecoverytracker: ShrinkableDebits { debit tally: 34031, bucket: 6 }
+      <0>com.google.android.apps.carrier.log: ShrinkableDebits { debit tally: 0, bucket: 6 }
+      <0>com.google.android.rkpdapp: ShrinkableDebits { debit tally: 0, bucket: 6 }
+      <0>com.google.android.contacts: ShrinkableDebits { debit tally: 0, bucket: 3 }
+      <0>com.android.server.telecom: ShrinkableDebits { debit tally: 0, bucket: 6 }
+--
+  0-ComponentInfo{com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService}: com.nick.myrecoverytracker
+  0-ComponentInfo{com.google.euiccpixel/com.google.euiccpixel.service.StartOtaService}: com.google.euiccpixel
+  0-ComponentInfo{com.twitter.android/com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService}: com.twitter.android
+  0-ComponentInfo{com.google.android.rkpdapp/androidx.work.impl.background.systemjob.SystemJobService}: com.google.android.rkpdapp
+  0-ComponentInfo{com.instagram.android/com.instagram.notifications.push.IgPushRegistrationService}: com.instagram.android
+--
+  10407: {com.nick.myrecoverytracker}
+  10408: {com.pinterest}
+  10409: {br.com.blackmountain.photo.tattoosimulator}
+
+Historical stats at 2025-10-07-12-37-53 (-1h15m33s160ms) over +30m13s845ms:
+--
+  u0a407 / com.nick.myrecoverytracker:
+    1x pending 1x active 
+    1x successful_finish
+
+Historical stats at 2025-10-07-11-06-14 (-2h47m12s458ms) over +31m17s788ms:
+--
+  u0a407 / com.nick.myrecoverytracker:
+    1x pending 1x active 
+    1x successful_finish
+
+  Job history:
+
+-- WorkManager (activity service) --
+<none>
+
+-- WorkManager (internal DB) --
+<no workdb>
+
+DONE

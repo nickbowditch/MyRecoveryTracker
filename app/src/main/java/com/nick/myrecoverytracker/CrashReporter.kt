@@ -1,7 +1,8 @@
-// app/src/main/java/com/nick/myrecoverytracker/CrashReporter.kt
 package com.nick.myrecoverytracker
 
 import android.app.Application
+import android.util.Log
+import androidx.work.Configuration
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -10,17 +11,27 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class CrashReporter : Application() {
+class CrashReporter : Application(), Configuration.Provider {
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setMinimumLoggingLevel(Log.INFO)
+            .build()
+
     override fun onCreate() {
         super.onCreate()
 
+        val previous = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             try {
-                val ts = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US).format(java.util.Date())
+                val ts = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US)
+                    .format(java.util.Date())
                 val f = File(filesDir, "crash_$ts.txt")
                 f.writeText("${e.javaClass.name}: ${e.message}\n${e.stackTrace.joinToString("\n")}")
-            } catch (_: Throwable) {}
-            Thread.getDefaultUncaughtExceptionHandler()?.uncaughtException(t, e)
+            } catch (_: Throwable) {
+            } finally {
+                previous?.uncaughtException(t, e)
+            }
         }
 
         val entropyReq =
@@ -33,5 +44,7 @@ class CrashReporter : Application() {
             ExistingPeriodicWorkPolicy.UPDATE,
             entropyReq
         )
+
+        Reschedule.runIfNeededOnAppStart(applicationContext)
     }
 }

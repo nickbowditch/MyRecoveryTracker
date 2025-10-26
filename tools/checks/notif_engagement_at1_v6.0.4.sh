@@ -1,55 +1,100 @@
 #!/bin/sh
 set -eu
 PKG="com.nick.myrecoverytracker"
-CSV_DAILY="files/daily_notification_engagement.csv"
-CSV_RAW="files/notification_log.csv"
-ACT="$PKG.ACTION_RUN_ENGAGEMENT_ROLLUP"
-CMP="$PKG/.TriggerReceiver"
-OUT="evidence/v6.0/notification_engagement/at1.4.txt"
-mkdir -p "$(dirname "$OUT")"
+CSV="files/daily_notification_engagement.csv"
+LOCK="app/locks/daily_notif_engagement.header"
+EXP="date,feature_schema_version,delivered,opened,open_rate"
+OUT_DIR="evidence/v6.0/notification_engagement"
+OUT="$OUT_DIR/at1.txt"
+LOG="$OUT_DIR/at1.log.txt"
+mkdir -p "$OUT_DIR"
 
-adb get-state >/dev/null 2>&1 || { echo "AT-1 RESULT=FAIL (no device)" | tee "$OUT"; exit 2; }
-adb shell pm path "$PKG"  >/dev/null 2>&1 || { echo "AT-1 RESULT=FAIL (app not installed)" | tee "$OUT"; exit 3; }
+fail(){ echo "AT-1 RESULT=FAIL $1" | tee "$OUT"; exit 1; }
 
-T="$(adb shell date +%F | tr -d '\r')"
+adb get-state >/dev/null 2>&1 || fail "(no device)"
+adb shell pm path "$PKG" >/dev/null 2>&1 || fail "(app not installed)"
 
-adb exec-out run-as "$PKG" sh -c '
-mkdir -p files
-[ -f "'"$CSV_RAW"'" ]   || printf "ts,event,notif_id\n" >"'"$CSV_RAW"'"
-[ -f "'"$CSV_DAILY"'" ] || printf "date,feature_schema_version,delivered,opened,open_rate\n" >"'"$CSV_DAILY"'"
-' >/dev/null
-
-getc(){ awk -F, -v d="$1" 'NR>1&&$1==d{print $3","$4","$5; f=1; exit} END{if(!f) print ""}'; }
-cnt_raw(){ awk -F, -v d="$1" 'NR>1{ if(substr($1,1,10)==d) c++ } END{ print c+0 }'; }
-
-before_daily="$(adb exec-out run-as "$PKG" cat "$CSV_DAILY" 2>/dev/null | tr -d '\r' | getc "$T")"
-before_raw="$(adb exec-out run-as "$PKG"  cat "$CSV_RAW"   2>/dev/null | tr -d '\r' | cnt_raw "$T")"
-
-TS1="$T 09:11:07"
-TS2="$T 12:22:09"
-
-adb exec-out run-as "$PKG" sh -c '
-f="'"$CSV_RAW"'"
-printf "%s,POSTED,at1-a\n%s,CLICKED,at1-a\n" "'"$TS1"'" "'"$TS2"'" >>"$f"
-' >/dev/null
-
-adb shell am broadcast -a "$ACT" -n "$CMP" >/dev/null 2>&1 || true
-sleep 2
-adb shell am broadcast -a "$ACT" -n "$CMP" >/dev/null 2>&1 || true
-sleep 1
-
-after_daily="$(adb exec-out run-as "$PKG" cat "$CSV_DAILY" 2>/dev/null | tr -d '\r' | getc "$T")"
-after_raw="$(adb exec-out run-as "$PKG"  cat "$CSV_RAW"   2>/dev/null | tr -d '\r' | cnt_raw "$T")"
-
-adb exec-out run-as "$PKG" sh -c '
-in="'"$CSV_RAW"'"; tmp="${in}.tmp.$$"; a="'"$TS1"'"; b="'"$TS2"'"
-awk -F, -v a="$a" -v b="$b" '"'"'NR==1{print;next}{ if(!($1==a && $2=="POSTED") && !($1==b && $2=="CLICKED")) print }'"'"' "$in" >"$tmp" && mv "$tmp" "$in"
-' >/dev/null || true
-
-inc_raw=$(( ${after_raw:-0} - ${before_raw:-0} ))
-
-if [ "$inc_raw" -ge 2 ] && [ "$after_daily" != "$before_daily" ]; then
-echo "AT-1 RESULT=PASS" | tee "$OUT"; exit 0
-else
-echo "AT-1 RESULT=FAIL (daily=$after_daily raw=$after_raw inc_raw=$inc_raw before_daily=$before_daily)" | tee "$OUT"; exit 1
+# --- Ensure headers + seed RAW for today ---
+TODAY="$(adb shell date +%F 2>/dev/null | tr -d '\r')"
+adb shell run-as "$PKG" sh <<'IN'
+set -eu
+HDR="date,feature_schema_version,delivered,opened,open_rate"
+mkdir -p files app/locks
+echo "$HDR" > app/locks/daily_notif_engagement.header
+if [ ! -f files/daily_notification_engagement.csv ]; then
+  echo "$HDR" > files/daily_notification_engagement.csv
 fi
+RAW="files/notification_log.csv"
+t="$(toybox date +%F)"
+have_today=0
+if [ -f "$RAW" ]; then
+  toybox grep -qm1 "^$t," "$RAW" && have_today=1 || true
+fi
+if [ "$have_today" -eq 0 ]; then
+  echo "ts,event,notif_id" > "$RAW"
+  echo "$t,POSTED,at1-a"  >> "$RAW"
+  echo "$t,POSTED,at1-b"  >> "$RAW"
+  echo "$t,CLICKED,at1-a" >> "$RAW"
+fi
+IN
+
+# --- Verify headers exist and match expected ---
+HDR_CSV="$(adb exec-out run-as "$PKG" head -n1 "$CSV" 2>/dev/null | tr -d '\r' || true)"
+[ -n "$HDR_CSV" ] || fail "(missing csv)"
+HDR_LOCK="$(adb exec-out run-as "$PKG" cat "$LOCK" 2>/dev/null | tr -d '\r' || true)"
+[ -n "$HDR_LOCK" ] || fail "(missing lock)"
+[ "$HDR_CSV" = "$EXP" ] || fail "(bad csv header)"
+[ "$HDR_LOCK" = "$EXP" ] || fail "(bad lock header)"
+
+# --- Notifications permission check (SDK33+) ---
+SDK="$(adb shell getprop ro.build.version.sdk 2>/dev/null | tr -d '\r')"
+PKGINFO="$(adb shell dumpsys package "$PKG" 2>/dev/null || true)"
+PN_GRANTED=""
+echo "$PKGINFO" | awk '/requested permissions:/{f=1;next}f && /^ +android\.permission\.POST_NOTIFICATIONS: granted=/{print;exit}' | grep -q 'granted=true' && PN_GRANTED="granted" || true
+if [ -z "$PN_GRANTED" ]; then
+  AO="$(adb shell cmd appops get "$PKG" POST_NOTIFICATION 2>/dev/null | tr -d '\r' || true)"
+  echo "$AO" | grep -qiE '\bmode=(allow|allow_fg|fg|default)\b' && PN_GRANTED="appops" || true
+fi
+if [ "${SDK:-0}" -ge 33 ] && [ -z "$PN_GRANTED" ]; then
+  {
+    echo "POST_NOTIFICATIONS: NOT GRANTED"
+    echo "-- appops POST_NOTIFICATION --"
+    adb shell cmd appops get "$PKG" POST_NOTIFICATION 2>/dev/null || true
+  } | tee "$LOG" >/dev/null
+  fail "(POST_NOTIFICATIONS not granted)"
+fi
+
+# --- Trigger rollup + capture logs ---
+adb shell logcat -c >/dev/null 2>&1 || true
+adb shell cmd activity broadcast \
+  -a com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP \
+  -n com.nick.myrecoverytracker/.TriggerReceiver \
+  --receiver-foreground \
+  --receiver-include-background \
+  --include-stopped-packages \
+  >/dev/null 2>&1 || fail "(broadcast failed)"
+
+sleep 2
+adb shell logcat -d > /tmp/_eng_log.txt 2>/dev/null || true
+cat /tmp/_eng_log.txt | tee "$LOG" >/dev/null
+
+# --- Receiver + worker checks ---
+grep -q "TriggerReceiver.*ACTION_RUN_NOTIFICATION_ROLLUP" "$LOG" || fail "(receiver not observed)"
+grep -Eq "NotificationEngagementWorker|WM-WorkerWrapper.*NotificationEngagementWorker" "$LOG" || fail "(worker not observed)"
+grep -Eq "WM-WorkerWrapper.*SUCCESS.*NotificationEngagementWorker" "$LOG" || fail "(worker did not succeed)"
+
+# --- Validate the daily CSV ---
+ROW="$(adb exec-out run-as "$PKG" toybox grep -m1 "^$TODAY," "$CSV" 2>/dev/null | tr -d '\r' || true)"
+[ -n "$ROW" ] || fail "(today row missing)"
+DELIVERED="$(printf '%s\n' "$ROW" | awk -F, '{print $3}')"
+OPENED="$(printf '%s\n' "$ROW" | awk -F, '{print $4}')"
+RATE="$(printf '%s\n' "$ROW" | awk -F, '{print $5}')"
+
+echo "$DELIVERED" | grep -Eq '^[0-9]+$' || fail "(delivered not integer)"
+echo "$OPENED"   | grep -Eq '^[0-9]+$' || fail "(opened not integer)"
+printf '%s' "$RATE" | grep -Eq '^[0-9]+(\.[0-9]+)?$' || fail "(open_rate not numeric)"
+[ "$OPENED" -le "$DELIVERED" ] || fail "(opened > delivered)"
+awk -v r="$RATE" 'BEGIN{exit !(r>=0 && r<=1)}' || fail "(open_rate out of [0,1])"
+
+echo "AT-1 RESULT=PASS" | tee "$OUT"
+exit 0

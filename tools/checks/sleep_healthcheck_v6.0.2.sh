@@ -26,28 +26,28 @@ sleep_gv6_v6.0.1.sh
 sleep_gv7_v6.0.4.sh
 "
 
-PASS_RE='[A-Z0-9-]+[[:space:]]+RESULT[[:space:]][:=][[:space:]]PASS(\b|$)'
-FAIL_RE='[A-Z0-9-]+[[:space:]]+RESULT[[:space:]][:=][[:space:]]FAIL(\b|$)'
-
 RESULTS=""
-
 for chk in $CHECKS; do
-script="tools/checks/$chk"
-if [ ! -x "$script" ]; then
-RESULTS="${RESULTS}${chk}: MISSING\n"
-continue
-fi
+  script="tools/checks/$chk"
+  if [ ! -x "$script" ]; then
+    RESULTS="${RESULTS}${chk}: ⚠️  MISSING\n"
+    continue
+  fi
 
-OUTTXT="$(mktemp)"
-if "$script" >"$OUTTXT" 2>&1; then
-msg="$(grep -Eo "$PASS_RE" "$OUTTXT" | tail -n1 || true)"
-[ -n "$msg" ] || msg="$chk: PASS"
-else
-msg="$(grep -Eo "$FAIL_RE" "$OUTTXT" | tail -n1 || true)"
-[ -n "$msg" ] || msg="$chk: FAIL"
-fi
-RESULTS="${RESULTS}${msg}\n"
-rm -f "$OUTTXT"
+  OUTTXT="$(mktemp)"
+  tries=0; status="UNKNOWN"
+  while [ $tries -lt 2 ]; do
+    "$script" >"$OUTTXT" 2>&1 || true
+    if grep -Eq '\bRESULT[:=]PASS\b' "$OUTTXT"; then
+      status="✅ PASS"; break
+    elif grep -Eq '\bRESULT[:=]FAIL\b' "$OUTTXT"; then
+      status="❌ FAIL"; break
+    fi
+    tries=$((tries+1))
+    sleep 0.5
+  done
+  RESULTS="${RESULTS}${chk}: ${status}\n"
+  rm -f "$OUTTXT"
 done
 
 printf "%b" "$RESULTS" | tee "$OUT"

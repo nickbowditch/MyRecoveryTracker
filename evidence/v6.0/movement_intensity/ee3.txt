@@ -1,0 +1,8 @@
+csv_path=files/daily_movement_intensity.csv
+header=date,intensity
+today=2025-10-25
+row_today=2025-10-25,4
+date,intensity
+2025-10-24,41
+2025-10-25,4
+EE3 RESULT=PASS

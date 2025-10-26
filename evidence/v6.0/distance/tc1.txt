@@ -1,0 +1,7 @@
+HEADER=date,distance_km
+TODAY=2025-10-25 count=1
+YESTERDAY= count=0
+TOMORROW= count=0
+other_dates=0 dup_rows_over_1=0
+LAST_DATE=2025-10-25
+TC1 RESULT=PASS

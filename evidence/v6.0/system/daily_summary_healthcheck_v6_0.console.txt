@@ -1,0 +1,10 @@
+[INFO] Daily Summary Healthcheck v6.0
+[INFO] PKG=com.nick.myrecoverytracker
+[INFO] CSV=files/daily_summary.csv
+[INFO] EXPECTED_WORKER=DailySummaryWorker
+[INFO] TODAY=2025-10-08
+--- DEBUG: header & tail ---
+  head: files/daily_summary.csv: No such file or directory
+  tail: files/daily_summary.csv: No such file or directory
+header_ok: no
+RESULT=FAIL - first column not 'date'

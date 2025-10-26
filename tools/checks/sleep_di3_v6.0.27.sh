@@ -23,27 +23,46 @@ HDUR="$(adb exec-out run-as "$PKG" head -n1 "$DUR" 2>/dev/null | tr -d '\r' || t
 [ "$HSUM" = "$ESUM" ] || { echo "DI-3 RESULT=FAIL (summary header drift)" | tee "$OUT"; exit 6; }
 [ "$HDUR" = "$EDUR" ] || { echo "DI-3 RESULT=FAIL (duration header drift)" | tee "$OUT"; exit 6; }
 
+# --- validate summary CSV rows (robust to quotes/extra cols/blanks) ---
 adb exec-out run-as "$PKG" tail -n +2 "$SUM" 2>/dev/null | tr -d '\r' | awk -F',' '
+function trimq(s){ gsub(/^ *"|" *$/,"",s); gsub(/^ +| +$/,"",s); return s }
 function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
+# allow "", HH:MM, HH:MM:SS, 24:00, 24:00:00
 function time_ok(t){ return (t=="" || t ~ /^(([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?|24:00(:00)?)$/) }
 function is_num(x){ return x ~ /^-?[0-9]+(\.[0-9]+)?$/ }
 {
-d=$1; st=$2; wt=$3; hrs=$4
-if(!date_ok(d)) exit 1
-if(!time_ok(st) || !time_ok(wt)) exit 1
-if(hrs!=""){ if(!(is_num(hrs) && (hrs+0)>=0 && (hrs+0)<=18.0)) exit 1 }
-}
-END{ }' || { echo "DI-3 RESULT=FAIL (summary invalid)" | tee "$OUT"; exit 8; }
+  # ignore pure blank/whitespace rows
+  line=$0; gsub(/[[:space:]]/,"",line); if (line=="") next
 
+  # pull first 4 fields only, clean quotes/spaces
+  d = trimq($1); st = trimq($2); wt = trimq($3); hrs = trimq($4)
+
+  if(!date_ok(d))            { exit 1 }
+  if(!time_ok(st) || !time_ok(wt)) { exit 1 }
+  if(hrs!=""){
+    if(!is_num(hrs))         { exit 1 }
+    h = hrs + 0
+    if(h<0 || h>18.0)        { exit 1 }
+  }
+}
+END { }' || { echo "DI-3 RESULT=FAIL (summary invalid)" | tee "$OUT"; exit 8; }
+
+# --- validate duration CSV rows (robust) ---
 adb exec-out run-as "$PKG" tail -n +2 "$DUR" 2>/dev/null | tr -d '\r' | awk -F',' '
+function trimq(s){ gsub(/^ *"|" *$/,"",s); gsub(/^ +| +$/,"",s); return s }
 function date_ok(d){ return d ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/ }
 function is_num(x){ return x ~ /^-?[0-9]+(\.[0-9]+)?$/ }
 {
-d=$1; hrs=$2
-if(!date_ok(d)) exit 1
-if(hrs!=""){ if(!(is_num(hrs) && (hrs+0)>=0 && (hrs+0)<=18.0)) exit 1 }
+  line=$0; gsub(/[[:space:]]/,"",line); if (line=="") next
+  d = trimq($1); hrs = trimq($2)
+  if(!date_ok(d))            { exit 1 }
+  if(hrs!=""){
+    if(!is_num(hrs))         { exit 1 }
+    h = hrs + 0
+    if(h<0 || h>18.0)        { exit 1 }
+  }
 }
-END{ }' || { echo "DI-3 RESULT=FAIL (duration invalid)" | tee "$OUT"; exit 9; }
+END { }' || { echo "DI-3 RESULT=FAIL (duration invalid)" | tee "$OUT"; exit 9; }
 
 echo "DI-3 RESULT=PASS" | tee "$OUT"
 exit 0

@@ -1,0 +1,12 @@
+today=2025-10-25
+daily_header=date,intensity
+windows_header=ts,level,duration_min
+--- DAILY (actual) ---
+2025-10-25,4
+--- WINDOWS (head) ---
+ts,level,duration_min
+2025-10-25 12:00:00,vigorous,4
+--- REBUILT FROM WINDOWS ---
+2025-10-25,4
+abs_diff=0
+AT2 RESULT=PASS

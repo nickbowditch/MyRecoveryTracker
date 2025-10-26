@@ -1,0 +1,64 @@
+GV1 CHECK: presence and +x on distance scripts
+DIRECTORY=tools/checks
+FOUND=29
+--- SCRIPT STATUS ---
+OK: tools/checks/distance_at1_v6.0.sh
+OK: tools/checks/distance_at2_v6.0.sh
+OK: tools/checks/distance_at3_v6.0.sh
+OK: tools/checks/distance_deep_diagnose.sh
+OK: tools/checks/distance_di1_v6.0.sh
+OK: tools/checks/distance_di2_v6.0.sh
+OK: tools/checks/distance_di3_v6.0.sh
+OK: tools/checks/distance_di4_v6.0.sh
+OK: tools/checks/distance_ee1_v6.0.sh
+OK: tools/checks/distance_gv1_v6.0.sh
+OK: tools/checks/distance_gv2_v6.0.2.sh
+OK: tools/checks/distance_gv2_v6.0.sh
+OK: tools/checks/distance_gv3_v6.0.sh
+OK: tools/checks/distance_gv4_v6.0.sh
+OK: tools/checks/distance_gv5_v6.0.sh
+OK: tools/checks/distance_gv6_v6.0.sh
+OK: tools/checks/distance_gv7_v6.0.sh
+OK: tools/checks/distance_healthcheck_v6.0.1.sh
+OK: tools/checks/distance_row_healthcheck_v6.0.sh
+OK: tools/checks/distance_row_healthcheck_v6_0.sh
+OK: tools/checks/distance_row_healthcheck_v6_1.sh
+OK: tools/checks/distance_schema_check.sh
+OK: tools/checks/distance_seed_trigger.sh
+OK: tools/checks/distance_smoke_v6.0.sh
+OK: tools/checks/distance_tc1_v6.0.sh
+OK: tools/checks/distance_tc2_v6.0.sh
+OK: tools/checks/distance_tc3_v6.0.sh
+OK: tools/checks/distance_tc5_v6.0.sh
+OK: tools/checks/distance_tc6_v6.0.sh
+--- PERMISSIONS ---
+-rwxr-xr-x  1 nickbowditch  staff  3761  6 Oct 14:27 tools/checks/distance_at1_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  6043  6 Oct 14:33 tools/checks/distance_at2_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2136  6 Oct 14:38 tools/checks/distance_at3_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  5721  6 Oct 12:28 tools/checks/distance_deep_diagnose.sh
+-rwxr-xr-x  1 nickbowditch  staff  2850  6 Oct 14:11 tools/checks/distance_di1_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2632  6 Oct 14:12 tools/checks/distance_di2_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2624  6 Oct 14:19 tools/checks/distance_di3_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2357  6 Oct 14:24 tools/checks/distance_di4_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  1796  6 Oct 11:13 tools/checks/distance_ee1_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  1001  6 Oct 14:41 tools/checks/distance_gv1_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff   381  6 Oct 14:48 tools/checks/distance_gv2_v6.0.2.sh
+-rwxr-xr-x  1 nickbowditch  staff  3363  6 Oct 14:44 tools/checks/distance_gv2_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  4183  6 Oct 14:56 tools/checks/distance_gv3_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  1531  6 Oct 14:58 tools/checks/distance_gv4_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2177  6 Oct 15:01 tools/checks/distance_gv5_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2259  6 Oct 15:10 tools/checks/distance_gv6_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  4029  6 Oct 15:13 tools/checks/distance_gv7_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  1555 24 Oct 12:20 tools/checks/distance_healthcheck_v6.0.1.sh
+-rwxr-xr-x  1 nickbowditch  staff  3932  8 Oct 09:10 tools/checks/distance_row_healthcheck_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  4970  8 Oct 09:30 tools/checks/distance_row_healthcheck_v6_0.sh
+-rwxr-xr-x  1 nickbowditch  staff  4965  8 Oct 09:24 tools/checks/distance_row_healthcheck_v6_1.sh
+-rwxr-xr-x  1 nickbowditch  staff  2765  6 Oct 12:25 tools/checks/distance_schema_check.sh
+-rwxr-xr-x  1 nickbowditch  staff  3657  6 Oct 12:13 tools/checks/distance_seed_trigger.sh
+-rwxr-xr-x  1 nickbowditch  staff  3235  6 Oct 12:40 tools/checks/distance_smoke_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  3452 24 Oct 12:28 tools/checks/distance_tc1_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  4294  6 Oct 12:56 tools/checks/distance_tc2_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  2748  6 Oct 12:58 tools/checks/distance_tc3_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  3125  6 Oct 12:59 tools/checks/distance_tc5_v6.0.sh
+-rwxr-xr-x  1 nickbowditch  staff  3097  6 Oct 13:04 tools/checks/distance_tc6_v6.0.sh
+GV1 RESULT=PASS

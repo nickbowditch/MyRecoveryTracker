@@ -1,0 +1,7 @@
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Task :app:qaCheck
+bash: tools/checks/unlocks_*_v6.0*.sh: No such file or directory
+
+BUILD SUCCESSFUL in 5s
+1 actionable task: 1 executed

@@ -1,0 +1,67 @@
+[INFO] EE2 — MovementIntensity worker scheduled & triggerable
+=== JOBSCHEDULER (pkg slice) ===
+<none>
+
+=== WORKMANAGER (pkg slice) ===
+<none>
+
+=== LOGCAT (tail, filtered) ===
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+I/TriggerReceiver( 5233): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x400000 }: 0
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver( 5233): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY
+I/WindowManager( 1787): setOnBackInvokedCallback(): No window state for package:com.nick.myrecoverytracker
+W/UsageStatsService( 1787): Unexpected activity event reported! (com.nick.myrecoverytracker/com.nick.myrecoverytracker.MainActivity event : 23 instanceId : 192906305)
+W/BackgroundStartupDetector(21915): bgMode=FOREGROUND
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x400000 }: 0
+W/ActivityManager( 1787): Background start not allowed: service Intent { xflg=0x4 cmp=com.instagram.android/com.instagram.util.startup.tracking.TaskLifeDetectingService } to com.instagram.android/com.instagram.util.startup.tracking.TaskLifeDetectingService from pid=21915 uid=10281 pkg=com.instagram.android startFg?=false
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver( 5233): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+W/ActivityManager( 1787): Background start not allowed: service Intent { act=Orca.START xflg=0x4 cmp=com.instagram.android/com.facebook.rti.push.service.FbnsService (has extras) } to com.instagram.android/com.facebook.rti.push.service.FbnsService from pid=21915 uid=10281 pkg=com.instagram.android startFg?=false
+W/RtiGracefulSystemMethodHelper(21915): [AI] Failed to start service due to IllegalStateException on Android O
+W/RtiGracefulSystemMethodHelper(21915): android.app.BackgroundServiceStartNotAllowedException: Not allowed to start service Intent { act=Orca.START xflg=0x4 cmp=com.instagram.android/com.facebook.rti.push.service.FbnsService (has extras) }: app is in background uid UidRecord{61fdf9e u0a281 TPSL bg:+4m53s472ms idle change:procstateprocadj procs:0 seq(5723209,5723183)} caps=-------TI
+W/RtiGracefulSystemMethodHelper(21915): 	at android.app.ContextImpl.startServiceCommon(ContextImpl.java:2042)
+W/RtiGracefulSystemMethodHelper(21915): 	at android.app.ContextImpl.startService(ContextImpl.java:1997)
+W/RtiGracefulSystemMethodHelper(21915): 	at android.content.ContextWrapper.startService(ContextWrapper.java:855)
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x400000 }: 0
+E/SlowAppComponent(14054): Main thread was blocked for 46ms in the background starting with FbnsService
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+W/ScreenshotDetectorByContent(21915): Started new screenshot session
+W/ScreenshotDetectorByContent(21915): Started new screenshot session
+W/ScreenshotDetectorByContent(21915): Started new screenshot session
+W/VideoPrefetchScheduler(21915): start prefetch time: 1
+W/ActivityManager( 1787): Background start not allowed: service Intent { xflg=0x4 cmp=com.instagram.android/com.instagram.util.startup.tracking.TaskLifeDetectingService } to com.instagram.android/com.instagram.util.startup.tracking.TaskLifeDetectingService from pid=21915 uid=10281 pkg=com.instagram.android startFg?=false
+W/ShakeSensorHelper(21915): unregisterShakeListener started | mRegistered=false
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver( 5233): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DAILY
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x400000 }: 0
+W/BackgroundStartupDetector(21915): bgMode=BACKGROUND
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N WA]_WCCConnectionDefaultDoConnectWithAuthKeys(1491)=>[INFO] connection/connect/start/[host=z-p42-chat-e2ee-ig.facebook.com port=443]/[31.13.70.175:443]
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+E/msys    (21915): E[N mns]_OnDiskCacheGetData(632)=>Start post callback cache refresh DNS resolution
+D/AppCenterCrashes(29566): The memory running level (40) was saved.
+I/ReactNativeJNI(29562): Memory warning (pressure level: TRIM_MEMORY_BACKGROUND) received by JS VM, running a GC
+I/ReactNativeJNI(29566): Memory warning (pressure level: TRIM_MEMORY_BACKGROUND) received by JS VM, running a GC
+D/AppCenterCrashes(29566): The memory running level (40) was saved.
+I/ReactNativeJNI(29566): Memory warning (pressure level: TRIM_MEMORY_BACKGROUND) received by JS VM, running a GC
+EE2 RESULT=PASS

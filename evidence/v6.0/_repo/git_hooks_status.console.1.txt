@@ -1,0 +1,4 @@
+HOOKS_DIR:.git/hooks
+PRE_PUSH:present+not-exec
+CONFIG_hooksPath:.git/hooks.empty
+GIT-HOOKS-STATUS RESULT=PASS

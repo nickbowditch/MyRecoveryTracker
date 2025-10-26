@@ -1,0 +1,10 @@
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+10-25 08:58:19.820  1787  3082 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-25 08:58:19.829  1188  1188 I TriggerReceiver: Enqueued NotificationLatency (once-NotificationLatencyRollup)
+10-25 08:58:19.910  1787  3082 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-25 08:58:19.982  1188  1214 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=685bbbbd-ffd7-4311-a53d-152751f0ca2d, tags={ com.nick.myrecoverytracker.NotificationLatencyWorker, NotificationLatency } ]
+10-25 08:58:19.996  1787  3082 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+EE-3 RESULT=PASS

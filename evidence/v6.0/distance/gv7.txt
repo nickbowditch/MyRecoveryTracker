@@ -1,0 +1,20 @@
+csv_path=files/daily_distance_log.csv
+header=date,distance_km
+today=2025-10-25
+yesterday=2025-10-24
+matched_row=2025-10-25,0.39
+--- CSV tail (last 60) ---
+date,distance_km
+2025-10-25,0.39
+--- logcat (DistanceWorker tail) ---
+10-25 09:00:30.311  1787  3813 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-25 09:00:30.313  1787  3813 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-25 09:00:30.325  4551  4551 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+10-25 09:00:30.332  4551  4551 I TriggerReceiver: Enqueued DistanceDaily (once-DistanceDaily)
+10-25 09:00:30.427  4551  4625 I DistanceWorker: DistanceWorker SUCCESS: 2025-10-25 distance_km=0.39 points=2 timeMs=9
+10-25 09:00:30.431  4551  4566 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=14272e11-9e45-4bd6-8317-2c11d8c5f1d9, tags={ com.nick.myrecoverytracker.DistanceWorker, DistanceDaily } ]
+10-25 09:00:30.475  1787  2319 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 }
+10-25 09:00:30.481  1787  2319 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 }: 0
+10-25 09:00:30.883  4551  4639 I DistanceWorker: DistanceWorker SUCCESS: 2025-10-25 distance_km=0.39 points=2 timeMs=11
+10-25 09:00:30.895  4551  4574 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=7d3decf1-0680-4d5b-a452-3a853bc8c154, tags={ com.nick.myrecoverytracker.DistanceWorker, DistanceAggregator } ]
+GV7 RESULT=PASS

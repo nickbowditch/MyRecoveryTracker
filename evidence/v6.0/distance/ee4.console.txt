@@ -1,0 +1,5 @@
+[INFO] EE4 evidence/ whitelisted
+[INFO] Checking idle whitelist entries for com.nick.myrecoverytracker
+[INFO] Matching allow-lines for evidence/v6.0/distance/
+[PASS] com.nick.myrecoverytracker present in idle whitelist (evidence/ access allowed)
+RESULT=PASS
