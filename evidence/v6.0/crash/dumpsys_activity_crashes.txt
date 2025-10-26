@@ -1,3 +1,0 @@
-Unknown command: crashes
-Bad activity command, or no activities match: crashes
-Use -h for help.

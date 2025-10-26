@@ -1,2 +1,0 @@
-[INFO] TC6 — Distance Evidence tracked (not ignored by git)
-TC6 RESULT=PASS

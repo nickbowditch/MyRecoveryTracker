@@ -1,6 +1,0 @@
-probe_file=evidence/v6.0/distance/_probe_AT3.txt
---- git check-ignore (verbose) ---
-.gitignore:26:!evidence/v6.0/**/*.txt	evidence/v6.0/distance/_probe_AT3.txt
---- git add -n (echo) ---
-add 'evidence/v6.0/distance/_probe_AT3.txt'
-AT3 RESULT=PASS

@@ -1,3 +1,0 @@
-HEADER=date,feature_schema_version,delivered,opened,open_rate
-ROW=
-TC1 RESULT=FAIL (row=)

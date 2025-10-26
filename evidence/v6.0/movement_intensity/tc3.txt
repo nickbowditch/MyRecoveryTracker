@@ -1,7 +1,0 @@
-today=2025-10-25
---- DEBUG: CSV head ---
-date,intensity
-2025-10-24,41
-2025-10-25,4
---- DEBUG: future-dated rows (count=0) ---
-TC3 RESULT=PASS

@@ -1,3 +1,0 @@
------ DEBUG sleep_di3_v6.0.27.sh -----
-DI-3 RESULT=FAIL (summary invalid)
------ END DEBUG sleep_di3_v6.0.27.sh -----
