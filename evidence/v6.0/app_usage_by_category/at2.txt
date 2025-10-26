@@ -1,0 +1,14 @@
+--- REBUILT ---
+productivity,45.0
+social,45.0
+--- ACTUAL ---
+social,288.1
+music_and_audio,54.2
+productivity,42.6
+other,33.4
+dating,16.6
+image,5.0
+health,2.1
+shopping,0.2
+maps,0.0
+AT2 RESULT=FAIL (category diff > tolerance)

@@ -1,0 +1,7 @@
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+10-26 20:34:10.979  1787  5209 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-26 20:34:11.057  1787  5209 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+EE-3 RESULT=PASS
