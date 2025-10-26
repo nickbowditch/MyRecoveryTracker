@@ -1,0 +1,10 @@
+=== JOBSCHEDULER ===
+[none]
+
+=== WORKMANAGER ===
+[none]
+
+=== LOGCAT ===
+10-26 20:33:07.713  1787  2320 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-26 20:33:07.715  1787  2320 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+EE-2 RESULT=FAIL
