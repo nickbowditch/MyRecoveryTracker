@@ -1,0 +1,10 @@
+=== HEADER ===
+run-as: package not debuggable: com.nick.myrecoverytracker
+
+=== WORKMANAGER SUCCESS MATCH ===
+[none]
+
+=== LOGCAT SUCCESS MATCH ===
+10-27 18:24:59.663 23738 23738 I TriggerReceiver: Enqueued AppSwitchingDaily (once-AppSwitchingDaily)
+10-27 18:24:59.763 23738 23780 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=a5c19078-9db9-4f01-ad2b-f83651416b34, tags={ com.nick.myrecoverytracker.AppSwitchingDailyWorker, AppSwitchingDaily } ]
+EE-3 RESULT=PASS

@@ -1,0 +1,4 @@
+DI-1 RESULT=FAIL (header drift)
+--- DEBUG ---
+EXPECTED: date,switches,entropy
+ACTUAL:   run-as: package not debuggable: com.nick.myrecoverytracker
