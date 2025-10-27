@@ -74,4 +74,3 @@ app/release/
 # ignore big archives/snapshots
 **/_snapshots/
 *.tgz
-!evidence/
