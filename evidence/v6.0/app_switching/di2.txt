@@ -1,4 +1,0 @@
-DI-2 RESULT=FAIL (bad header)
---- DEBUG ---
-EXPECTED: date,switches,entropy
-ACTUAL:   run-as: package not debuggable: com.nick.myrecoverytracker

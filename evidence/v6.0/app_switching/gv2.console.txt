@@ -1,1 +1,0 @@
-RUN:tools/checks/_v6.0.sh
