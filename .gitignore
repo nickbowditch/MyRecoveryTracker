@@ -75,3 +75,7 @@ app/release/
 **/_snapshots/
 *.tgz
 !evidence/
+
+# Secure credentials - never commit
+gradle.properties
+local.properties
