@@ -1,0 +1,44 @@
+[INFO] EE2 — MovementIntensity worker scheduled & triggerable
+=== JOBSCHEDULER (pkg slice) ===
+<none>
+
+=== WORKMANAGER (pkg slice) ===
+<none>
+
+=== LOGCAT (tail, filtered) ===
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24687): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY flg=0x400000 }: 0
+D/CoreBackPreview( 1787): Window{4976bc4 u0 com.nick.myrecoverytracker/com.nick.myrecoverytracker.MainActivity}: Setting back callback null
+W/UsageStatsService( 1787): Unexpected activity event reported! (com.nick.myrecoverytracker/com.nick.myrecoverytracker.MainActivity event : 23 instanceId : 251057046)
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+W/birx    (20534): Job(dynamite-sync: SharedSyncName(88)__SHARED_SYNC_PAGINATED_WORLD #4.349) Enqueued job 'dynamite-sync: SharedSyncName(88)__SHARED_SYNC_PAGINATED_WORLD ' failed
+W/birx    (20534): Enqueued job 'WorldSyncEngineImpl.syncNewerWorldItemsForFirstSync' failed
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+W/birx    (20534): Enqueued job 'dynamite-rpc: register' failed
+W/birx    (20534): Job(dynamite-sync: SharedSyncName(137)__SHARED_SYNC_HEARTBEAT #4.348) Enqueued job 'dynamite-sync: SharedSyncName(137)__SHARED_SYNC_HEARTBEAT ' failed
+D/BoundBrokerSvc(26732): onBind: Intent { act=com.google.android.gms.inappreach.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+D/BoundBrokerSvc(26732): Loading bound service for intent: Intent { act=com.google.android.gms.inappreach.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+I/TriggerReceiver(24687): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY
+W/birx    (20534): Job(dynamite-sync: SharedSyncName(96)__SHARED_SYNC_GET_BLOCKED_USER_LIST #4.342) Enqueued job 'dynamite-sync: SharedSyncName(96)__SHARED_SYNC_GET_BLOCKED_USER_LIST ' failed
+D/BoundBrokerSvc(26732): onBind: Intent { act=com.google.android.gms.people.service.START xflg=0x4 pkg=com.google.android.gms }
+D/BoundBrokerSvc(26732): Loading bound service for intent: Intent { act=com.google.android.gms.people.service.START xflg=0x4 pkg=com.google.android.gms }
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_DAILY flg=0x400000 }: 0
+W/birx    (20534): Job(dynamite-sync: SharedSyncName(148)__SHARED_SYNC_RECOMMENDATION #4.350) Enqueued job 'dynamite-sync: SharedSyncName(148)__SHARED_SYNC_RECOMMENDATION ' failed
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24687): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_INTENSITY_DAILY flg=0x400000 }: 0
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24687): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DAILY
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x400000 }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DAILY flg=0x400000 }: 0
+I/AHal::Router( 1380): InvalidateLocked: ============ apply graph #37614 [Mon Oct 27 18:25:57 2025] start ============
+I/ReactNativeJNI(17388): Memory warning (pressure level: TRIM_MEMORY_BACKGROUND) received by JS VM, running a GC
+I/ReactNativeJNI(17388): Memory warning (pressure level: TRIM_MEMORY_BACKGROUND) received by JS VM, running a GC
+EE2 RESULT=PASS

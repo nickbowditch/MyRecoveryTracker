@@ -1,0 +1,30 @@
+FILE: daily_late_night_screen_usage.csv
+date,late_night_YN
+---
+FILE: daily_notification_engagement.csv
+date,feature_schema_version,delivered,opened,open_rate
+---
+FILE: daily_usage_entropy.csv
+date,entropy_bits
+---
+FILE: daily_app_usage_minutes.csv
+date,app_min_social,app_min_dating,app_min_productivity,app_min_music_audio,app_min_image,app_min_maps,app_min_video,app_min_travel_local,app_min_shopping,app_min_news,app_min_game,app_min_health,app_min_finance,app_min_browser,app_min_comm,app_min_other,app_min_total
+---
+FILE: daily_distance_log.csv
+date,distance_km
+---
+FILE: daily_movement_intensity.csv
+date,intensity
+---
+FILE: daily_sleep_summary.csv
+date,total_sleep_minutes,sleep_efficiency
+---
+FILE: daily_sleep_duration.csv
+date,hours
+---
+FILE: daily_sleep_time.csv
+date,HH:MM:SS
+---
+FILE: daily_wake_time.csv
+date,HH:MM:SS
+---

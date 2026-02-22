@@ -1,0 +1,7 @@
+=== WAKE TIME HEALTHCHECK v6.0 ===
+List of devices attached
+53221JEBF15483	device
+
+header=date,HH:MM:SS
+rows_for_today=0
+RESULT: WARN (file exists, no row for today)

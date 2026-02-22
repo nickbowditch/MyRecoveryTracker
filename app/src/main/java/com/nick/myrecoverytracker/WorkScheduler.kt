@@ -1,117 +1,149 @@
-// app/src/main/java/com/nick/myrecoverytracker/WorkScheduler.kt
+// WorkScheduler.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import java.time.Duration
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 object WorkScheduler {
+
     private const val SLEEP_PERIODIC = "periodic-SleepRollup"
     private const val ENGAGEMENT_PERIODIC = "periodic-EngagementRollup"
-
-    // Unique names for the three daily metrics
     private const val MOVE_INTENSITY_PERIODIC = "periodic-MovementIntensityDaily"
-    private const val DISTANCE_PERIODIC       = "periodic-DistanceDaily"
+    private const val DISTANCE_PERIODIC = "periodic-DistanceDaily"
     private const val SLEEP_DURATION_PERIODIC = "periodic-SleepDurationDaily"
+    private const val USAGE_ENTROPY_PERIODIC = "periodic-UsageEntropyDaily"
+    private const val USAGE_EVENTS_PERIODIC = "periodic-UsageEventsDaily"
+    private const val USAGE_CAPTURE_PERIODIC = "periodic-UsageCaptureDaily"
 
-    fun scheduleDailySleepRollup(context: Context) {
-        val now = LocalDateTime.now()
-        val zone = ZoneId.systemDefault()
-        val target = LocalDate.now(zone).atTime(LocalTime.of(4, 15))
-        val initial = Duration.between(now, nextOccurrence(now, target))
-        val req = PeriodicWorkRequestBuilder<SleepRollupWorker>(24L, TimeUnit.HOURS, 1L, TimeUnit.HOURS)
-            .setInitialDelay(initial.toMinutes().coerceAtLeast(1L), TimeUnit.MINUTES)
-            .addTag("SleepRollup")
-            .build()
-        WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(SLEEP_PERIODIC, ExistingPeriodicWorkPolicy.UPDATE, req)
-    }
+    private val zone: ZoneId = ZoneId.systemDefault()
 
-    fun enqueueOneTimeSleepRollup(context: Context) {
-        val one = OneTimeWorkRequestBuilder<SleepRollupWorker>().build()
-        WorkManager.getInstance(context)
-            .enqueueUniqueWork("boot-once-SleepRollup", ExistingWorkPolicy.KEEP, one)
-    }
-
-    fun scheduleDailyEngagementRollup(context: Context) {
-        val now = LocalDateTime.now()
-        val zone = ZoneId.systemDefault()
-        val target = LocalDate.now(zone).atTime(LocalTime.of(4, 25))
-        val initial = Duration.between(now, nextOccurrence(now, target))
-        val req = PeriodicWorkRequestBuilder<NotificationEngagementWorker>(24L, TimeUnit.HOURS, 1L, TimeUnit.HOURS)
-            .setInitialDelay(initial.toMinutes().coerceAtLeast(1L), TimeUnit.MINUTES)
-            .addTag("NotificationEngagement")
-            .build()
-        WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(ENGAGEMENT_PERIODIC, ExistingPeriodicWorkPolicy.UPDATE, req)
-    }
-
-    fun scheduleDailyMovementIntensity(context: Context) {
-        val now = LocalDateTime.now()
-        val zone = ZoneId.systemDefault()
-        val target = LocalDate.now(zone).atTime(LocalTime.of(4, 5))
-        val initial = Duration.between(now, nextOccurrence(now, target))
-        val req = PeriodicWorkRequestBuilder<MovementIntensityDailyWorker>(24L, TimeUnit.HOURS, 1L, TimeUnit.HOURS)
-            .setInitialDelay(initial.toMinutes().coerceAtLeast(1L), TimeUnit.MINUTES)
-            .addTag("MovementIntensityDaily")
-            .build()
-        WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(MOVE_INTENSITY_PERIODIC, ExistingPeriodicWorkPolicy.UPDATE, req)
-    }
-
-    fun scheduleDailyDistance(context: Context) {
-        val now = LocalDateTime.now()
-        val zone = ZoneId.systemDefault()
-        val target = LocalDate.now(zone).atTime(LocalTime.of(4, 10))
-        val initial = Duration.between(now, nextOccurrence(now, target))
-        val req = PeriodicWorkRequestBuilder<DistanceWorker>(24L, TimeUnit.HOURS, 1L, TimeUnit.HOURS)
-            .setInitialDelay(initial.toMinutes().coerceAtLeast(1L), TimeUnit.MINUTES)
-            .addTag("DistanceDaily")
-            .build()
-        WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(DISTANCE_PERIODIC, ExistingPeriodicWorkPolicy.UPDATE, req)
-    }
-
-    fun scheduleDailySleepDuration(context: Context) {
-        val now = LocalDateTime.now()
-        val zone = ZoneId.systemDefault()
-        val target = LocalDate.now(zone).atTime(LocalTime.of(4, 20))
-        val initial = Duration.between(now, nextOccurrence(now, target))
-        val req = PeriodicWorkRequestBuilder<SleepDurationWorker>(24L, TimeUnit.HOURS, 1L, TimeUnit.HOURS)
-            .setInitialDelay(initial.toMinutes().coerceAtLeast(1L), TimeUnit.MINUTES)
-            .addTag("SleepDurationDaily")
-            .build()
-        WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(SLEEP_DURATION_PERIODIC, ExistingPeriodicWorkPolicy.UPDATE, req)
-    }
-
-    // Remove obsolete/legacy unique works that could duplicate the new ones.
-    fun cleanupObsolete(context: Context) {
-        val wm = WorkManager.getInstance(context)
-        // Legacy engagement unique name we used before
-        wm.cancelUniqueWork("mrt_notification_daily")
-        wm.pruneWork()
-    }
-
-    // One call to seed everything
     fun registerAllDaily(context: Context) {
         scheduleDailyMovementIntensity(context)
         scheduleDailyDistance(context)
         scheduleDailySleepDuration(context)
         scheduleDailySleepRollup(context)
         scheduleDailyEngagementRollup(context)
+        scheduleDailyUsageEntropy(context)
+        scheduleDailyUsageEvents(context)
+        scheduleDailyUsageCapture(context)
     }
 
-    private fun nextOccurrence(now: LocalDateTime, targetToday: LocalDateTime): LocalDateTime {
-        return if (now.isBefore(targetToday)) targetToday else targetToday.plusDays(1)
+    private fun schedulePeriodicWork(
+        context: Context,
+        workerClass: Class<out ListenableWorker>,
+        uniqueName: String,
+        hour: Int,
+        minute: Int,
+        tag: String
+    ) {
+        val now = ZonedDateTime.now(zone)
+        val targetToday = LocalDate.now(zone).atTime(hour, minute).atZone(zone)
+        val nextRun = if (now.isBefore(targetToday)) targetToday else targetToday.plusDays(1)
+
+        val initialDelayMinutes = Duration
+            .between(now, nextRun)
+            .toMinutes()
+            .coerceAtLeast(1L)
+
+        val request = PeriodicWorkRequest.Builder(
+            workerClass,
+            24, TimeUnit.HOURS,
+            1, TimeUnit.HOURS
+        )
+            .setInitialDelay(initialDelayMinutes, TimeUnit.MINUTES)
+            .addTag(tag)
+            .build()
+
+        WorkManager.getInstance(context)
+            .enqueueUniquePeriodicWork(
+                uniqueName,
+                ExistingPeriodicWorkPolicy.UPDATE,
+                request
+            )
     }
+
+    fun scheduleDailySleepRollup(context: Context) =
+        schedulePeriodicWork(
+            context,
+            SleepRollupWorker::class.java,
+            SLEEP_PERIODIC,
+            4,
+            15,
+            "SleepRollup"
+        )
+
+    fun scheduleDailyEngagementRollup(context: Context) =
+        schedulePeriodicWork(
+            context,
+            NotificationEngagementWorker::class.java,
+            ENGAGEMENT_PERIODIC,
+            4,
+            25,
+            "NotificationEngagement"
+        )
+
+    fun scheduleDailyMovementIntensity(context: Context) =
+        schedulePeriodicWork(
+            context,
+            MovementIntensityDailyWorker::class.java,
+            MOVE_INTENSITY_PERIODIC,
+            4,
+            5,
+            "MovementIntensityDaily"
+        )
+
+    fun scheduleDailyDistance(context: Context) =
+        schedulePeriodicWork(
+            context,
+            DistanceWorker::class.java,
+            DISTANCE_PERIODIC,
+            4,
+            10,
+            "DistanceDaily"
+        )
+
+    fun scheduleDailySleepDuration(context: Context) =
+        schedulePeriodicWork(
+            context,
+            SleepDurationWorker::class.java,
+            SLEEP_DURATION_PERIODIC,
+            4,
+            20,
+            "SleepDurationDaily"
+        )
+
+    fun scheduleDailyUsageEntropy(context: Context) =
+        schedulePeriodicWork(
+            context,
+            UsageEntropyDailyWorker::class.java,
+            USAGE_ENTROPY_PERIODIC,
+            4,
+            30,
+            "UsageEntropyDaily"
+        )
+
+    fun scheduleDailyUsageEvents(context: Context) =
+        schedulePeriodicWork(
+            context,
+            UsageEventsDailyWorker::class.java,
+            USAGE_EVENTS_PERIODIC,
+            4,
+            35,
+            "UsageEventsDaily"
+        )
+
+    fun scheduleDailyUsageCapture(context: Context) =
+        schedulePeriodicWork(
+            context,
+            UsageCaptureWorker::class.java,
+            USAGE_CAPTURE_PERIODIC,
+            4,
+            40,
+            "UsageCaptureDaily"
+        )
 }

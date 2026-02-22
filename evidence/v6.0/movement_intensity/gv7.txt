@@ -1,0 +1,9 @@
+started_at=2025-10-27T07:26:26Z
+target_day=2025-10-27
+pre_header=run-as: package not debuggable: com.nick.myrecoverytracker
+csv_header=run-as: package not debuggable: com.nick.myrecoverytracker
+row_today=<none>
+--- DEBUG: CSV head/tail ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+run-as: package not debuggable: com.nick.myrecoverytracker
+GV7 RESULT=FAIL (header mismatch or missing)

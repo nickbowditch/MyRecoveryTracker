@@ -1,4 +1,3 @@
-// app/src/main/java/com/nick/myrecoverytracker/SleepRollupWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -22,381 +21,164 @@ class SleepRollupWorker(appContext: Context, params: WorkerParameters) : Worker(
     override fun doWork(): Result {
         val dir = applicationContext.filesDir
         Log.i(TAG, "filesDir=${dir.absolutePath}")
-        val fUnlock = File(dir, "unlock_log.csv")
+
         val fScreen = File(dir, "screen_log.csv")
-        val fNotif  = File(dir, "notification_log.csv")
-
-        // v6 summary (NEW, for REDCap mapping)
-        val outSummaryV6 = ensureHeader(
-            File(dir, "daily_sleep_summary.csv"),
-            "date,total_sleep_minutes,sleep_efficiency"
-        )
-        // Legacy summary (kept so nothing breaks)
-        val outSummaryLegacy = ensureHeader(
-            File(dir, "daily_sleep_summary_legacy.csv"),
-            "date,sleep_time,wake_time,duration_hours"
-        )
-
-        val outDur = ensureHeader(File(dir, "daily_sleep_duration.csv"), "date,hours")
-        val outST  = ensureHeader(File(dir, "daily_sleep_time.csv"), "date,HH:MM:SS")
-        val outWT  = ensureHeader(File(dir, "daily_wake_time.csv"), "date,HH:MM:SS")
-        val outQ   = ensureHeader(File(dir, "daily_sleep_quality.csv"), "date,quality")
+        val outSummary = ensureHeader(File(dir, OUT_FILE), EXPECTED_HEADER)
+        val outDuration = ensureHeader(File(dir, OUT_FILE_HOURS), EXPECTED_HEADER_HOURS)
 
         val today = LocalDate.now(zone)
+        val yesterday = today.minusDays(1)
         val backfillDays = inputData.getInt("backfill_days", 30).coerceIn(1, 400)
         val startDate = today.minusDays(backfillDays.toLong())
 
         var processed = 0
-        var wrote = 0
-        var lastLog: String? = null
-
         var d = startDate
         while (!d.isAfter(today)) {
-            val r = computeForDate(d, fUnlock, fScreen, fNotif)
-
-            // --- v6 summary ---
-            val minutes = (r.hours * 60.0).coerceAtLeast(0.0)
-            val eff = estimateEfficiency(r) // 0.00–1.00
-            upsert(outSummaryV6, d.format(fmtDate), listOf(to0(minutes), to2(eff)))
-
-            // --- legacy summary (unchanged schema) ---
-            upsert(outSummaryLegacy, d.format(fmtDate), listOf(r.sleepTime ?: "", r.wakeTime ?: "", to2(r.hours)))
-
-            // --- other files (unchanged) ---
-            upsert(outDur, d.format(fmtDate), listOf(to2(r.hours)))
-            upsert(outST,  d.format(fmtDate), listOf(r.sleepTime ?: ""))
-            upsert(outWT,  d.format(fmtDate), listOf(r.wakeTime ?: ""))
-            upsert(outQ,   d.format(fmtDate), listOf(r.quality))
-
+            val r = computeForDate(d, fScreen)
+            upsertSummary(outSummary, d.format(fmtDate), r.totalSleepMinutes, r.sleepEfficiency)
+            upsertDuration(outDuration, d.format(fmtDate), r.totalSleepMinutes)
             processed++
-            if (r.sleepTime != null || r.wakeTime != null || r.hours > 0.0) wrote++
-            lastLog = "Sleep ${d.format(fmtDate)} -> sleep=${r.sleepTime ?: "-"} wake=${r.wakeTime ?: "-"} hours=${to2(r.hours)} quality=${r.quality}"
-            Log.i(TAG, lastLog!!)
             d = d.plusDays(1)
         }
 
-        // Heal UTC/local dupes & rotate
-        healDropUtcTodayIfBoth(outSummaryV6)
-        healDropUtcTodayIfBoth(outSummaryLegacy)
-        healDropUtcTodayIfBoth(outDur)
-        healDropUtcTodayIfBoth(outST)
-        healDropUtcTodayIfBoth(outWT)
-        healDropUtcTodayIfBoth(outQ)
+        val y = computeForDate(yesterday, fScreen)
+        val t = computeForDate(today, fScreen)
+        upsertSummary(outSummary, yesterday.format(fmtDate), y.totalSleepMinutes, y.sleepEfficiency)
+        upsertDuration(outDuration, yesterday.format(fmtDate), y.totalSleepMinutes)
+        upsertSummary(outSummary, today.format(fmtDate), t.totalSleepMinutes, t.sleepEfficiency)
+        upsertDuration(outDuration, today.format(fmtDate), t.totalSleepMinutes)
 
-        rotateByDate(outSummaryV6,      keepDays = 400)
-        rotateByDate(outSummaryLegacy,  keepDays = 400)
-        rotateByDate(outDur,            keepDays = 400)
-        rotateByDate(outST,             keepDays = 400)
-        rotateByDate(outWT,             keepDays = 400)
-        rotateByDate(outQ,              keepDays = 400)
+        Log.i(TAG, "SleepRollup processed=$processed (backfill_days=$backfillDays)")
+        Log.e(PROBE_TAG, "END success processed=$processed out=${outSummary.absolutePath}")
 
-        Log.i(TAG, "Sleep backfill_days=$backfillDays processed=$processed wrote=$wrote last=\"$lastLog\"")
         return Result.success()
     }
 
-    private data class SleepResult(
-        val sleepTime: String?,
-        val wakeTime: String?,
-        val hours: Double,
-        val quality: String
-    )
+    private data class SleepResult(val totalSleepMinutes: Int, val sleepEfficiency: Double)
 
-    // Simple placeholder efficiency: 1.00 when we have a valid interval, else 0.00.
-    // Keeps REDCap happy without inventing complicated heuristics.
-    private fun estimateEfficiency(r: SleepResult): Double =
-        if (r.hours > 0.0 && r.sleepTime != null && r.wakeTime != null) 1.0 else 0.0
+    private fun round2(v: Double) = round(v * 100.0) / 100.0
 
-    private fun computeForDate(date: LocalDate, fUnlock: File, fScreen: File, fNotif: File): SleepResult {
-        val wakeZ = firstStrictWakeAfter4am(fUnlock, fScreen, date, debug = true)
-            ?: return SleepResult(null, null, 0.0, "NO_MORNING_WAKE")
-
-        val sleepZ = lastStrictSleepWith60mQuiet(fScreen, fUnlock, date, wakeZ, debug = true)
-            ?: return SleepResult(null, wakeZ.toLocalTime().formatHms(), 0.0, "NO_SLEEP_CANDIDATE")
-
-        return finalize(sleepZ, wakeZ, "OK")
+    private fun ensureHeader(f: File, header: String): File {
+        f.parentFile?.mkdirs()
+        if (!f.exists() || f.length() == 0L) {
+            writeAtomic(f, "$header\n")
+        } else {
+            val cur = try { f.useLines { it.firstOrNull() ?: "" } } catch (_: Throwable) { "" }
+            if (cur.trim().replace("\r", "") != header) {
+                val rest = try { f.readLines().drop(1) } catch (_: Throwable) { emptyList() }
+                writeAtomic(f, buildString {
+                    append(header).append('\n')
+                    rest.forEach { line -> if (line.isNotBlank()) append(line.trimEnd('\r')).append('\n') }
+                })
+            }
+        }
+        return f
     }
 
-    private fun finalize(sleepZ: ZonedDateTime, wakeZ: ZonedDateTime, qual: String): SleepResult {
-        val hrs = Duration.between(sleepZ, wakeZ).seconds.coerceAtLeast(0) / 3600.0
-        return SleepResult(
-            sleepTime = sleepZ.toLocalTime().formatHms(),
-            wakeTime  = wakeZ.toLocalTime().formatHms(),
-            hours     = round2(hrs.coerceIn(0.0, 12.0)),
-            quality   = qual
-        )
+    private fun upsertSummary(file: File, dateStr: String, totalSleepMinutes: Int, sleepEfficiency: Double) {
+        val lines = if (file.exists()) file.readLines().map { it.trimEnd('\r') }.toMutableList() else mutableListOf()
+        if (lines.isEmpty()) return
+        val header = lines.first()
+        if (header != EXPECTED_HEADER) return
+        val map = lines.drop(1).filter { it.isNotBlank() }.associateBy({ it.substringBefore(',') }, { it }).toMutableMap()
+        map[dateStr] = "%s,%d,%.2f".format(Locale.US, dateStr, totalSleepMinutes, sleepEfficiency)
+        val rebuilt = buildString { append(header).append('\n'); map.keys.sorted().forEach { append(map[it]).append('\n') } }
+        writeAtomic(file, rebuilt)
     }
 
-    // --- Wake/sleep detection (unchanged) ---
-    private fun firstStrictWakeAfter4am(
-        fUnlock: File,
-        fScreen: File,
-        date: LocalDate,
-        debug: Boolean = false
-    ): ZonedDateTime? {
-        val dayStart = date.atTime(4, 0).atZone(zone)
-        val dayEnd   = date.plusDays(1).atStartOfDay(zone)
-        val unlocks = mutableListOf<ZonedDateTime>()
-        if (fUnlock.exists()) fUnlock.useLines { seq ->
-            seq.forEach { line ->
-                if (!line.endsWith(",UNLOCK", true)) return@forEach
-                val ts = extractTs(line) ?: return@forEach
-                val z = safeParse(ts) ?: return@forEach
-                if (!z.isBefore(dayStart) && z.isBefore(dayEnd)) unlocks += z
-            }
+    private fun upsertDuration(file: File, dateStr: String, totalMinutes: Int) {
+        val hours = totalMinutes / 60.0
+        val lines = if (file.exists()) file.readLines().map { it.trimEnd('\r') }.toMutableList() else mutableListOf()
+        val map = mutableMapOf<String, String>()
+        if (lines.isEmpty()) {
+            map[dateStr] = "%s,%.2f".format(Locale.US, dateStr, hours)
+            writeAtomic(file, buildString { append(EXPECTED_HEADER_HOURS).append('\n'); append(map[dateStr]).append('\n') })
+            return
         }
-        unlocks.sortBy { it.toInstant().toEpochMilli() }
-
-        val offs = mutableListOf<ZonedDateTime>()
-        if (fScreen.exists()) fScreen.useLines { seq ->
-            seq.forEach { line ->
-                val isOff = line.endsWith(",SCREEN_OFF", true) || line.endsWith(",OFF", true)
-                if (!isOff) return@forEach
-                val ts = extractTs(line) ?: return@forEach
-                val z = safeParse(ts) ?: return@forEach
-                offs += z
-            }
-        }
-        offs.sortBy { it.toInstant().toEpochMilli() }
-
-        for (u in unlocks) {
-            val limit = u.plusSeconds(20)
-            val offWithin20s = offs.firstOrNull { it.isAfter(u) && it.isBefore(limit) }
-            if (debug) {
-                if (offWithin20s != null) {
-                    val diff = Duration.between(u, offWithin20s).seconds
-                    Log.i(TAG, "WAKE_REJECT unlock=$u reason=SCREEN_OFF at $offWithin20s (+${diff}s < 20s)")
-                } else {
-                    Log.i(TAG, "WAKE_ACCEPT unlock=$u (no SCREEN_OFF in next 20s)")
-                }
-            }
-            if (offWithin20s == null) return u
-        }
-        if (debug) Log.i(TAG, "WAKE_NONE date=$date reason=No UNLOCK that survives 20s")
-        return null
+        val header = lines.first()
+        lines.drop(1).filter { it.isNotBlank() }.forEach { map[it.substringBefore(',')] = it }
+        map[dateStr] = "%s,%.2f".format(Locale.US, dateStr, hours)
+        writeAtomic(file, buildString { append(header).append('\n'); map.keys.sorted().forEach { append(map[it]).append('\n') } })
     }
 
-    private fun lastStrictSleepWith60mQuiet(
-        fScreen: File,
-        fUnlock: File,
-        date: LocalDate,
-        wakeZ: ZonedDateTime,
-        debug: Boolean = false
-    ): ZonedDateTime? {
-        val windowStart = date.minusDays(1).atTime(21, 0).atZone(zone)
-        val windowEndByRule = date.atTime(4, 0).atZone(zone)
-        val windowEnd = minOf(windowEndByRule, wakeZ)
-        if (!windowEnd.isAfter(windowStart)) {
-            if (debug) logI("SLEEP_NONE date=$date reason=Empty window")
-            return null
-        }
+    private fun writeAtomic(dst: File, content: String) {
+        dst.parentFile?.mkdirs()
+        val tmp = File(dst.parentFile, dst.name + ".tmp")
+        FileOutputStream(tmp).use { it.channel.truncate(0); it.write(content.toByteArray()); it.channel.force(true) }
+        if (!tmp.renameTo(dst)) { FileOutputStream(dst, false).use { it.write(content.toByteArray()) }; tmp.delete() }
+    }
 
-        data class C(val z: ZonedDateTime, val type: String)
-        val candidates = mutableListOf<C>()
-
-        if (fScreen.exists()) fScreen.useLines { seq ->
-            seq.forEach { line ->
-                val isOff = line.endsWith(",SCREEN_OFF", true) || line.endsWith(",OFF", true)
-                val ts = extractTs(line) ?: return@forEach
-                val z = safeParse(ts) ?: return@forEach
-                if (isOff && !z.isBefore(windowStart) && !z.isAfter(windowEnd)) {
-                    candidates += C(z, "SCREEN_OFF")
+    private fun computeForDate(date: LocalDate, fScreen: File): SleepResult {
+        val minutesByDate = mutableMapOf<LocalDate, Int>()
+        if (!fScreen.exists()) return SleepResult(0, 0.0)
+        data class ScreenEvent(val ts: ZonedDateTime, val isOn: Boolean)
+        val events = mutableListOf<ScreenEvent>()
+        try {
+            fScreen.useLines { seq ->
+                seq.forEach { line ->
+                    val l = line.trimStart('\uFEFF').trim()
+                    if (l.isEmpty() || l.startsWith("ts,", true) || l.startsWith("timestamp,", true)) return@forEach
+                    val ts = extractTs(l) ?: return@forEach
+                    val z = safeParse(ts) ?: return@forEach
+                    val state = l.substringAfter(',', "").trim()
+                    events += ScreenEvent(z, state.equals("ON", true))
                 }
             }
-        }
-        if (fUnlock.exists()) fUnlock.useLines { seq ->
-            seq.forEach { line ->
-                if (!line.endsWith(",LOCK", true)) return@forEach
-                val ts = extractTs(line) ?: return@forEach
-                val z = safeParse(ts) ?: return@forEach
-                if (!z.isBefore(windowStart) && !z.isAfter(windowEnd)) {
-                    candidates += C(z, "LOCK")
-                }
+        } catch (_: Throwable) { return SleepResult(0, 0.0) }
+        if (events.size < 2) return SleepResult(0, 0.0)
+        events.sortBy { it.ts.toInstant().toEpochMilli() }
+
+        val minGap = 5 * 60 // minimum gap (5 minutes) to include fragmented sleep
+        val nightStart = 18 // 6 PM as start of sleep day
+        val nightEnd = 10 // 10 AM as end of sleep day
+        val sleepBlocks = mutableListOf<Pair<ZonedDateTime, ZonedDateTime>>()
+        var sleepStart: ZonedDateTime? = null
+
+        for (event in events) {
+            if (!event.isOn) {
+                if (sleepStart == null) sleepStart = event.ts
+            } else if (event.isOn && sleepStart != null) {
+                val gapSec = Duration.between(sleepStart, event.ts).seconds
+                if (gapSec >= minGap) sleepBlocks.add(Pair(sleepStart, event.ts))
+                sleepStart = null
             }
         }
-        if (candidates.isEmpty()) {
-            if (debug) logI("SLEEP_NONE date=$date reason=No candidates in window")
-            return null
-        }
-        candidates.sortBy { it.z.toInstant().toEpochMilli() }
 
-        val unlocks = mutableListOf<ZonedDateTime>()
-        if (fUnlock.exists()) fUnlock.useLines { seq ->
-            seq.forEach { line ->
-                if (!line.endsWith(",UNLOCK", true)) return@forEach
-                val ts = extractTs(line) ?: return@forEach
-                val z = safeParse(ts) ?: return@forEach
-                if (!z.isBefore(windowStart) && !z.isAfter(wakeZ)) unlocks += z
+        // Aggregate blocks into the correct sleep day
+        val nightlyMinutes = mutableMapOf<LocalDate, Int>()
+        sleepBlocks.forEach { (start, end) ->
+            val sleepDay = if (start.hour >= nightStart) start.toLocalDate() else start.toLocalDate().minusDays(1)
+            nightlyMinutes[sleepDay] = (nightlyMinutes[sleepDay] ?: 0) + Duration.between(start, end).toMinutes().toInt()
+        }
+
+        val totalMinutes = nightlyMinutes[date] ?: 0
+        val totalTimeInBed = if (nightlyMinutes[date] != null) {
+            val blocks = sleepBlocks.filter {
+                val sd = if (it.first.hour >= nightStart) it.first.toLocalDate() else it.first.toLocalDate().minusDays(1)
+                sd == date
             }
-        }
-        unlocks.sortBy { it.toInstant().toEpochMilli() }
+            if (blocks.isEmpty()) 1 else Duration.between(blocks.first().first, blocks.last().second).toMinutes()
+        } else 1
+        val eff = if (totalMinutes > 0) totalMinutes.toDouble() / totalTimeInBed.toDouble() else 0.0
 
-        val ons = mutableListOf<ZonedDateTime>()
-        if (fScreen.exists()) fScreen.useLines { seq ->
-            seq.forEach { line ->
-                val isOn = line.endsWith(",SCREEN_ON", true) || line.endsWith(",ON", true)
-                if (!isOn) return@forEach
-                val ts = extractTs(line) ?: return@forEach
-                val z = safeParse(ts) ?: return@forEach
-                if (!z.isBefore(windowStart) && !z.isAfter(wakeZ)) ons += z
-            }
-        }
-        ons.sortBy { it.toInstant().toEpochMilli() }
-
-        fun hasNoiseWithin60mAfter(anchor: ZonedDateTime): Boolean {
-            val end = minOf(anchor.plusMinutes(60), wakeZ)
-            if (unlocks.any { it.isAfter(anchor) && it.isBefore(end) }) return true
-            if (ons.any     { it.isAfter(anchor) && it.isBefore(end) }) return true
-            return false
-        }
-
-        for (i in candidates.indices.reversed()) {
-            val c = candidates[i]
-            val noisy = hasNoiseWithin60mAfter(c.z)
-            if (debug) {
-                if (noisy) logI("SLEEP_REJECT at=${c.z} type=${c.type} reason=UNLOCK/SCREEN_ON within 60m")
-                else       logI("SLEEP_ACCEPT at=${c.z} type=${c.type} (60m quiet)")
-            }
-            if (!noisy) return c.z
-        }
-        if (debug) logI("SLEEP_NONE date=$date reason=No candidate with 60m quiet")
-        return null
+        return SleepResult(totalMinutes, round2(eff))
     }
 
     private fun extractTs(line: String): String? {
-        val t = line.trim()
-        if (t.isEmpty()) return null
-        if (t.startsWith("date,", true) || t.startsWith("timestamp,", true)) return null
-        val parts = t.split(',').map { it.trim() }
-        if (parts.isEmpty()) return null
-        return when {
-            parts.size >= 1 && parts[0].length >= 19 && parts[0][10] == ' ' ->
-                parts[0].substring(0, 19)
-            parts.size >= 1 && parts[0].length >= 19 && parts[0][10] == 'T' ->
-                parts[0].replace('T', ' ').substring(0, 19)
-            parts.size >= 2 && parts[0].length == 10 && parts[1].length >= 8 ->
-                parts[0] + " " + parts[1].substring(0, 8)
-            else -> null
-        }
+        val first = line.substringBefore(',', "").trim()
+        return if (first.length >= 19) first.substring(0, 19) else null
     }
 
     private fun safeParse(s: String): ZonedDateTime? = try {
         LocalDateTime.parse(s.substring(0, 19), fmtTs).atZone(zone)
     } catch (_: Throwable) { null }
 
-    private fun ensureHeader(f: File, header: String): File {
-        f.parentFile?.mkdirs()
-        if (!f.exists()) {
-            writeAtomic(f, header + "\n")
-            Log.i(TAG, "CREATED ${f.absolutePath}")
-        } else if (f.length() == 0L) {
-            writeAtomic(f, header + "\n")
-            Log.i(TAG, "WROTE_HEADER ${f.absolutePath}")
-        } else {
-            Log.i(TAG, "EXISTS ${f.absolutePath} size=${f.length()}")
-        }
-        return f
+    companion object {
+        private const val TAG = "SleepRollupWorker"
+        private const val PROBE_TAG = "SLEEP_SUM_PROBE"
+        private const val OUT_FILE = "daily_sleep_summary.csv"
+        private const val OUT_FILE_HOURS = "daily_sleep_duration.csv"
+        private const val EXPECTED_HEADER = "date,total_sleep_minutes,sleep_efficiency"
+        private const val EXPECTED_HEADER_HOURS = "date,hours"
     }
-
-    private fun upsert(file: File, dateStr: String, tailCols: List<String>) {
-        val lines = if (file.exists()) file.readLines().toMutableList() else mutableListOf()
-        if (lines.isEmpty()) return
-        val header = lines.first()
-        var replaced = false
-        for (i in 1 until lines.size) {
-            val idx = lines[i].indexOf(',')
-            val key = if (idx >= 0) lines[i].substring(0, idx) else lines[i]
-            if (key == dateStr) {
-                lines[i] = csvJoin(listOf(dateStr) + tailCols)
-                replaced = true
-                break
-            }
-        }
-        if (!replaced) lines.add(csvJoin(listOf(dateStr) + tailCols))
-        writeAtomic(file, (listOf(header) + lines.drop(1)).joinToString("\n") + "\n")
-    }
-
-    private fun rotateByDate(file: File, keepDays: Int) {
-        if (!file.exists()) return
-        val lines = file.readLines()
-        if (lines.isEmpty()) return
-        val header = lines.first()
-        val cutoff = LocalDate.now(zone).minusDays(keepDays.toLong())
-        val kept = lines.drop(1).filter { line ->
-            val idx = line.indexOf(',')
-            if (idx <= 0) true else {
-                val ds = line.substring(0, idx)
-                try {
-                    LocalDate.parse(ds, fmtDate) >= cutoff
-                } catch (_: Throwable) {
-                    true
-                }
-            }
-        }
-        writeAtomic(file, (sequenceOf(header) + kept.asSequence()).joinToString("\n") + "\n")
-    }
-
-    private fun healDropUtcTodayIfBoth(file: File) {
-        if (!file.exists()) return
-        val lines = file.readLines()
-        if (lines.isEmpty()) return
-        val header = lines.first()
-        val body = lines.drop(1).toMutableList()
-
-        val localToday = LocalDate.now(zone).format(fmtDate)
-        val utcToday = LocalDate.now(ZoneOffset.UTC).format(fmtDate)
-
-        if (localToday != utcToday) {
-            val hasLocal = body.any { it.startsWith("$localToday,") }
-            val hasUtc = body.any { it.startsWith("$utcToday,") }
-            if (hasLocal && hasUtc) {
-                val pruned = body.filterNot { it.startsWith("$utcToday,") }
-                writeAtomic(file, (sequenceOf(header) + pruned.asSequence()).joinToString("\n") + "\n")
-            }
-        }
-    }
-
-    private fun csvJoin(cols: List<String>): String =
-        cols.joinToString(",") { csvEscape(it) }
-
-    private fun csvEscape(s: String): String {
-        if (s.isEmpty()) return ""
-        val needs = s.any { it == ',' || it == '"' || it == '\n' || it == '\r' }
-        return if (!needs) s else "\"" + s.replace("\"", "\"\"") + "\""
-    }
-
-    private fun writeAtomic(dst: File, content: String) {
-        dst.parentFile?.mkdirs()
-        val tmp = File(dst.parentFile, dst.name + ".tmp")
-        var fos: FileOutputStream? = null
-        try {
-            fos = FileOutputStream(tmp)
-            val ch: FileChannel = fos.channel
-            ch.truncate(0)
-            ch.write(java.nio.ByteBuffer.wrap(content.toByteArray()))
-            ch.force(true)
-            ch.close()
-        } finally {
-            try { fos?.close() } catch (_: Throwable) {}
-        }
-        if (!tmp.renameTo(dst)) {
-            try {
-                FileOutputStream(dst, false).use { it.write(content.toByteArray()) }
-                tmp.delete()
-            } catch (_: Throwable) {
-                dst.delete()
-                tmp.renameTo(dst)
-            }
-        }
-    }
-
-    private fun LocalTime.formatHms(): String =
-        String.format(Locale.US, "%02d:%02d:%02d", hour, minute, second)
-
-    private fun logI(msg: String) { Log.i(TAG, msg) }
-
-    private fun round2(v: Double): Double = round(v * 100.0) / 100.0
-    private fun to2(v: Double): String = String.format(Locale.US, "%.2f", v)
-    private fun to0(v: Double): String = String.format(Locale.US, "%.0f", v)
-
-    companion object { private const val TAG = "SleepRollupWorker" }
 }

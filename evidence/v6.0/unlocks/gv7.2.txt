@@ -1,0 +1,10 @@
+=== LOG ===
+10-27 18:23:22.907  1787  3177 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-27 18:23:22.908  1787  3177 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-27 18:23:22.911 20585 20585 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP
+10-27 18:23:22.913 20585 20585 I TriggerReceiver: Enqueued UnlockRollup (once-UnlockRollup)
+10-27 18:23:22.997 20585 20608 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=49420347-c333-4005-8fde-d7dbc534c4af, tags={ com.nick.myrecoverytracker.UnlockRollupWorker, UnlockRollup } ]
+
+=== TAIL: files/daily_unlocks.csv ===
+run-as: package not debuggable: com.nick.myrecoverytracker
+GV7 RESULT=FAIL (bad or missing CSV rows)

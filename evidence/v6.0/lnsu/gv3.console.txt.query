@@ -1,0 +1,42 @@
+1 receivers found:
+  Receiver #0:
+    priority=0 preferredOrder=0 match=0x108000 specificIndex=-1 isDefault=false
+    ActivityInfo:
+      name=com.nick.myrecoverytracker.TriggerReceiver
+      packageName=com.nick.myrecoverytracker
+      enabled=true exported=true directBootAware=false
+      taskAffinity=com.nick.myrecoverytracker targetActivity=null persistableMode=PERSIST_ROOT_ONLY
+      launchMode=LAUNCH_MULTIPLE flags=0x10000 privateFlags=0x0 theme=0x0
+      lockTaskLaunchMode=LOCK_TASK_LAUNCH_MODE_DEFAULT
+      resizeMode=RESIZE_MODE_RESIZEABLE
+      knownActivityEmbeddingCerts={}
+      requireContentUriPermissionFromCaller=CONTENT_URI_PERMISSION_NONE
+      ApplicationInfo:
+        name=com.nick.myrecoverytracker.CrashReporter
+        packageName=com.nick.myrecoverytracker
+        labelRes=0x7f0f001c nonLocalizedLabel=null icon=0x7f0d0000 banner=0x0
+        className=com.nick.myrecoverytracker.CrashReporter
+        processName=com.nick.myrecoverytracker
+        taskAffinity=com.nick.myrecoverytracker
+        uid=10401 flags=0x20c9be46 privateFlags=0x8c001100 theme=0x7f100274
+        requiresSmallestWidthDp=0 compatibleWidthLimitDp=0 largestWidthLimitDp=0
+        sourceDir=/data/app/~~vHz1-0KYCUL1hoNL0MNhjg==/com.nick.myrecoverytracker-g5_AL0xXtnzRQZXDAHuCTA==/base.apk
+        resourceDirs=[/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+        overlayPaths=[/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk, /data/resource-cache/com.android.systemui-neutral-7eQj.frro, /data/resource-cache/com.android.systemui-accent-Q48v.frro, /data/resource-cache/com.android.systemui-dynamic-L5Q3.frro]
+        seinfo=default:targetSdkVersion=34
+        seinfoUser=:complete
+        dataDir=/data/user/0/com.nick.myrecoverytracker
+        deviceProtectedDataDir=/data/user_de/0/com.nick.myrecoverytracker
+        credentialProtectedDataDir=/data/user/0/com.nick.myrecoverytracker
+        enabled=true minSdkVersion=24 targetSdkVersion=34 versionCode=1 targetSandboxVersion=1
+        supportsRtl=true
+        fullBackupContent=true
+        crossProfile=false
+        HiddenApiEnforcementPolicy=2
+        usesNonSdkApi=false
+        allowsPlaybackCapture=true
+        nativeHeapZeroInitialized=0
+        enableOnBackInvokedCallback=false
+        allowCrossUidActivitySwitchFromBelow=true
+        mPageSizeAppCompatFlags=0
+        createTimestamp=276117399

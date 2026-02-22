@@ -1,0 +1,1 @@
+DI2 RESULT=FAIL (header mismatch: expected 'date,intensity' got 'run-as: package not debuggable: com.nick.myrecoverytracker')

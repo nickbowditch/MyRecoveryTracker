@@ -1,0 +1,10 @@
+=== LNSU WORKER MANUAL TEST ===
+screen_log.csv exists
+unlock_log.csv exists
+daily_late_night_screen_usage.csv exists
+Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_LNSU_TEST flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver (has extras) }
+Broadcast completed: result=0
+date,late_night_YN
+2026-02-07,Y
+2026-02-08,Y
+RESULT=INSPECT_OUTPUT

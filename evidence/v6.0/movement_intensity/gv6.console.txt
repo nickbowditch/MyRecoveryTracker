@@ -1,0 +1,11 @@
+started_at=2025-10-06T11:22:24Z
+daily_header=date,intensity
+prev_lock_header=<none>
+new_lock_header=date,intensity
+--- DEBUG: CSV head ---
+date,intensity
+2025-10-05,51
+2025-10-06,28
+--- DEBUG: LOCK file ---
+date,intensity
+GV6 RESULT=PASS

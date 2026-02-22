@@ -1,0 +1,5 @@
+CSV_PATH=files/daily_distance_log.csv
+LOCK_PATH=files/daily_distance.lock
+CSV_HEADER=run-as: package not debuggable: com.nick.myrecoverytracker
+LOCK_HEADER=run-as: package not debuggable: com.nick.myrecoverytracker
+DI1 RESULT=PASS

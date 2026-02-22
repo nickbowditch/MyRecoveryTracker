@@ -1,3 +1,4 @@
+// app/src/main/java/com/nick/myrecoverytracker/DistanceNudge.kt
 package com.nick.myrecoverytracker
 
 import android.annotation.SuppressLint
@@ -7,6 +8,7 @@ import android.os.Looper
 import androidx.work.*
 import com.google.android.gms.location.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import java.io.File
 import java.time.*
 import java.util.concurrent.TimeUnit
@@ -84,6 +86,7 @@ class DistanceNudgeReceiver : BroadcastReceiver() {
 }
 
 @SuppressLint("MissingPermission")
+@OptIn(DelicateCoroutinesApi::class)  // silences the 'delicate API' warning for GlobalScope
 private fun requestOneLocationThenRecompute(app: Context) {
     val fused = LocationServices.getFusedLocationProviderClient(app)
     val req = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10_000L)

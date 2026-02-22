@@ -1,0 +1,7 @@
+GV-4 RESULT=FAIL
+RED:evidence/v6.0/sleep/di3.2.txt
+RED:evidence/v6.0/sleep/ee2.1.txt
+RED:evidence/v6.0/sleep/ee3.1.txt
+RED:evidence/v6.0/sleep/gv1.4.txt
+RED:evidence/v6.0/sleep/gv3.9.txt
+RED:evidence/v6.0/sleep/gv4.14.txt

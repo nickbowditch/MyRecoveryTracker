@@ -1,0 +1,24 @@
+10-28 09:03:05.924 I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-28 09:03:05.927 I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-28 09:03:05.934 I/TriggerReceiver(24687): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY
+10-28 09:03:06.018 I/WM-WorkerWrapper(24687): Worker result SUCCESS for Work [ id=15b53f85-8945-4912-b8b7-e8a26567fa89, tags={ com.nick.myrecoverytracker.MovementIntensityDailyWorker, MovementIntensity } ]
+10-28 09:03:13.662 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=LocalError: Connection abandoned, Error on socket write Network is unreachable, 
+10-28 09:03:13.674 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:03:18.018 I/LocationAccessPolicy( 1787): com.instagram.android is aware of coarse but the app-ops permission is specifically denied.
+10-28 09:03:18.203 W/TracingMuxer( 1661): type=1400 audit(0.0:390543): avc:  denied  { write } for  name="traced_producer" dev="tmpfs" ino=1353 scontext=u:r:gxp_logging:s0 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0
+10-28 09:03:20.199 W/TracingMuxer( 1395): type=1400 audit(0.0:390544): avc:  denied  { write } for  name="traced_producer" dev="tmpfs" ino=1353 scontext=u:r:hal_neuralnetworks_darwinn:s0 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0
+10-28 09:03:22.898 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=LocalError: Connection abandoned, Error on socket write Network is unreachable, 
+10-28 09:03:22.911 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:03:32.764 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=LocalError: Connection abandoned, Error on socket write Network is unreachable, 
+10-28 09:03:32.776 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:03:39.808 I/LocationAccessPolicy( 1787): com.instagram.android is aware of coarse but the app-ops permission is specifically denied.
+10-28 09:03:44.173 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=LocalError: Connection abandoned, Error on socket write Network is unreachable, 
+10-28 09:03:44.184 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:03:46.539 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:03:48.239 W/TracingMuxer( 1661): type=1400 audit(0.0:390545): avc:  denied  { write } for  name="traced_producer" dev="tmpfs" ino=1353 scontext=u:r:gxp_logging:s0 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0
+10-28 09:03:50.231 W/TracingMuxer( 1395): type=1400 audit(0.0:390546): avc:  denied  { write } for  name="traced_producer" dev="tmpfs" ino=1353 scontext=u:r:hal_neuralnetworks_darwinn:s0 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0
+10-28 09:03:51.409 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=LocalError: Connection abandoned, Error on socket write Network is unreachable, 
+10-28 09:03:51.423 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:03:58.753 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=LocalError: Connection abandoned, Error on socket write Network is unreachable, 
+10-28 09:03:58.764 E/MvfstCallbacks.cpp( 1142): onConnectionSetupError: error=TransportError: Internal Error, Error on socket write Operation not permitted, 
+10-28 09:04:01.574 I/LocationAccessPolicy( 1787): com.instagram.android is aware of coarse but the app-ops permission is specifically denied.

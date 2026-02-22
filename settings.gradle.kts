@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MyRecoveryTracker"
 include(":app")
- 
+include(":mylibrary")

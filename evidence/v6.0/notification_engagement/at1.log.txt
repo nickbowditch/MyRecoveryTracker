@@ -1,0 +1,41 @@
+--------- beginning of main
+10-25 08:58:06.256 32674 32736 I SleepRollupWorker: WAKE_NONE date=2025-09-30 reason=No UNLOCK that survives 20s
+10-25 08:58:06.266 32674 32736 I SleepRollupWorker: Sleep 2025-09-30 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+10-25 08:58:06.360 32674 32736 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-01T17:58:59+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:58:06.399  1787  3177 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-25 08:58:06.400  1787  3177 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x400000 pkg=com.nick.myrecoverytracker cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-25 08:58:06.405  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-25 08:58:06.406 32674 32674 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP
+10-25 08:58:06.407 32674 32674 I TriggerReceiver: Enqueued NotificationEngagement (once-NotificationEngagementRollup)
+10-25 08:58:06.408  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-25 08:58:06.487 32674 32736 I SleepRollupWorker: SLEEP_ACCEPT at=2025-10-01T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:58:06.496 32674 32749 I NotificationEngagementWorker: Engagement rollup wrote 2 date(s) to daily_notification_engagement.csv
+10-25 08:58:06.500 32674 32699 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=fa5f4b14-9ee1-4d6a-b364-47b796463919, tags={ com.nick.myrecoverytracker.NotificationEngagementWorker, NotificationEngagement } ]
+10-25 08:58:06.502 32674 32736 I SleepRollupWorker: Sleep 2025-10-01 -> sleep=01:05:00 wake=17:58:59 hours=12.00 quality=OK
+10-25 08:58:06.549 32674 32736 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-02T07:40:26+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:58:06.685 32674 32736 I SleepRollupWorker: SLEEP_ACCEPT at=2025-10-02T02:57:14+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:58:06.703 32674 32736 I SleepRollupWorker: Sleep 2025-10-02 -> sleep=02:57:14 wake=07:40:26 hours=4.72 quality=OK
+10-25 08:58:06.745  9813  9813 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-25 08:58:06.764 32674 32736 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-03T07:21:59+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:58:06.934 32674 32736 I SleepRollupWorker: SLEEP_ACCEPT at=2025-10-03T01:06:04+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:58:06.943 32674 32736 I SleepRollupWorker: Sleep 2025-10-03 -> sleep=01:06:04 wake=07:21:59 hours=6.27 quality=OK
+10-25 08:58:07.008 32674 32736 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-04T05:34:31+10:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:58:07.091  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4358: USF: TMD3733: R/C:0.49 2D->1CD d_lux:108.3 c_lux:109.7/-1.0 c_coeff:0.50/-1.00
+10-25 08:58:07.091  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4361: USF: TMD3733:  w:0.02 C:27.50 d_leak:-.0 c_leak:-.0 lux:108.4 leak:-.0
+10-25 08:58:07.094 17689 17699 I pixel-thermal: rfpa_therm:33.085 raw data: rfpa_therm:33085 
+10-25 08:58:07.104  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x6 size 9 
+10-25 08:58:07.105  1390  1412 D CHRE    : @ 628974.331: timepulse GPI 49, timestamp:15457671230358
+10-25 08:58:07.105  1390  1412 D CHRE    : @ 628974.331: [TimeSync] ProcessPpsPulse: fiq counter 15457671230358
+10-25 08:58:07.184 32674 32736 I SleepRollupWorker: SLEEP_ACCEPT at=2025-10-04T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:58:07.194 32674 32736 I SleepRollupWorker: Sleep 2025-10-04 -> sleep=01:05:00 wake=05:34:31 hours=4.49 quality=OK
+10-25 08:58:07.298 32674 32736 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-05T06:47:41+11:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+10-25 08:58:07.347  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-25 08:58:07.353  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-25 08:58:07.353  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-25 08:58:07.415 32674 32736 I SleepRollupWorker: SLEEP_ACCEPT at=2025-10-05T01:05+10:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+10-25 08:58:07.425 32674 32736 I SleepRollupWorker: Sleep 2025-10-05 -> sleep=01:05:00 wake=06:47:41 hours=4.71 quality=OK
+10-25 08:58:07.434 15035 15039 E gcblocker: too long GC blocking: 8
+10-25 08:58:07.434 15035 15039 E gcblocker: gc block end, 537716580,101
+10-25 08:58:07.467 32674 32736 I SleepRollupWorker: WAKE_REJECT unlock=2025-10-06T08:13:08+11:00[Australia/Sydney] reason=SCREEN_OFF at 2025-10-06T08:13:23+11:00[Australia/Sydney] (+15s < 20s)
+10-25 08:58:07.468 32674 32736 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-10-06T08:35+11:00[Australia/Sydney] (no SCREEN_OFF in next 20s)

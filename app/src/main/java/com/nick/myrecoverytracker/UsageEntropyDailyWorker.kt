@@ -1,6 +1,7 @@
-// app/src/main/java/com/nick/myrecoverytracker/UsageEntropyDailyWorker.kt
 package com.nick.myrecoverytracker
 
+import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -8,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import kotlin.math.ln
 
@@ -17,83 +20,100 @@ class UsageEntropyDailyWorker(appContext: Context, params: WorkerParameters) :
     private val dayFmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        try {
-            val dir = applicationContext.filesDir
-            val today = dayFmt.format(System.currentTimeMillis())
-            ensureHeader(dir)
 
-            val switching = File(dir, "daily_app_switching.csv")
-            val usageEvents = File(dir, "usage_events.csv")
+        val ctx = applicationContext
+        val dir = ctx.filesDir
+        ensureHeader(dir)
 
-            var entropyFromSwitching: Double? = null
-            if (switching.exists()) {
-                switching.forEachLine { line ->
-                    if (line.startsWith("$today,")) {
-                        val parts = line.split(',')
-                        if (parts.size >= 3) {
-                            val e = parts[2].trim().toDoubleOrNull()
-                            if (e != null) entropyFromSwitching = e
-                        }
-                    }
-                }
-            }
-            if (entropyFromSwitching != null) {
-                writeOut(dir, today, entropyFromSwitching!!)
+        val day = dayFmt.format(System.currentTimeMillis())
+
+        val diag = File(dir, "usage_diag.csv")
+        if (diag.exists()) {
+            val last = diag.readLines().lastOrNull() ?: ""
+            if (!last.contains("MODE_ALLOWED")) {
+                writeMissing(dir, day)
                 return@withContext Result.success()
             }
-
-            val freq = mutableMapOf<String, Int>()
-            var total = 0
-            if (usageEvents.exists()) {
-                usageEvents.forEachLine { line ->
-                    if (!line.startsWith("$today,")) return@forEachLine
-                    val parts = line.split(',')
-                    if (parts.size >= 2) {
-                        val pkg = parts[1].trim()
-                        if (pkg.isNotEmpty()) {
-                            freq[pkg] = (freq[pkg] ?: 0) + 1
-                            total++
-                        }
-                    }
-                }
-            }
-
-            if (total == 0) {
-                // no write for today (header already ensured)
-                return@withContext Result.success()
-            }
-
-            val entropyBits = shannonEntropy(freq.values, total)
-            writeOut(dir, today, entropyBits)
-            Result.success()
-        } catch (_: Throwable) {
-            Result.retry()
         }
+
+        val (startMs, endMs) = dayBoundsMillis()
+
+        val usm = ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val stats: List<UsageStats> =
+            usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startMs, endMs)
+                ?.filter { it.totalTimeInForeground > 0 } ?: emptyList()
+
+        val pkgTime = mutableMapOf<String, Long>()
+        for (u in stats) {
+            val pkg = u.packageName ?: continue
+            if (shouldSkip(pkg)) continue
+            val ms = u.totalTimeInForeground
+            if (ms > 0) pkgTime[pkg] = (pkgTime[pkg] ?: 0L) + ms
+        }
+
+        if (pkgTime.isEmpty()) return@withContext Result.success()
+
+        val totalMs = pkgTime.values.sum()
+        if (totalMs <= 0) return@withContext Result.success()
+
+        val entropy = shannon(pkgTime.values, totalMs)
+        writeOut(dir, day, entropy)
+
+        Result.success()
     }
 
-    private fun shannonEntropy(counts: Collection<Int>, total: Int): Double {
+    private fun shannon(values: Collection<Long>, total: Long): Double {
         var h = 0.0
-        for (c in counts) {
-            val p = c.toDouble() / total
-            h -= p * ln(p)
+        for (c in values) {
+            val p = c.toDouble() / total.toDouble()
+            if (p > 0) h -= p * ln(p)
         }
         return h / ln(2.0)
     }
 
     private fun ensureHeader(dir: File) {
         val f = File(dir, "daily_usage_entropy.csv")
-        if (!f.exists()) {
+        if (!f.exists() || f.length() == 0L) {
             f.writeText("date,entropy_bits\n")
         }
     }
 
-    private fun writeOut(dir: File, day: String, entropy: Double) {
+    private fun writeMissing(dir: File, day: String) {
         val f = File(dir, "daily_usage_entropy.csv")
         if (!f.exists()) f.writeText("date,entropy_bits\n")
+        val lines = f.readLines().toMutableList()
+        val row = "$day,PERMISSION_MISSING"
+        val idx = lines.indexOfFirst { it.startsWith("$day,") }
+        if (idx >= 0) lines[idx] = row else lines.add(row)
+        f.writeText(lines.joinToString("\n") + "\n")
+    }
+
+    private fun writeOut(dir: File, day: String, entropy: Double) {
+        val f = File(dir, "daily_usage_entropy.csv")
         val lines = f.readLines().toMutableList()
         val row = "%s,%.4f".format(Locale.US, day, entropy)
         val idx = lines.indexOfFirst { it.startsWith("$day,") }
         if (idx >= 0) lines[idx] = row else lines.add(row)
         f.writeText(lines.joinToString("\n") + "\n")
+    }
+
+    private fun dayBoundsMillis(): Pair<Long, Long> {
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
+        val start = cal.timeInMillis
+        val end = start + 86400000L
+        return start to end
+    }
+
+    private fun shouldSkip(pkg: String): Boolean {
+        val p = pkg.lowercase(Locale.US)
+        return p == "android" ||
+                p == "com.nick.myrecoverytracker" ||
+                p == "com.android.intentresolver" ||
+                p == "com.google.android.apps.nexuslauncher"
     }
 }

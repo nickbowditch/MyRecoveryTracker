@@ -1,0 +1,7 @@
+date,feature_schema_version,daily_unlocks
+2025-09-16,v6.0,47
+2025-09-17,v6.0,67
+2025-09-18,v6.0,155
+2025-09-19,v6.0,74
+2025-09-20,v6.0,63
+DIAG-SNAP RESULT=PASS

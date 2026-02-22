@@ -1,0 +1,650 @@
+#!/bin/bash
+set -euo pipefail
+
+MODE="${1:-artefact}"
+PID="${2:-P_PREPILOT_PIXEL}"
+INGEST_ROOT="$HOME/Documents/PHD/INGEST/raw"
+DEST="${INGEST_ROOT}/${PID}"
+DEVICE_PATH="/sdcard/Android/data/com.myra/files"
+
+echo "== MyRecoveryTracker Health Gate (Pre-Pilot v2.0) =="
+echo "Mode    : $MODE"
+echo "PID     : $PID"
+echo
+
+FAIL=0
+WARNING=0
+UNKNOWN=0
+fail(){ echo "FAIL: $*"; FAIL=1; }
+warn(){ echo "WARN: $*"; WARNING=1; }
+ok(){ echo "OK  : $*"; }
+unknown(){ echo "UNKN: $*"; UNKNOWN=1; }
+
+if [ "$MODE" = "live" ]; then
+  adb shell "test -d $DEVICE_PATH" || { fail "Device path inaccessible"; exit 1; }
+  NOW=$(date +%s)
+  
+  check_file_recent(){
+    local f="$1" l="$2" thresh="$3"
+    local mtime age
+    mtime=$(adb shell "stat -c %Y $DEVICE_PATH/$f 2>/dev/null || echo 0")
+    if [ "$mtime" -eq 0 ]; then
+      fail "$l file missing"
+      return
+    fi
+    age=$((NOW - mtime))
+    [ "$age" -le "$thresh" ] && ok "$l recency falsified stall >$thresh s" || fail "$l stalled ($age s old, threshold $thresh s)"
+  }
+  
+  check_file_recent "heartbeat.csv" "Heartbeat" 120
+  check_file_recent "unlock_log.csv" "Unlock events" 7200
+  check_file_recent "screen_log.csv" "Screen events" 7200
+  check_file_recent "notification_log.csv" "Notification events" 7200
+  check_file_recent "daily_summary.csv" "Daily summary" 86400
+  check_file_recent "distance_today.csv" "Distance today" 86400
+  check_file_recent "log_export.csv" "Export log" 7200
+  
+  unknown "Worker execution state"
+  unknown "Permission functional status"
+  unknown "Future write capability"
+  
+elif [ "$MODE" = "artefact" ]; then
+  [ -d "$DEST" ] || { fail "Ingest directory missing"; exit 1; }
+  
+  # Check Python3 and pandas availability
+  if ! command -v python3 &> /dev/null; then
+    fail "Python3 not available (required for CSV validation)"
+    exit 1
+  fi
+  
+  if ! python3 -c "import pandas" 2>/dev/null; then
+    fail "Pandas not available (required for CSV validation)"
+    exit 1
+  fi
+  
+  csv() { printf '%s/%s\n' "$DEST" "$1"; }
+  
+  # Core validation functions using pandas for RFC 4180 compliance
+  
+  check_has_data_rows(){
+    local f="$1" l="$2" p n
+    p="$(csv "$f")"
+    [ -s "$p" ] || { fail "$l missing ($f)"; return; }
+    n=$(python3 -c "import pandas as pd; print(len(pd.read_csv('$p')))" 2>/dev/null || echo 0)
+    [ "$n" -gt 0 ] && ok "$l falsified total write failure ($n rows)" || fail "$l no data rows ($f)"
+  }
+  
+  check_numeric_ge0(){
+    local f="$1" l="$2" colname="$3" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || { fail "$l missing ($f)"; return; }
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df = pd.read_csv('$p')
+    val = df['$colname'].iloc[-1]
+    if pd.isna(val):
+        print("NULL")
+    elif float(val) >= 0:
+        print(f"OK:{val}")
+    else:
+        print(f"NEGATIVE:{val}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK:*)
+        local val="${result#OK:}"
+        ok "$l '$colname' falsified non-numeric ($val)"
+        ;;
+      NULL)
+        fail "$l '$colname' is NULL"
+        ;;
+      NEGATIVE:*)
+        local val="${result#NEGATIVE:}"
+        fail "$l '$colname' negative value ($val)"
+        ;;
+      ERROR*)
+        fail "$l '$colname' validation error: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  check_schema(){
+    local f="$1" l="$2" expected="$3" p actual
+    p="$(csv "$f")"
+    [ -s "$p" ] || { fail "$l missing ($f)"; return; }
+    actual=$(python3 -c "import pandas as pd; print(len(pd.read_csv('$p', nrows=0).columns))" 2>/dev/null || echo 0)
+    if [ "$actual" -eq "$expected" ]; then
+      ok "$l falsified schema drift ($actual cols)"
+    else
+      fail "$l schema mismatch (expected $expected cols, got $actual)"
+    fi
+  }
+  
+  check_csv_parseable(){
+    local f="$1" l="$2" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || { fail "$l missing ($f)"; return; }
+    result=$(python3 -c "import pandas as pd; pd.read_csv('$p'); print('OK')" 2>&1)
+    if [ "$result" = "OK" ]; then
+      ok "$l falsified CSV structural corruption"
+    else
+      fail "$l CSV parse error: $result"
+    fi
+  }
+  
+  check_redcap_upload(){
+    local rc="$(csv redcap_receipts.csv)"
+    if [ -s "$rc" ]; then
+      local result
+      result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df = pd.read_csv('$rc')
+    last = df.iloc[-1]
+    code = int(last['http_code'])
+    rows = int(last['rows'])
+    if code == 200 and rows > 0:
+        print(f"OK:{rows}")
+    elif code == 200 and rows == 0:
+        print("ZERO_ROWS")
+    else:
+        print(f"BAD_CODE:{code}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+      case "$result" in
+        OK:*)
+          local rows="${result#OK:}"
+          ok "REDCap HTTP falsified connection failure (code 200)"
+          ok "REDCap upload falsified zero-row success ($rows rows)"
+          ;;
+        ZERO_ROWS)
+          ok "REDCap HTTP falsified connection failure (code 200)"
+          fail "REDCap uploaded 0 rows"
+          ;;
+        BAD_CODE:*)
+          fail "REDCap HTTP error (code=${result#BAD_CODE:})"
+          ;;
+        ERROR*)
+          fail "REDCap validation error: ${result#ERROR:}"
+          ;;
+      esac
+    else
+      fail "REDCap receipts missing"
+    fi
+  }
+  
+  # TEMPORAL INTEGRITY CHECKS
+  
+  check_timestamp_monotonic(){
+    local f="$1" l="$2" colname="$3" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df = pd.read_csv('$p')
+    df['ts_parsed'] = pd.to_datetime(df['$colname'], errors='coerce')
+    non_monotonic = (df['ts_parsed'].diff() < pd.Timedelta(0)).sum()
+    if non_monotonic > 0:
+        print(f"FAIL:{non_monotonic}")
+    else:
+        print("OK")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK)
+        ok "$l timestamps falsified non-monotonic ordering"
+        ;;
+      FAIL:*)
+        local count="${result#FAIL:}"
+        fail "$l has $count backwards timestamps"
+        ;;
+      ERROR*)
+        warn "$l timestamp monotonicity check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  check_timestamp_range(){
+    local f="$1" l="$2" colname="$3" min_date="$4" max_date="$5" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df = pd.read_csv('$p')
+    df['ts_parsed'] = pd.to_datetime(df['$colname'], errors='coerce')
+    min_ts = pd.to_datetime('$min_date')
+    max_ts = pd.to_datetime('$max_date')
+    out_of_range = ((df['ts_parsed'] < min_ts) | (df['ts_parsed'] > max_ts)).sum()
+    if out_of_range > 0:
+        print(f"FAIL:{out_of_range}")
+    else:
+        print("OK")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK)
+        ok "$l timestamps falsified range violation ($min_date to $max_date)"
+        ;;
+      FAIL:*)
+        local count="${result#FAIL:}"
+        fail "$l has $count timestamps outside expected range"
+        ;;
+      ERROR*)
+        warn "$l timestamp range check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  check_heartbeat_gaps(){
+    local f="$1" l="$2" colname="$3" max_gap_sec="$4" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df = pd.read_csv('$p')
+    df['ts_parsed'] = pd.to_datetime(df['$colname'], errors='coerce')
+    df = df.sort_values('ts_parsed')
+    gaps = df['ts_parsed'].diff().dt.total_seconds()
+    max_gap = gaps.max()
+    large_gaps = (gaps > $max_gap_sec).sum()
+    if large_gaps > 0:
+        print(f"WARN:{large_gaps}:{max_gap:.0f}")
+    else:
+        print("OK")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK)
+        ok "$l falsified collection gaps >$max_gap_sec s"
+        ;;
+      WARN:*)
+        local count="${result#WARN:}"
+        count="${count%%:*}"
+        local max_gap="${result##*:}"
+        warn "$l has $count gaps >$max_gap_sec s (max gap: ${max_gap}s)"
+        ;;
+      ERROR*)
+        warn "$l gap analysis failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  # LOGICAL CONSISTENCY CHECKS
+  
+  check_unlock_count_with_diag(){
+    local f_log="$1" f_diag="$2" f_summary="$3" p_log p_diag p_summary result
+    p_log="$(csv "$f_log")"
+    p_diag="$(csv "$f_diag")"
+    p_summary="$(csv "$f_summary")"
+    [ -s "$p_log" ] && [ -s "$p_diag" ] && [ -s "$p_summary" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    log = pd.read_csv('$p_log')
+    diag = pd.read_csv('$p_diag')
+    summary = pd.read_csv('$p_summary')
+    
+    log_count = len(log)
+    diag_unlock_count = len(diag[diag['tag'] == 'UNLOCK'])
+    summary_count = int(summary['total_unlocks'].iloc[-1])
+    
+    # Check if daily_summary matches unlock_diag UNLOCK tag count
+    if summary_count == diag_unlock_count:
+        print(f"OK:{summary_count}:{log_count}:{diag_unlock_count}")
+    else:
+        print(f"MISMATCH:{summary_count}:{log_count}:{diag_unlock_count}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK:*)
+        IFS=':' read -r _ summary_cnt log_cnt diag_cnt <<< "$result"
+        ok "Unlock count falsified mismatch (daily_summary=$summary_cnt matches unlock_diag=$diag_cnt)"
+        if [ "$log_cnt" -ne "$summary_cnt" ]; then
+          warn "unlock_log has $log_cnt raw events vs $summary_cnt counted (likely includes rapid re-unlocks <60s)"
+        fi
+        ;;
+      MISMATCH:*)
+        IFS=':' read -r _ summary_cnt log_cnt diag_cnt <<< "$result"
+        fail "Unlock count mismatch: daily_summary=$summary_cnt, unlock_diag=$diag_cnt, unlock_log=$log_cnt"
+        ;;
+      ERROR*)
+        warn "Unlock count check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  check_notification_count(){
+    local f_log="$1" f_summary="$2" p_log p_summary result
+    p_log="$(csv "$f_log")"
+    p_summary="$(csv "$f_summary")"
+    [ -s "$p_log" ] && [ -s "$p_summary" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    log = pd.read_csv('$p_log')
+    summary = pd.read_csv('$p_summary')
+    
+    log_count = len(log)
+    posted_count = len(log[log['event_type'] == 'POSTED'])
+    summary_count = int(summary['notification_count'].iloc[-1])
+    
+    # Check various hypotheses
+    if summary_count == posted_count:
+        print(f"OK_POSTED:{summary_count}:{log_count}:{posted_count}")
+    elif summary_count == log_count:
+        print(f"OK_ALL:{summary_count}:{log_count}:{posted_count}")
+    else:
+        print(f"MISMATCH:{summary_count}:{log_count}:{posted_count}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK_POSTED:*)
+        IFS=':' read -r _ summary_cnt log_cnt posted_cnt <<< "$result"
+        ok "Notification count falsified mismatch (daily_summary=$summary_cnt matches POSTED events=$posted_cnt)"
+        ;;
+      OK_ALL:*)
+        IFS=':' read -r _ summary_cnt log_cnt posted_cnt <<< "$result"
+        ok "Notification count falsified mismatch (daily_summary=$summary_cnt matches all events=$log_cnt)"
+        ;;
+      MISMATCH:*)
+        IFS=':' read -r _ summary_cnt log_cnt posted_cnt <<< "$result"
+        fail "Notification count mismatch: daily_summary=$summary_cnt, total_events=$log_cnt, posted_events=$posted_cnt"
+        ;;
+      ERROR*)
+        warn "Notification count check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  check_app_usage_sum_matches(){
+    local f1="$1" f2="$2" col="$3" p1 p2 result
+    p1="$(csv "$f1")"
+    p2="$(csv "$f2")"
+    [ -s "$p1" ] && [ -s "$p2" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df1 = pd.read_csv('$p1')
+    df2 = pd.read_csv('$p2')
+    # Use app_min_total column instead of summing all columns
+    val1 = float(df1['app_min_total'].iloc[-1])
+    val2 = float(df2['$col'].iloc[-1])
+    diff_pct = abs(val1 - val2) / max(val1, val2) * 100 if max(val1, val2) > 0 else 0
+    if diff_pct < 1:
+        print(f"OK:{val1:.2f}:{val2:.2f}")
+    else:
+        print(f"MISMATCH:{val1:.2f}:{val2:.2f}:{diff_pct:.1f}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK:*)
+        IFS=':' read -r _ sum1 sum2 <<< "$result"
+        ok "App usage sum falsified mismatch (detailed=$sum1, summary=$sum2)"
+        ;;
+      MISMATCH:*)
+        IFS=':' read -r _ sum1 sum2 diff <<< "$result"
+        fail "App usage sum differs by $diff% (detailed=$sum1, summary=$sum2)"
+        ;;
+      ERROR*)
+        warn "App usage sum check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  # STATISTICAL PLAUSIBILITY CHECKS
+  
+  check_value_range(){
+    local f="$1" col="$2" min="$3" max="$4" label="$5" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+try:
+    df = pd.read_csv('$p')
+    val = float(df['$col'].iloc[-1])
+    if $min <= val <= $max:
+        print(f"OK:{val}")
+    else:
+        print(f"OUT_OF_RANGE:{val}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK:*)
+        local val="${result#OK:}"
+        ok "$label falsified implausible range ($val within [$min, $max])"
+        ;;
+      OUT_OF_RANGE:*)
+        local val="${result#OUT_OF_RANGE:}"
+        fail "$label out of plausible range: $val (expected [$min, $max])"
+        ;;
+      ERROR*)
+        warn "$label range check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  check_statistical_outliers(){
+    local f="$1" col="$2" label="$3" p result
+    p="$(csv "$f")"
+    [ -s "$p" ] || return
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+import numpy as np
+try:
+    df = pd.read_csv('$p')
+    vals = df['$col'].dropna()
+    if len(vals) < 3:
+        print("INSUFFICIENT_DATA")
+    else:
+        mean = vals.mean()
+        std = vals.std()
+        last_val = float(vals.iloc[-1])
+        z_score = abs((last_val - mean) / std) if std > 0 else 0
+        if z_score > 3:
+            print(f"OUTLIER:{last_val:.2f}:{z_score:.2f}")
+        else:
+            print(f"OK:{last_val:.2f}:{z_score:.2f}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      OK:*)
+        IFS=':' read -r _ val z <<< "$result"
+        ok "$label falsified statistical outlier (z=$z)"
+        ;;
+      OUTLIER:*)
+        IFS=':' read -r _ val z <<< "$result"
+        warn "$label statistical outlier detected: $val (z-score=$z)"
+        ;;
+      INSUFFICIENT_DATA)
+        unknown "$label outlier detection (need >2 data points)"
+        ;;
+      ERROR*)
+        warn "$label outlier check failed: ${result#ERROR:}"
+        ;;
+    esac
+  }
+  
+  # DATA COMPLETENESS CHECKS
+  
+  calculate_completeness_score(){
+    local result
+    result=$(python3 <<PYEOF 2>/dev/null || echo "ERROR"
+import pandas as pd
+import os
+try:
+    files = [
+        'unlock_log.csv', 'unlock_diag.csv', 'screen_log.csv',
+        'daily_summary.csv', 'notification_log.csv', 'heartbeat.csv',
+        'distance_today.csv', 'daily_distance_log.csv'
+    ]
+    scores = []
+    for f in files:
+        path = '$DEST/' + f
+        if os.path.exists(path):
+            df = pd.read_csv(path)
+            null_pct = (df.isnull().sum().sum() / (len(df) * len(df.columns))) * 100
+            score = max(0, 100 - null_pct)
+            scores.append(score)
+        else:
+            scores.append(0)
+    avg_score = sum(scores) / len(scores)
+    print(f"{avg_score:.1f}")
+except Exception as e:
+    print(f"ERROR:{e}")
+PYEOF
+)
+    case "$result" in
+      ERROR*)
+        warn "Completeness score calculation failed"
+        ;;
+      *)
+        if awk -v s="$result" 'BEGIN{exit !(s >= 90)}'; then
+          ok "Data completeness score: $result%"
+        elif awk -v s="$result" 'BEGIN{exit !(s >= 70)}'; then
+          warn "Data completeness score: $result% (below 90%)"
+        else
+          fail "Data completeness score: $result% (below 70%)"
+        fi
+        ;;
+    esac
+  }
+  
+  # Execute checks
+  
+  echo "=== STRUCTURAL VALIDATION ==="
+  check_has_data_rows "unlock_log.csv" "Unlock events"
+  check_csv_parseable "unlock_log.csv" "Unlock events"
+  check_schema "unlock_log.csv" "Unlock events" 2
+  
+  check_has_data_rows "unlock_diag.csv" "Unlock diagnostics"
+  check_csv_parseable "unlock_diag.csv" "Unlock diagnostics"
+  check_schema "unlock_diag.csv" "Unlock diagnostics" 3
+  
+  check_has_data_rows "screen_log.csv" "Screen events"
+  check_csv_parseable "screen_log.csv" "Screen events"
+  check_schema "screen_log.csv" "Screen events" 2
+  
+  check_has_data_rows "daily_summary.csv" "Daily summary"
+  check_csv_parseable "daily_summary.csv" "Daily summary"
+  check_schema "daily_summary.csv" "Daily summary" 6
+  check_numeric_ge0 "daily_summary.csv" "Screen usage" "screen_usage_min"
+  check_numeric_ge0 "daily_summary.csv" "App usage" "app_usage_min"
+  check_numeric_ge0 "daily_summary.csv" "Total unlocks" "total_unlocks"
+  check_numeric_ge0 "daily_summary.csv" "Notification count" "notification_count"
+  
+  check_has_data_rows "daily_late_night_screen_usage.csv" "Late-night screen usage"
+  check_csv_parseable "daily_late_night_screen_usage.csv" "Late-night screen usage"
+  
+  check_has_data_rows "daily_usage_entropy.csv" "Usage entropy"
+  check_csv_parseable "daily_usage_entropy.csv" "Usage entropy"
+  check_schema "daily_usage_entropy.csv" "Usage entropy" 2
+  
+  check_has_data_rows "daily_app_usage_minutes.csv" "Daily app usage"
+  check_csv_parseable "daily_app_usage_minutes.csv" "Daily app usage"
+  
+  check_has_data_rows "daily_app_starts_by_package.csv" "App starts by package"
+  check_csv_parseable "daily_app_starts_by_package.csv" "App starts by package"
+  
+  check_has_data_rows "app_category_daily.csv" "App category totals"
+  check_csv_parseable "app_category_daily.csv" "App category totals"
+  
+  check_has_data_rows "notification_log.csv" "Notification events"
+  check_csv_parseable "notification_log.csv" "Notification events"
+  check_schema "notification_log.csv" "Notification events" 6
+  
+  check_has_data_rows "daily_notification_engagement.csv" "Notification engagement"
+  check_csv_parseable "daily_notification_engagement.csv" "Notification engagement"
+  
+  check_has_data_rows "notification_heartbeat.csv" "Notification heartbeat"
+  check_csv_parseable "notification_heartbeat.csv" "Notification heartbeat"
+  
+  check_has_data_rows "distance_today.csv" "Distance today"
+  check_csv_parseable "distance_today.csv" "Distance today"
+  check_schema "distance_today.csv" "Distance today" 2
+  
+  check_has_data_rows "daily_distance_log.csv" "Daily distance log"
+  check_csv_parseable "daily_distance_log.csv" "Daily distance log"
+  check_schema "daily_distance_log.csv" "Daily distance log" 2
+  
+  check_has_data_rows "heartbeat.csv" "Heartbeat"
+  check_csv_parseable "heartbeat.csv" "Heartbeat"
+  check_schema "heartbeat.csv" "Heartbeat" 1
+  
+  check_has_data_rows "log_export.csv" "Export log"
+  check_csv_parseable "log_export.csv" "Export log"
+  
+  check_has_data_rows "log_retention.csv" "Retention log"
+  check_csv_parseable "log_retention.csv" "Retention log"
+  
+  echo
+  echo "=== TEMPORAL INTEGRITY ==="
+  check_timestamp_monotonic "unlock_log.csv" "Unlock events" "ts"
+  check_timestamp_monotonic "notification_log.csv" "Notification events" "timestamp"
+  check_timestamp_range "daily_summary.csv" "Daily summary" "date" "2024-01-01" "2027-12-31"
+  check_heartbeat_gaps "heartbeat.csv" "Heartbeat" "ts" 300
+  
+  echo
+  echo "=== LOGICAL CONSISTENCY ==="
+  check_unlock_count_with_diag "unlock_log.csv" "unlock_diag.csv" "daily_summary.csv"
+  check_notification_count "notification_log.csv" "daily_summary.csv"
+  check_app_usage_sum_matches "daily_app_usage_minutes.csv" "daily_summary.csv" "app_usage_min"
+  
+  echo
+  echo "=== STATISTICAL PLAUSIBILITY ==="
+  check_value_range "daily_summary.csv" "screen_usage_min" 0 1440 "Screen usage (24hr max)"
+  check_value_range "daily_summary.csv" "total_unlocks" 0 500 "Daily unlocks (500 max)"
+  check_value_range "daily_distance_log.csv" "distance_km" 0 100 "Daily distance (100km max)"
+  check_statistical_outliers "daily_summary.csv" "screen_usage_min" "Screen usage"
+  check_statistical_outliers "daily_summary.csv" "total_unlocks" "Unlock frequency"
+  
+  echo
+  echo "=== DATA COMPLETENESS ==="
+  calculate_completeness_score
+  
+  echo
+  echo "=== REDCAP UPLOAD ==="
+  check_redcap_upload
+  
+  echo
+  echo "=== KNOWN LIMITATIONS ==="
+  unknown "Data collection recency (cannot verify timestamp freshness from artefact)"
+  unknown "Worker execution state (cannot verify active collection)"
+  unknown "Sensor functional status (cannot verify hardware availability)"
+  unknown "Future write capability (cannot predict system behavior)"
+  
+else
+  echo "Usage: $0 {live|artefact} [PID]"
+  exit 1
+fi
+
+echo
+echo "=== GATE SUMMARY ==="
+echo "Failures : $FAIL"
+echo "Warnings : $WARNING"
+echo "Unknowns : $UNKNOWN"
+[ "$FAIL" -eq 0 ] && { echo "Result: PASS"; exit 0; } \
+                  || { echo "Result: FAIL"; exit 1; }

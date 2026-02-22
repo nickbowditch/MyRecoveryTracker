@@ -1,0 +1,15 @@
+[INFO] REDCap Queue Healthcheck v6.0
+[INFO] PKG=com.nick.myrecoverytracker
+[INFO] CSV=files/redcap_queue.csv
+[INFO] EXPECTED_WORKER=RedcapUploadWorker
+[INFO] TODAY=2025-10-08
+--- DEBUG: header & tail ---
+  instrument,participant_id,date,schema_version,unlocks
+  instrument,participant_id,date,schema_version,unlocks
+rows_today: 0
+duplicate_date_rows: 0
+last_3_days:
+  <no data rows>
+worker_expected: RedcapUploadWorker
+worker_found: no
+RESULT=FAIL - expected worker not found

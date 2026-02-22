@@ -1,0 +1,70 @@
+git_root=/Users/nickbowditch/AndroidStudioProjects/MyRecoveryTracker
+target_dir=evidence/v6.0/distance
+--- check-ignore (should be empty) ---
+
+--- directory listing ---
+total 6696
+drwxr-xr-x  63 nickbowditch  staff     2016  6 Oct 15:16 .
+drwxr-xr-x  25 nickbowditch  staff      800 25 Oct 09:34 ..
+-rw-r--r--@  1 nickbowditch  staff       17 26 Oct 20:35 _probe_AT3.txt
+-rw-r--r--@  1 nickbowditch  staff       17 26 Oct 20:35 _probe_GV5.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:27 at1.console.txt
+-rw-r--r--@  1 nickbowditch  staff      222 25 Oct 09:00 at1.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:33 at2.console.txt
+-rw-r--r--@  1 nickbowditch  staff      939 26 Oct 20:35 at2.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:38 at3.console.txt
+-rw-r--r--@  1 nickbowditch  staff      246 26 Oct 20:35 at3.txt
+-rw-r--r--   1 nickbowditch  staff      227 23 Sep 10:35 daily_distance_log.csv
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:11 di1.console.txt
+-rw-r--r--@  1 nickbowditch  staff      231 27 Oct 18:25 di1.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:12 di2.console.txt
+-rw-r--r--@  1 nickbowditch  staff      594 27 Oct 18:25 di2.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:19 di3.console.txt
+-rw-r--r--@  1 nickbowditch  staff      448 27 Oct 18:25 di3.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:24 di4.console.txt
+-rw-r--r--@  1 nickbowditch  staff      169 27 Oct 18:25 di4.txt
+-rw-r--r--@  1 nickbowditch  staff      277  6 Oct 12:28 diagnose.console.txt
+-rw-r--r--@  1 nickbowditch  staff    24708  6 Oct 12:28 diagnose.txt
+-rw-r--r--@  1 nickbowditch  staff       17  6 Oct 11:13 ee1.console.txt
+-rw-r--r--@  1 nickbowditch  staff     1399 27 Oct 18:25 ee1.txt
+-rw-r--r--   1 nickbowditch  staff        0  6 Oct 12:08 ee2.console.txt
+-rw-r--r--@  1 nickbowditch  staff  2205181 27 Oct 18:25 ee2.txt
+-rw-r--r--@  1 nickbowditch  staff     1150  6 Oct 12:16 ee3.console.txt
+-rw-r--r--@  1 nickbowditch  staff     3143 27 Oct 18:25 ee3.txt
+-rw-r--r--@  1 nickbowditch  staff      258  6 Oct 12:17 ee4.console.txt
+-rw-r--r--@  1 nickbowditch  staff     2192 27 Oct 18:25 ee4.txt
+-rw-r--r--@  1 nickbowditch  staff     2417  6 Oct 14:41 gv1.console.txt
+-rw-r--r--@  1 nickbowditch  staff     3888 26 Oct 20:35 gv1.txt
+-rw-r--r--@  1 nickbowditch  staff       26 26 Oct 20:35 gv2.console.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:48 gv2.run.txt
+-rw-r--r--@  1 nickbowditch  staff       16 26 Oct 20:35 gv2.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:56 gv3.console.txt
+-rw-r--r--@  1 nickbowditch  staff     1983 26 Oct 20:35 gv3.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 14:58 gv4.console.txt
+-rw-r--r--@  1 nickbowditch  staff     3541 26 Oct 20:35 gv4.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 15:01 gv5.console.txt
+-rw-r--r--@  1 nickbowditch  staff      163 26 Oct 20:35 gv5.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 15:10 gv6.console.txt
+-rw-r--r--@  1 nickbowditch  staff      630 26 Oct 20:35 gv6.txt
+-rw-r--r--@  1 nickbowditch  staff       16  6 Oct 15:13 gv7.console.txt
+-rw-r--r--@  1 nickbowditch  staff     1136 26 Oct 20:35 gv7.txt
+-rw-r--r--@  1 nickbowditch  staff      725 24 Oct 12:21 healthcheck.console.txt
+-rw-r--r--@  1 nickbowditch  staff      726 26 Oct 20:35 healthcheck.txt
+-rw-r--r--@  1 nickbowditch  staff     1211  6 Oct 12:25 schema.console.txt
+-rw-r--r--@  1 nickbowditch  staff      234  6 Oct 12:25 schema.txt
+-rw-r--r--@  1 nickbowditch  staff     3208  6 Oct 12:13 seed_trigger.console.txt
+-rw-r--r--@  1 nickbowditch  staff     3208  6 Oct 12:13 seed_trigger.txt
+-rw-r--r--@  1 nickbowditch  staff      224  6 Oct 12:44 smoke.console.2.txt
+-rw-r--r--@  1 nickbowditch  staff     7137  6 Oct 12:40 smoke.console.txt
+-rw-r--r--@  1 nickbowditch  staff     3663  6 Oct 12:44 smoke.txt
+-rw-r--r--@  1 nickbowditch  staff      103 24 Oct 12:28 tc1.console.txt
+-rw-r--r--@  1 nickbowditch  staff      661 27 Oct 18:25 tc1.txt
+-rw-r--r--@  1 nickbowditch  staff      102  6 Oct 12:56 tc2.console.txt
+-rw-r--r--@  1 nickbowditch  staff     1489 27 Oct 18:25 tc2.txt
+-rw-r--r--@  1 nickbowditch  staff       56  6 Oct 12:58 tc3.console.txt
+-rw-r--r--@  1 nickbowditch  staff      605 27 Oct 18:25 tc3.txt
+-rw-r--r--@  1 nickbowditch  staff       55  6 Oct 12:59 tc5.console.txt
+-rw-r--r--@  1 nickbowditch  staff      563 27 Oct 18:25 tc5.txt
+-rw-r--r--@  1 nickbowditch  staff       78  6 Oct 13:04 tc6.console.txt
+-rw-r--r--@  1 nickbowditch  staff     9257 27 Oct 18:25 tc6.txt
+DI4 RESULT=PASS

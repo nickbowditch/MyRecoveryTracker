@@ -1,0 +1,52 @@
+CSV_RELEVANCE v6.0
+today=2025-10-07
+
+== SCHEDULING SNAPSHOT ==
+-- JobScheduler --
+  JOB #u0a407/1427: e7c34e1 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+  JOB #u0a407/1428: 100b0e3 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+  JOB #u0a407/1462: e124b74 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+  JOB #u0a407/1463: 228d112 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+  JOB #u0a407/1660: f339acc com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    u0a407 tag=*job*r/com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+    Source: uid=u0a407 user=0 pkg=com.nick.myrecoverytracker
+    JobStatus{e124b74 #u0a407/1462 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+3h58m59s162ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1752711768
+    JobStatus{228d112 #u0a407/1463 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+3h58m59s259ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1752711866
+    JobStatus{100b0e3 #u0a407/1428 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+3h58m59s343ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1752711950
+    JobStatus{e7c34e1 #u0a407/1427 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+16h11m23s263ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1823715870
+    JobStatus{f339acc #u0a407/1660 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService u=0 s=10407 TIME=+14m9s536ms:none satisfied:0x3600000 unsatisfied:0x80000000}: 1733402144
+    ##u0a407/1660 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1427 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1462 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1463 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1428 from u0a407 active, exempted: com.nick.myrecoverytracker [RUN_ANY_IN_BACKGROUND allowed] RUNNABLE
+    ##u0a407/1660 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1427 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1462 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1463 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+    ##u0a407/1428 from u0a407: com.nick.myrecoverytracker RUNNABLE WHITELISTED
+  u0a407 / com.nick.myrecoverytracker:
+  u0a407 / com.nick.myrecoverytracker:
+       -15m50s667ms   START: #u0a407/1659 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService
+       -15m50s583ms    STOP: #u0a407/1659 com.nick.myrecoverytracker/androidx.work.impl.background.systemjob.SystemJobService app called jobFinished
+-- WorkManager --
+
+---- files/daily_movement.csv ----
+code_refs: <none>
+lock_header: app/locks/daily_movement.header (missing)
+device_file: present (size=416B)
+rows_today=0 last7_days=9 last_data_date=2025-10-06
+-- tail --
+2025-10-04,0.00,336.83,98.35,615.43,1050.61
+2025-10-05,0.00,515.34,12.67,196.32,724.33
+2025-10-06,0.00,367.21,142.58,162.03,671.82
+
+DONE

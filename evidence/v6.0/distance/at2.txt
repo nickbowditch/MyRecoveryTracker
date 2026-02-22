@@ -1,0 +1,19 @@
+AT2 RESULT=FAIL (no raw distance file found (checked: files/location_log.csv, files/distance_log.csv))
+--- DEBUG: device date/time ---
+2025-10-27 18:25:46 AEDT +1100
+--- DEBUG: files present ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: headers ---
+[DAILY:files/daily_distance_log.csv]
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: RAW head/tail ---
+--- DEBUG: DAILY head/tail ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: logcat tail (filtered) ---
+I/ActivityManager( 1787): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1787): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(24055): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+I/TriggerReceiver(24055): Enqueued DistanceDaily (once-DistanceDaily)
+I/DistanceWorker(24055): DistanceWorker: SUCCESS — not enough points for 2025-10-27 (n=0)
+I/WM-WorkerWrapper(24055): Worker result SUCCESS for Work [ id=631d484c-c484-4eeb-a074-bac3371c2c3e, tags={ com.nick.myrecoverytracker.DistanceWorker, DistanceDaily } ]

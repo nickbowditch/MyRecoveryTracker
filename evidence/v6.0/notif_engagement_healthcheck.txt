@@ -1,0 +1,3 @@
+=== NOTIF ENGAGEMENT HEALTHCHECK v6.0 ===
+rows_for_today=0
+RESULT: FAIL (no row for 2026-02-07)

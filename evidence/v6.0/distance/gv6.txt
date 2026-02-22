@@ -1,0 +1,16 @@
+GV6 RESULT=FAIL (header mismatch: repo lock vs device CSV)
+--- DEBUG: repo locks (first line) ---
+[app/locks/daily_distance_log.header]
+date,distance_km
+[app/locks/daily_distance.header]
+<missing>
+--- DEBUG: device CSV candidates (first line) ---
+[files/daily_distance_log.csv]
+run-as: package not debuggable: com.nick.myrecoverytracker
+[files/daily_distance.csv]
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: resolved ---
+LOCK_PATH=app/locks/daily_distance_log.header
+CSV_PATH=files/daily_distance_log.csv
+LOCK_HEADER=date,distance_km
+CSV_HEADER=run-as: package not debuggable: com.nick.myrecoverytracker

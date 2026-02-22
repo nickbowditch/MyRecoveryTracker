@@ -1,0 +1,2 @@
+DI-3 RESULT=FAIL
+run-as: package not debuggable: com.nick.myrecoverytracker

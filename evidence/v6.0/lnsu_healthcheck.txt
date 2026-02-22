@@ -1,0 +1,6 @@
+=== LNSU HEALTHCHECK v6.0 (YESTERDAY) ===
+header=date,late_night_YN
+rows_for_yesterday=1
+2026-02-07,N
+2026-02-07,N
+RESULT: PASS

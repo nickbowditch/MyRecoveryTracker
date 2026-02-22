@@ -1,0 +1,95 @@
+=== LOG ===
+11-26 17:20:31.637  1520  2195 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+11-26 17:20:31.643  1520  2195 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+11-26 17:20:31.653  8585  8585 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP
+11-26 17:20:31.657  8585  8585 I TriggerReceiver: Enqueued SleepRollup (once-SleepRollup)
+11-26 17:20:31.722  8585  8669 I SleepRollupWorker: filesDir=/data/user/0/com.nick.myrecoverytracker/files
+11-26 17:20:31.723  8585  8669 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_summary.csv size=620
+11-26 17:20:31.723  8585  8669 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_summary_legacy.csv size=641
+11-26 17:20:31.723  8585  8669 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_duration.csv size=507
+11-26 17:20:31.723  8585  8669 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_time.csv size=394
+11-26 17:20:31.724  8585  8669 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_wake_time.csv size=402
+11-26 17:20:31.724  8585  8669 I SleepRollupWorker: EXISTS /data/user/0/com.nick.myrecoverytracker/files/daily_sleep_quality.csv size=867
+11-26 17:20:31.754  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-10-27 reason=No UNLOCK that survives 20s
+11-26 17:20:31.784  8585  8669 I SleepRollupWorker: Sleep 2025-10-27 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:31.807  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-10-28 reason=No UNLOCK that survives 20s
+11-26 17:20:31.826  8585  8669 I SleepRollupWorker: Sleep 2025-10-28 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:31.848  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-10-29 reason=No UNLOCK that survives 20s
+11-26 17:20:31.864  8585  8669 I SleepRollupWorker: Sleep 2025-10-29 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:31.883  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-10-30 reason=No UNLOCK that survives 20s
+11-26 17:20:31.898  8585  8669 I SleepRollupWorker: Sleep 2025-10-30 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:31.917  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-10-31 reason=No UNLOCK that survives 20s
+11-26 17:20:31.932  8585  8669 I SleepRollupWorker: Sleep 2025-10-31 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:31.951  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-01 reason=No UNLOCK that survives 20s
+11-26 17:20:31.994  8585  8669 I SleepRollupWorker: Sleep 2025-11-01 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.016  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-02 reason=No UNLOCK that survives 20s
+11-26 17:20:32.034  8585  8669 I SleepRollupWorker: Sleep 2025-11-02 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.055  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-03 reason=No UNLOCK that survives 20s
+11-26 17:20:32.070  8585  8669 I SleepRollupWorker: Sleep 2025-11-03 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.089  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-04 reason=No UNLOCK that survives 20s
+11-26 17:20:32.105  8585  8669 I SleepRollupWorker: Sleep 2025-11-04 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.123  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-05 reason=No UNLOCK that survives 20s
+11-26 17:20:32.138  8585  8669 I SleepRollupWorker: Sleep 2025-11-05 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.155  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-06 reason=No UNLOCK that survives 20s
+11-26 17:20:32.169  8585  8669 I SleepRollupWorker: Sleep 2025-11-06 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.185  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-07 reason=No UNLOCK that survives 20s
+11-26 17:20:32.199  8585  8669 I SleepRollupWorker: Sleep 2025-11-07 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.215  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-08 reason=No UNLOCK that survives 20s
+11-26 17:20:32.229  8585  8669 I SleepRollupWorker: Sleep 2025-11-08 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.246  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-09 reason=No UNLOCK that survives 20s
+11-26 17:20:32.259  8585  8669 I SleepRollupWorker: Sleep 2025-11-09 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.276  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-10 reason=No UNLOCK that survives 20s
+11-26 17:20:32.290  8585  8669 I SleepRollupWorker: Sleep 2025-11-10 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.306  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-11 reason=No UNLOCK that survives 20s
+11-26 17:20:32.318  8585  8669 I SleepRollupWorker: Sleep 2025-11-11 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.334  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-12 reason=No UNLOCK that survives 20s
+11-26 17:20:32.346  8585  8669 I SleepRollupWorker: Sleep 2025-11-12 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.362  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-13 reason=No UNLOCK that survives 20s
+11-26 17:20:32.379  8585  8669 I SleepRollupWorker: Sleep 2025-11-13 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.394  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-14 reason=No UNLOCK that survives 20s
+11-26 17:20:32.407  8585  8669 I SleepRollupWorker: Sleep 2025-11-14 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.423  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-15 reason=No UNLOCK that survives 20s
+11-26 17:20:32.439  8585  8669 I SleepRollupWorker: Sleep 2025-11-15 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.455  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-16 reason=No UNLOCK that survives 20s
+11-26 17:20:32.470  8585  8669 I SleepRollupWorker: Sleep 2025-11-16 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.486  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-17 reason=No UNLOCK that survives 20s
+11-26 17:20:32.503  8585  8669 I SleepRollupWorker: Sleep 2025-11-17 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.511  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-18 reason=No UNLOCK that survives 20s
+11-26 17:20:32.528  8585  8669 I SleepRollupWorker: Sleep 2025-11-18 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.542  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-19 reason=No UNLOCK that survives 20s
+11-26 17:20:32.601  8585  8669 I SleepRollupWorker: Sleep 2025-11-19 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.622  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-20 reason=No UNLOCK that survives 20s
+11-26 17:20:32.640  8585  8669 I SleepRollupWorker: Sleep 2025-11-20 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.658  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-21 reason=No UNLOCK that survives 20s
+11-26 17:20:32.674  8585  8669 I SleepRollupWorker: Sleep 2025-11-21 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.691  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-22 reason=No UNLOCK that survives 20s
+11-26 17:20:32.706  8585  8669 I SleepRollupWorker: Sleep 2025-11-22 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.722  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-23 reason=No UNLOCK that survives 20s
+11-26 17:20:32.736  8585  8669 I SleepRollupWorker: Sleep 2025-11-23 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.752  8585  8669 I SleepRollupWorker: WAKE_NONE date=2025-11-24 reason=No UNLOCK that survives 20s
+11-26 17:20:32.766  8585  8669 I SleepRollupWorker: Sleep 2025-11-24 -> sleep=- wake=- hours=0.00 quality=NO_MORNING_WAKE
+11-26 17:20:32.783  8585  8669 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-11-25T16:55:38+11:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+11-26 17:20:32.803  8585  8669 I SleepRollupWorker: SLEEP_NONE date=2025-11-25 reason=No candidates in window
+11-26 17:20:32.818  8585  8669 I SleepRollupWorker: Sleep 2025-11-25 -> sleep=- wake=16:55:38 hours=0.00 quality=NO_SLEEP_CANDIDATE
+11-26 17:20:32.826  8585  8669 I SleepRollupWorker: WAKE_ACCEPT unlock=2025-11-26T06:10:12+11:00[Australia/Sydney] (no SCREEN_OFF in next 20s)
+11-26 17:20:32.842  8585  8669 I SleepRollupWorker: SLEEP_ACCEPT at=2025-11-26T00:17:47+11:00[Australia/Sydney] type=SCREEN_OFF (60m quiet)
+11-26 17:20:32.857  8585  8669 I SleepRollupWorker: Sleep 2025-11-26 -> sleep=00:17:47 wake=06:10:12 hours=5.87 quality=OK
+11-26 17:20:32.874  8585  8669 I SleepRollupWorker: Sleep backfill_days=30 processed=31 wrote=2 last="Sleep 2025-11-26 -> sleep=00:17:47 wake=06:10:12 hours=5.87 quality=OK"
+11-26 17:20:32.881  8585  8617 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=922b348e-261e-4c5a-a6d0-ce9a904b22d8, tags={ com.nick.myrecoverytracker.SleepRollupWorker, SleepRollup } ]
+
+=== HEAD/Tail: files/daily_sleep_summary.csv ===
+date,total_sleep_minutes,sleep_efficiency
+2025-11-23,0,0.00
+2025-11-24,0,0.00
+2025-11-25,0,0.00
+2025-11-11,0,0.00
+2025-11-26,352,1.00
+
+=== HEAD/Tail: files/daily_sleep_duration.csv ===
+date,hours
+2025-11-22,0.00
+2025-11-23,0.00
+2025-11-24,0.00
+2025-11-25,0.00
+2025-11-26,5.87
+GV7 RESULT=PASS

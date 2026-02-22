@@ -1,0 +1,10 @@
+=== WORKMANAGER STATUS ===
+[none]
+
+=== LOGCAT (idle->broadcast->completion) ===
+09-24 16:23:10.535  1463  3218 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+09-24 16:23:10.537  1463  3218 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+09-24 16:23:10.551 19446 19446 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_ENGAGEMENT_ROLLUP
+09-24 16:23:10.882  5261  5261 D WM-WorkerWrapper: Starting work for com.twitter.analytics.service.core.workmanager.AnalyticsFlushWorker
+09-24 16:23:10.893  5261  5477 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=c1d87454-e7af-490b-975c-b216e976ea47, tags={ com.twitter.analytics.service.core.workmanager.AnalyticsFlushWorker } ]
+EE-3 RESULT=FAIL

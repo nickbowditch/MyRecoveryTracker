@@ -1,0 +1,6 @@
+=== LNSU SCHEDULE FIX CHECK ===
+Enqueuing LateNightScreenRollupWorker periodically...
+Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_REREGISTER_WORKERS flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+Broadcast completed: result=0
+Verify with WorkManager list:
+RESULT=PASS

@@ -1,0 +1,17 @@
+GV7 RESULT=FAIL (unsupported header 'run-as: package not debuggable: com.nick.myrecoverytracker' in files/daily_distance_log.csv)
+--- DEBUG: device date/time ---
+2025-10-27 18:25:50 AEDT +1100
+--- DEBUG: CSV candidates (head) ---
+[files/daily_distance_log.csv]
+run-as: package not debuggable: com.nick.myrecoverytracker
+[files/daily_distance.csv]
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: logcat (tail Distance) ---
+10-27 18:25:50.114  1787  3176 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-27 18:25:50.117  1787  3176 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-27 18:25:50.123 24055 24055 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+10-27 18:25:50.125 24055 24055 I TriggerReceiver: Enqueued DistanceDaily (once-DistanceDaily)
+10-27 18:25:50.174 24055 24107 I DistanceWorker: DistanceWorker: SUCCESS — not enough points for 2025-10-27 (n=0)
+10-27 18:25:50.182 24055 24096 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=d0b69b66-e347-4b83-a83d-db5329ab00a6, tags={ com.nick.myrecoverytracker.DistanceWorker, DistanceDaily } ]
+10-27 18:25:50.281  1787  3176 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 }
+10-27 18:25:50.291  1787  3176 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x400000 }: 0

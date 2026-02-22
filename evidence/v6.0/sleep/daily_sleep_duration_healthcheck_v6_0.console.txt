@@ -1,0 +1,24 @@
+[INFO] Daily Sleep Duration Healthcheck v6.0
+[INFO] PKG=com.nick.myrecoverytracker
+[INFO] CSV=files/daily_sleep_duration.csv
+[INFO] EXPECTED_WORKER=SleepDurationWorker
+[INFO] VALUE_RANGE_MIN=0-900
+[INFO] TODAY=2025-10-08
+--- DEBUG: header & tail ---
+  date,duration_hours
+  2025-10-03,6.27
+  2025-10-04,4.49
+  2025-10-05,4.71
+  2025-10-06,5.48
+  2025-10-08,8.59
+rows_today: 1
+today_values: minutes=<none> hours=8.59 eval_minutes=515.40
+sanity_ok: yes (0..900 min)
+duplicate_date_rows: 0
+last_3_days:
+  - 2025-10-05 : 2025-10-05,4.71
+  - yesterday : 2025-10-06,5.48
+  - today : 2025-10-08,8.59
+worker_expected: SleepDurationWorker
+worker_found: no
+RESULT=FAIL - expected worker not found

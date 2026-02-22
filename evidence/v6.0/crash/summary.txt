@@ -1,0 +1,124 @@
+=== CRASH DIAG SUMMARY (2025-09-27T13:44:14+1000) ===
+PACKAGE=com.nick.myrecoverytracker
+PID_NOW=1245
+
+--- Recent fatal exceptions (logcat crash buffer) ---
+
+--- ANR markers (logcat) ---
+36:09-27 13:38:07.575  1463   953 I ActivityManager: Skipping duplicate ANR: com.android.server.am.ProcessErrorStateRecord@26407c8 Broadcast of Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x10400010 xflg=0x1 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+72:09-27 13:38:17.674  1463   964 I ActivityManager: Skipping duplicate ANR: com.android.server.am.ProcessErrorStateRecord@26407c8 Broadcast of Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_LATENCY_ROLLUP flg=0x10400010 xflg=0x1 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+
+--- App-specific lines (last 1000) ---
+2:09-27 13:37:57.562  1463  4936 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+36:09-27 13:38:07.575  1463   953 I ActivityManager: Skipping duplicate ANR: com.android.server.am.ProcessErrorStateRecord@26407c8 Broadcast of Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP flg=0x10400010 xflg=0x1 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+39:09-27 13:38:07.582  1463   953 D ActivityManager: Completed ANR of com.nick.myrecoverytracker in 8ms, latency 6ms
+40:09-27 13:38:07.657  1463  4936 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_LATENCY_ROLLUP flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+72:09-27 13:38:17.674  1463   964 I ActivityManager: Skipping duplicate ANR: com.android.server.am.ProcessErrorStateRecord@26407c8 Broadcast of Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIF_LATENCY_ROLLUP flg=0x10400010 xflg=0x1 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+73:09-27 13:38:17.674  1463   964 D ActivityManager: Completed ANR of com.nick.myrecoverytracker in 1ms, latency 11ms
+746:09-27 13:42:08.145  1463  1704 I ActivityManager: Killing 32531:com.nick.myrecoverytracker/u0a401 (adj 200): user request after error
+747:09-27 13:42:08.148  1463  1704 D CoreBackPreview: Window{ea2758 u0 Application Not Responding: com.nick.myrecoverytracker}: Setting back callback null
+749:09-27 13:42:08.226  1463  3752 W ActivityManager: Scheduling restart of crashed service com.nick.myrecoverytracker/.ForegroundUnlockService in 1000ms for start-requested
+760:09-27 13:42:09.269  1463  1724 I ActivityManager: Start proc 1245:com.nick.myrecoverytracker/u0a401 for service {com.nick.myrecoverytracker/com.nick.myrecoverytracker.ForegroundUnlockService}
+761:09-27 13:42:09.911  1463  3764 W AppOps  : Noting op not finished: uid 10401 pkg com.nick.myrecoverytracker code 79 startTime of in progress event=1758944529760
+765:09-27 13:42:09.966 23167 23167 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+766:09-27 13:42:09.968 23167 23167 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+792:09-27 13:42:10.225 23185 23185 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+793:09-27 13:42:10.228 23185 23185 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+798:09-27 13:42:10.574  9463  9463 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+799:09-27 13:42:10.579  9463  9463 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+1660:09-27 13:42:14.878  1245  1416 D ProfileInstaller: Installing profile for com.nick.myrecoverytracker
+3255:09-27 13:43:02.722  6275  6275 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+3256:09-27 13:43:02.722  6275  6275 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+5296:09-27 13:44:00.136 31213 31213 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+5297:09-27 13:44:00.139 31213 31213 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+7593:09-27 13:44:03.886 21278 21278 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+7598:09-27 13:44:03.916 21278 21278 D ActivityThread: Package [com.nick.myrecoverytracker] reported as REPLACED, but missing application info. Assuming REMOVED.
+7789:09-27 13:44:04.526  1463  1780 I AppsFilter: interaction: PackageSetting{68dfbd5 com.nick.myrecoverytracker/10401} -> PackageSetting{de54eb com.instagram.android/10281} BLOCKED
+
+--- WorkManager / JobScheduler hints (last 300) ---
+402:09-27 13:40:13.776  1463  4933 W JobScheduler: Job didn't exist in JobStore: 782fd65 {androidx.work.systemjobscheduler} #u0a129/4629 #TikTokListenableWorker#@androidx.work.systemjobscheduler@com.google.android.apps.safetyhub/androidx.work.impl.background.systemjob.SystemJobService
+403:09-27 13:40:13.786  1463  3761 W JobScheduler: Job didn't exist in JobStore: d18da3a {androidx.work.systemjobscheduler} #u0a129/4698 @androidx.work.systemjobscheduler@com.google.android.apps.safetyhub/androidx.work.impl.background.systemjob.SystemJobService
+406:09-27 13:40:13.859  1463  3761 W JobScheduler: Job didn't exist in JobStore: 15e95b5 {androidx.work.systemjobscheduler} #u0a129/4698 @androidx.work.systemjobscheduler@com.google.android.apps.safetyhub/androidx.work.impl.background.systemjob.SystemJobService
+749:09-27 13:42:08.226  1463  3752 W ActivityManager: Scheduling restart of crashed service com.nick.myrecoverytracker/.ForegroundUnlockService in 1000ms for start-requested
+787:09-27 13:42:10.121  1463  3764 W JobScheduler: Job didn't exist in JobStore: d48c3fa #u0a160/4096 com.google.android.partnersetup/.InstalledAppJobService
+3008:09-27 13:42:57.136  2245  2624 I bluetooth: system/gd/hci/le_advertising_manager_impl.cc:662 create_extended_advertiser_with_id: Scheduling address rotation for advertiser_id=0
+3079:09-27 13:42:57.796  2245  2624 I bluetooth: system/gd/hci/le_advertising_manager_impl.cc:662 create_extended_advertiser_with_id: Scheduling address rotation for advertiser_id=1
+3087:09-27 13:42:57.813  2245  2624 I bluetooth: system/gd/hci/le_advertising_manager_impl.cc:662 create_extended_advertiser_with_id: Scheduling address rotation for advertiser_id=2
+4934:09-27 13:43:55.137 16347 16497 D WM-DelayedWorkTracker: Scheduling work 9095e80b-a0cc-4eb9-ab61-24ca647914b9
+4939:09-27 13:43:55.162 23185 23185 D WM-DelayedWorkTracker: Scheduling work 2554e5e0-31c5-4b1c-b168-02966b88696e
+4948:09-27 13:43:55.196 23185 23483 D WM-Processor: Work WorkGenerationalId(workSpecId=2554e5e0-31c5-4b1c-b168-02966b88696e, generation=0) is already enqueued for processing
+4952:09-27 13:43:55.216 16347 16404 D WM-Processor: Work WorkGenerationalId(workSpecId=9095e80b-a0cc-4eb9-ab61-24ca647914b9, generation=83) is already enqueued for processing
+5002:09-27 13:43:55.838  1476  1476 I elzj    : Validating WorkManager process
+5010:09-27 13:43:55.871  1476  1476 D WM-Schedulers: Created SystemJobScheduler and enabled SystemJobService
+5063:09-27 13:43:56.246  1476  1524 I endz    : Scheduling next wakeup
+5064:09-27 13:43:56.248  1476  1524 I enez    : Scheduling next periodic WorkManager workers
+5077:09-27 13:43:56.293  1463  4936 W JobScheduler: Job didn't exist in JobStore: f054986 {androidx.work.systemjobscheduler} #u0a179/39618 #TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService
+5099:09-27 13:43:56.361  1476  1508 D WM-SystemJobScheduler: Scheduling work ID 9095e80b-a0cc-4eb9-ab61-24ca647914b9Job ID 39646
+5108:09-27 13:43:56.420  1476  1508 D WM-SystemJobScheduler: Scheduling work ID 1bba3838-06e1-49d4-bf94-645424407452Job ID 39647
+5111:09-27 13:43:56.446  1476  1508 D WM-SystemJobScheduler: Scheduling work ID 383dacb8-bde9-441c-80d6-db8e17d261b9Job ID 39648
+5116:09-27 13:43:56.467  1476  1508 D WM-SystemJobScheduler: Scheduling work ID 34ad609a-8f04-4de9-9707-030e58c3548eJob ID 39649
+5119:09-27 13:43:56.498  1476  1508 D WM-SystemJobScheduler: Scheduling work ID d7ad4ece-4464-45ab-a9f9-3912ece4ca17Job ID 39650
+5122:09-27 13:43:56.520  1476  1508 D WM-SystemJobScheduler: Scheduling work ID 34ad609a-8f04-4de9-9707-030e58c3548eJob ID 39651
+5125:09-27 13:43:56.537  1476  1508 D WM-SystemJobScheduler: Scheduling work ID 0e7f4b84-acf4-424f-93bf-7933d67f3dc6Job ID 39652
+5257:09-27 13:43:59.617  1463  4933 W JobScheduler: Job didn't exist in JobStore: 5381d94 {androidx.work.systemjobscheduler} #u0a296/10570 #RandomizedDailyCronWorker#@androidx.work.systemjobscheduler@com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService
+5258:09-27 13:43:59.631 23185 23444 D WM-SystemJobScheduler: Scheduling work ID aaf4fca1-1ac4-46cd-a6d3-e093fbdc5ca4Job ID 10628
+
+--- dumpsys activity crashes (tail) ---
+Unknown command: crashes
+Bad activity command, or no activities match: crashes
+Use -h for help.
+
+--- dropbox recent entries (tail) ---
+Drop box contents: 7 entries
+Max entries: 1000
+Low priority rate limit period: 2000 ms
+Low priority tags: {data_app_wtf, keymaster, system_server_wtf, system_app_strictmode, system_app_wtf, system_server_strictmode, data_app_strictmode, netstats}
+
+2025-09-25 12:36:15 SubsystemRestart (text, 457 bytes)
+2025-09-27 08:26:29 SYSTEM_TOMBSTONE_PROTO_WITH_HEADERS (compressed data, 54854 bytes)
+2025-09-27 08:26:29 SYSTEM_TOMBSTONE (compressed text, 11112 bytes)
+2025-09-27 11:47:34 data_app_anr (compressed text, 24920 bytes)
+2025-09-27 11:48:19 data_app_anr (compressed text, 24709 bytes)
+2025-09-27 11:51:37 data_app_anr (compressed text, 24825 bytes)
+2025-09-27 13:33:10 data_app_anr (compressed text, 24587 bytes)
+
+Usage: dumpsys dropbox [--print|--file] [YYYY-mm-dd] [HH:MM:SS] [tag]
+
+--- /data/anr listing (head) ---
+total 8204
+-rw------- 1 system system   60329 2025-09-27 13:38 temp_anr_3388187746500129581.txt
+-rw------- 1 system system   60340 2025-09-27 13:38 temp_anr_1117600419032335143.txt
+-rw------- 1 system system   60319 2025-09-27 13:33 temp_anr_2047696842420367924.txt
+-rw------- 1 system system   60328 2025-09-27 13:33 temp_anr_9064251755074088634.txt
+-rw------- 1 system system 2001778 2025-09-27 13:33 anr_2025-09-27-13-32-54-219
+-rw------- 1 system system   64116 2025-09-27 11:58 temp_anr_2817392907478656492.txt
+-rw------- 1 system system   64107 2025-09-27 11:58 temp_anr_2647261236307342436.txt
+-rw------- 1 system system   64120 2025-09-27 11:58 temp_anr_8899601093244478788.txt
+-rw------- 1 system system   64107 2025-09-27 11:56 temp_anr_3569376596455281104.txt
+-rw------- 1 system system 1974700 2025-09-27 11:51 anr_2025-09-27-11-51-22-190
+-rw------- 1 system system 2001098 2025-09-27 11:48 anr_2025-09-27-11-48-13-839
+-rw------- 1 system system 1907859 2025-09-27 11:47 anr_2025-09-27-11-47-26-603
+
+--- /data/tombstones listing (head) ---
+total 1976
+-rw-rw-r-- 1 tombstoned system 524720 2025-09-27 08:26 tombstone_02
+-rw-rw-r-- 1 tombstoned system 292144 2025-09-27 08:26 tombstone_02.pb
+-rw-rw-r-- 1 tombstoned system  98486 2025-09-15 19:37 tombstone_01
+-rw-rw-r-- 1 tombstoned system  51497 2025-09-15 19:37 tombstone_01.pb
+-rw-rw-r-- 1 tombstoned system 648419 2025-08-12 14:38 tombstone_00
+-rw-rw-r-- 1 tombstoned system 389221 2025-08-12 14:38 tombstone_00.pb
+
+FILES_WRITTEN:
+ - anr_dir_listing.txt
+ - diag.console.txt
+ - dumpsys_activity_crashes.txt
+ - dumpsys_activity_processes.txt
+ - dumpsys_dropbox.txt
+ - dumpsys_package.txt
+ - logcat_crash.txt
+ - logcat_threadtime.pid.txt
+ - logcat_threadtime.txt
+ - summary.txt
+ - tombstones_dir_listing.txt
+
+CRASH-DIAG RESULT=DONE

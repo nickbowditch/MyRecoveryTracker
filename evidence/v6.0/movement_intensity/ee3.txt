@@ -1,0 +1,6 @@
+csv_path=files/daily_movement_intensity.csv
+header=run-as: package not debuggable: com.nick.myrecoverytracker
+today=2025-10-27
+row_today=<none>
+run-as: package not debuggable: com.nick.myrecoverytracker
+EE3 RESULT=FAIL (no row for today)

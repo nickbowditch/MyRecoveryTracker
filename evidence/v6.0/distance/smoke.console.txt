@@ -1,0 +1,95 @@
+[INFO] Distance smoke — seed, trigger, verify
+[INFO] Seed minimal location_log.csv for 2025-10-06
+[INFO] Broadcast trigger
+[INFO] Wait for output (deadline 15s)
+[FAIL] daily_distance_log.csv missing or no row for 2025-10-06
+[DEBUG] device time
+[DEBUG] app files list
+total 3788
+-rw-rw-rw- 1 u0_a407 u0_a407      97 2025-10-06 08:53 _at2_by_app_tmp.csv
+-rw-rw-rw- 1 u0_a407 u0_a407     240 2025-10-06 08:53 app_category_daily.csv
+-rw-rw-rw- 1 u0_a407 u0_a407      98 2025-10-06 09:37 app_switches.csv
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_11-47-16.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_11-47-17.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_11-48-03.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_11-48-04.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_11-51-12.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_11-51-13.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_13-32-44.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_13-32-45.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_14-44-26.txt
+-rw------- 1 u0_a407 u0_a407    1036 1970-01-21 18:35 crash_2025-09-27_14-44-27.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-01 16:43 crash_2025-10-01_16-43-54.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-01 16:43 crash_2025-10-01_16-43-55.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 10:04 crash_2025-10-02_10-04-47.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 10:04 crash_2025-10-02_10-04-48.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 10:17 crash_2025-10-02_10-17-23.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 10:17 crash_2025-10-02_10-17-24.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 11:18 crash_2025-10-02_11-18-42.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 11:18 crash_2025-10-02_11-18-43.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 11:22 crash_2025-10-02_11-22-06.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-02 11:22 crash_2025-10-02_11-22-07.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 06:13 crash_2025-10-04_06-13-15.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 06:13 crash_2025-10-04_06-13-16.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 18:20 crash_2025-10-04_18-20-28.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 18:20 crash_2025-10-04_18-20-29.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 18:32 crash_2025-10-04_18-32-51.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 18:32 crash_2025-10-04_18-32-52.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 19:18 crash_2025-10-04_19-18-50.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 19:18 crash_2025-10-04_19-18-51.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-04 19:18 crash_2025-10-04_19-18-52.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-05 12:04 crash_2025-10-05_12-04-40.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-05 12:04 crash_2025-10-05_12-04-41.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-05 14:16 crash_2025-10-05_14-16-39.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-05 14:16 crash_2025-10-05_14-16-40.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-06 08:31 crash_2025-10-06_08-31-05.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-06 08:31 crash_2025-10-06_08-31-06.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-06 12:08 crash_2025-10-06_12-08-18.txt
+-rw------- 1 u0_a407 u0_a407    1036 2025-10-06 12:08 crash_2025-10-06_12-08-19.txt
+-rw------- 1 u0_a407 u0_a407    1318 2025-10-06 12:07 daily_app_starts_by_package.csv
+-rw-rw-rw- 1 u0_a407 u0_a407      58 2025-10-06 11:00 daily_app_switching.csv
+-rw------- 1 u0_a407 u0_a407     564 2025-10-06 12:07 daily_app_usage_minutes.csv
+-rw-rw-rw- 1 u0_a407 u0_a407      97 2025-10-04 19:19 daily_app_usage_minutes_by_app.csv
+-rw------- 1 u0_a407 u0_a407     211 2025-10-06 12:07 daily_app_usage_other.csv
+-rw------- 1 u0_a407 u0_a407     195 2025-10-06 08:32 daily_late_night_screen_usage.csv
+-rw------- 1 u0_a407 u0_a407      63 1970-01-21 18:34 daily_lnslu.csv
+-rw------- 1 u0_a407 u0_a407      28 1970-01-21 18:31 daily_lnslu.csv.bak.1758682952
+-rw------- 1 u0_a407 u0_a407      39 1970-01-21 18:31 daily_lnslu.csv.bak.1758685223
+-rw------- 1 u0_a407 u0_a407     416 2025-10-06 12:07 daily_movement.csv
+-rw------- 1 u0_a407 u0_a407      81 2025-10-06 12:07 daily_notification_engagement.csv
+-rw------- 1 u0_a407 u0_a407      96 2025-10-06 08:33 daily_notification_latency.csv
+-rw------- 1 u0_a407 u0_a407     727 2025-10-06 12:07 daily_sleep_duration.csv
+-rw------- 1 u0_a407 u0_a407     523 1970-01-21 18:31 daily_sleep_duration.csv.bak.1758682876
+-rw------- 1 u0_a407 u0_a407    1032 2025-10-06 12:07 daily_sleep_quality.csv
+-rw------- 1 u0_a407 u0_a407    1044 2025-10-06 12:07 daily_sleep_summary.csv
+-rw------- 1 u0_a407 u0_a407     646 2025-10-06 12:07 daily_sleep_time.csv
+-rw------- 1 u0_a407 u0_a407     306 2025-10-06 12:07 daily_unlocks.csv
+-rw------- 1 u0_a407 u0_a407     187 1970-01-21 18:31 daily_unlocks.csv.bak.1758682548
+-rw------- 1 u0_a407 u0_a407     126 2025-10-05 17:44 daily_usage_entropy.csv
+-rw-rw-rw- 1 u0_a407 u0_a407      46 2025-10-06 12:07 daily_usage_events.csv
+-rw------- 1 u0_a407 u0_a407     646 2025-10-06 12:07 daily_wake_time.csv
+-rw------- 1 u0_a407 u0_a407  188057 2025-10-06 12:40 heartbeat.csv
+-rw-rw-rw- 1 u0_a407 u0_a407     102 2025-10-06 12:40 location_log.csv
+-rw------- 1 u0_a407 u0_a407 2274081 2025-10-06 12:40 movement_log.csv
+-rw------- 1 u0_a407 u0_a407     176 1970-01-21 18:38 notification_events.csv
+-rw-rw-rw- 1 u0_a407 u0_a407     196 2025-10-01 16:46 notification_latency_log.csv
+-rw------- 1 u0_a407 u0_a407     213 2025-10-06 08:33 notification_log.csv
+-rw------- 1 u0_a407 u0_a407     176 1970-01-21 18:38 notifications.csv
+-rw------- 1 u0_a407 u0_a407      24 2025-10-06 12:08 profileInstalled
+-rw------- 1 u0_a407 u0_a407      54 1970-01-21 18:35 redcap_queue.csv
+-rw------- 1 u0_a407 u0_a407   80614 2025-10-06 12:25 screen_log.csv
+-rw------- 1 u0_a407 u0_a407    6636 1970-01-21 18:31 screen_log.csv.bak.1758682680
+-rw------- 1 u0_a407 u0_a407  844772 2025-10-06 12:24 unlock_diag.csv
+-rw-rw-rw- 1 u0_a407 u0_a407   12375 2025-10-06 12:24 unlock_log.csv
+-rw------- 1 u0_a407 u0_a407  174265 2025-10-06 12:07 usage_events.csv
+[DEBUG] location_log.csv (head)
+ts,lat,lon,accuracy
+2025-10-06 08:00:00,-33.8675,151.2070,12
+2025-10-06 08:30:00,-33.8700,151.2100,10
+[DEBUG] daily_distance_log.csv (head)
+head: files/daily_distance_log.csv: No such file or directory
+[DEBUG] logcat tail (filtered)
+I/ActivityManager( 1463): Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+I/ActivityManager( 1463): Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY flg=0x10400000 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+I/TriggerReceiver(20731): onReceive action=com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY
+RESULT=FAIL

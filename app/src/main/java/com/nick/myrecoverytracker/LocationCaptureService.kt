@@ -1,20 +1,22 @@
 // app/src/main/java/com/nick/myrecoverytracker/LocationCaptureService.kt
 package com.nick.myrecoverytracker
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.os.IBinder
+import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import java.io.File
@@ -51,18 +53,50 @@ class LocationCaptureService : Service(), LocationListener {
     override fun onCreate() {
         super.onCreate()
 
+        // Hard gate: if we don't have foreground + location perms, never crash; just stop.
+        val hasFine = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED
+        val hasCoarse = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED
+        val hasLoc = hasFine || hasCoarse
+
+        val hasFgLoc =
+            if (Build.VERSION.SDK_INT >= 34)
+                ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED
+            else true
+
+        if (!hasLoc || !hasFgLoc) {
+            stopSelf()
+            return
+        }
+
         createLocationFgChannelIfNeeded()
         val notif = buildLocationNotification()
-        if (Build.VERSION.SDK_INT >= 29) {
-            startForeground(FG_NOTIF_ID, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
-        } else {
-            @Suppress("DEPRECATION")
-            startForeground(FG_NOTIF_ID, notif)
+        try {
+            if (Build.VERSION.SDK_INT >= 29) {
+                startForeground(FG_NOTIF_ID, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
+            } else {
+                @Suppress("DEPRECATION")
+                startForeground(FG_NOTIF_ID, notif)
+            }
+        } catch (_: SecurityException) {
+            // If the OS refuses the FGS start for any reason, do not crash the app.
+            stopSelf()
+            return
         }
 
         lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        runCatching { lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, REQ_MIN_TIME_MS, REQ_MIN_DIST_M, this) }
-        runCatching { lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, REQ_MIN_TIME_MS, REQ_MIN_DIST_M, this) }
+
+        // Request updates only when allowed
+        if (hasLoc) {
+            runCatching {
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, REQ_MIN_TIME_MS, REQ_MIN_DIST_M, this)
+            }
+            runCatching {
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, REQ_MIN_TIME_MS, REQ_MIN_DIST_M, this)
+            }
+        }
 
         listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER).forEach { p ->
             runCatching { lm.getLastKnownLocation(p) }.getOrNull()?.let { loc ->
@@ -157,8 +191,11 @@ class LocationCaptureService : Service(), LocationListener {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val nm = getSystemService(NotificationManager::class.java)
         if (nm.getNotificationChannel(FG_CHANNEL_ID) == null) {
-            val importance = if (BuildConfig.DEBUG) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT
-            nm.createNotificationChannel(NotificationChannel(FG_CHANNEL_ID, "MyRecovery Tracker (Location)", importance))
+            val importance = if (BuildConfig.DEBUG)
+                NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT
+            nm.createNotificationChannel(
+                NotificationChannel(FG_CHANNEL_ID, "MyRecovery Tracker (Location)", importance)
+            )
         }
     }
 

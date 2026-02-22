@@ -1,0 +1,9 @@
+start_ts=2025-10-27T07:26:18Z
+device_state=device
+pm_path=package:/data/app/~~m1e_pbg9zumNHiyIMFxItw==/com.nick.myrecoverytracker-GuvKy8IpVIKcu8RgHBO5Ig==/base.apk
+doze_deep_state=IDLE
+allow_lines_begin
+    com.nick.myrecoverytracker
+user,com.nick.myrecoverytracker,10431
+allow_lines_end
+EE4 RESULT=PASS

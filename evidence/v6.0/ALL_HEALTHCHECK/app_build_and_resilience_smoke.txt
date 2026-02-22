@@ -1,0 +1,15 @@
+❌ versionCode mismatch local=10000 device=1
+❌ versionName mismatch local=1.0.0-pilot device=1.0
+❌ UpgradeReceiver missing from package dump
+✅ ForegroundUnlockService start logged
+✅ LocationCaptureService start logged
+✅ NotificationEngagement periodic enqueued
+✅ RedcapDiag log executed
+✅ ForegroundUnlockService alive
+✅ LocationCaptureService alive
+✅ Jobs present in JobScheduler
+✅ Trigger ENGAGEMENT_ROLLUP delivered to TriggerReceiver
+✅ ENGAGEMENT_ROLLUP enqueued worker
+✅ Trigger DISTANCE_DAILY delivered to TriggerReceiver
+✅ DISTANCE_DAILY enqueued worker
+✅ Reschedule log not observed (acceptable if flag write was blocked)

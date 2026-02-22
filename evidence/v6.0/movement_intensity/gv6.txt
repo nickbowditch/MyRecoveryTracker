@@ -1,0 +1,9 @@
+started_at=2025-10-27T07:26:25Z
+daily_header=run-as: package not debuggable: com.nick.myrecoverytracker
+prev_lock_header=run-as: package not debuggable: com.nick.myrecoverytracker
+new_lock_header=run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: CSV head ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: LOCK file ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+GV6 RESULT=PASS

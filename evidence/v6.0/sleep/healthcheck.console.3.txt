@@ -1,0 +1,20 @@
+ee1_sleep_v6.0.sh: ⚠️  UNKNOWN
+sleep_ee2_v6.0.2.sh: ✅ PASS
+sleep_ee3_v6.0.2.sh: ✅ PASS
+sleep_tc1_v6.0.8.sh: ✅ PASS
+sleep_tc3_v6.0.2.sh: ✅ PASS
+sleep_tc5_v6.0.2.sh: ✅ PASS
+sleep_tc6_v6.0.1.sh: ✅ PASS
+sleep_di1_v6.0.5.sh: ✅ PASS
+sleep_di2_v6.0.2.sh: ✅ PASS
+sleep_di3_v6.0.27.sh: ❌ FAIL
+sleep_di4_v6.0.2.sh: ✅ PASS
+sleep_at1_v6.0.4.sh: ✅ PASS
+sleep_at3_v6.0.1.sh: ✅ PASS
+sleep_gv1_v6.0.7.sh: ✅ PASS
+sleep_gv2_v6.0.5.sh: ✅ PASS
+sleep_gv3_v6.0.13.sh: ✅ PASS
+sleep_gv4_v6.0.19.sh: ✅ PASS
+sleep_gv5_v6.0.1.sh: ✅ PASS
+sleep_gv6_v6.0.1.sh: ✅ PASS
+sleep_gv7_v6.0.4.sh: ✅ PASS

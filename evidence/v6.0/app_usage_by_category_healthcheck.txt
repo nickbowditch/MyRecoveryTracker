@@ -1,0 +1,6 @@
+=== APP USAGE BY CATEGORY HEALTHCHECK v6.0 ===
+header=date,app_min_social,app_min_dating,app_min_productivity,app_min_music_audio,app_min_image,app_min_maps,app_min_video,app_min_travel_local,app_min_shopping,app_min_news,app_min_game,app_min_health,app_min_finance,app_min_browser,app_min_comm,app_min_other,app_min_total
+rows_for_today=1
+2026-02-18,1.49,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.04,1.53
+2026-02-18,1.49,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.04,1.53
+RESULT: PASS

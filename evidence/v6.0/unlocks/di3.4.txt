@@ -1,0 +1,1 @@
+DI-3 RESULT=FAIL (missing daily_unlocks column)

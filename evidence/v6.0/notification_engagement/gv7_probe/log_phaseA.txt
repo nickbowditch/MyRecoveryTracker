@@ -1,0 +1,85 @@
+--------- beginning of main
+10-23 14:56:34.927  1787  2328 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+--------- beginning of system
+10-23 14:56:34.930  1787  2328 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-23 14:56:34.933  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:34.948 27467 27467 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP
+10-23 14:56:34.951  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-23 14:56:35.027  1787  2328 I ActivityManager: Broadcasting: Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }
+10-23 14:56:35.028  2823  3087 D TemperatureStateSource: sequence=38590 actualDelay=10001
+10-23 14:56:35.029  1787  2328 I ActivityManager: Enqueued broadcast Intent { act=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP flg=0x11400020 cmp=com.nick.myrecoverytracker/.TriggerReceiver }: 0
+10-23 14:56:35.034  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:35.035  2823  3087 D TemperatureStateSource: Reading temperature: sequence=38591
+10-23 14:56:35.037 27467 27467 I TriggerReceiver: onReceive action=com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP
+10-23 14:56:35.038 17689 17689 I pixel-thermal: CPU_THROTTLE_SEVERE:0 raw data: CPU_THROTTLE_SEVERE:0 
+10-23 14:56:35.039  1787  1879 I ActivityManager: Broadcast completed: result=0
+10-23 14:56:35.039 17689 17689 I pixel-thermal: VIRTUAL-SKIN:34.4613 raw data: VIRTUAL-SKIN:34461.3 
+10-23 14:56:35.040  2823  3087 D TemperatureStateSource: getDeviceTemperatures: sequence=38591 deviceTemperatureType=3 temperatureSource=0 temperatures=[34.461315]
+10-23 14:56:35.040  2823  3087 D BusinessScope: Enqueuing the block
+10-23 14:56:35.040  2823  3087 D TemperatureStateSource: sequence=38591 waitTime=10000
+10-23 14:56:35.040  2823  3902 D BusinessScope: Start running the #82595 block
+10-23 14:56:35.042 17689 17689 I pixel-thermal: CPU_THROTTLE_SEVERE:0 raw data: CPU_THROTTLE_SEVERE:0 
+10-23 14:56:35.042 17689 17689 I pixel-thermal: VIRTUAL-SKIN:34.4613 raw data: VIRTUAL-SKIN:34461.3 
+10-23 14:56:35.042  2823  3902 I TemperatureStateSource: temperature was set
+10-23 14:56:35.044  2823  3902 D BusinessScope: Enqueuing the block
+10-23 14:56:35.044  2823  3902 D ImpulseStateSource: Notify clients: 41294
+10-23 14:56:35.044  2823  3902 D BusinessScope: Finish running the #82595 block
+10-23 14:56:35.044  2823  3902 D BusinessScope: Start running the #82596 block
+10-23 14:56:35.046  2823  2960 D BusinessScope: Finish running the #82596 block
+10-23 14:56:35.065 17689 17699 I pixel-thermal: charging_therm:38.005 raw data: charging_therm:38005 
+10-23 14:56:35.072 17689 17699 I pixel-thermal: VIRTUAL-SKIN-CHARGE:33.6611 raw data: VIRTUAL-SKIN-CHARGE:33661.1 VIRTUAL-SKIN-CHARGE-SUB-0:32685.4 VIRTUAL-SKIN-CHARGE-SUB-1:33661.1 btmspkr_therm:29769 charging_therm:38005 disp_therm:30926 north_therm:36714 quiet_therm:36602 rfpa_therm:36714 soc_therm:38294 usb_pwr_therm:29747 
+10-23 14:56:35.072 17689 17699 I pixel-thermal: VIRTUAL-SKIN-CHARGE power_budget=3901.34 err=4.33889 s_power=2527 time_elapsed_ms=7012 p=516.328 i=1302 d=0 dt_per_min=nan compensation=0 budget transient=0 control target=2 excluded power budget=443.988 (PARTIAL_SYSTEM_POWER: 3699.90 mW, cdev_weight: 0.120000)
+10-23 14:56:35.073 17689 17699 I pixel-thermal: VIRTUAL-SKIN-CHARGE-WLC:33.2312 raw data: VIRTUAL-SKIN-CHARGE-WLC:33231.2 charging_therm:38005 soc_therm:38294 usb_pwr_therm:29747 
+10-23 14:56:35.073 17689 17699 I pixel-thermal: VIRTUAL-SKIN-CHARGE-WLC power_budget=3643.78 err=7.76884 s_power=1383 time_elapsed_ms=7012 p=1654.76 i=1383 d=0 dt_per_min=nan compensation=0 budget transient=0 control target=2 excluded power budget=776.979 (PARTIAL_SYSTEM_POWER: 3699.90 mW, cdev_weight: 0.210000)
+10-23 14:56:35.074 17689 17699 I pixel-thermal: Successfully update cdev dc_icl sysfs to 1
+10-23 14:56:35.087  3581  3593 W pixelstats-vendor: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: android.frameworks.stats.IStats/default
+10-23 14:56:35.100  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:35.108  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:35.108  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:35.127  2641  2641 D DLObserver: onReceive(); android.intent.action.BATTERY_CHANGED
+10-23 14:56:35.127  2641  2641 D DLObserver: plugged=2
+10-23 14:56:35.128  2641  2641 D SystemEventDataSource: onReceive: intentAction
+10-23 14:56:35.128  2641  2641 D PowerNotificationWarningsGoogleImpl: onReceive: android.intent.action.BATTERY_CHANGED
+10-23 14:56:35.128  2641  2641 D PulsarController: dispatchIntent: android.intent.action.BATTERY_CHANGED
+10-23 14:56:35.129  2641  2641 D IncompatibleChargerNotification: dispatchIntent: android.intent.action.BATTERY_CHANGED
+10-23 14:56:35.131  2641 17397 D PowerUI : can't show warning due to - plugged: true status unknown: false
+10-23 14:56:35.139  2641  2715 D GoogleBatteryDataSource: fetchDwellDefendStatus: CONNECTED
+10-23 14:56:35.139  2641  2715 D GoogleBatteryDataSource: fetchTempDefendStatus: t_sum=0, time_sum=0 t_avg=0 lst_v=0 lst_t=0 lst_u=0, dt=0, t=0 e=1
+10-23 14:56:35.140  2641  2715 D SystemEventDataSource: updatedEventData: SystemEventData(intentAction=android.intent.action.BATTERY_CHANGED, plugged=EventData(value=2), batteryScale=EventData(value=100), batteryLevel=EventData(value=77), chargingStatus=EventData(value=1), maxChargingCurrent=EventData(value=500000), maxChargingVoltage=EventData(value=5000000), batteryStatus=EventData(value=4), halEventData=HalEventData(dockDefendStatus=EventData(value=-3), tempDefendEventData=EventData(value=false), dwellDefendEventData=EventData(value=false)), settingsEventData=SettingsEventData(dockDefenderBypass=EventData(value=0), chargingLimitSettings=EventData(value=0), dndState=EventData(value=false), airplaneState=EventData(value=false)), frameworkApiEventData=FrameworkApiEventData(batterySaverState=EventData(value=false), extremeBatterySaverState=EventData(value=false)))
+10-23 14:56:35.141  2641  2715 D SystemEventDataSource: extra doesn't changed, no need to onEventSourceUpdate
+10-23 14:56:35.194 21270 21279 E gcblocker: too long GC blocking: 8
+10-23 14:56:35.194 21270 21279 E gcblocker: gc block end, 386533143,101
+10-23 14:56:35.200  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4358: USF: TMD3733: R/C:0.32 0C->1CD d_lux:49.1 c_lux:32.9/-1.0 c_coeff:0.50/-1.00
+10-23 14:56:35.201  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4361: USF: TMD3733:  w:0.85 C:16.24 d_leak:22.7 c_leak:14.8 lux:35.2 leak:16.0
+10-23 14:56:35.290  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x8 size 4 
+10-23 14:56:35.291  1390  1412 I CHRE    : @ 477680.040: [TimeSyncManager] AR=4 confidence=625 motion confidence=389
+10-23 14:56:35.291  1390  1412 W CHRE    : @ 477680.041: [TimeSyncManager] Unexpected event type 33026
+10-23 14:56:35.300  1787  2343 D ActivityManager: freezing 24312 android.process.acore
+10-23 14:56:35.308  1787  2542 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-23 14:56:35.309  1787  2542 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-23 14:56:35.310  1787  2542 D InetDiagMessage: Destroyed live tcp sockets for uids={10082} in 5ms
+10-23 14:56:35.606  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x6 size 9 
+10-23 14:56:35.608  1390  1412 D CHRE    : @ 477680.357: timepulse GPI 49, timestamp:11739470991181
+10-23 14:56:35.608  1390  1412 D CHRE    : @ 477680.358: [TimeSync] ProcessPpsPulse: fiq counter 11739470991181
+10-23 14:56:35.636  1787 15614 W BroadcastQueue: Ignoring finishReceiverLocked; no active broadcast for BroadcastProcessQueue{5e7d4a1 21270:com.lemon.lvoverseas/u0a316}
+10-23 14:56:35.844  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 2356: USF: TMD3733: New STATUS interrupts fired (was:88 now:8)
+10-23 14:56:36.061  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 2356: USF: TMD3733: New STATUS interrupts fired (was:88 now:8)
+10-23 14:56:36.217  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4358: USF: TMD3733: R/C:0.29 1CD->0C d_lux:-1.0 c_lux:32.9/-1.0 c_coeff:0.50/-1.00
+10-23 14:56:36.218  1662  1662 D AOC     : A3:MSG: tmd3733_device.cc, 4361: USF: TMD3733:  w:0.00 C:16.24 d_leak:22.7 c_leak:14.8 lux:32.9 leak:14.8
+10-23 14:56:36.283 17689 17699 I pixel-thermal: soc_therm:37.493 raw data: soc_therm:37493 
+10-23 14:56:36.291 17689 17699 I pixel-thermal: disp_therm:31.149 raw data: disp_therm:31149 
+10-23 14:56:36.291 17689 17699 I pixel-thermal: rfpa_therm:36.447 raw data: rfpa_therm:36447 
+10-23 14:56:36.292 17689 17699 I pixel-thermal: btmspkr_therm:29.769 raw data: btmspkr_therm:29769 
+10-23 14:56:36.292 17689 17699 I pixel-thermal: usb_pwr_therm:29.813 raw data: usb_pwr_therm:29813 
+10-23 14:56:36.293 17689 17699 I pixel-thermal: VIRTUAL-USB-UI:0 raw data: USB-MINUS-CHARGER:-7769 VIRTUAL-USB-UI:0 charging_therm:37582 usb_pwr_therm:29813 
+10-23 14:56:36.293 17689 17699 I pixel-thermal: VIRTUAL-USB-THROTTLING:0 raw data: USB-MINUS-CHARGER:-7769 VIRTUAL-USB-THROTTLING:0 usb_pwr_therm:29813 
+10-23 14:56:36.608  1390  1412 D CHRE.HAL: Received a nanoapp message from 0x476f6f676c001044 endpoint 0x80c1: Type 0x6 size 9 
+10-23 14:56:36.609  1390  1412 D CHRE    : @ 477681.358: timepulse GPI 49, timestamp:11739495567641
+10-23 14:56:36.609  1390  1412 D CHRE    : @ 477681.359: [TimeSync] ProcessPpsPulse: fiq counter 11739495567641
+10-23 14:56:36.628  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:36.633  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:36.633  1787  2590 D BackgroundInstallControlService: Package event received: 0
+10-23 14:56:36.717 21270 21279 E gcblocker: too long GC blocking: 8
+10-23 14:56:36.718 21270 21279 E gcblocker: gc block end, 386534667,100
+10-23 14:56:36.949 18690 14324 I CastService: [instance-160] [com.google.android.gms] Disconnecting
+10-23 14:56:36.950 18690 14324 I CastService: [instance-160] [com.google.android.gms] Disposing ConnectedClient; controller = CSC.

@@ -1,0 +1,2 @@
+header=run-as: package not debuggable: com.nick.myrecoverytracker
+DI3 RESULT=FAIL (unsupported header 'run-as: package not debuggable: com.nick.myrecoverytracker')

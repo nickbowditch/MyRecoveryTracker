@@ -1,0 +1,9 @@
+DI3 RESULT=FAIL (unsupported header 'run-as: package not debuggable: com.nick.myrecoverytracker' (want: date,distance_km))
+--- DEBUG: device date/time (local) ---
+2025-10-27 18:25:45 AEDT +1100
+--- DEBUG: app files dir ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: CSV head ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: CSV tail ---
+run-as: package not debuggable: com.nick.myrecoverytracker

@@ -1,0 +1,755 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        c91021c com.nick.myrecoverytracker/.MainActivity filter 60a9e25
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      android.intent.action.BATTERY_OKAY:
+        6429f38 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy filter 4310b11
+          Action: "android.intent.action.BATTERY_OKAY"
+          Action: "android.intent.action.BATTERY_LOW"
+      com.nick.myrecoverytracker.ACTION_DUMP_WORK:
+        84ae052 com.nick.myrecoverytracker/.WorkStatusReceiver filter 9a6af23
+          Action: "com.nick.myrecoverytracker.ACTION_DUMP_WORK"
+      android.intent.action.ACTION_POWER_DISCONNECTED:
+        cf627aa com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy filter c60df9b
+          Action: "android.intent.action.ACTION_POWER_DISCONNECTED"
+          Action: "android.intent.action.ACTION_POWER_CONNECTED"
+      com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        26fbe7c com.nick.myrecoverytracker/androidx.profileinstaller.ProfileInstallReceiver filter 274e58b
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      android.intent.action.DEVICE_STORAGE_LOW:
+        a671476 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy filter f63da77
+          Action: "android.intent.action.DEVICE_STORAGE_LOW"
+          Action: "android.intent.action.DEVICE_STORAGE_OK"
+      android.net.conn.CONNECTIVITY_CHANGE:
+        91e76e4 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy filter 28a474d
+          Action: "android.net.conn.CONNECTIVITY_CHANGE"
+      android.intent.action.LOCKED_BOOT_COMPLETED:
+        452cbfa com.nick.myrecoverytracker/.BootReceiver filter ec335ab
+          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.USER_UNLOCKED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+      android.intent.action.DEVICE_STORAGE_OK:
+        a671476 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy filter f63da77
+          Action: "android.intent.action.DEVICE_STORAGE_LOW"
+          Action: "android.intent.action.DEVICE_STORAGE_OK"
+      com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        26fbe7c com.nick.myrecoverytracker/androidx.profileinstaller.ProfileInstallReceiver filter 5861305
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      android.intent.action.BATTERY_LOW:
+        6429f38 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy filter 4310b11
+          Action: "android.intent.action.BATTERY_OKAY"
+          Action: "android.intent.action.BATTERY_LOW"
+      android.intent.action.TIMEZONE_CHANGED:
+        9280202 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.RescheduleReceiver filter 631a713
+          Action: "android.intent.action.TIMEZONE_CHANGED"
+          Action: "android.intent.action.TIME_SET"
+          Action: "android.intent.action.BOOT_COMPLETED"
+      android.intent.action.TIME_SET:
+        9280202 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.RescheduleReceiver filter 631a713
+          Action: "android.intent.action.TIMEZONE_CHANGED"
+          Action: "android.intent.action.TIME_SET"
+          Action: "android.intent.action.BOOT_COMPLETED"
+      androidx.profileinstaller.action.SKIP_FILE:
+        26fbe7c com.nick.myrecoverytracker/androidx.profileinstaller.ProfileInstallReceiver filter ebfcf5a
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        26fbe7c com.nick.myrecoverytracker/androidx.profileinstaller.ProfileInstallReceiver filter e384668
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+      android.intent.action.BOOT_COMPLETED:
+        452cbfa com.nick.myrecoverytracker/.BootReceiver filter ec335ab
+          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.USER_UNLOCKED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+        9280202 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.RescheduleReceiver filter 631a713
+          Action: "android.intent.action.TIMEZONE_CHANGED"
+          Action: "android.intent.action.TIME_SET"
+          Action: "android.intent.action.BOOT_COMPLETED"
+      android.intent.action.USER_PRESENT:
+        2d178b4 com.nick.myrecoverytracker/.UnlockReceiver filter 52f6cdd
+          Action: "android.intent.action.USER_PRESENT"
+      android.intent.action.USER_UNLOCKED:
+        452cbfa com.nick.myrecoverytracker/.BootReceiver filter ec335ab
+          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.USER_UNLOCKED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+        ba2408 com.nick.myrecoverytracker/.UpgradeReceiver filter c6bf7a1
+          Action: "android.intent.action.USER_UNLOCKED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+      com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_DISTANCE_NUDGE:
+        692af9e com.nick.myrecoverytracker/.DistanceNudgeReceiver filter 2b1a7f
+          Action: "com.nick.myrecoverytracker.ACTION_DISTANCE_NUDGE"
+      android.intent.action.ACTION_POWER_CONNECTED:
+        cf627aa com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy filter c60df9b
+          Action: "android.intent.action.ACTION_POWER_DISCONNECTED"
+          Action: "android.intent.action.ACTION_POWER_CONNECTED"
+      com.nick.myrecoverytracker.ACTION_RECALC_DISTANCE_TODAY:
+        d676c20 com.nick.myrecoverytracker/.DistanceDebugReceiver filter 8baf9d9
+          Action: "com.nick.myrecoverytracker.ACTION_RECALC_DISTANCE_TODAY"
+      com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+      com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+        1a72a4c com.nick.myrecoverytracker/.RedcapDebugReceiver filter 5d85a95
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+      androidx.work.diagnostics.REQUEST_DIAGNOSTICS:
+        3183c4e com.nick.myrecoverytracker/androidx.work.impl.diagnostics.DiagnosticsReceiver filter 605a16f
+          Action: "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+      android.intent.action.MY_PACKAGE_REPLACED:
+        452cbfa com.nick.myrecoverytracker/.BootReceiver filter ec335ab
+          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.USER_UNLOCKED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+        ba2408 com.nick.myrecoverytracker/.UpgradeReceiver filter c6bf7a1
+          Action: "android.intent.action.USER_UNLOCKED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+      androidx.work.impl.background.systemalarm.UpdateProxies:
+        fbe1d50 com.nick.myrecoverytracker/androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver filter cc10b49
+          Action: "androidx.work.impl.background.systemalarm.UpdateProxies"
+      com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION:
+        6f1adc6 com.nick.myrecoverytracker/.TriggerReceiver filter 4fd8187
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_VERIFY_SLEEP_RESCHEDULE"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_SLEEP_VALIDATION"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD"
+          Action: "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION"
+
+Service Resolver Table:
+  Non-Data Actions:
+      android.service.notification.NotificationListenerService:
+        fd9da81 com.nick.myrecoverytracker/.NotificationLogService filter 11b8726 permission android.permission.BIND_NOTIFICATION_LISTENER_SERVICE
+          Action: "android.service.notification.NotificationListenerService"
+
+Domain verification status:
+
+Permissions:
+  Permission [com.nick.myrecoverytracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (f771059):
+    sourcePackage=com.nick.myrecoverytracker
+    uid=10461 gids=[] type=0 prot=signature
+    perm=PermissionInfo{a5b3ed6 com.nick.myrecoverytracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  com.nick.myrecoverytracker/androidx.startup.InitializationProvider:
+    Provider{5832557 com.nick.myrecoverytracker/androidx.startup.InitializationProvider}
+  com.nick.myrecoverytracker/androidx.core.content.FileProvider:
+    Provider{6819844 com.nick.myrecoverytracker/androidx.core.content.FileProvider}
+
+ContentProvider Authorities:
+  [com.nick.myrecoverytracker.androidx-startup]:
+    Provider{5832557 com.nick.myrecoverytracker/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{a83441e com.nick.myrecoverytracker}
+  [com.nick.myrecoverytracker.fileprovider]:
+    Provider{6819844 com.nick.myrecoverytracker/androidx.core.content.FileProvider}
+      applicationInfo=ApplicationInfo{5d954ff com.nick.myrecoverytracker}
+
+Key Set Manager:
+  [com.nick.myrecoverytracker]
+      Signing KeySets: 307
+
+Packages:
+  Package [com.nick.myrecoverytracker] (b5bc436):
+    appId=10461
+    pkg=Package{5aabff3 com.nick.myrecoverytracker}
+    codePath=/data/app/~~ZRXEs_W-1kDALGhZ--Mr7Q==/com.nick.myrecoverytracker-jPyem25vDmZooACKzzalBQ==
+    resourcePath=/data/app/~~ZRXEs_W-1kDALGhZ--Mr7Q==/com.nick.myrecoverytracker-jPyem25vDmZooACKzzalBQ==
+    legacyNativeLibraryDir=/data/app/~~ZRXEs_W-1kDALGhZ--Mr7Q==/com.nick.myrecoverytracker-jPyem25vDmZooACKzzalBQ==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=10000 minSdk=24 targetSdk=34
+    minExtensionVersions=[]
+    versionName=1.0.0-pilot
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP KILL_AFTER_RESTORE ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2025-11-25 16:12:30
+    lastUpdateTime=2025-11-25 16:12:33
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{e4f0f2b version:2, signatures:[3515d9dd], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP KILL_AFTER_RESTORE ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      com.nick.myrecoverytracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      android.permission.POST_NOTIFICATIONS
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.FOREGROUND_SERVICE
+      android.permission.RECEIVE_BOOT_COMPLETED
+      android.permission.FOREGROUND_SERVICE_LOCATION
+      android.permission.INTERNET
+      android.permission.PACKAGE_USAGE_STATS
+      android.permission.ACCESS_COARSE_LOCATION
+      android.permission.FOREGROUND_SERVICE_DATA_SYNC
+      android.permission.ACCESS_NETWORK_STATE
+      com.nick.myrecoverytracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+      android.permission.ACTIVITY_RECOGNITION
+      android.permission.WAKE_LOCK
+      android.permission.ACCESS_BACKGROUND_LOCATION
+    install permissions:
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.RECEIVE_BOOT_COMPLETED: granted=true
+      android.permission.FOREGROUND_SERVICE_LOCATION: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.FOREGROUND_SERVICE_DATA_SYNC: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      com.nick.myrecoverytracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+      android.permission.WAKE_LOCK: granted=true
+    User 0: ceDataInode=430414 deDataInode=428841 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/0/com.nick.myrecoverytracker
+      firstInstallTime=2025-11-22 17:10:38
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-7eQj.frro
+        /data/resource-cache/com.android.systemui-accent-Q48v.frro
+        /data/resource-cache/com.android.systemui-dynamic-L5Q3.frro
+      legacy overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_FINE_LOCATION: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_COARSE_LOCATION: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACTIVITY_RECOGNITION: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_BACKGROUND_LOCATION: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+      enabledComponents:
+        androidx.work.impl.background.systemalarm.RescheduleReceiver
+        androidx.work.impl.background.systemjob.SystemJobService
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+  queries via component:
+    com.google.android.apps.diagnosticstool:
+      com.nick.myrecoverytracker
+    com.google.android.as.oss:
+      com.nick.myrecoverytracker
+    com.google.android.as:
+      com.nick.myrecoverytracker
+    com.google.android.apps.camera.services:
+      com.nick.myrecoverytracker
+    com.google.android.settings.intelligence:
+      com.nick.myrecoverytracker
+    com.google.android.apps.accessibility.voiceaccess:
+      com.nick.myrecoverytracker
+    com.verizon.mips.services:
+      com.nick.myrecoverytracker
+    com.instagram.android:
+      com.nick.myrecoverytracker
+    com.gojek.app:
+      com.nick.myrecoverytracker
+    com.grabtaxi.passenger:
+      com.nick.myrecoverytracker
+    com.whatsapp.w4b:
+      com.nick.myrecoverytracker
+    com.whatsapp:
+      com.nick.myrecoverytracker
+    com.facebook.katana:
+      com.nick.myrecoverytracker
+    com.audible.application:
+      com.nick.myrecoverytracker
+    com.bumble.app:
+      com.nick.myrecoverytracker
+    com.magicv.airbrush:
+      com.nick.myrecoverytracker
+    com.grindrapp.android:
+      com.nick.myrecoverytracker
+    com.lemon.lvoverseas:
+      com.nick.myrecoverytracker
+    com.facebook.orca:
+      com.nick.myrecoverytracker
+    com.snapchat.android:
+      com.nick.myrecoverytracker
+    com.sportsbet.sportsbetweb:
+      com.nick.myrecoverytracker
+    com.microsoft.office.outlook:
+      com.nick.myrecoverytracker
+    com.merit.sport:
+      com.nick.myrecoverytracker
+  queryable via interaction:
+    User 0:
+      [com.android.settings,com.android.dynsystem,com.android.inputdevices,com.google.SSRestartDetector,com.google.pixel.camera.services,com.google.android.settings.future.biometrics.faceenroll,com.google.android.repairmode,com.android.qns,com.android.DeviceAsWebcam,android,com.google.android.iwlan,com.android.keychain,com.android.providers.settings,com.android.server.telecom,com.google.pixel.iwlan,com.android.location.fused,com.android.localtransport]:
+        com.nick.myrecoverytracker
+      com.google.android.as:
+        com.nick.myrecoverytracker
+      [com.google.android.gsf,com.google.android.gms]:
+        com.nick.myrecoverytracker
+      com.google.android.inputmethod.latin:
+        com.nick.myrecoverytracker
+      com.google.android.apps.nexuslauncher:
+        com.nick.myrecoverytracker
+      com.android.systemui:
+        com.nick.myrecoverytracker
+      com.garmin.android.apps.connectmobile:
+        com.nick.myrecoverytracker
+      com.nick.myrecoverytracker:
+        [com.android.settings,com.android.dynsystem,com.android.inputdevices,com.google.SSRestartDetector,com.google.pixel.camera.services,com.google.android.settings.future.biometrics.faceenroll,com.google.android.repairmode,com.android.qns,com.android.DeviceAsWebcam,android,com.google.android.iwlan,com.android.keychain,com.android.providers.settings,com.android.server.telecom,com.google.pixel.iwlan,com.android.location.fused,com.android.localtransport]
+        com.google.android.as
+        [com.google.android.gsf,com.google.android.gms]
+  queryable via uses-library:
+
+Dexopt state:
+  [com.nick.myrecoverytracker]
+    path: /data/app/~~ZRXEs_W-1kDALGhZ--Mr7Q==/com.nick.myrecoverytracker-jPyem25vDmZooACKzzalBQ==/base.apk
+      arm64: [status=verify] [reason=bg-dexopt] [primary-abi]
+        [location is /data/app/~~ZRXEs_W-1kDALGhZ--Mr7Q==/com.nick.myrecoverytracker-jPyem25vDmZooACKzzalBQ==/oat/arm64/base.odex]
+
+Compiler stats:
+  [com.nick.myrecoverytracker]
+     base.apk - 922

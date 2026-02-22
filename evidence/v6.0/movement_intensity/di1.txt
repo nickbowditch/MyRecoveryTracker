@@ -1,0 +1,6 @@
+lock_path=<builtin-default>
+lock_value=date,intensity
+device_header=run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: device CSV head ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+DI1 RESULT=FAIL (header mismatch)

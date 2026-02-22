@@ -1,0 +1,7 @@
+started_at=2025-10-27T07:26:25Z
+--- DEBUG: git check-ignore (verbose) ---
+.gitignore:25:!evidence/v6.0/**	evidence/v6.0/movement_intensity
+.gitignore:25:!evidence/v6.0/**	evidence/v6.0/movement_intensity/.gv5_sentinel
+--- DEBUG: git add -n sentinel ---
+add 'evidence/v6.0/movement_intensity/.gv5_sentinel'
+GV5 RESULT=PASS

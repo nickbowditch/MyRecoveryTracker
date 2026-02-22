@@ -1,0 +1,86 @@
+
+----- DEBUG movement_intensity_ee3.sh -----
+csv_path=files/daily_movement_intensity.csv
+header=run-as: package not debuggable: com.nick.myrecoverytracker
+today=2025-10-27
+row_today=<none>
+run-as: package not debuggable: com.nick.myrecoverytracker
+EE3 RESULT=FAIL (no row for today)
+----- END DEBUG movement_intensity_ee3.sh -----
+
+----- DEBUG movement_intensity_tc1.sh -----
+TC1 RESULT=FAIL (header mismatch or file missing)
+----- END DEBUG movement_intensity_tc1.sh -----
+
+----- DEBUG movement_intensity_tc2.sh -----
+TC2 RESULT=FAIL (daily CSV header mismatch or missing)
+----- END DEBUG movement_intensity_tc2.sh -----
+
+----- DEBUG movement_intensity_tc3.sh -----
+TC3 RESULT=FAIL (daily CSV header mismatch or missing)
+----- END DEBUG movement_intensity_tc3.sh -----
+
+----- DEBUG movement_intensity_tc5.sh -----
+TC5 RESULT=FAIL (daily CSV header mismatch or missing)
+----- END DEBUG movement_intensity_tc5.sh -----
+
+----- DEBUG movement_intensity_di1.sh -----
+lock_path=<builtin-default>
+lock_value=date,intensity
+device_header=run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: device CSV head ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+DI1 RESULT=FAIL (header mismatch)
+----- END DEBUG movement_intensity_di1.sh -----
+
+----- DEBUG movement_intensity_di2.sh -----
+DI2 RESULT=FAIL (header mismatch: expected 'date,intensity' got 'run-as: package not debuggable: com.nick.myrecoverytracker')
+----- END DEBUG movement_intensity_di2.sh -----
+
+----- DEBUG movement_intensity_di3.sh -----
+header=run-as: package not debuggable: com.nick.myrecoverytracker
+DI3 RESULT=FAIL (unsupported header 'run-as: package not debuggable: com.nick.myrecoverytracker')
+----- END DEBUG movement_intensity_di3.sh -----
+
+----- DEBUG movement_intensity_at1.sh -----
+AT1 RESULT=FAIL (CSV header mismatch or missing)
+----- END DEBUG movement_intensity_at1.sh -----
+
+----- DEBUG movement_intensity_at2.sh -----
+AT2 RESULT=FAIL (bad daily header)
+----- END DEBUG movement_intensity_at2.sh -----
+
+----- DEBUG movement_intensity_gv7_v6.0.1.sh -----
+started_at=2025-10-27T07:26:26Z
+target_day=2025-10-27
+pre_header=run-as: package not debuggable: com.nick.myrecoverytracker
+csv_header=run-as: package not debuggable: com.nick.myrecoverytracker
+row_today=<none>
+--- DEBUG: CSV head/tail ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+run-as: package not debuggable: com.nick.myrecoverytracker
+GV7 RESULT=FAIL (header mismatch or missing)
+----- END DEBUG movement_intensity_gv7_v6.0.1.sh -----
+movement_intensity_ee1_v6.0.5.sh: PASS
+movement_intensity_ee2_v6.0.sh: PASS
+movement_intensity_ee3.sh: FAIL
+movement_intensity_ee4.sh: PASS
+movement_intensity_tc1.sh: FAIL
+movement_intensity_tc2.sh: FAIL
+movement_intensity_tc3.sh: FAIL
+movement_intensity_tc5.sh: FAIL
+movement_intensity_tc6.sh: PASS
+movement_intensity_di1.sh: FAIL
+movement_intensity_di2.sh: FAIL
+movement_intensity_di3.sh: FAIL
+movement_intensity_di4.sh: PASS
+movement_intensity_at1.sh: FAIL
+movement_intensity_at2.sh: FAIL
+movement_intensity_at3_v6.0.2.sh: PASS
+movement_intensity_gv1_v6.0.1.sh: PASS
+movement_intensity_gv2_v6.0.3.sh: PASS
+movement_intensity_gv3_v6.0.1.sh: PASS
+movement_intensity_gv4_v6.0.1.sh: PASS
+movement_intensity_gv5_v6.0.2.sh: PASS
+movement_intensity_gv6_v6.0.1.sh: PASS
+movement_intensity_gv7_v6.0.1.sh: FAIL

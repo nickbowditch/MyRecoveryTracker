@@ -1,0 +1,2 @@
+OK  2025-10-22 raw=2,1 daily=2,1
+AT2 RESULT=PASS

@@ -70,4 +70,8 @@ app/release/
 !evidence/v6.0/app_switching/*.txt
 !evidence/v6.0/app_switching
 !evidence/v6.0/app_switching/*.csv
+
+# ignore big archives/snapshots
+**/_snapshots/
+*.tgz
 !evidence/

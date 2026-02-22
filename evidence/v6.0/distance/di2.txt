@@ -1,0 +1,13 @@
+DI2 RESULT=FAIL (bad header (want: date,distance_km; got: run-as: package not debuggable: com.nick.myrecoverytracker))
+--- DEBUG: device date/time (local) ---
+2025-10-27 18:25:44 AEDT +1100
+--- DEBUG: app files dir (pwd; ls -la) ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: CSV exists/size ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: CSV head ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: CSV tail ---
+run-as: package not debuggable: com.nick.myrecoverytracker
+--- DEBUG: duplicates (date,count) ---
+<none>

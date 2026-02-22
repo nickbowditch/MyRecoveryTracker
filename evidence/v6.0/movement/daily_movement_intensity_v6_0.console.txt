@@ -1,0 +1,28 @@
+STATUS:
+rows_total=4
+
+-- DEBUG: header & tail ---
+date,intensity
+2025-10-07,38
+2025-10-08,43
+2025-10-09,17
+
+LAST WRITTEN:
+today_rows=1
+yesterday_rows=1
+
+WORKER(S):
+Binary file /data/user/0/com.nick.myrecoverytracker/no_backup/androidx.work.workdb matches
+Binary file /data/user/0/com.nick.myrecoverytracker/no_backup/androidx.work.workdb matches
+Binary file /data/user/0/com.nick.myrecoverytracker/no_backup/androidx.work.workdb matches
+JobScheduler: not found
+
+REDCap Mapping:
+redcap_map: present
+
+REDCap Status:
+redcap_status: skipped (no env)
+
+NOTES:
+sanity check: plausible row count & fresh writes confirmed
+RESULT=PASS

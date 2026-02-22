@@ -1,3 +1,4 @@
+// app/build.gradle.kts
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -11,30 +12,26 @@ android {
         applicationId = "com.nick.myrecoverytracker"
         minSdk = 24
         targetSdk = 34
-
-        // 🔒 Freeze pilot version
         versionCode = 10000
         versionName = "1.0.0-pilot"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // Disable release lint because AGP/Kotlin lint is crashing (KaModule error)
     lint {
         checkReleaseBuilds = false
         abortOnError = false
     }
 
-    // ✅ Production signing (projectRoot/keystore/… is correct from app/)
     signingConfigs {
         create("release") {
-            storeFile = file("../keystore/myrecoverytracker_keystore.jks")
+            storeFile = file("/Users/nickbowditch/AndroidStudioProjects/keystore/myrecoverytracker_keystore.jks")
             storePassword = "Bowdo1904!!"
-            keyAlias = "myrecoverytracker"
+            keyAlias = "myrecovery"
             keyPassword = "Bowdo1904!!"
+            enableV1Signing = true
+            enableV2Signing = true
         }
     }
-
     buildTypes {
         val redcapUrl = project.findProperty("REDCAP_URL") as String? ?: ""
         val redcapToken = project.findProperty("REDCAP_TOKEN") as String? ?: ""

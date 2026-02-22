@@ -1,4 +1,3 @@
-// app/src/main/java/com/nick/myrecoverytracker/RedcapUploadWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -8,227 +7,206 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.io.File
-import java.net.InetAddress
-import java.net.URI
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
+import kotlin.math.round
 
-class RedcapUploadWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
+class RedcapUploadWorker(
+    appContext: Context,
+    params: WorkerParameters
+) : CoroutineWorker(appContext, params) {
 
     private val ctx = applicationContext
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        val filesDir = ctx.filesDir ?: return@withContext Result.retry()
-        val prefs = ctx.getSharedPreferences("redcap_upload", Context.MODE_PRIVATE)
+    override suspend fun doWork(): Result {
+        return withContext(Dispatchers.IO) {
+            val filesDir = ctx.filesDir ?: return@withContext Result.retry()
 
-        try {
-            val qf = File(filesDir, QUEUE_FILE)
-            ensureQueueHeader(qf, QUEUE_HEADER)
-        } catch (_: Throwable) {}
+            // Stable per-install participant ID
+            val participantId = ParticipantIdManager.getOrCreate(ctx)
+            Log.i(TAG, "UPLOAD participant_id=$participantId")
 
-        val rollup = File(filesDir, "daily_unlocks.csv")
-        if (!rollup.exists()) return@withContext Result.success()
-        val lines = rollup.readLines()
-        if (lines.isEmpty()) return@withContext Result.success()
+            val metricFields = listOf(
+                "daily_unlocks",
+                "sleep_hours",
+                "sleep_has_morning_wake",
+                "late_night",
+                "notif_posted",
+                "notif_engaged",
+                "notif_engagement_rate",
+                "notif_latency_avg_s",
+                "notif_latency_median_s",
+                "notif_latency_n",
+                "usage_events_count",
+                "app_min_social",
+                "app_min_dating",
+                "app_min_productivity",
+                "app_min_music_audio",
+                "app_min_image",
+                "app_min_maps",
+                "app_min_video",
+                "app_min_travel_local",
+                "app_min_shopping",
+                "app_min_news",
+                "app_min_game",
+                "app_min_health",
+                "app_min_finance",
+                "app_min_other",
+                "app_min_total",
+                "app_switch_count",
+                "usage_entropy",
+                "distance_m",
+                "move_intensity_score"
+            )
 
-        val body: List<String> = if (looksLikeHeader(lines.first())) lines.drop(1) else lines
-        if (body.isEmpty()) return@withContext Result.success()
+            val rawToRedcap = mapOf(
+                "screen_unlocks_per_day" to "daily_unlocks",
+                "sleep_duration_hours" to "sleep_hours",
+                "has_morning_wake" to "sleep_has_morning_wake",
+                "late_night_YN" to "late_night",
+                "notifications_delivered" to "notif_posted",
+                "notifications_opened" to "notif_engaged",
+                "usage_events_count" to "usage_events_count",
+                "distance_km" to "distance_m",
+                "movement_intensity_score" to "move_intensity_score"
+            )
 
-        val rows = mutableListOf<Triple<String, String, Int>>()
-        for (line in body) {
-            if (line.isBlank()) continue
-            val parts = line.split(",")
-            if (parts.size < 2) continue
-            val date = normalizeDate(parts[0].trim()) ?: continue
-            val unlocks = parts[1].trim().toIntOrNull() ?: continue
-            val recordId = "${DEVICE_ID}-$date-unlocks"
-            rows.add(Triple(recordId, date, unlocks))
-        }
-        if (rows.isEmpty()) return@withContext Result.success()
+            val yesNoFields = setOf("sleep_has_morning_wake", "late_night")
+            val rowsByDate = mutableMapOf<String, MutableMap<String, String>>()
 
-        val header = "record_id,participant_id,date,feature_schema_version,daily_unlocks\n"
-        val csvSb = StringBuilder(header)
-        rows.sortedBy { it.second }.forEach { (recId, date, ct) ->
-            csvSb.append(recId).append(",")
-                .append(DEVICE_ID).append(",")
-                .append(date).append(",")
-                .append(SCHEMA_VERSION_UNLOCKS).append(",")
-                .append(ct).append("\n")
-        }
-        val csv = csvSb.toString()
+            val candidates = filesDir.listFiles()?.filter {
+                it.name.startsWith("daily_") && it.name.endsWith(".csv")
+            } ?: emptyList()
 
-        logSchemaVersion(INSTR_UNLOCKS, SCHEMA_VERSION_UNLOCKS)
-        writeEncrypted(File(filesDir, "daily_metrics_upload.csv"), csv)
-        RollupValidator.validateUnlocks(ctx)
+            for (file in candidates) {
+                val lines = try { file.readLines() } catch (_: Throwable) { continue }
+                if (lines.size < 2) continue
 
-        try {
-            val qf = File(filesDir, QUEUE_FILE)
-            ensureQueueHeader(qf, QUEUE_HEADER)
-            upsertUnlocksQueue(qf, DEVICE_ID, rows)
-        } catch (_: Throwable) {}
+                val header = lines.first().split(",")
 
-        val urlRaw = BuildConfig.REDCAP_URL
-        val token = BuildConfig.REDCAP_TOKEN
-        if (urlRaw.isBlank() || token.isBlank()) return@withContext Result.retry()
+                for (line in lines.drop(1)) {
+                    val cols = line.split(",")
+                    val date = cols.firstOrNull()?.trim().orEmpty()
+                    if (date.isEmpty()) continue
 
-        val url = if (urlRaw.endsWith("/")) urlRaw else "$urlRaw/"
-        val host = try { URI(url).host.orEmpty() } catch (_: Throwable) { "" }
-        try { InetAddress.getByName(host) } catch (_: Throwable) { return@withContext Result.retry() }
+                    val row = rowsByDate.getOrPut(date) { mutableMapOf() }
 
-        val hash = sha256(csv)
-        val lastHash = prefs.getString("hash:daily_unlocks", null)
-        if (lastHash != null && lastHash == hash) return@withContext Result.success()
+                    for (i in 1 until minOf(header.size, cols.size)) {
+                        val redcapField = rawToRedcap[header[i]] ?: continue
+                        if (redcapField !in metricFields) continue
 
-        val form = FormBody.Builder()
-            .add("token", token)
-            .add("content", "record")
-            .add("action", "import")
-            .add("format", "csv")
-            .add("type", "flat")
-            .add("overwriteBehavior", "overwrite")
-            .add("returnContent", "count")
-            .add("returnFormat", "json")
-            .add("dateFormat", "YMD")
-            .add("data", csv)
-            .build()
+                        val raw = cols[i].trim()
+                        if (raw.isEmpty()) continue
 
-        val req = Request.Builder()
-            .url(url)
-            .header("Accept", "application/json")
-            .header("User-Agent", "MyRecoveryTracker/1.0 (Android)")
-            .post(form)
-            .build()
+                        val value = when {
+                            redcapField in yesNoFields -> normaliseYesNo(raw)
+                            redcapField.startsWith("app_min_") -> normaliseMinutes(raw)
+                            else -> raw
+                        }
 
-        val client = OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .build()
-
-        var ok = false
-        try {
-            client.newCall(req).execute().use { resp ->
-                ok = resp.isSuccessful
-                val bodyStr = resp.body?.string().orEmpty()
-                if (ok) {
-                    writeReceipt(File(filesDir, RECEIPTS_FILE), rows.size, bodyStr)
-                    prefs.edit().putString("hash:daily_unlocks", hash).apply()
+                        if (value.isNotEmpty()) row[redcapField] = value
+                    }
                 }
             }
-        } catch (_: Throwable) {}
 
-        if (ok) Result.success() else Result.retry()
-    }
+            val today = DATE_FMT.format(System.currentTimeMillis())
+            val rowsForUpload = rowsByDate.filterKeys { it == today }
 
-    private fun ensureQueueHeader(f: File, header: String) {
-        if (!f.exists() || f.length() == 0L) f.writeText(header + "\n")
-        else {
-            val first = f.bufferedReader().use { it.readLine() } ?: ""
-            if (first != header) {
-                val body = f.readLines().drop(1).joinToString("\n")
-                val tmp = File(f.parentFile, f.name + ".tmp")
-                tmp.writeText(header + "\n" + body + if (body.isNotEmpty()) "\n" else "")
-                f.delete()
-                tmp.renameTo(f)
+            if (rowsForUpload.isEmpty()) {
+                writeReceipt(File(filesDir, RECEIPTS_FILE), 0, 0, "NO_ROWS_FOR_TODAY")
+                return@withContext Result.success()
             }
+
+            val headerOut = buildList {
+                add("record_id")
+                add("participant_id")
+                add("date")
+                add("feature_schema_version")
+                addAll(metricFields)
+                add(DAILY_METRICS_COMPLETE_FIELD)
+            }
+
+            val csv = buildString {
+                append(headerOut.joinToString(",")).append("\n")
+                for ((date, map) in rowsForUpload) {
+                    val row = mutableListOf(
+                        "$participantId-$date",
+                        participantId,
+                        date,
+                        FEATURE_SCHEMA_VERSION
+                    )
+                    metricFields.forEach { row.add(map[it].orEmpty()) }
+                    row.add("2")
+                    append(row.joinToString(",")).append("\n")
+                }
+            }
+
+            writeEncrypted(File(filesDir, "daily_metrics_upload.csv"), csv)
+            writeReceipt(File(filesDir, RECEIPTS_FILE), rowsForUpload.size, 200, "BUILT_ONLY")
+
+            Log.i(TAG, "REDCAP_CSV_PAYLOAD_ROWS=${rowsForUpload.size}")
+            Result.success()
         }
     }
 
-    private fun upsertUnlocksQueue(queue: File, participantId: String, rows: List<Triple<String, String, Int>>) {
-        val map = LinkedHashMap<String, List<String>>()
-        if (queue.exists()) {
-            queue.readLines().drop(1).forEach { line ->
-                if (line.isBlank()) return@forEach
-                val cols = line.split(',')
-                if (cols.size < 5) return@forEach
-                val key = "${cols[0]}|${cols[2]}"
-                map[key] = cols
-            }
-        }
-        for ((_, date, unlocks) in rows) {
-            val cols = listOf(INSTR_UNLOCKS, participantId, date, SCHEMA_VERSION_UNLOCKS.toString(), unlocks.toString())
-            map["$INSTR_UNLOCKS|$date"] = cols
-        }
-        val tmp = File(queue.parentFile, queue.name + ".tmp")
-        tmp.writeText(QUEUE_HEADER + "\n")
-        map.values.sortedWith(compareBy({ it[0] }, { it[2] })).forEach { cols ->
-            tmp.appendText(cols.joinToString(",") + "\n")
-        }
-        if (queue.exists()) queue.delete()
-        tmp.renameTo(queue)
-    }
+    // ---------------- helpers ----------------
 
     private fun writeEncrypted(file: File, plain: String) {
         try {
-            val salt = "MyRecoverySalt".toByteArray()
-            val spec = PBEKeySpec("local-pass".toCharArray(), salt, 10000, 256)
-            val key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(spec)
-            val secret = SecretKeySpec(key.encoded, "AES")
-            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-            cipher.init(Cipher.ENCRYPT_MODE, secret)
-            val iv = cipher.iv
-            val enc = cipher.doFinal(plain.toByteArray())
-            val blob = Base64.encodeToString(iv + enc, Base64.NO_WRAP)
-            file.writeText(blob)
-        } catch (_: Throwable) { file.writeText(plain) }
+            val salt = "MYRA_SALT".toByteArray()
+            val spec = PBEKeySpec("local".toCharArray(), salt, 10000, 256)
+            val key = SecretKeyFactory
+                .getInstance("PBKDF2WithHmacSHA256")
+                .generateSecret(spec)
+
+            val cipher = Cipher.getInstance("AES")
+            cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key.encoded, "AES"))
+            file.writeText(
+                Base64.encodeToString(cipher.doFinal(plain.toByteArray()), Base64.NO_WRAP)
+            )
+        } catch (_: Throwable) {
+            file.writeText(plain)
+        }
     }
 
-    private fun looksLikeHeader(firstLine: String): Boolean {
-        val s = firstLine.lowercase(Locale.US)
-        return s.startsWith("date,") || s.startsWith("ts,") || s.startsWith("day,")
+    private fun writeReceipt(file: File, rows: Int, httpCode: Int, note: String) {
+        if (!file.exists()) file.writeText("ts,rows,http,note\n")
+        val ts = TS.format(System.currentTimeMillis())
+        file.appendText("$ts,$rows,$httpCode,$note\n")
     }
-    private fun normalizeDate(raw: String): String? {
-        val m = DATE_PREFIX.find(raw) ?: return null
-        return m.groupValues[1]
-    }
+
     private fun sha256(s: String): String {
-        val md = MessageDigest.getInstance("SHA-256")
-        return md.digest(s.toByteArray()).joinToString("") { "%02x".format(it) }
-    }
-    private fun writeReceipt(file: File, rows: Int, serverBody: String) {
-        try {
-            if (!file.exists()) file.writeText("ts,endpoint,rows,http_code,note\n")
-            val ts = TS.format(System.currentTimeMillis())
-            val safe = serverBody.replace(",", " ").replace("\n", " ").take(200)
-            file.appendText("$ts,record_import,$rows,200,$safe\n")
-        } catch (_: Throwable) {}
+        return MessageDigest.getInstance("SHA-256")
+            .digest(s.toByteArray())
+            .joinToString("") { "%02x".format(it) }
     }
 
-    private fun logSchemaVersion(feature: String, version: Int) {
-        try {
-            val f = File(ctx.filesDir, SCHEMA_LOG_FILE)
-            if (!f.exists()) f.writeText("ts,feature,version\n")
-            val prefs = ctx.getSharedPreferences("schema_versions", Context.MODE_PRIVATE)
-            val key = "v:$feature"
-            val last = prefs.getInt(key, -1)
-            if (last != version) {
-                val ts = TS.format(System.currentTimeMillis())
-                f.appendText("$ts,$feature,$version\n")
-                prefs.edit().putInt(key, version).apply()
-            }
-        } catch (_: Throwable) {}
+    private fun normaliseYesNo(raw: String): String {
+        return when (raw.lowercase(Locale.US)) {
+            "y", "yes", "1", "true" -> "1"
+            "n", "no", "0", "false" -> "0"
+            else -> ""
+        }
+    }
+
+    private fun normaliseMinutes(raw: String): String {
+        val d = raw.toDoubleOrNull() ?: return ""
+        return round(d).toLong().coerceAtLeast(0).toString()
     }
 
     companion object {
-        private const val DEVICE_ID = "TEST-DEVICE"
-        private val DATE_PREFIX = Regex("""^(\d{4}-\d{2}-\d{2})""")
-        private val TS = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+        private const val TAG = "RedcapUploadWorker"
+        private const val FEATURE_SCHEMA_VERSION = "1"
+        private const val DAILY_METRICS_COMPLETE_FIELD = "daily_metrics_complete"
         private const val RECEIPTS_FILE = "redcap_receipts.csv"
-        private const val INSTR_UNLOCKS = "daily_unlocks"
-        private const val SCHEMA_VERSION_UNLOCKS = 1
-        private const val QUEUE_FILE = "redcap_queue.csv"
-        private const val QUEUE_HEADER = "instrument,participant_id,date,schema_version,unlocks"
-        private const val SCHEMA_LOG_FILE = "schema_versions.csv"
+
+        private val DATE_FMT = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        private val TS = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
     }
 }

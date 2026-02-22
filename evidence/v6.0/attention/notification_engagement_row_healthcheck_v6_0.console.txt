@@ -1,0 +1,15 @@
+[INFO] Notification Engagement Row Healthcheck v6.0
+[INFO] PKG=com.nick.myrecoverytracker
+[INFO] CSV=files/daily_notification_engagement.csv
+[INFO] EXPECTED_WORKER=NotificationEngagementWorker
+[INFO] TODAY=2025-10-08
+--- DEBUG: header & tail ---
+  date,feature_schema_version,delivered,opened,open_rate
+  date,feature_schema_version,delivered,opened,open_rate
+  2025-10-08,1,3,3,1.000000
+rows_today: 1
+last_3_days:
+  - 2025-10-08 : 2025-10-08,1,3,3,1.000000
+worker_expected: NotificationEngagementWorker
+worker_found: no
+RESULT=FAIL

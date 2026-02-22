@@ -1,0 +1,42 @@
+=== MANIFEST RECEIVERS (BOOT/REPLACED) ===
+60:      android.intent.action.LOCKED_BOOT_COMPLETED:
+62:          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+63:          Action: "android.intent.action.BOOT_COMPLETED"
+64:          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+224:          Action: "android.intent.action.BOOT_COMPLETED"
+229:          Action: "android.intent.action.BOOT_COMPLETED"
+236:      android.intent.action.BOOT_COMPLETED:
+238:          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+239:          Action: "android.intent.action.BOOT_COMPLETED"
+240:          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+244:          Action: "android.intent.action.BOOT_COMPLETED"
+287:      android.intent.action.MY_PACKAGE_REPLACED:
+289:          Action: "android.intent.action.LOCKED_BOOT_COMPLETED"
+290:          Action: "android.intent.action.BOOT_COMPLETED"
+291:          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+389:      android.permission.RECEIVE_BOOT_COMPLETED
+401:      android.permission.RECEIVE_BOOT_COMPLETED: granted=true
+
+=== JOBSCHEDULER MATCH ===
+[none]
+
+=== WORKMANAGER MATCH ===
+[none]
+
+=== LOGCAT (boot/update/enqueue) ===
+09-24 16:15:20.030  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:20.032  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:20.033  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:20.033  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:20.033  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:20.069 11640 11640 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+09-24 16:15:20.916  1463  3749 D ActivityManager: sync unfroze 9299 com.google.android.cellbroadcastreceiver for 19
+09-24 16:15:21.031  5261  5411 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=16747Kbps LinkDnBandwidth>=25579Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /192.168.1.112, Security type: 2, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -39, Link speed: 866Mbps, Tx Link speed: 866Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 866Mbps, Max Supported Rx Link speed: 866Mbps, Frequency: 5180MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -39 UnderlyingNetworks: Null]
+09-24 16:15:21.039  5261  5261 D WM-WorkerWrapper: Starting work for com.twitter.analytics.service.core.workmanager.AnalyticsFlushWorker
+09-24 16:15:21.049  5261  5460 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=3d705418-d546-4b6b-b4d2-3059f3c8de21, tags={ com.twitter.analytics.service.core.workmanager.AnalyticsFlushWorker } ]
+09-24 16:15:21.570  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:21.576  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:21.576  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:21.576  1463  2067 D BackgroundInstallControlService: Package event received: 0
+09-24 16:15:21.582  1463  2067 D BackgroundInstallControlService: Package event received: 0
+EE-2 RESULT=FAIL

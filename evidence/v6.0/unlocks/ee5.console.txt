@@ -1,0 +1,4 @@
+EE-5 DATA valid_rows=0
+EE-5 DATA screen_unlocks_per_day=0
+EE-5 DATA total_unlocks=0
+EE-5 RESULT: FAIL
