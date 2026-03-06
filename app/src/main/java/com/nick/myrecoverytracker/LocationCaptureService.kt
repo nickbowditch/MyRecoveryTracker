@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.SystemClock
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import java.io.File
@@ -30,7 +31,7 @@ class LocationCaptureService : Service(), LocationListener {
 
     private lateinit var lm: LocationManager
 
-    private val MIN_ACC_METERS = 25f
+    private val MIN_ACC_METERS = 100f
     private val MIN_KEEP_DIST_M = 15f
     private val MIN_KEEP_INTERVAL_MS = 30_000L
     private val DEBOUNCE_DIST_M = 8f
@@ -53,6 +54,8 @@ class LocationCaptureService : Service(), LocationListener {
     override fun onCreate() {
         super.onCreate()
 
+        Log.i(TAG, "🔵 onCreate() called")
+
         // Hard gate: if we don't have foreground + location perms, never crash; just stop.
         val hasFine = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED
@@ -66,7 +69,10 @@ class LocationCaptureService : Service(), LocationListener {
                         PackageManager.PERMISSION_GRANTED
             else true
 
+        Log.i(TAG, "🔑 Permissions: hasFine=$hasFine, hasCoarse=$hasCoarse, hasFgLoc=$hasFgLoc")
+
         if (!hasLoc || !hasFgLoc) {
+            Log.w(TAG, "❌ Missing required permissions, stopping service")
             stopSelf()
             return
         }
@@ -80,8 +86,9 @@ class LocationCaptureService : Service(), LocationListener {
                 @Suppress("DEPRECATION")
                 startForeground(FG_NOTIF_ID, notif)
             }
-        } catch (_: SecurityException) {
-            // If the OS refuses the FGS start for any reason, do not crash the app.
+            Log.i(TAG, "✅ Started as foreground service")
+        } catch (e: SecurityException) {
+            Log.e(TAG, "❌ SecurityException during startForeground", e)
             stopSelf()
             return
         }
@@ -90,12 +97,23 @@ class LocationCaptureService : Service(), LocationListener {
 
         // Request updates only when allowed
         if (hasLoc) {
+            Log.i(TAG, "🔵 Attempting to register location listeners...")
+
             runCatching {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, REQ_MIN_TIME_MS, REQ_MIN_DIST_M, this)
+                Log.i(TAG, "✅ GPS_PROVIDER listener registered successfully")
+            }.onFailure { e ->
+                Log.e(TAG, "❌ GPS_PROVIDER registration FAILED: ${e.message}", e)
             }
+
             runCatching {
                 lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, REQ_MIN_TIME_MS, REQ_MIN_DIST_M, this)
+                Log.i(TAG, "✅ NETWORK_PROVIDER listener registered successfully")
+            }.onFailure { e ->
+                Log.e(TAG, "❌ NETWORK_PROVIDER registration FAILED: ${e.message}", e)
             }
+
+            Log.i(TAG, "🔵 Listener registration complete. Waiting for callbacks...")
         }
 
         listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER).forEach { p ->
@@ -103,43 +121,71 @@ class LocationCaptureService : Service(), LocationListener {
                 if (isFresh(loc, 10_000L) && isGoodAccuracy(loc)) {
                     lastKept = Location(loc)
                     lastKeptWallMs = nowWall()
+                    Log.i(TAG, "📍 Initialized lastKept from $p")
                 }
             }
         }
 
         ensureHeader("location_log.csv", "ts,lat,lon,accuracy")
         if (WRITE_RAW_TOO) ensureHeader("location_log_raw.csv", "ts,lat,lon,accuracy,provider")
+        Log.i(TAG, "✅ onCreate() complete")
     }
 
     override fun onDestroy() {
+        Log.i(TAG, "🔴 onDestroy() called, removing location updates")
         runCatching { lm.removeUpdates(this) }
         super.onDestroy()
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.i(TAG, "🔵 onStartCommand() called")
+        return START_STICKY
+    }
+
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onLocationChanged(loc: Location) {
+        Log.i(TAG, "📍 onLocationChanged() called! provider=${loc.provider}, accuracy=${loc.accuracy}")
+
         val ts = tsFmt.format(System.currentTimeMillis())
         val acc = if (loc.hasAccuracy()) loc.accuracy else Float.MAX_VALUE
 
         if (WRITE_RAW_TOO) {
             appendLine("location_log_raw.csv", "$ts,${loc.latitude},${loc.longitude},${acc.toInt()},${loc.provider ?: ""}\n")
+            Log.i(TAG, "✅ Wrote to location_log_raw.csv")
         }
 
-        if (!isGoodAccuracy(loc)) return
-        if (!isFresh(loc, 30_000L)) return
-        if (!shouldKeep(loc)) return
+        if (!isGoodAccuracy(loc)) {
+            Log.d(TAG, "⚠️ Rejected: poor accuracy ($acc > $MIN_ACC_METERS)")
+            return
+        }
+        if (!isFresh(loc, 30_000L)) {
+            Log.d(TAG, "⚠️ Rejected: stale location")
+            return
+        }
+        if (!shouldKeep(loc)) {
+            Log.d(TAG, "⚠️ Rejected: shouldKeep() returned false")
+            return
+        }
 
         appendLine("location_log.csv", "$ts,${loc.latitude},${loc.longitude},${acc.toInt()}\n")
+        Log.i(TAG, "✅ Wrote to location_log.csv")
         lastKept = Location(loc)
         lastKeptWallMs = nowWall()
     }
 
-    override fun onProviderEnabled(provider: String) {}
-    override fun onProviderDisabled(provider: String) {}
+    override fun onProviderEnabled(provider: String) {
+        Log.i(TAG, "✅ Provider enabled: $provider")
+    }
+
+    override fun onProviderDisabled(provider: String) {
+        Log.w(TAG, "⚠️ Provider disabled: $provider")
+    }
+
     @Deprecated("Unused on modern APIs")
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        Log.d(TAG, "📊 onStatusChanged: provider=$provider, status=$status")
+    }
 
     private fun shouldKeep(cur: Location): Boolean {
         val prev = lastKept ?: return true
@@ -218,6 +264,7 @@ class LocationCaptureService : Service(), LocationListener {
     }
 
     companion object {
+        private const val TAG = "LocationCaptureService"
         private const val FG_CHANNEL_ID = "mrt_location_fg_v1"
         private const val FG_NOTIF_ID = 2001
 

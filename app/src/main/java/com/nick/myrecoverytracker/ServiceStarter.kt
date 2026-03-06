@@ -1,3 +1,4 @@
+// app/src/main/java/com/nick/myrecoverytracker/ServiceStarter.kt
 package com.nick.myrecoverytracker
 
 import android.Manifest
@@ -19,8 +20,9 @@ object ServiceStarter {
     }
 
     fun startAllIfAllowed(ctx: Context) {
+        // Start the unlock tracking service
+        ForegroundUnlockService.start(ctx)
+
         if (canRunLocation(ctx)) LocationCaptureService.start(ctx)
-        // schedule the midnight recompute (idempotent)
-        DistanceDailySchedule.schedule(ctx)
     }
 }

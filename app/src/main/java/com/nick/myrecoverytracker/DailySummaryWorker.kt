@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.Date
@@ -21,33 +22,102 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
             val outFile = File(dir, "daily_summary.csv")
             val header = "date,total_unlocks,battery_drain_rate,screen_usage_min,notification_count,app_usage_min"
 
+            Log.d(TAG, "File path: ${outFile.absolutePath}")
+            Log.d(TAG, "File exists: ${outFile.exists()}")
+            Log.d(TAG, "Dir writable: ${dir.canWrite()}")
+
+            // Ensure file exists with header
             if (!outFile.exists()) {
-                outFile.writeText("$header\n")
-                Log.i(TAG, "CREATED $outFile")
+                Log.i(TAG, "Creating new daily_summary.csv")
+                try {
+                    FileOutputStream(outFile).use { fos ->
+                        fos.write("$header\n".toByteArray())
+                        fos.fd.sync()
+                    }
+                    Log.i(TAG, "File created, exists now: ${outFile.exists()}, size: ${outFile.length()}")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to create file", e)
+                    throw e
+                }
             }
 
-            val date = getTodayDate()
-            val totalUnlocks = countTodayUnlocks()
-            val batteryDrainRate = 0.05  // placeholder until we wire real battery metric
-            val screenUsageMin = readScreenUsageMinutes(dir, date)
-            val notificationCount = readNotificationCount(dir, date)
-            val appUsageMin = readAppUsageMinutes(dir, date)
+            // Get all dates that need processing (historical + today)
+            val datesToProcess = getAllDatesNeedingProcessing(dir)
+            Log.i(TAG, "Processing ${datesToProcess.size} dates: ${datesToProcess.joinToString(", ")}")
 
-            val line = "$date,$totalUnlocks,$batteryDrainRate,$screenUsageMin,$notificationCount,$appUsageMin"
-
-            val existing = outFile.readLines().toMutableList()
-            val replacedIdx = existing.indexOfFirst { it.startsWith("$date,") }
-            if (replacedIdx > 0) {
-                existing[replacedIdx] = line
-                outFile.writeText(existing.joinToString("\n") + "\n")
+            // Load existing daily_summary data
+            val existing = if (outFile.exists() && outFile.length() > 0) {
+                outFile.readLines().toMutableList()
             } else {
-                outFile.appendText("$line\n")
+                Log.w(TAG, "File missing or empty after creation attempt, starting fresh")
+                mutableListOf(header)
             }
 
-            Log.i(
-                TAG,
-                "Wrote daily summary for $date → unlocks=$totalUnlocks, screen_min=$screenUsageMin, notif=$notificationCount, app_min=$appUsageMin"
-            )
+            Log.d(TAG, "Read ${existing.size} lines from file before processing")
+
+            val dataStartIdx = if (existing.isNotEmpty() && existing[0].startsWith("date,")) 1 else 0
+            val existingDates = existing.drop(dataStartIdx).map { it.split(',')[0].trim() }.toSet()
+
+            var backfilledCount = 0
+            var updatedCount = 0
+
+            // Process each date
+            for (date in datesToProcess) {
+                val totalUnlocks = countUnlocksForDate(date)
+                val batteryDrainRate = 0.05
+                val screenUsageMin = readScreenUsageMinutes(dir, date)
+                val notificationCount = readNotificationCount(dir, date)
+                val appUsageMin = readAppUsageMinutes(dir, date)
+
+                val line = "$date,$totalUnlocks,$batteryDrainRate,$screenUsageMin,$notificationCount,$appUsageMin"
+
+                val replacedIdx = existing.drop(dataStartIdx).indexOfFirst { it.startsWith("$date,") }
+
+                if (replacedIdx >= 0) {
+                    val actualIdx = dataStartIdx + replacedIdx
+                    val oldLine = existing[actualIdx]
+                    existing[actualIdx] = line
+                    updatedCount++
+                    Log.d(TAG, "UPDATED row for $date")
+                    Log.d(TAG, "  OLD: $oldLine")
+                    Log.d(TAG, "  NEW: $line")
+                } else {
+                    existing.add(line)
+                    backfilledCount++
+                    Log.i(TAG, "BACKFILLED new row for $date → $line")
+                }
+            }
+
+            // Write all data back using FileOutputStream
+            val content = existing.joinToString("\n") + "\n"
+            val contentBytes = content.toByteArray()
+            Log.d(TAG, "About to write ${existing.size} lines (${contentBytes.size} bytes)")
+            Log.d(TAG, "First 3 lines to write:")
+            existing.take(3).forEach { Log.d(TAG, "  $it") }
+
+            try {
+                FileOutputStream(outFile, false).use { fos ->
+                    fos.write(contentBytes)
+                    fos.flush()
+                    fos.fd.sync()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Write failed", e)
+                throw e
+            }
+
+            Log.d(TAG, "Write complete. File exists: ${outFile.exists()}, size: ${outFile.length()}")
+
+            // Verify write by reading back
+            if (outFile.length() > 0) {
+                val verification = outFile.readLines()
+                Log.d(TAG, "Verification: read back ${verification.size} lines")
+                verification.take(3).forEach { Log.d(TAG, "  VERIFY: $it") }
+            } else {
+                Log.e(TAG, "VERIFICATION FAILED: File size is 0 after write!")
+            }
+
+            Log.i(TAG, "Daily summary complete: backfilled=$backfilledCount, updated=$updatedCount, total_dates=${datesToProcess.size}")
             Result.success()
 
         } catch (e: Exception) {
@@ -56,21 +126,67 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
         }
     }
 
-    /**
-     * FIXED: Now reads from unlock_diag.csv and counts UNLOCK tag events
-     * This is the source of truth for unlock counts, not unlock_log.csv
-     */
-    private fun countTodayUnlocks(): Int {
+    private fun getAllDatesNeedingProcessing(dir: File): List<String> {
+        val dates = mutableSetOf<String>()
+
+        // Always include today
+        dates.add(getTodayDate())
+
+        // Scan unlock_diag.csv for all historical dates
+        val unlockDiag = File(dir, "unlock_diag.csv")
+        if (unlockDiag.exists()) {
+            unlockDiag.readLines().forEach { line ->
+                if (line.isBlank() || line.startsWith("ts,")) return@forEach
+                val parts = line.split(',')
+                if (parts.isNotEmpty()) {
+                    val tsStr = parts[0].trim()
+                    if (tsStr.length >= 10) {
+                        dates.add(tsStr.substring(0, 10))
+                    }
+                }
+            }
+        }
+
+        // Scan screen_log.csv for additional dates
+        val screenLog = File(dir, "screen_log.csv")
+        if (screenLog.exists()) {
+            screenLog.readLines().forEach { line ->
+                if (line.isBlank() || line.startsWith("ts,")) return@forEach
+                val parts = line.split(',')
+                if (parts.isNotEmpty()) {
+                    val tsStr = parts[0].trim()
+                    if (tsStr.length >= 10) {
+                        dates.add(tsStr.substring(0, 10))
+                    }
+                }
+            }
+        }
+
+        // Scan notification_log.csv for additional dates
+        val notifLog = File(dir, "notification_log.csv")
+        if (notifLog.exists()) {
+            notifLog.readLines().forEach { line ->
+                if (line.isBlank() || line.startsWith("ts,")) return@forEach
+                val parts = line.split(',')
+                if (parts.isNotEmpty()) {
+                    val tsStr = parts[0].trim()
+                    if (tsStr.length >= 10) {
+                        dates.add(tsStr.substring(0, 10))
+                    }
+                }
+            }
+        }
+
+        return dates.sorted()
+    }
+
+    private fun countUnlocksForDate(date: String): Int {
         val f = File(applicationContext.filesDir, "unlock_diag.csv")
         if (!f.exists()) {
-            Log.w(TAG, "unlock_diag.csv not found, returning 0 unlocks")
             return 0
         }
 
-        val today = getTodayDate()
         val lines = f.readLines()
-
-        // Skip header if present
         val body = if (lines.isNotEmpty() && lines[0].contains("ts,tag,extra")) {
             lines.drop(1)
         } else {
@@ -86,13 +202,11 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
             val tsStr = parts[0].trim()
             val tag = parts[1].trim()
 
-            // Count only rows where tag == "UNLOCK" and date matches today
-            if (tsStr.startsWith(today) && tag == "UNLOCK") {
+            if (tsStr.startsWith(date) && tag == "UNLOCK") {
                 count++
             }
         }
 
-        Log.d(TAG, "Counted $count UNLOCK events from unlock_diag.csv for $today")
         return count
     }
 
@@ -138,14 +252,9 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
         return (totalOnMs / 60000.0)
     }
 
-    /**
-     * FIXED: Now counts only POSTED events, not all notification events
-     * notification_log.csv columns: timestamp,package,notification_id,event_type,title,text
-     */
     private fun readNotificationCount(dir: File, day: String): Int {
         val f = File(dir, "notification_log.csv")
         if (!f.exists()) {
-            Log.w(TAG, "notification_log.csv not found, returning 0")
             return 0
         }
 
@@ -157,23 +266,19 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
             if (line.isBlank()) continue
             val parts = line.split(',')
 
-            // notification_log has 6 columns: timestamp, package, notification_id, event_type, title, text
             if (parts.size < 4) continue
 
             val tsStr = parts[0].trim()
             val eventType = parts[3].trim()
 
-            // Extract date from ISO timestamp (YYYY-MM-DDTHH:MM:SS)
             val dayPart = if (tsStr.length >= 10) tsStr.substring(0, 10) else tsStr
             if (dayPart != day) continue
 
-            // Count only POSTED events (notifications shown to user)
             if (eventType == "POSTED") {
                 count++
             }
         }
 
-        Log.d(TAG, "Counted $count POSTED notifications for $day")
         return count
     }
 
@@ -183,7 +288,6 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
         val lines = f.readLines()
         if (lines.size <= 1) return 0.0
 
-        // header: find "app_min_total" if it exists, else fall back to last column
         val header = lines.first().split(',').map { it.trim() }
         val appTotalIdx = header.indexOfFirst { it.equals("app_min_total", ignoreCase = true) }
         val idx = if (appTotalIdx >= 0) appTotalIdx else header.size - 1

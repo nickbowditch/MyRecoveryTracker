@@ -12,12 +12,12 @@ class MovementARReceiver : BroadcastReceiver() {
         val res = ActivityTransitionResult.extractResult(intent) ?: return
         for (e in res.transitionEvents) {
             when (e.activityType) {
-                DetectedActivity.STILL -> MovementCapture.writeStill()
+                DetectedActivity.STILL -> MovementCaptureService.writeStill()
                 DetectedActivity.WALKING,
                 DetectedActivity.RUNNING,
                 DetectedActivity.ON_FOOT,
                 DetectedActivity.ON_BICYCLE,
-                DetectedActivity.IN_VEHICLE -> MovementCapture.writeActive()
+                DetectedActivity.IN_VEHICLE -> MovementCaptureService.writeActive()
             }
         }
     }

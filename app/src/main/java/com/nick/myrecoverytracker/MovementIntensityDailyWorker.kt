@@ -37,8 +37,9 @@ class MovementIntensityDailyWorker(
         probe("START today=$dateStr in_exists=$inExists in_size=$inSize out_exists=$outExists out_size=$outSize")
 
         return@withContext try {
+            val participantId = ParticipantIdManager.getOrCreate(applicationContext)
             val intensity = countUnlocksForDate(today)
-            upsertDailyCsv(dateStr, intensity)
+            upsertDailyCsv(dateStr, participantId, intensity)
 
             probe("END success today=$dateStr intensity=$intensity out_size_now=${outFile.length()}")
             Log.i(TAG, "MovementIntensityDaily -> $dateStr=$intensity")
@@ -59,7 +60,6 @@ class MovementIntensityDailyWorker(
 
         unlockLog.forEachLine { line ->
             if (line.length < 10) return@forEachLine
-            // expected: YYYY-MM-DD,...
             val datePrefix = line.substring(0, 10)
             if (datePrefix == wanted && line.contains("UNLOCK")) {
                 count += 1
@@ -68,9 +68,10 @@ class MovementIntensityDailyWorker(
         return count
     }
 
-    private fun upsertDailyCsv(dateStr: String, intensity: Int) {
+    private fun upsertDailyCsv(dateStr: String, participantId: String, intensity: Int) {
         val header = HEADER
-        val line = "$dateStr,$intensity"
+        val recordId = "${participantId}_$dateStr"
+        val line = "$recordId,$participantId,$dateStr,$FEATURE_SCHEMA_VERSION,$EVENT_NAME,$intensity"
 
         val existingLines = if (outFile.exists()) {
             outFile.readLines().map { it.trimEnd('\r') }
@@ -80,23 +81,23 @@ class MovementIntensityDailyWorker(
 
         val map = LinkedHashMap<String, String>(existingLines.size.coerceAtLeast(16))
 
-        // normalise / rebuild, enforcing schema
         map.clear()
 
-        // Load existing rows if schema matches; otherwise discard and rebuild cleanly
         if (existingLines.isNotEmpty() && existingLines.first() == header) {
             existingLines.drop(1).forEach { row ->
-                val d = row.substringBefore(',', "")
-                if (d.length == 10 && DATE_RE.matches(d)) {
-                    map[d] = row
+                val d = row.substringBefore(',')
+                // Extract date from recordId_date pattern
+                if (d.contains('_')) {
+                    val dateFromId = d.substringAfterLast('_')
+                    if (dateFromId.length == 10 && DATE_RE.matches(dateFromId)) {
+                        map[dateFromId] = row
+                    }
                 }
             }
         }
 
-        // Upsert today
         map[dateStr] = line
 
-        // Rebuild deterministically
         val rebuilt = buildString {
             append(header).append('\n')
             map.keys.sorted().forEach { d ->
@@ -104,11 +105,9 @@ class MovementIntensityDailyWorker(
             }
         }
 
-        // Atomic write: temp + rename
         val tmp = File(outFile.parentFile, "${OUT_NAME}.tmp")
         tmp.writeText(rebuilt)
         if (!tmp.renameTo(outFile)) {
-            // fallback if rename fails on some devices/filesystems
             outFile.writeText(rebuilt)
             tmp.delete()
         }
@@ -131,9 +130,11 @@ class MovementIntensityDailyWorker(
         private const val PROBE_TAG = "MOVE_INTENSITY_PROBE"
 
         private const val OUT_NAME = "daily_movement_intensity.csv"
-        private const val HEADER = "date,intensity"
+        private const val HEADER = "record_id,participant_id,date,feature_schema_version,event,movement_intensity"
         private const val UNLOCK_LOG = "unlock_log.csv"
         private const val HEARTBEAT_FILE = "movement_intensity_heartbeat.csv"
+        private const val FEATURE_SCHEMA_VERSION = "1"
+        private const val EVENT_NAME = "MovementIntensity"
 
         private val DATE_RE = Regex("""^\d{4}-\d{2}-\d{2}$""")
     }

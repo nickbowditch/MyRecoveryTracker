@@ -23,6 +23,7 @@ class NotificationLogService : NotificationListenerService() {
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
+        Log.i(TAG, "onNotificationPosted called: pkg=${sbn.packageName}, id=${sbn.id}")
         val pkg = sbn.packageName ?: "unknown"
         val id = sbn.id
         appendLine(
@@ -35,6 +36,7 @@ class NotificationLogService : NotificationListenerService() {
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification, rankingMap: RankingMap?, reason: Int) {
+        Log.i(TAG, "onNotificationRemoved called: pkg=${sbn.packageName}, id=${sbn.id}, reason=$reason")
         val pkg = sbn.packageName ?: "unknown"
         val id = sbn.id
 
@@ -97,6 +99,7 @@ class NotificationLogService : NotificationListenerService() {
             }
 
             logFile.appendText(line + "\n")
+            Log.i(TAG, "Logged: $line")
         } catch (t: Throwable) {
             Log.e(TAG, "Failed to append notification log line", t)
         }
@@ -106,7 +109,7 @@ class NotificationLogService : NotificationListenerService() {
         private const val TAG = "NotificationLogService"
         private const val LOG_FILE = "notification_log.csv"
         private const val HEADER =
-            "timestamp,event_type,package_name,notification_id,raw_event,raw_reason"
+            "ts,event_type,package_name,notification_id,raw_event,raw_reason"
 
         private val TS_FMT = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US)
     }

@@ -1,0 +1,4 @@
+Settings implementation:
+app/src/main/java/com/nick/myrecoverytracker/SensorSampleWorker.kt
+
+Toggle controls in layouts:

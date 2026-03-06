@@ -1,0 +1,9 @@
+Splash configuration:
+
+Testing app launch...
+02-22 17:03:58.986  1594  1672 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-22 17:03:59.207 16736 20206 E msys    : E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.8.175, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect timed out after 9999ms, type = Timed out
+02-22 17:03:59.226 16736 20206 E msys    : E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.8.175, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect timed out after 9999ms, type = Timed out
+02-22 17:03:59.258  2209 22995 W MediaPlayer: Error setting data source via ContentResolver
+02-22 17:03:59.258  2209 22995 W MediaPlayer: java.io.FileNotFoundException: open failed: ENOENT (No such file or directory)
+02-22 17:03:59.258  2209 22995 W MediaPlayer: 	at android.database.DatabaseUtils.readExceptionWithFileNotFoundExceptionFromParcel(DatabaseUtils.java:186)

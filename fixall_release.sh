@@ -2,6 +2,7 @@
 set -eu
 
 PKG="com.nick.myrecoverytracker"
+LISTENER="$PKG/.NotificationLogService"
 
 ./gradlew clean assembleRelease
 
@@ -15,6 +16,16 @@ adb shell pm grant "$PKG" android.permission.ACCESS_COARSE_LOCATION 2>/dev/null 
 adb shell pm grant "$PKG" android.permission.ACCESS_FINE_LOCATION 2>/dev/null || true
 adb shell pm grant "$PKG" android.permission.ACCESS_BACKGROUND_LOCATION 2>/dev/null || true
 adb shell cmd deviceidle whitelist +"$PKG" >/dev/null 2>&1
+
+CURRENT=$(adb shell settings get secure enabled_notification_listeners 2>/dev/null || echo "")
+if ! echo "$CURRENT" | grep -q "$PKG"; then
+  if [ -z "$CURRENT" ]; then
+    NEW_LISTENERS="$LISTENER"
+  else
+    NEW_LISTENERS="$CURRENT:$LISTENER"
+  fi
+  adb shell settings put secure enabled_notification_listeners "$NEW_LISTENERS"
+fi
 
 adb shell am force-stop "$PKG"
 adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1
@@ -35,6 +46,7 @@ echo -n "Idle WL  : "; adb shell dumpsys deviceidle | awk -v p="$PKG" '
   s && NF==0 {s=0}
   s && index($0,p){f=1}
   END{print (f?"OK":"MISSING")}'
+echo -n "NotifList: "; adb shell settings get secure enabled_notification_listeners | grep -q "$PKG" && echo OK || echo MISSING
 
 echo ""
 echo "✅ Release APK installed and configured"

@@ -1,5 +1,7 @@
 package com.nick.myrecoverytracker
 
+import android.content.Context
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,9 +22,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val filter = IntentFilter().apply {
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_LOG_EXPORT")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_DAILY_SUMMARY")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY")
+            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_DIAG")
+        }
+        registerReceiver(WorkerTriggerReceiver(), filter, Context.RECEIVER_EXPORTED)
+        Log.i("MainActivity", "WorkerTriggerReceiver dynamically registered")
+
         val wm = WorkManager.getInstance(this)
 
-        // DEBUG-only delayed startup hook (NO direct service start)
         if (BuildConfig.DEBUG) {
             Handler(Looper.getMainLooper()).postDelayed({
                 try {
@@ -34,14 +56,35 @@ class MainActivity : ComponentActivity() {
             }, 2000)
         }
 
-        HeartbeatWorker.ensure(this)
-
         try {
             RedcapDiag.log(this)
             Log.i("MainActivity", "RedcapDiag.log executed on launch")
         } catch (e: Exception) {
             Log.e("MainActivity", "RedcapDiag.log failed", e)
         }
+
+        val exportWork = OneTimeWorkRequestBuilder<LogExportWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("LogExportKick")
+            .build()
+
+        wm.enqueueUniqueWork(
+            "once-LogExportKick",
+            ExistingWorkPolicy.REPLACE,
+            exportWork
+        )
+
+        val redcapWork = OneTimeWorkRequestBuilder<RedcapUploadWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag("RedcapUploadKick")
+            .build()
+
+        wm.enqueueUniqueWork(
+            "once-RedcapUploadKick",
+            ExistingWorkPolicy.REPLACE,
+            redcapWork
+        )
+        Log.i("MainActivity", "RedcapUploadWorker enqueued for QA")
 
         val periodicUsage =
             PeriodicWorkRequestBuilder<UsageCaptureWorker>(24, TimeUnit.HOURS)
@@ -55,8 +98,8 @@ class MainActivity : ComponentActivity() {
         )
 
         val distancePeriodic =
-            PeriodicWorkRequestBuilder<DistanceWorker>(24, TimeUnit.HOURS)
-                .addTag("DistanceDaily")
+            PeriodicWorkRequestBuilder<DistanceSummaryWorker>(24, TimeUnit.HOURS)
+                .addTag("DistanceSummaryDaily")
                 .setConstraints(
                     Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
@@ -87,26 +130,16 @@ class MainActivity : ComponentActivity() {
         )
 
         val distanceKick =
-            OneTimeWorkRequestBuilder<DistanceWorker>()
+            OneTimeWorkRequestBuilder<DistanceSummaryWorker>()
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .addTag("DistanceKick")
+                .addTag("DistanceSummaryKick")
                 .build()
 
         wm.enqueueUniqueWork(
-            "once-DistanceKick",
+            "once-DistanceSummaryKick",
             ExistingWorkPolicy.REPLACE,
             distanceKick
         )
-
-        if (BuildConfig.DEBUG) {
-            try {
-                DistanceRepair.recalcToday(this)
-            } catch (e: Exception) {
-                Log.e("MainActivity", "DistanceRepair failed", e)
-            }
-        }
-
-        Handler(Looper.getMainLooper()).postDelayed({ finish() }, 2000)
     }
 
     override fun onStart() {

@@ -19,3 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Keep all Worker classes
+-keep class * extends androidx.work.Worker { *; }
+-keep class * extends androidx.work.CoroutineWorker { *; }
+-keep class * extends androidx.work.ListenableWorker { *; }
+
+# Keep all MYRA workers specifically
+-keep class com.nick.myrecoverytracker.*Worker { *; }
+
+# Keep WorkManager classes
+-keep class androidx.work.** { *; }

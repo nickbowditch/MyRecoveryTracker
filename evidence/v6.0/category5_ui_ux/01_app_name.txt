@@ -1,0 +1,2 @@
+Package info: 
+Manifest label:         android:label="@string/app_name"

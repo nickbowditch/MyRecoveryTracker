@@ -8,8 +8,10 @@ import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.Date
 import java.util.Locale
 
 class NotificationEngagementWorker(
@@ -23,18 +25,45 @@ class NotificationEngagementWorker(
 
         val inFile = File(files, IN_FILE)
         val outFile = File(files, OUT_FILE)
+        val latencyFile = File(files, LATENCY_FILE)
 
         val zone = ZoneId.systemDefault()
         val today = LocalDate.now(zone).toString()
         val yesterday = LocalDate.now(zone).minusDays(1).toString()
 
-        probe("START doWork() today=$today yesterday=$yesterday in_exists=${inFile.exists()} in_size=${if (inFile.exists()) inFile.length() else 0} out_exists=${outFile.exists()} out_size=${if (outFile.exists()) outFile.length() else 0}")
-        heartbeat("START today=$today yesterday=$yesterday")
+        Log.i(TAG, "START doWork() today=$today yesterday=$yesterday")
 
+        val participantId = ParticipantIdManager.getOrCreate(ctx)
         val header = DEFAULT_HEADER
         ensureHeader(outFile, header)
 
-        val agg = mutableMapOf<String, Counts>()
+        // Load latency data by date
+        val latencyByDate = mutableMapOf<String, Pair<Double, Int>>() // date -> (median, count)
+        if (latencyFile.exists()) {
+            try {
+                latencyFile.forEachLine { raw ->
+                    val line = raw.trimStart('\uFEFF').trim()
+                    if (line.isEmpty() || isHeaderLike(line)) return@forEachLine
+
+                    val cols = readCols(line)
+                    if (cols.size < 5) return@forEachLine
+
+                    val date = cols[2].trim()
+                    val medianStr = cols[4].trim()
+                    val countStr = cols[5].trim()
+
+                    val median = medianStr.toDoubleOrNull() ?: 0.0
+                    val count = countStr.toIntOrNull() ?: 0
+
+                    latencyByDate[date] = Pair(median, count)
+                }
+            } catch (t: Throwable) {
+                Log.e(TAG, "Failed to load latency file", t)
+            }
+        }
+
+        // Map: date -> engagement stats
+        val engagementByDate = mutableMapOf<String, EngagementStats>()
         var parseFailed = false
 
         if (inFile.exists()) {
@@ -43,32 +72,38 @@ class NotificationEngagementWorker(
                     val line = raw.trimStart('\uFEFF').trim()
                     if (line.isEmpty() || isHeaderLike(line)) return@forEachLine
 
-                    val firstCol = line.substringBefore(',', "")
-                    val date = if (firstCol.length >= 10) firstCol.substring(0, 10) else firstCol
+                    val cols = readCols(line)
+                    if (cols.size < 6) return@forEachLine
+
+                    val ts = cols[0].trim()
+                    val eventType = cols[1].trim().uppercase(Locale.US)
+                    val rawEvent = cols[4].trim().uppercase(Locale.US)
+                    val rawReason = cols[5].trim().uppercase(Locale.US)
+
+                    // Extract date from timestamp
+                    val date = if (ts.length >= 10) ts.substring(0, 10) else ""
                     if (!DATE_RE.matches(date)) return@forEachLine
 
-                    when (classify(line)) {
-                        EventKind.DELIVERED -> agg.getOrPut(date) { Counts() }.delivered++
-                        EventKind.OPENED -> agg.getOrPut(date) { Counts() }.opened++
-                        EventKind.OTHER -> Unit
+                    val stats = engagementByDate.getOrPut(date) { EngagementStats() }
+
+                    // Classification logic
+                    when {
+                        eventType == "POSTED" || rawEvent == "POSTED" -> stats.posted++
+                        eventType == "REMOVED" && rawReason == "CLICK" -> {
+                            stats.posted++ // Also count as delivered
+                            stats.engaged++
+                        }
                     }
                 }
             } catch (t: Throwable) {
-                // IMPORTANT: do NOT return early; still force rows + write output
                 parseFailed = true
                 Log.e(TAG, "Failed parsing $IN_FILE (continuing with forced rows)", t)
-                probe("PARSE_FAIL ${t.javaClass.simpleName}: ${t.message}")
-                heartbeat("PARSE_FAIL ${t.javaClass.simpleName}: ${t.message}")
             }
-        } else {
-            probe("NO_INPUT_FILE (will still force rows)")
-            heartbeat("NO_INPUT_FILE")
         }
 
-        // 🔒 HARD INVARIANT FOR MYRA:
-        // Always materialise yesterday (and today) so healthchecks never depend on “did any events occur?”
-        agg.putIfAbsent(yesterday, Counts())
-        agg.putIfAbsent(today, Counts())
+        // 🔒 HARD INVARIANT: Always materialise yesterday and today
+        engagementByDate.putIfAbsent(yesterday, EngagementStats())
+        engagementByDate.putIfAbsent(today, EngagementStats())
 
         val existing = try {
             outFile.readLines()
@@ -79,21 +114,33 @@ class NotificationEngagementWorker(
                 .toMutableMap()
         } catch (t: Throwable) {
             Log.e(TAG, "Failed reading existing $OUT_FILE (will rebuild)", t)
-            probe("READ_EXISTING_FAIL ${t.javaClass.simpleName}: ${t.message}")
-            heartbeat("READ_EXISTING_FAIL ${t.javaClass.simpleName}: ${t.message}")
             mutableMapOf()
         }
 
-        agg.forEach { (date, c) ->
-            val rate = if (c.delivered > 0) c.opened.toDouble() / c.delivered.toDouble() else 0.0
+        engagementByDate.forEach { (date, stats) ->
+            val recordId = "${participantId}_$date"
+            val engagementRate = if (stats.posted > 0) {
+                (stats.engaged.toDouble() / stats.posted.toDouble())
+            } else {
+                0.0
+            }
+
+            // Get latency from latencyFile
+            val (latencyMedian, latencyCount) = latencyByDate[date] ?: Pair(0.0, 0)
+
             existing[date] = String.format(
                 Locale.US,
-                "%s,%s,%d,%d,%.6f",
+                "%s,%s,%s,%s,%s,%d,%d,%.6f,%.6f,%d",
+                recordId,
+                participantId,
                 date,
                 FEATURE_SCHEMA_VERSION,
-                c.delivered,
-                c.opened,
-                rate
+                "engagement",
+                stats.posted,
+                stats.engaged,
+                engagementRate,
+                latencyMedian,
+                latencyCount
             )
         }
 
@@ -108,13 +155,10 @@ class NotificationEngagementWorker(
             outFile.writeText(rebuilt)
         } catch (t: Throwable) {
             Log.e(TAG, "Failed writing $OUT_FILE", t)
-            probe("WRITE_FAIL ${t.javaClass.simpleName}: ${t.message}")
-            heartbeat("WRITE_FAIL ${t.javaClass.simpleName}: ${t.message}")
             return@withContext Result.failure()
         }
 
-        probe("END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed out=${outFile.absolutePath}")
-        heartbeat("END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed")
+        Log.i(TAG, "END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed")
 
         Result.success()
     }
@@ -124,7 +168,6 @@ class NotificationEngagementWorker(
             out.parentFile?.mkdirs()
             out.writeText("$header\n")
         } else {
-            // If header ever drifts, normalise it without nuking data
             val cur = out.useLines { it.firstOrNull() ?: "" }.trim().replace("\r", "")
             if (cur != header) {
                 val rest = out.readLines().drop(1).joinToString("\n")
@@ -140,12 +183,11 @@ class NotificationEngagementWorker(
 
     private fun isHeaderLike(line: String): Boolean {
         val l = line.lowercase(Locale.US)
-        return l.startsWith("timestamp,") || l.startsWith("ts,")
+        return l.startsWith("ts,") || l.startsWith("timestamp,")
     }
 
-    // Robust CSV parsing so quoted commas don’t destroy columns
     private fun readCols(line: String): List<String> {
-        val out = ArrayList<String>(8)
+        val out = ArrayList<String>(6)
         val sb = StringBuilder()
         var inQuotes = false
         var i = 0
@@ -176,57 +218,21 @@ class NotificationEngagementWorker(
         return out
     }
 
-    private fun classify(line: String): EventKind {
-        val cols = readCols(line)
-        if (cols.size < 2) return EventKind.OTHER
-
-        val ev2 = cols[1].trim().uppercase(Locale.US)
-        return when (ev2) {
-            "POSTED", "DELIVERED" -> EventKind.DELIVERED
-            "CLICKED", "OPENED" -> EventKind.OPENED
-            else -> EventKind.OTHER
-        }
-    }
-
-    private fun probe(msg: String) {
-        Log.e(PROBE, msg)
-    }
-
-    private fun heartbeat(msg: String) {
-        try {
-            val hb = File(applicationContext.filesDir, HEARTBEAT_FILE)
-            if (!hb.exists() || hb.length() == 0L) {
-                hb.parentFile?.mkdirs()
-                hb.writeText("ts,message\n")
-            }
-            hb.appendText("${System.currentTimeMillis()},$msg\n")
-        } catch (t: Throwable) {
-            Log.e(TAG, "Failed to write heartbeat", t)
-        }
-    }
-
-    private data class Counts(
-        var delivered: Int = 0,
-        var opened: Int = 0
+    private data class EngagementStats(
+        var posted: Int = 0,
+        var engaged: Int = 0
     )
-
-    private enum class EventKind {
-        DELIVERED,
-        OPENED,
-        OTHER
-    }
 
     companion object {
         private const val TAG = "NotificationEngagementWorker"
-        private const val PROBE = "NOTIF_ENG_PROBE"
 
         private const val IN_FILE = "notification_log.csv"
         private const val OUT_FILE = "daily_notification_engagement.csv"
-        private const val HEARTBEAT_FILE = "notification_engagement_heartbeat.csv"
+        private const val LATENCY_FILE = "daily_notification_latency.csv"
 
         private const val FEATURE_SCHEMA_VERSION = "1"
         private const val DEFAULT_HEADER =
-            "date,feature_schema_version,delivered,opened,open_rate"
+            "record_id,participant_id,date,feature_schema_version,event,notif_posted,notif_engaged,notif_engagement_rate,notif_latency_median_s,notif_latency_n"
 
         private val DATE_RE = Regex("""^\d{4}-\d{2}-\d{2}$""")
     }

@@ -1,0 +1,244 @@
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    ContextCompat.registerReceiver(this, screenReceiver, screenFilter, Context.RECEIVER_NOT_EXPORTED)
+    ContextCompat.registerReceiver(this, userPresentReceiver, userPresentFilter, Context.RECEIVER_NOT_EXPORTED)
+package com.nick.myrecoverytracker
+
+import android.app.*
+import android.content.*
+import android.os.*
+import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
+
+class ForegroundUnlockService : Service() {
+
+    private lateinit var km: KeyguardManager
+    private lateinit var pm: PowerManager
+    private lateinit var mainHandler: Handler
+
+    private val CHANNEL_ID = "mrt_device_state"
+    private val TAG = "ForegroundUnlockService"
+
+    private val tsMinFmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).apply {
+        timeZone = TimeZone.getDefault()
+    }
+
+    private val tsLogFmt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).apply {
+        timeZone = TimeZone.getDefault()
+    }
+
+    private var lastHeartbeat = ""
+    private var currentSessionId = 0
+    private var currentSessionLogged = false
+    private val pendingChecks = mutableListOf<Runnable>()
+
+    private var hbThread: HandlerThread? = null
+    private var hbHandler: Handler? = null
+
+    private val hbRunnable = object : Runnable {
+        override fun run() {
+            try {
+                ensureHeader("heartbeat.csv", "ts")
+                val ts = tsMinFmt.format(System.currentTimeMillis())
+                if (ts != lastHeartbeat) {
+                    appendLine("heartbeat.csv", "$ts\n")
+                    lastHeartbeat = ts
+                }
+            } catch (_: Throwable) {}
+            hbHandler?.postDelayed(this, 60_000L)
+        }
+    }
+
+    private fun nowStr() = tsLogFmt.format(System.currentTimeMillis())
+
+    @Synchronized
+    private fun ensureHeader(name: String, header: String) {
+        try {
+            val f = File(filesDir, name)
+            Log.d(TAG, "ensureHeader: $name at ${f.absolutePath}, exists=${f.exists()}, length=${if (f.exists()) f.length() else -1}")
+            if (!f.exists() || f.length() == 0L) {
+                FileOutputStream(f, false).use {
+                    it.write("$header\n".toByteArray())
+                    it.fd.sync()
+                }
+                Log.d(TAG, "ensureHeader: wrote header to $name")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ensureHeader failed for $name", e)
+        }
+    }
+
+    @Synchronized
+    private fun appendLine(name: String, line: String) {
+        try {
+            val f = File(filesDir, name)
+            Log.d(TAG, "appendLine: $name, line length=${line.length}")
+            FileOutputStream(f, true).use {
+                it.write(line.toByteArray())
+                it.fd.sync()
+            }
+            Log.d(TAG, "appendLine: wrote to $name, new size=${f.length()}")
+        } catch (e: Exception) {
+            Log.e(TAG, "appendLine failed for $name", e)
+        }
+    }
+
+    private fun logScreen(on: Boolean) {
+        Log.d(TAG, "logScreen: $on")
+        ensureHeader("screen_log.csv", "ts,state")
+        appendLine("screen_log.csv", "${nowStr()},${if (on) "ON" else "OFF"}\n")
+    }
+
+    private fun logUnlock(reason: String) {
+        Log.d(TAG, "logUnlock: $reason")
+        if (currentSessionLogged) return
+        currentSessionLogged = true
+        ensureHeader("unlock_log.csv", "ts,event")
+        appendLine("unlock_log.csv", "${nowStr()},UNLOCK\n")
+        ensureHeader("unlock_diag.csv", "ts,tag,extra")
+        appendLine("unlock_diag.csv", "${nowStr()},UNLOCK,$reason\n")
+        cancelPendingChecks()
+    }
+
+    private fun cancelPendingChecks() {
+        pendingChecks.forEach { mainHandler.removeCallbacks(it) }
+        pendingChecks.clear()
+    }
+
+    private fun startNewSession() {
+        cancelPendingChecks()
+        currentSessionId++
+        currentSessionLogged = false
+    }
+
+    private fun scheduleChecks() {
+        val session = currentSessionId
+        fun sched(delay: Long) {
+            val r = Runnable {
+                if (session != currentSessionId || currentSessionLogged) return@Runnable
+                if (pm.isInteractive && !km.isKeyguardLocked) {
+                    logUnlock("CHECK")
+                }
+            }
+            pendingChecks.add(r)
+            mainHandler.postDelayed(r, delay)
+        }
+        sched(0)
+        sched(500)
+        sched(1500)
+        sched(3000)
+    }
+
+    private val screenReceiver = object : BroadcastReceiver() {
+        override fun onReceive(ctx: Context, intent: Intent) {
+            Log.d(TAG, "screenReceiver.onReceive: ${intent.action}")
+            when (intent.action) {
+                Intent.ACTION_SCREEN_ON -> {
+                    logScreen(true)
+                    startNewSession()
+                    if (pm.isInteractive && !km.isKeyguardLocked) logUnlock("SCREEN_ON")
+                    scheduleChecks()
+                }
+                Intent.ACTION_SCREEN_OFF -> {
+                    logScreen(false)
+                    cancelPendingChecks()
+                }
+            }
+        }
+    }
+
+    private val userPresentReceiver = object : BroadcastReceiver() {
+        override fun onReceive(ctx: Context, intent: Intent) {
+            Log.d(TAG, "userPresentReceiver.onReceive: ${intent.action}")
+            if (intent.action == Intent.ACTION_USER_PRESENT) {
+                currentSessionLogged = false
+                logUnlock("USER_PRESENT")
+            }
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        Log.d(TAG, "onCreate, filesDir=${filesDir.absolutePath}")
+
+        km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        mainHandler = Handler(Looper.getMainLooper())
+
+        createNotificationChannel()
+        startForeground(1001, buildNotification())
+
+        val screenFilter = IntentFilter().apply {
+            addAction(Intent.ACTION_SCREEN_ON)
+            addAction(Intent.ACTION_SCREEN_OFF)
+        }
+
+        val userPresentFilter = IntentFilter(Intent.ACTION_USER_PRESENT)
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            ContextCompat.registerReceiver(this, screenReceiver, screenFilter, Context.RECEIVER_NOT_EXPORTED)
+            ContextCompat.registerReceiver(this, userPresentReceiver, userPresentFilter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(screenReceiver, screenFilter)
+            registerReceiver(userPresentReceiver, userPresentFilter)
+        }
+        Log.d(TAG, "screenReceiver and userPresentReceiver registered")
+
+        hbThread = HandlerThread("mrt-heartbeat").also { it.start() }
+        hbHandler = Handler(hbThread!!.looper)
+        hbHandler?.post(hbRunnable)
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
+        unregisterReceiver(screenReceiver)
+        unregisterReceiver(userPresentReceiver)
+        cancelPendingChecks()
+        hbHandler?.removeCallbacksAndMessages(null)
+        hbThread?.quitSafely()
+        super.onDestroy()
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return START_STICKY
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            val ch = NotificationChannel(
+                CHANNEL_ID,
+                "Device State Tracking",
+                NotificationManager.IMPORTANCE_LOW
+            )
+            ch.setShowBadge(false)
+            getSystemService(NotificationManager::class.java).createNotificationChannel(ch)
+        }
+    }
+
+    private fun buildNotification(): Notification =
+        NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.stat_notify_sync)
+            .setContentTitle("My Recovery Assistant")
+            .setContentText("Research Study")
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .build()
+
+    companion object {
+        fun start(ctx: Context) {
+            val intent = Intent(ctx, ForegroundUnlockService::class.java)
+            if (Build.VERSION.SDK_INT >= 26) {
+                ctx.startForegroundService(intent)
+            } else {
+                ctx.startService(intent)
+            }
+        }
+    }
+}

@@ -34,7 +34,7 @@ class LateNightScreenRollupWorker(
             val dir = applicationContext.filesDir
             val out = ensureHeader(
                 File(dir, "daily_late_night_screen_usage.csv"),
-                "date,late_night_YN"
+                "date,feature_schema_version,late_night"
             )
 
             val fScreen = File(dir, "screen_log.csv")
@@ -132,7 +132,7 @@ class LateNightScreenRollupWorker(
             if (file.exists()) file.readLines().toMutableList() else mutableListOf()
 
         if (existing.isEmpty()) {
-            file.writeText("date,late_night_YN\n$dateStr,$yn\n")
+            file.writeText("date,feature_schema_version,late_night\n$dateStr,$FEATURE_SCHEMA_VERSION,$yn\n")
             return
         }
 
@@ -141,18 +141,19 @@ class LateNightScreenRollupWorker(
 
         for (i in 1 until existing.size) {
             if (existing[i].substringBefore(',') == dateStr) {
-                existing[i] = "$dateStr,$yn"
+                existing[i] = "$dateStr,$FEATURE_SCHEMA_VERSION,$yn"
                 replaced = true
                 break
             }
         }
 
-        if (!replaced) existing.add("$dateStr,$yn")
+        if (!replaced) existing.add("$dateStr,$FEATURE_SCHEMA_VERSION,$yn")
         file.writeText((listOf(header) + existing.drop(1)).joinToString("\n") + "\n")
     }
 
     companion object {
         private const val TAG = "LateNightScreenRollup"
         private const val PROBE = "LATE_NIGHT_PROBE"
+        private const val FEATURE_SCHEMA_VERSION = "v6.0"
     }
 }

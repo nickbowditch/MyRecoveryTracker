@@ -1,0 +1,65 @@
+Location/GPS default state:
+File: app/src/main/java/com/nick/myrecoverytracker/DistanceNudge.kt
+6:import android.location.Location
+9:import com.google.android.gms.location.*
+17:/** Append one line to location_log.csv (header if needed) */
+19:    val f = File(context.filesDir, "location_log.csv")
+35:/** Recompute today’s distance from location_log.csv and upsert daily_distance_log.csv */
+File: app/src/main/java/com/nick/myrecoverytracker/LocationPingWorker.kt
+9:import android.location.Location
+10:import android.location.LocationManager
+78:        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+88:        val providers = locationManager.getProviders(true)
+92:            val location = locationManager.getLastKnownLocation(provider)
+File: app/src/main/java/com/nick/myrecoverytracker/MovementCapture.kt
+8:import com.google.android.gms.location.ActivityRecognition
+9:import com.google.android.gms.location.ActivityTransition
+10:import com.google.android.gms.location.ActivityTransitionRequest
+11:import com.google.android.gms.location.DetectedActivity
+File: app/src/main/java/com/nick/myrecoverytracker/MovementARReceiver.kt
+6:import com.google.android.gms.location.ActivityTransitionResult
+7:import com.google.android.gms.location.DetectedActivity
+File: app/src/main/java/com/nick/myrecoverytracker/MetricsStore.kt
+4:import android.location.Location
+21:    private const val LOCATION_LOG_FILE = "location_log.csv"
+File: app/src/main/java/com/nick/myrecoverytracker/LocationWorker.kt
+6:import android.location.Location
+7:import android.location.LocationManager
+29:        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+39:        val providers = locationManager.getProviders(true)
+43:            val location = locationManager.getLastKnownLocation(provider)
+File: app/src/main/java/com/nick/myrecoverytracker/MovementCaptureService.kt
+10:import com.google.android.gms.location.*
+File: app/src/main/java/com/nick/myrecoverytracker/DistanceWorker.kt
+25:            val locFile = File(context.filesDir, "location_log.csv")
+27:                Log.w(TAG, "DistanceWorker: location_log.csv not found — SUCCESS(no-op)")
+File: app/src/main/java/com/nick/myrecoverytracker/DistanceRepair.kt
+33:            val raw = File(files, "location_log.csv")
+36:                Log.i(TAG, "No location_log.csv, wrote 0.00 km")
+File: app/src/main/java/com/nick/myrecoverytracker/LocationCaptureService.kt
+13:import android.location.Location
+14:import android.location.LocationListener
+15:import android.location.LocationManager
+56:        // Hard gate: if we don't have foreground + location perms, never crash; just stop.
+110:        ensureHeader("location_log.csv", "ts,lat,lon,accuracy")
+File: app/src/main/java/com/nick/myrecoverytracker/DistanceSummaryWorker.kt
+4:import android.location.Location
+22:            val locFile = File(dir, "location_log.csv")
+31:                Log.w(TAG, "location_log.csv missing; wrote zeros for $yesterday and $today")
+File: app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt
+41:        val locationPing = PeriodicWorkRequestBuilder<LocationPingWorker>(
+45:        wm.enqueueUniquePeriodicWork(UNIQUE_LOC, ExistingPeriodicWorkPolicy.KEEP, locationPing)
+47:        val locationLogger = PeriodicWorkRequestBuilder<LocationWorker>(
+51:        wm.enqueueUniquePeriodicWork(UNIQUE_LOC_LOG, ExistingPeriodicWorkPolicy.KEEP, locationLogger)
+255:        private const val UNIQUE_LOC = "periodic_location_ping"
+File: app/src/main/java/com/nick/myrecoverytracker/RecoveryVisitsWorker.kt
+26:        val locFile = File(filesDir, "location_log.csv")
+28:        val cfgFile = File(filesDir, "participant_recovery_locations.json")
+32:            Log.w(tag, "No recovery places configured (participant_recovery_locations.json missing or empty). Writing NO,0.")
+38:            Log.w(tag, "location_log.csv missing. Writing NO,0.")
+118:            Log.e(tag, "Failed to parse participant_recovery_locations.json", t)
+
+Communication metadata default state:
+app/src/main/java/com/nick/myrecoverytracker/ForegroundSleepService.kt
+app/src/main/java/com/nick/myrecoverytracker/MetricsStoreCallTotals.kt
+app/src/main/java/com/nick/myrecoverytracker/MetricsStoreCounts.kt

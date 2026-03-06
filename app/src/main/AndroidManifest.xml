@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,6 +14,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
@@ -29,7 +32,8 @@
         <!-- Boot receiver -->
         <receiver
             android:name=".BootReceiver"
-            android:exported="false">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
@@ -94,33 +98,64 @@
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            android:exported="false">
+            android:exported="false"
+            tools:node="remove">
             <meta-data
                 android:name="androidx.work.WorkManagerInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
         </provider>
 
-        <!-- Core TriggerReceiver -->
+        <!-- Core TriggerReceiver - handles rollups, reregister, dumps, copy -->
         <receiver
             android:name=".TriggerReceiver"
-            android:exported="true" />
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nick.myrecoverytracker.ACTION_REREGISTER_WORKERS" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_HEARTBEAT" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_LOG_EXPORT" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_LOG_RETENTION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_REDCAP_RECEIPTS" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_COPY_EXPORT_ZIP" />
+            </intent-filter>
+        </receiver>
 
-        <!-- Other receivers -->
+        <!-- WorkerTriggerReceiver - handles ALL individual worker triggers -->
         <receiver
-            android:name=".RedcapDebugReceiver"
-            android:exported="false" />
-        <receiver
-            android:name=".MovementARReceiver"
-            android:exported="false" />
-        <receiver
-            android:name=".WorkStatusReceiver"
-            android:exported="false" />
-        <receiver
-            android:name=".DistanceDebugReceiver"
-            android:exported="false" />
-        <receiver
-            android:name=".DistanceNudgeReceiver"
-            android:exported="false" />
+            android:name=".WorkerTriggerReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_DIAG" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DAILY_SUMMARY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LOG_EXPORT" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LOG_RETENTION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_STARTS_DAILY" />
+            </intent-filter>
+        </receiver>
 
     </application>
+
 </manifest>

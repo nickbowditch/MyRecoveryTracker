@@ -1,212 +1,307 @@
+// app/src/main/java/com/nick/myrecoverytracker/RedcapUploadWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
-import android.util.Base64
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
 import java.io.File
-import java.security.MessageDigest
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
-import javax.crypto.Cipher
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
-import javax.crypto.spec.SecretKeySpec
-import kotlin.math.round
 
 class RedcapUploadWorker(
     appContext: Context,
     params: WorkerParameters
 ) : CoroutineWorker(appContext, params) {
 
-    private val ctx = applicationContext
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        val ctx = applicationContext
+        val files = ctx.filesDir
 
-    override suspend fun doWork(): Result {
-        return withContext(Dispatchers.IO) {
-            val filesDir = ctx.filesDir ?: return@withContext Result.retry()
+        val baseUrl = getConfigString(ctx, "REDCAP_BASE_URL")
+        val token = getConfigString(ctx, "REDCAP_API_TOKEN")
+        val projectId = getConfigString(ctx, "REDCAP_PROJECT_ID")
 
-            // Stable per-install participant ID
-            val participantId = ParticipantIdManager.getOrCreate(ctx)
-            Log.i(TAG, "UPLOAD participant_id=$participantId")
+        if (baseUrl.isBlank() || token.isBlank() || projectId.isBlank()) {
+            Log.e(TAG, "Missing REDCap config")
+            return@withContext Result.failure()
+        }
 
-            val metricFields = listOf(
-                "daily_unlocks",
-                "sleep_hours",
-                "sleep_has_morning_wake",
-                "late_night",
-                "notif_posted",
-                "notif_engaged",
-                "notif_engagement_rate",
-                "notif_latency_avg_s",
-                "notif_latency_median_s",
-                "notif_latency_n",
-                "usage_events_count",
-                "app_min_social",
-                "app_min_dating",
-                "app_min_productivity",
-                "app_min_music_audio",
-                "app_min_image",
-                "app_min_maps",
-                "app_min_video",
-                "app_min_travel_local",
-                "app_min_shopping",
-                "app_min_news",
-                "app_min_game",
-                "app_min_health",
-                "app_min_finance",
-                "app_min_other",
-                "app_min_total",
-                "app_switch_count",
-                "usage_entropy",
-                "distance_m",
-                "move_intensity_score"
+        val participantId = ParticipantIdManager.getOrCreate(ctx)
+        Log.i(TAG, "Starting upload for participant_id=$participantId")
+
+        try {
+            // Aggregate CSV files
+            val aggregated = aggregateDailyMetrics(files, participantId)
+
+            // Upload to REDCap
+            val uploaded = uploadToRedcap(baseUrl, token, projectId, aggregated)
+
+            // Record receipt
+            recordReceipt(files, participantId, uploaded)
+
+            Result.success()
+        } catch (t: Throwable) {
+            Log.e(TAG, "Upload failed", t)
+            Result.retry()
+        }
+    }
+
+    private fun aggregateDailyMetrics(files: File, participantId: String): String {
+        val csvFiles = listOf(
+            "daily_late_night_screen_usage.csv",
+            "daily_notification_engagement.csv",
+            "daily_notification_latency.csv",
+            "daily_usage_entropy.csv",
+            "daily_app_usage_minutes.csv",
+            "daily_distance_log.csv",
+            "daily_movement_intensity.csv"
+        )
+
+        val mapping = mapOf(
+            "daily_late_night_screen_usage.csv" to mapOf(
+                "late_night_screen_usage_yn" to "late_night"
+            ),
+            "daily_notification_engagement.csv" to mapOf(
+                "notif_posted" to "notif_posted",
+                "notif_engaged" to "notif_engaged",
+                "notif_engagement_rate" to "notification_engagement_rate",
+                "notif_latency_median_s" to "notif_latency_median_s",
+                "notif_latency_n" to "notif_latency_n"
+            ),
+            "daily_notification_latency.csv" to mapOf(
+                "notif_latency_avg_s" to "notif_latency_avg_s"
+            ),
+            "daily_usage_entropy.csv" to mapOf(
+                "entropy" to "usage_entropy"
+            ),
+            "daily_app_usage_minutes.csv" to mapOf(
+                "app_min_total" to "app_min_total"
+            ),
+            "daily_distance_log.csv" to mapOf(
+                "distance_km" to "distance_m"
+            ),
+            "daily_movement_intensity.csv" to mapOf(
+                "intensity" to "move_intensity_score"
             )
+        )
 
-            val rawToRedcap = mapOf(
-                "screen_unlocks_per_day" to "daily_unlocks",
-                "sleep_duration_hours" to "sleep_hours",
-                "has_morning_wake" to "sleep_has_morning_wake",
-                "late_night_YN" to "late_night",
-                "notifications_delivered" to "notif_posted",
-                "notifications_opened" to "notif_engaged",
-                "usage_events_count" to "usage_events_count",
-                "distance_km" to "distance_m",
-                "movement_intensity_score" to "move_intensity_score"
-            )
+        // Build header
+        val payload = StringBuilder()
+        payload.append("record_id,participant_id,date,feature_schema_version,redcap_repeat_instrument,redcap_repeat_instance,daily_metrics_complete")
 
-            val yesNoFields = setOf("sleep_has_morning_wake", "late_night")
-            val rowsByDate = mutableMapOf<String, MutableMap<String, String>>()
+        val allRedcapFields = mutableListOf<String>()
+        mapping.values.forEach { fields ->
+            fields.values.forEach { redcapField ->
+                allRedcapFields.add(redcapField)
+                payload.append(",$redcapField")
+            }
+        }
+        payload.append("\n")
 
-            val candidates = filesDir.listFiles()?.filter {
-                it.name.startsWith("daily_") && it.name.endsWith(".csv")
-            } ?: emptyList()
+        // Merge rows by date
+        val rowsByDate = mutableMapOf<String, MutableMap<String, String>>()
 
-            for (file in candidates) {
-                val lines = try { file.readLines() } catch (_: Throwable) { continue }
-                if (lines.size < 2) continue
+        csvFiles.forEach { csvFile ->
+            val file = File(files, csvFile)
+            if (!file.exists()) {
+                Log.w(TAG, "CSV file not found: $csvFile")
+                return@forEach
+            }
 
-                val header = lines.first().split(",")
+            val lines = file.readLines()
+            if (lines.isEmpty()) return@forEach
 
-                for (line in lines.drop(1)) {
-                    val cols = line.split(",")
-                    val date = cols.firstOrNull()?.trim().orEmpty()
-                    if (date.isEmpty()) continue
+            val headerLine = lines[0]
+            val headers = readCols(headerLine)
 
-                    val row = rowsByDate.getOrPut(date) { mutableMapOf() }
+            // Find date column index
+            val dateIdx = headers.indexOf("date")
+            if (dateIdx < 0) {
+                Log.w(TAG, "No 'date' column in $csvFile. Headers: $headers")
+                return@forEach
+            }
 
-                    for (i in 1 until minOf(header.size, cols.size)) {
-                        val redcapField = rawToRedcap[header[i]] ?: continue
-                        if (redcapField !in metricFields) continue
+            // Process data rows (skip header at index 0)
+            for (i in 1 until lines.size) {
+                val line = lines[i].trim()
+                if (line.isEmpty()) continue
 
-                        val raw = cols[i].trim()
-                        if (raw.isEmpty()) continue
+                val cols = readCols(line)
+                if (cols.isEmpty()) continue
 
-                        val value = when {
-                            redcapField in yesNoFields -> normaliseYesNo(raw)
-                            redcapField.startsWith("app_min_") -> normaliseMinutes(raw)
-                            else -> raw
+                // Skip incomplete rows (fewer columns than header)
+                if (cols.size < headers.size) {
+                    Log.w(TAG, "Skipping incomplete row in $csvFile: $line (got ${cols.size} cols, expected ${headers.size})")
+                    continue
+                }
+
+                val date = cols.getOrNull(dateIdx) ?: continue
+
+                // Skip invalid dates
+                if (!isValidDate(date)) {
+                    Log.w(TAG, "Skipping invalid date in $csvFile: $date")
+                    continue
+                }
+
+                val row = rowsByDate.getOrPut(date) { mutableMapOf() }
+                row["record_id"] = "${participantId}_$date"
+                row["participant_id"] = participantId
+                row["date"] = date
+                row["feature_schema_version"] = "1"
+                row["redcap_repeat_instrument"] = "daily_metrics"
+                row["redcap_repeat_instance"] = "1"
+                row["daily_metrics_complete"] = "2"
+
+                // Map CSV columns to REDCap fields
+                val csvToRedcap = mapping[csvFile] ?: emptyMap()
+                csvToRedcap.forEach { (csvCol, redcapField) ->
+                    val colIdx = headers.indexOf(csvCol)
+                    if (colIdx >= 0 && colIdx < cols.size) {
+                        var value = cols[colIdx]
+
+                        // Convert Y/N to 1/0 for late_night field
+                        if (redcapField == "late_night") {
+                            value = when (value.uppercase()) {
+                                "Y" -> "1"
+                                "N" -> "0"
+                                else -> value
+                            }
                         }
 
-                        if (value.isNotEmpty()) row[redcapField] = value
+                        row[redcapField] = value
                     }
                 }
             }
+        }
 
-            val today = DATE_FMT.format(System.currentTimeMillis())
-            val rowsForUpload = rowsByDate.filterKeys { it == today }
+        // Write payload rows
+        rowsByDate.keys.sorted().forEach { date ->
+            val row = rowsByDate[date] ?: return@forEach
+            val values = mutableListOf<String>()
+            values.add(row["record_id"] ?: "")
+            values.add(row["participant_id"] ?: "")
+            values.add(row["date"] ?: "")
+            values.add(row["feature_schema_version"] ?: "1")
+            values.add(row["redcap_repeat_instrument"] ?: "daily_metrics")
+            values.add(row["redcap_repeat_instance"] ?: "1")
+            values.add(row["daily_metrics_complete"] ?: "2")
 
-            if (rowsForUpload.isEmpty()) {
-                writeReceipt(File(filesDir, RECEIPTS_FILE), 0, 0, "NO_ROWS_FOR_TODAY")
-                return@withContext Result.success()
+            allRedcapFields.forEach { field ->
+                values.add(row[field] ?: "")
             }
 
-            val headerOut = buildList {
-                add("record_id")
-                add("participant_id")
-                add("date")
-                add("feature_schema_version")
-                addAll(metricFields)
-                add(DAILY_METRICS_COMPLETE_FIELD)
-            }
+            payload.append(values.joinToString(",")).append("\n")
+        }
 
-            val csv = buildString {
-                append(headerOut.joinToString(",")).append("\n")
-                for ((date, map) in rowsForUpload) {
-                    val row = mutableListOf(
-                        "$participantId-$date",
-                        participantId,
-                        date,
-                        FEATURE_SCHEMA_VERSION
-                    )
-                    metricFields.forEach { row.add(map[it].orEmpty()) }
-                    row.add("2")
-                    append(row.joinToString(",")).append("\n")
+        Log.i(TAG, "Aggregated payload:\n$payload")
+        return payload.toString()
+    }
+
+    private fun isValidDate(date: String): Boolean {
+        return date.matches(Regex("\\d{4}-\\d{2}-\\d{2}"))
+    }
+
+    private fun uploadToRedcap(baseUrl: String, token: String, projectId: String, csvPayload: String): Boolean {
+        val client = OkHttpClient()
+        val endpoint = baseUrl
+
+        Log.i(TAG, "Uploading to: $endpoint")
+
+        val body = FormBody.Builder()
+            .add("token", token)
+            .add("content", "record")
+            .add("format", "csv")
+            .add("data", csvPayload)
+            .add("type", "flat")
+            .build()
+
+        val request = okhttp3.Request.Builder()
+            .url(endpoint)
+            .post(body)
+            .build()
+
+        return try {
+            val response = client.newCall(request).execute()
+            val success = response.isSuccessful
+            Log.i(TAG, "Upload response: code=${response.code} success=$success")
+            if (!success) {
+                val responseBody = response.body?.string()
+                Log.e(TAG, "Upload failed. Response body: $responseBody")
+            }
+            success
+        } catch (t: Throwable) {
+            Log.e(TAG, "Upload HTTP error", t)
+            false
+        }
+    }
+
+    private fun recordReceipt(files: File, participantId: String, success: Boolean) {
+        val receiptDir = File("/sdcard/Documents/MYRA")
+        receiptDir.mkdirs()
+
+        val receiptFile = File(receiptDir, "redcap_receipts.csv")
+        val now = System.currentTimeMillis()
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date(now))
+        val status = if (success) "success" else "failed"
+
+        if (!receiptFile.exists()) {
+            receiptFile.writeText("ts,date,participant_id,status\n")
+        }
+
+        receiptFile.appendText("$now,$date,$participantId,$status\n")
+        Log.i(TAG, "Receipt recorded: $status for $participantId on $date")
+    }
+
+    private fun readCols(line: String): List<String> {
+        val out = ArrayList<String>()
+        val sb = StringBuilder()
+        var inQuotes = false
+        var i = 0
+
+        while (i < line.length) {
+            val c = line[i]
+            when (c) {
+                '"' -> {
+                    if (inQuotes && i + 1 < line.length && line[i + 1] == '"') {
+                        sb.append('"')
+                        i += 1
+                    } else {
+                        inQuotes = !inQuotes
+                    }
                 }
+                ',' -> if (inQuotes) {
+                    sb.append(c)
+                } else {
+                    out.add(sb.toString())
+                    sb.setLength(0)
+                }
+                '\r' -> Unit
+                else -> sb.append(c)
             }
-
-            writeEncrypted(File(filesDir, "daily_metrics_upload.csv"), csv)
-            writeReceipt(File(filesDir, RECEIPTS_FILE), rowsForUpload.size, 200, "BUILT_ONLY")
-
-            Log.i(TAG, "REDCAP_CSV_PAYLOAD_ROWS=${rowsForUpload.size}")
-            Result.success()
+            i += 1
         }
+        out.add(sb.toString())
+        return out
     }
 
-    // ---------------- helpers ----------------
-
-    private fun writeEncrypted(file: File, plain: String) {
-        try {
-            val salt = "MYRA_SALT".toByteArray()
-            val spec = PBEKeySpec("local".toCharArray(), salt, 10000, 256)
-            val key = SecretKeyFactory
-                .getInstance("PBKDF2WithHmacSHA256")
-                .generateSecret(spec)
-
-            val cipher = Cipher.getInstance("AES")
-            cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key.encoded, "AES"))
-            file.writeText(
-                Base64.encodeToString(cipher.doFinal(plain.toByteArray()), Base64.NO_WRAP)
-            )
-        } catch (_: Throwable) {
-            file.writeText(plain)
+    private fun getConfigString(ctx: Context, key: String): String {
+        return try {
+            val cls = Class.forName("com.nick.myrecoverytracker.BuildConfig")
+            val field = cls.getField(key)
+            field.get(null) as? String ?: ""
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to read config $key", t)
+            ""
         }
-    }
-
-    private fun writeReceipt(file: File, rows: Int, httpCode: Int, note: String) {
-        if (!file.exists()) file.writeText("ts,rows,http,note\n")
-        val ts = TS.format(System.currentTimeMillis())
-        file.appendText("$ts,$rows,$httpCode,$note\n")
-    }
-
-    private fun sha256(s: String): String {
-        return MessageDigest.getInstance("SHA-256")
-            .digest(s.toByteArray())
-            .joinToString("") { "%02x".format(it) }
-    }
-
-    private fun normaliseYesNo(raw: String): String {
-        return when (raw.lowercase(Locale.US)) {
-            "y", "yes", "1", "true" -> "1"
-            "n", "no", "0", "false" -> "0"
-            else -> ""
-        }
-    }
-
-    private fun normaliseMinutes(raw: String): String {
-        val d = raw.toDoubleOrNull() ?: return ""
-        return round(d).toLong().coerceAtLeast(0).toString()
     }
 
     companion object {
         private const val TAG = "RedcapUploadWorker"
-        private const val FEATURE_SCHEMA_VERSION = "1"
-        private const val DAILY_METRICS_COMPLETE_FIELD = "daily_metrics_complete"
-        private const val RECEIPTS_FILE = "redcap_receipts.csv"
-
-        private val DATE_FMT = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        private val TS = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
     }
 }

@@ -1,0 +1,3 @@
+Onboarding components:
+app/src/main/java/com/nick/myrecoverytracker/OnboardingActivity.kt
+            android:name=".OnboardingActivity"

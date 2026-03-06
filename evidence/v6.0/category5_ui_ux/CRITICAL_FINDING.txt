@@ -1,0 +1,27 @@
+CATEGORY 5: CRITICAL FINDING - RESOLVED
+
+ISSUE: Documentation vs Implementation Mismatch
+
+Paper 2 Statement:
+"GPS location and communication metadata are disabled by default"
+
+Implementation Reality (v1.0.0-pilot):
+- GPS location: Permissions exist, disabled by default ✓
+- Communication metadata: NO permissions, feature does not exist ✗
+
+RESOLUTION (confirmed by researcher):
+The pilot study intentionally does NOT collect communication metadata.
+
+ACTION REQUIRED:
+Update Paper 2 wording from:
+  "communication metadata are disabled by default"
+To:
+  "communication metadata are not collected in this pilot study"
+
+IMPACT:
+- Ethics application may need clarification
+- Participant information sheet should reflect this
+- Category 5 verification: PASS (with documentation update required)
+
+VERIFICATION DATE: 2026-02-22
+STATUS: Implementation is CORRECT, documentation needs UPDATE

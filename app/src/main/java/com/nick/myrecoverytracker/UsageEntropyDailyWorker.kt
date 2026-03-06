@@ -74,15 +74,15 @@ class UsageEntropyDailyWorker(appContext: Context, params: WorkerParameters) :
     private fun ensureHeader(dir: File) {
         val f = File(dir, "daily_usage_entropy.csv")
         if (!f.exists() || f.length() == 0L) {
-            f.writeText("date,entropy_bits\n")
+            f.writeText("date,feature_schema_version,daily_usage_entropy_bits\n")
         }
     }
 
     private fun writeMissing(dir: File, day: String) {
         val f = File(dir, "daily_usage_entropy.csv")
-        if (!f.exists()) f.writeText("date,entropy_bits\n")
+        if (!f.exists()) f.writeText("date,feature_schema_version,daily_usage_entropy_bits\n")
         val lines = f.readLines().toMutableList()
-        val row = "$day,PERMISSION_MISSING"
+        val row = "$day,$FEATURE_SCHEMA_VERSION,PERMISSION_MISSING"
         val idx = lines.indexOfFirst { it.startsWith("$day,") }
         if (idx >= 0) lines[idx] = row else lines.add(row)
         f.writeText(lines.joinToString("\n") + "\n")
@@ -91,7 +91,7 @@ class UsageEntropyDailyWorker(appContext: Context, params: WorkerParameters) :
     private fun writeOut(dir: File, day: String, entropy: Double) {
         val f = File(dir, "daily_usage_entropy.csv")
         val lines = f.readLines().toMutableList()
-        val row = "%s,%.4f".format(Locale.US, day, entropy)
+        val row = "%s,%s,%.4f".format(Locale.US, day, FEATURE_SCHEMA_VERSION, entropy)
         val idx = lines.indexOfFirst { it.startsWith("$day,") }
         if (idx >= 0) lines[idx] = row else lines.add(row)
         f.writeText(lines.joinToString("\n") + "\n")
@@ -115,5 +115,9 @@ class UsageEntropyDailyWorker(appContext: Context, params: WorkerParameters) :
                 p == "com.nick.myrecoverytracker" ||
                 p == "com.android.intentresolver" ||
                 p == "com.google.android.apps.nexuslauncher"
+    }
+
+    companion object {
+        private const val FEATURE_SCHEMA_VERSION = "v6.0"
     }
 }

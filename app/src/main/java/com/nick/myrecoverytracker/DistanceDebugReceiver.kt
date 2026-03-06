@@ -5,24 +5,32 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import kotlin.concurrent.thread
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
+import androidx.work.WorkManager
 
 class DistanceDebugReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_RECALC_DISTANCE_TODAY -> {
-                // Do the work off the main thread and honor goAsync() to avoid ANR
+                // Kick DistanceSummaryWorker instead of calling dead DistanceRepair
                 val pending = goAsync()
-                thread(name = "mrt-distance-repair") {
-                    try {
-                        DistanceRepair.recalcToday(context)
-                        Log.i(TAG, "Recalculated today’s distance.")
-                    } catch (t: Throwable) {
-                        Log.e(TAG, "Distance recalc failed", t)
-                    } finally {
-                        pending.finish()
-                    }
+                try {
+                    val work = OneTimeWorkRequestBuilder<DistanceSummaryWorker>()
+                        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                        .addTag("DistanceSummaryDebugKick")
+                        .build()
+                    WorkManager.getInstance(context).enqueueUniqueWork(
+                        "debug-DistanceSummaryKick",
+                        androidx.work.ExistingWorkPolicy.REPLACE,
+                        work
+                    )
+                    Log.i(TAG, "Kicked DistanceSummaryWorker for today's distance recalc.")
+                } catch (t: Throwable) {
+                    Log.e(TAG, "Distance recalc kick failed", t)
+                } finally {
+                    pending.finish()
                 }
             }
             else -> {

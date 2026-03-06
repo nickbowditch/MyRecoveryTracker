@@ -1,3 +1,4 @@
+// app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt
 package com.nick.myrecoverytracker
 
 import android.app.Application
@@ -23,6 +24,33 @@ class MainApplication : Application() {
         Log.e("CATCHUP_PROBE", "MainApplication onCreate() scheduling + catchup starting")
 
         try {
+            // Call centralized WorkScheduler
+            WorkScheduler.registerAllWork(this)
+
+            // Validate REDCap token
+            try {
+                val tokenValid = RedcapApiClient.validateToken(this)
+                if (tokenValid) {
+                    Log.i(TAG, "✅ REDCap token validated successfully")
+                } else {
+                    Log.w(TAG, "⚠️ REDCap token validation failed – check credentials")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "REDCap token validation threw exception", e)
+            }
+
+            // Test REDCap reachability
+            try {
+                val reachable = RedcapApiClient.testReachability(this)
+                if (reachable) {
+                    Log.i(TAG, "✅ REDCap server reachable")
+                } else {
+                    Log.w(TAG, "⚠️ REDCap server unreachable – check network or URL")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "REDCap reachability test threw exception", e)
+            }
+
             schedulePeriodicWork()
             enqueueImmediateCatchUp()
             Log.e("CATCHUP_PROBE", "MainApplication onCreate() scheduling + catchup finished")
@@ -34,22 +62,6 @@ class MainApplication : Application() {
     private fun schedulePeriodicWork() {
         val wm = WorkManager.getInstance(this)
 
-        val locConstraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
-            .build()
-
-        val locationPing = PeriodicWorkRequestBuilder<LocationPingWorker>(
-            15, TimeUnit.MINUTES,
-            5, TimeUnit.MINUTES
-        ).setConstraints(locConstraints).addTag(TAG_LOC).build()
-        wm.enqueueUniquePeriodicWork(UNIQUE_LOC, ExistingPeriodicWorkPolicy.KEEP, locationPing)
-
-        val locationLogger = PeriodicWorkRequestBuilder<LocationWorker>(
-            15, TimeUnit.MINUTES,
-            5, TimeUnit.MINUTES
-        ).setConstraints(locConstraints).addTag(TAG_LOC_LOG).build()
-        wm.enqueueUniquePeriodicWork(UNIQUE_LOC_LOG, ExistingPeriodicWorkPolicy.KEEP, locationLogger)
-
         wm.enqueueUniquePeriodicWork(
             UNIQUE_DIST,
             ExistingPeriodicWorkPolicy.UPDATE,
@@ -57,27 +69,9 @@ class MainApplication : Application() {
         )
 
         wm.enqueueUniquePeriodicWork(
-            UNIQUE_SLEEP,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            dailyAt(SleepRollupWorker::class.java, TAG_SLEEP, 3, 30)
-        )
-
-        wm.enqueueUniquePeriodicWork(
             UNIQUE_LNS,
             ExistingPeriodicWorkPolicy.UPDATE,
             dailyAt(LateNightScreenRollupWorker::class.java, TAG_LNS, 5, 5)
-        )
-
-        val luxPeriodic = PeriodicWorkRequestBuilder<AmbientLuxWorker>(
-            15, TimeUnit.MINUTES,
-            5, TimeUnit.MINUTES
-        ).addTag(TAG_LUX).build()
-        wm.enqueueUniquePeriodicWork(UNIQUE_LUX, ExistingPeriodicWorkPolicy.KEEP, luxPeriodic)
-
-        wm.enqueueUniquePeriodicWork(
-            UNIQUE_LIGHT_DAILY,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            dailyAt(DailyLightExposureWorker::class.java, TAG_LIGHT_DAILY, 3, 40)
         )
 
         wm.enqueueUniquePeriodicWork(
@@ -92,28 +86,10 @@ class MainApplication : Application() {
             dailyAt(NotificationEngagementWorker::class.java, TAG_NOTIF_ENG, 3, 47)
         )
 
-        wm.enqueueUniquePeriodicWork(
-            UNIQUE_NOTIF_LAT,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            dailyAt(NotificationLatencyWorker::class.java, TAG_NOTIF_LAT, 3, 48)
-        )
-
         val usageEventsPeriodic = PeriodicWorkRequestBuilder<UsageEventsDumpWorker>(
             3, TimeUnit.HOURS
         ).addTag(TAG_USAGE_EVENTS).build()
         wm.enqueueUniquePeriodicWork(UNIQUE_USAGE_EVENTS, ExistingPeriodicWorkPolicy.KEEP, usageEventsPeriodic)
-
-        wm.enqueueUniquePeriodicWork(
-            UNIQUE_APP_CAT,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            dailyAt(AppUsageByCategoryDailyWorker::class.java, TAG_APP_CAT, 4, 15)
-        )
-
-        wm.enqueueUniquePeriodicWork(
-            UNIQUE_APP_SWITCH,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            dailyAt(AppSwitchingDailyWorker::class.java, TAG_APP_SWITCH, 4, 25)
-        )
 
         wm.enqueueUniquePeriodicWork(
             UNIQUE_USAGE_DAILY,
@@ -127,7 +103,6 @@ class MainApplication : Application() {
             dailyAt(MovementIntensityDailyWorker::class.java, TAG_MOVE_INTENSITY, 4, 45)
         )
 
-        // ADD DAILY SUMMARY WORKER - runs at 3:00 AM daily
         wm.enqueueUniquePeriodicWork(
             UNIQUE_DAILY_SUMMARY,
             ExistingPeriodicWorkPolicy.UPDATE,
@@ -139,12 +114,6 @@ class MainApplication : Application() {
         val wm = WorkManager.getInstance(this)
 
         wm.enqueueUniqueWork(
-            UNIQUE_SLEEP_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<SleepRollupWorker>().addTag("${TAG_SLEEP}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
             UNIQUE_LNS_NOW,
             ExistingWorkPolicy.REPLACE,
             OneTimeWorkRequestBuilder<LateNightScreenRollupWorker>().addTag("${TAG_LNS}_now").build()
@@ -154,18 +123,6 @@ class MainApplication : Application() {
             UNIQUE_DIST_NOW,
             ExistingWorkPolicy.REPLACE,
             OneTimeWorkRequestBuilder<DistanceSummaryWorker>().addTag("${TAG_DIST}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
-            UNIQUE_LUX_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<AmbientLuxWorker>().addTag("${TAG_LUX}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
-            UNIQUE_LIGHT_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<DailyLightExposureWorker>().addTag("${TAG_LIGHT_DAILY}_now").build()
         )
 
         wm.enqueueUniqueWork(
@@ -181,27 +138,9 @@ class MainApplication : Application() {
         )
 
         wm.enqueueUniqueWork(
-            UNIQUE_NOTIF_LAT_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<NotificationLatencyWorker>().addTag("${TAG_NOTIF_LAT}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
             UNIQUE_USAGE_NOW,
             ExistingWorkPolicy.REPLACE,
             OneTimeWorkRequestBuilder<UsageEventsDumpWorker>().addTag("${TAG_USAGE_EVENTS}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
-            UNIQUE_APP_CAT_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<AppUsageByCategoryDailyWorker>().addTag("${TAG_APP_CAT}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
-            UNIQUE_APP_SWITCH_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<AppSwitchingDailyWorker>().addTag("${TAG_APP_SWITCH}_now").build()
         )
 
         wm.enqueueUniqueWork(
@@ -216,13 +155,6 @@ class MainApplication : Application() {
             OneTimeWorkRequestBuilder<MovementIntensityDailyWorker>().addTag("${TAG_MOVE_INTENSITY}_now").build()
         )
 
-        wm.enqueueUniqueWork(
-            UNIQUE_LOC_LOG_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<LocationWorker>().addTag("${TAG_LOC_LOG}_now").build()
-        )
-
-        // ADD DAILY SUMMARY IMMEDIATE CATCHUP
         wm.enqueueUniqueWork(
             UNIQUE_DAILY_SUMMARY_NOW,
             ExistingWorkPolicy.REPLACE,
@@ -252,51 +184,25 @@ class MainApplication : Application() {
         private val schedulerRan = AtomicBoolean(false)
         const val TAG = "MainApplication"
 
-        private const val UNIQUE_LOC = "periodic_location_ping"
-        private const val UNIQUE_LOC_LOG = "periodic_location_logger"
-        private const val UNIQUE_LOC_LOG_NOW = "onstart_location_logger"
-
         private const val UNIQUE_DIST = "periodic_distance_summary"
         private const val UNIQUE_DIST_NOW = "onstart_distance_summary"
         private const val TAG_DIST = "DistanceSummaryPeriodic"
 
-        private const val UNIQUE_SLEEP = "periodic_sleep_rollup"
         private const val UNIQUE_LNS = "periodic_late_night_rollup"
-        private const val UNIQUE_SLEEP_NOW = "onstart_sleep_rollup"
         private const val UNIQUE_LNS_NOW = "onstart_late_night_rollup"
-        private const val TAG_SLEEP = "SleepRollupPeriodic"
         private const val TAG_LNS = "LateNightRollupPeriodic"
-
-        private const val UNIQUE_LUX = "periodic_lux_sample"
-        private const val UNIQUE_LUX_NOW = "onstart_lux_sample"
-        private const val TAG_LUX = "AmbientLuxPeriodic"
-
-        private const val UNIQUE_LIGHT_DAILY = "periodic_daily_light_exposure"
-        private const val UNIQUE_LIGHT_NOW = "onstart_light_exposure"
-        private const val TAG_LIGHT_DAILY = "DailyLightExposurePeriodic"
 
         private const val UNIQUE_NOTIF_LOG = "periodic_notification_log_trim"
         private const val UNIQUE_NOTIF_NOW = "onstart_notification_log_trim"
         private const val TAG_NOTIF_LOG = "NotificationLogTrim"
 
         private const val UNIQUE_NOTIF_ENG = "periodic_notification_engagement"
-        private const val UNIQUE_NOTIF_LAT = "periodic_notification_latency"
         private const val UNIQUE_NOTIF_ENG_NOW = "onstart_notification_engagement"
-        private const val UNIQUE_NOTIF_LAT_NOW = "onstart_notification_latency"
         private const val TAG_NOTIF_ENG = "NotificationEngagementPeriodic"
-        private const val TAG_NOTIF_LAT = "NotificationLatencyPeriodic"
 
         private const val UNIQUE_USAGE_EVENTS = "periodic_usage_events_dump"
         private const val UNIQUE_USAGE_NOW = "onstart_usage_events_dump"
         private const val TAG_USAGE_EVENTS = "UsageEventsDump"
-
-        private const val UNIQUE_APP_CAT = "periodic_app_usage_category"
-        private const val UNIQUE_APP_CAT_NOW = "onstart_app_usage_category"
-        private const val TAG_APP_CAT = "AppUsageCategoryDaily"
-
-        private const val UNIQUE_APP_SWITCH = "periodic_app_switching"
-        private const val UNIQUE_APP_SWITCH_NOW = "onstart_app_switching"
-        private const val TAG_APP_SWITCH = "AppSwitchingDaily"
 
         private const val UNIQUE_USAGE_DAILY = "periodic_usage_events_daily"
         private const val UNIQUE_USAGE_DAILY_NOW = "onstart_usage_events_daily"
@@ -306,10 +212,6 @@ class MainApplication : Application() {
         private const val UNIQUE_MOVE_INTENSITY_NOW = "onstart_movement_intensity"
         private const val TAG_MOVE_INTENSITY = "MovementIntensityDaily"
 
-        private const val TAG_LOC = "LocationPingPeriodic"
-        private const val TAG_LOC_LOG = "LocationLoggerPeriodic"
-
-        // DAILY SUMMARY WORKER CONSTANTS
         private const val UNIQUE_DAILY_SUMMARY = "periodic_daily_summary"
         private const val UNIQUE_DAILY_SUMMARY_NOW = "onstart_daily_summary"
         private const val TAG_DAILY_SUMMARY = "DailySummaryPeriodic"

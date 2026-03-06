@@ -26,14 +26,13 @@ object Reschedule {
                 "once-NotificationLatencyRollup",
                 "once-NotificationEngagementRollup",
                 "once-DistanceDaily",
-                "once-SleepDurationDaily",
                 "once-DailySummary"
             )
 
             try {
-                WorkScheduler.registerAllDaily(app)
+                WorkScheduler.registerAllWork(app)
             } catch (t: Throwable) {
-                Log.w("Reschedule", "registerAllDaily failed: ${t.message}")
+                Log.w("Reschedule", "registerAllWork failed: ${t.message}")
             }
 
             DirectBoot.deviceProtectedContext(app)

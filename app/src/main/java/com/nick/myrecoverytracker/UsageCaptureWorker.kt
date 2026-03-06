@@ -109,7 +109,7 @@ class UsageCaptureWorker(
     }
 
     private fun logDiag(tag: String) {
-        val f = File(applicationContext.filesDir, "usage_diag.csv")
+        val f = File(applicationContext.filesDir, "usage_capture_log.csv")
         if (!f.exists()) f.writeText("ts,tag\n")
         f.appendText("${tsFmt.format(System.currentTimeMillis())},$tag\n")
     }

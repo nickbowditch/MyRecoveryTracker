@@ -32,10 +32,11 @@ android {
             enableV2Signing = true
         }
     }
+
     buildTypes {
-        val redcapUrl = project.findProperty("REDCAP_URL") as String? ?: ""
-        val redcapToken = project.findProperty("REDCAP_TOKEN") as String? ?: ""
-        val redcapPid = project.findProperty("REDCAP_PROJECT_ID") as String? ?: ""
+        val redcapUrl = System.getProperty("REDCAP_URL") ?: project.findProperty("REDCAP_URL") as String? ?: ""
+        val redcapToken = System.getProperty("REDCAP_TOKEN") ?: project.findProperty("REDCAP_TOKEN") as String? ?: ""
+        val redcapPid = System.getProperty("REDCAP_PROJECT_ID") ?: project.findProperty("REDCAP_PROJECT_ID") as String? ?: ""
 
         debug {
             buildConfigField("String", "REDCAP_URL", "\"$redcapUrl\"")

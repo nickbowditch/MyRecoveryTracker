@@ -38,6 +38,7 @@ class RingerChangeReceiver : BroadcastReceiver() {
         val ts = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Date())
         try {
             val f = File(ctx.filesDir, "ringer_log.csv")
+            if (!f.exists()) f.writeText("ts,mode\n")
             f.appendText("$ts,$name\n")
             Log.i(TAG, "ringer: $ts,$name")
         } catch (t: Throwable) {

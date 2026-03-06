@@ -1,0 +1,23 @@
+Icon resources:
+app/src/main/res/mipmap-mdpi
+app/src/main/res/mipmap-mdpi/ic_launcher.webp
+app/src/main/res/mipmap-mdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-hdpi
+app/src/main/res/mipmap-hdpi/ic_launcher.webp
+app/src/main/res/mipmap-hdpi/ic_launcher_round.webp
+app/src/main/res/drawable/ic_launcher_foreground.xml
+app/src/main/res/drawable/ic_launcher_background.xml
+app/src/main/res/mipmap-xxxhdpi
+app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp
+app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-xxhdpi
+app/src/main/res/mipmap-xxhdpi/ic_launcher.webp
+app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp
+app/src/main/res/values/ic_launcher_colors.xml
+app/src/main/res/mipmap-xhdpi
+app/src/main/res/mipmap-xhdpi/ic_launcher.webp
+app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-anydpi-v26
+app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+Manifest icon reference:         android:icon="@mipmap/ic_launcher"
