@@ -1,0 +1,1 @@
+bash /tmp/mrt_check.sh
