@@ -85,3 +85,4 @@ apk_extracted/
 backup_data/
 .kotlin/
 export_logs*.zip
+test_row19.sh
