@@ -3,8 +3,15 @@ package com.nick.myrecoverytracker
 
 import android.content.Context
 import android.util.Log
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 object RedcapDiag {
+    private const val TAG = "RedcapDiag"
+
     private fun getBuildConfigString(context: Context, field: String): String? {
         return try {
             val cls = Class.forName("${context.packageName}.BuildConfig")
@@ -50,32 +57,50 @@ object RedcapDiag {
     }
 
     fun log(context: Context) {
-        // Try BuildConfig first, then strings.xml fallbacks
-        val baseUrl = getBuildConfigString(context, "REDCAP_BASE_URL")
-            ?: getStringRes(context, "redcap_base_url")
-        val apiToken = getBuildConfigString(context, "REDCAP_API_TOKEN")
-            ?: getStringRes(context, "redcap_api_token")
-        val projectId = getBuildConfigString(context, "REDCAP_PROJECT_ID")
-            ?: getStringRes(context, "redcap_project_id")
+        try {
+            val baseUrl = getBuildConfigString(context, "REDCAP_BASE_URL")
+                ?: getStringRes(context, "redcap_base_url")
+            val apiToken = getBuildConfigString(context, "REDCAP_API_TOKEN")
+                ?: getStringRes(context, "redcap_api_token")
+            val projectId = getBuildConfigString(context, "REDCAP_PROJECT_ID")
+                ?: getStringRes(context, "redcap_project_id")
 
-        val hasBaseUrl = !baseUrl.isNullOrBlank()
-        val hasToken = !apiToken.isNullOrBlank()
-        val hasProject = !projectId.isNullOrBlank()
+            val hasBaseUrl = !baseUrl.isNullOrBlank()
+            val hasToken = !apiToken.isNullOrBlank()
+            val hasProject = !projectId.isNullOrBlank()
 
-        Log.i("RedcapDiag", "Env present -> baseUrl=$hasBaseUrl, apiToken=$hasToken, projectId=$hasProject")
+            Log.i(TAG, "Env present -> baseUrl=$hasBaseUrl, apiToken=$hasToken, projectId=$hasProject")
 
-        // mapping: prefer assets/redcap_mapping.json, else res/raw/redcap_mapping
-        val (assetOk, assetSize) = readAssetIfPresent(context, "redcap_mapping.json")
-        val (rawOk, rawSize) = readRawIfPresent(context, "redcap_mapping")
+            val (assetOk, assetSize) = readAssetIfPresent(context, "redcap_mapping.json")
+            val (rawOk, rawSize) = readRawIfPresent(context, "redcap_mapping")
 
-        val present = assetOk || rawOk
-        val source = when {
-            assetOk -> "assets/redcap_mapping.json"
-            rawOk -> "raw/redcap_mapping"
-            else -> "none"
+            val present = assetOk || rawOk
+            val source = when {
+                assetOk -> "assets/redcap_mapping.json"
+                rawOk -> "raw/redcap_mapping"
+                else -> "none"
+            }
+            val size = if (assetOk) assetSize else if (rawOk) rawSize else 0
+
+            Log.i(TAG, "Mapping present -> $present source=$source size=$size")
+
+            // Write redcap_diag.csv
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).apply {
+                timeZone = TimeZone.getTimeZone("UTC+11")
+            }
+            val timestamp = sdf.format(Date())
+
+            val dataDir = File(context.getExternalFilesDir(null), "data")
+            dataDir.mkdirs()
+
+            val diagFile = File(dataDir, "redcap_diag.csv")
+            val header = "ts,env_base_url,env_api_token,env_project_id,mapping_present,mapping_source,mapping_size_bytes"
+            val row = "$timestamp,$hasBaseUrl,$hasToken,$hasProject,$present,$source,$size"
+
+            diagFile.writeText("$header\n$row\n")
+            Log.i(TAG, "✅ redcap_diag.csv written")
+        } catch (e: Exception) {
+            Log.e(TAG, "❌ Error writing redcap_diag.csv", e)
         }
-        val size = if (assetOk) assetSize else if (rawOk) rawSize else 0
-
-        Log.i("RedcapDiag", "Mapping present -> $present source=$source size=$size")
     }
 }

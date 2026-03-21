@@ -1,3 +1,4 @@
+// UsageEntropyDailyWorker.kt
 package com.nick.myrecoverytracker
 
 import android.app.usage.UsageStats
@@ -22,7 +23,7 @@ class UsageEntropyDailyWorker(appContext: Context, params: WorkerParameters) :
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
 
         val ctx = applicationContext
-        val dir = ctx.filesDir
+        val dir = StorageHelper.getDataDir(ctx)
         ensureHeader(dir)
 
         val day = dayFmt.format(System.currentTimeMillis())

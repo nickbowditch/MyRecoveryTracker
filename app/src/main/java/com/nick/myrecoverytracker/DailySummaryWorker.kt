@@ -1,3 +1,4 @@
+// app/src/main/java/com/nick/myrecoverytracker/DailySummaryWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -18,15 +19,14 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
 
     override fun doWork(): Result {
         return try {
-            val dir = applicationContext.filesDir
+            val dir = StorageHelper.getDataDir(applicationContext)
             val outFile = File(dir, "daily_summary.csv")
-            val header = "date,total_unlocks,battery_drain_rate,screen_usage_min,notification_count,app_usage_min"
+            val header = "date,total_unlocks,screen_usage_min,notification_count,app_usage_min"
 
             Log.d(TAG, "File path: ${outFile.absolutePath}")
             Log.d(TAG, "File exists: ${outFile.exists()}")
             Log.d(TAG, "Dir writable: ${dir.canWrite()}")
 
-            // Ensure file exists with header
             if (!outFile.exists()) {
                 Log.i(TAG, "Creating new daily_summary.csv")
                 try {
@@ -41,11 +41,9 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
                 }
             }
 
-            // Get all dates that need processing (historical + today)
             val datesToProcess = getAllDatesNeedingProcessing(dir)
             Log.i(TAG, "Processing ${datesToProcess.size} dates: ${datesToProcess.joinToString(", ")}")
 
-            // Load existing daily_summary data
             val existing = if (outFile.exists() && outFile.length() > 0) {
                 outFile.readLines().toMutableList()
             } else {
@@ -61,15 +59,13 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
             var backfilledCount = 0
             var updatedCount = 0
 
-            // Process each date
             for (date in datesToProcess) {
                 val totalUnlocks = countUnlocksForDate(date)
-                val batteryDrainRate = 0.05
                 val screenUsageMin = readScreenUsageMinutes(dir, date)
                 val notificationCount = readNotificationCount(dir, date)
                 val appUsageMin = readAppUsageMinutes(dir, date)
 
-                val line = "$date,$totalUnlocks,$batteryDrainRate,$screenUsageMin,$notificationCount,$appUsageMin"
+                val line = "$date,$totalUnlocks,$screenUsageMin,$notificationCount,$appUsageMin"
 
                 val replacedIdx = existing.drop(dataStartIdx).indexOfFirst { it.startsWith("$date,") }
 
@@ -88,7 +84,6 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
                 }
             }
 
-            // Write all data back using FileOutputStream
             val content = existing.joinToString("\n") + "\n"
             val contentBytes = content.toByteArray()
             Log.d(TAG, "About to write ${existing.size} lines (${contentBytes.size} bytes)")
@@ -108,7 +103,6 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
 
             Log.d(TAG, "Write complete. File exists: ${outFile.exists()}, size: ${outFile.length()}")
 
-            // Verify write by reading back
             if (outFile.length() > 0) {
                 val verification = outFile.readLines()
                 Log.d(TAG, "Verification: read back ${verification.size} lines")
@@ -126,13 +120,16 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
         }
     }
 
+    private fun getTodayDate(): String {
+        val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        return fmt.format(Date())
+    }
+
     private fun getAllDatesNeedingProcessing(dir: File): List<String> {
         val dates = mutableSetOf<String>()
 
-        // Always include today
         dates.add(getTodayDate())
 
-        // Scan unlock_diag.csv for all historical dates
         val unlockDiag = File(dir, "unlock_diag.csv")
         if (unlockDiag.exists()) {
             unlockDiag.readLines().forEach { line ->
@@ -147,7 +144,6 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
             }
         }
 
-        // Scan screen_log.csv for additional dates
         val screenLog = File(dir, "screen_log.csv")
         if (screenLog.exists()) {
             screenLog.readLines().forEach { line ->
@@ -162,7 +158,6 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
             }
         }
 
-        // Scan notification_log.csv for additional dates
         val notifLog = File(dir, "notification_log.csv")
         if (notifLog.exists()) {
             notifLog.readLines().forEach { line ->
@@ -181,33 +176,49 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
     }
 
     private fun countUnlocksForDate(date: String): Int {
-        val f = File(applicationContext.filesDir, "unlock_diag.csv")
+        val dir = StorageHelper.getDataDir(applicationContext)
+        val f = File(dir, "unlock_diag.csv")
+
+        Log.d(TAG, "countUnlocksForDate($date): dataDir=$dir, file=${f.absolutePath}, exists=${f.exists()}, length=${f.length()}")
+
         if (!f.exists()) {
+            Log.w(TAG, "countUnlocksForDate($date): unlock_diag.csv not found at ${f.absolutePath}")
             return 0
         }
 
-        val lines = f.readLines()
-        val body = if (lines.isNotEmpty() && lines[0].contains("ts,tag,extra")) {
-            lines.drop(1)
-        } else {
-            lines
-        }
+        return try {
+            val lines = f.readLines()
+            Log.d(TAG, "countUnlocksForDate($date): read ${lines.size} lines from ${f.absolutePath}")
 
-        var count = 0
-        for (line in body) {
-            if (line.isBlank()) continue
-            val parts = line.split(',')
-            if (parts.size < 2) continue
-
-            val tsStr = parts[0].trim()
-            val tag = parts[1].trim()
-
-            if (tsStr.startsWith(date) && tag == "UNLOCK") {
-                count++
+            val body = if (lines.isNotEmpty() && lines[0].contains("ts,tag,extra")) {
+                lines.drop(1)
+            } else {
+                lines
             }
-        }
 
-        return count
+            Log.d(TAG, "countUnlocksForDate($date): processing ${body.size} body lines")
+
+            var count = 0
+            for (line in body) {
+                if (line.isBlank()) continue
+                val parts = line.split(',')
+                if (parts.size < 2) continue
+
+                val tsStr = parts[0].trim()
+                val tag = parts[1].trim()
+
+                if (tsStr.startsWith(date) && tag == "UNLOCK") {
+                    count++
+                    Log.d(TAG, "countUnlocksForDate($date): matched line: $line, count now = $count")
+                }
+            }
+
+            Log.d(TAG, "countUnlocksForDate($date): final count = $count")
+            count
+        } catch (e: Exception) {
+            Log.e(TAG, "countUnlocksForDate($date): error reading unlock_diag.csv", e)
+            0
+        }
     }
 
     private fun readScreenUsageMinutes(dir: File, day: String): Double {
@@ -242,11 +253,10 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
         }
 
         if (lastOnTime != null) {
-            val endOfDay = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-                .parse("$day 23:59:59")?.time
-            if (endOfDay != null) {
-                totalOnMs += (endOfDay - lastOnTime!!).coerceAtLeast(0L)
-            }
+            val endOfDay = runCatching {
+                fmt.parse("$day 23:59:59")?.time ?: System.currentTimeMillis()
+            }.getOrNull() ?: System.currentTimeMillis()
+            totalOnMs += (endOfDay - lastOnTime!!).coerceAtLeast(0L)
         }
 
         return (totalOnMs / 60000.0)
@@ -254,27 +264,25 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
 
     private fun readNotificationCount(dir: File, day: String): Int {
         val f = File(dir, "notification_log.csv")
-        if (!f.exists()) {
-            return 0
-        }
+        if (!f.exists()) return 0
 
         val lines = f.readLines()
-        if (lines.size <= 1) return 0
+        val body = if (lines.isNotEmpty() && lines[0].contains("ts,")) {
+            lines.drop(1)
+        } else {
+            lines
+        }
 
         var count = 0
-        for (line in lines.drop(1)) {
+        for (line in body) {
             if (line.isBlank()) continue
             val parts = line.split(',')
-
-            if (parts.size < 4) continue
+            if (parts.size < 2) continue
 
             val tsStr = parts[0].trim()
-            val eventType = parts[3].trim()
+            val eventType = parts[1].trim()
 
-            val dayPart = if (tsStr.length >= 10) tsStr.substring(0, 10) else tsStr
-            if (dayPart != day) continue
-
-            if (eventType == "POSTED") {
+            if (tsStr.startsWith(day) && eventType == "POSTED") {
                 count++
             }
         }
@@ -285,27 +293,27 @@ class DailySummaryWorker(appContext: Context, params: WorkerParameters) : Worker
     private fun readAppUsageMinutes(dir: File, day: String): Double {
         val f = File(dir, "daily_app_usage_minutes.csv")
         if (!f.exists()) return 0.0
+
         val lines = f.readLines()
-        if (lines.size <= 1) return 0.0
+        val body = if (lines.isNotEmpty() && lines[0].contains("date,")) {
+            lines.drop(1)
+        } else {
+            lines
+        }
 
-        val header = lines.first().split(',').map { it.trim() }
-        val appTotalIdx = header.indexOfFirst { it.equals("app_min_total", ignoreCase = true) }
-        val idx = if (appTotalIdx >= 0) appTotalIdx else header.size - 1
+        for (line in body) {
+            if (line.isBlank()) continue
+            val parts = line.split(',')
+            if (parts.size < 2) continue
 
-        val row = lines
-            .asReversed()
-            .firstOrNull { it.startsWith("$day,") }
-            ?: return 0.0
+            val date = parts[0].trim()
+            val appMinTotal = runCatching { parts[1].trim().toDouble() }.getOrNull() ?: 0.0
 
-        val cols = row.split(',')
-        if (idx !in cols.indices) return 0.0
+            if (date == day) {
+                return appMinTotal
+            }
+        }
 
-        val value = cols[idx].trim()
-        return value.toDoubleOrNull() ?: 0.0
-    }
-
-    private fun getTodayDate(): String {
-        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        return formatter.format(Date())
+        return 0.0
     }
 }

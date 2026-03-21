@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -16,97 +15,40 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:label="@string/app_name"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.MyRecoveryAssistant">
+        android:supportsRtl="true">
 
-        <!-- Boot receiver -->
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Main UI activities -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".OnboardingActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.Alert" />
-
-        <!-- Notification listener service -->
-        <service
-            android:name=".NotificationLogService"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </service>
+        </receiver>
 
-        <!-- Foreground services -->
-        <service
-            android:name=".ForegroundUnlockService"
-            android:exported="false"
-            android:stopWithTask="false"
-            android:foregroundServiceType="dataSync" />
-
-        <service
-            android:name=".LocationCaptureService"
-            android:exported="false"
-            android:stopWithTask="false"
-            android:foregroundServiceType="location|dataSync" />
-
-        <service
-            android:name="androidx.work.impl.foreground.SystemForegroundService"
-            android:exported="false"
-            android:foregroundServiceType="dataSync"
-            tools:node="merge" />
-
-        <!-- File providers -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="remove">
-            <meta-data
-                android:name="androidx.work.WorkManagerInitializer"
-                android:value="androidx.startup"
-                tools:node="remove" />
-        </provider>
-
-        <!-- Core TriggerReceiver - handles rollups, reregister, dumps, copy -->
         <receiver
             android:name=".TriggerReceiver"
             android:enabled="true"
@@ -118,43 +60,96 @@
                 <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_HEARTBEAT" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_LOG_EXPORT" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_LOG_RETENTION" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_DUMP_REDCAP_RECEIPTS" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_COPY_EXPORT_ZIP" />
             </intent-filter>
         </receiver>
 
-        <!-- WorkerTriggerReceiver - handles ALL individual worker triggers -->
         <receiver
             android:name=".WorkerTriggerReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_DAILY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_DIAG" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DAILY_SUMMARY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LOG_EXPORT" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LOG_RETENTION" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_ROLLUP" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_SCAN" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION" />
                 <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_CATEGORY_DAILY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_SWITCHING_DAILY" />
-                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_APP_STARTS_DAILY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DAILY_SUMMARY" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY_DAILY_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LATE_NIGHT_SCREEN_ROLLUP_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_ACCESS_DIAG_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_LOG_EXPORT_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DUMP_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_SERVICE_HEALTH_CHECK_WORKER" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION_WORKER" />
             </intent-filter>
         </receiver>
+
+        <!--
+            ServiceRestartReceiver: receives the exact AlarmManager callback
+            scheduled by ServiceHealthCheckWorker. Exact alarm callbacks are a
+            documented Android 12+ OS exemption allowing startForegroundService().
+            Must NOT be exported — only AlarmManager (a system process) fires it.
+        -->
+        <receiver
+            android:name=".ServiceRestartReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
+
+        <receiver
+            android:name=".DebugExportReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".RedcapDebugReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_DEBUG" />
+                <action android:name="com.nick.myrecoverytracker.DEBUG_FORCE_UPLOAD" />
+                <action android:name="com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" />
+            </intent-filter>
+        </receiver>
+
+        <!--
+            RingerChangeReceiver: kept in manifest for completeness but on
+            Android 8+ this broadcast is NOT delivered to static receivers.
+            Dynamic registration in MainApplication.onCreate() is the real fix.
+        -->
+        <receiver
+            android:name=".RingerChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.RINGER_MODE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".ForegroundUnlockService"
+            android:enabled="true"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".LocationCaptureService"
+            android:enabled="true"
+            android:foregroundServiceType="location" />
+
+        <service
+            android:name=".NotificationLogService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
 
     </application>
 

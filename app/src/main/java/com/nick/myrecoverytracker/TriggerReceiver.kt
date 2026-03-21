@@ -1,4 +1,4 @@
-// app/src/main/java/com/nick/myrecoverytracker/TriggerReceiver.kt
+// TriggerReceiver.kt
 package com.nick.myrecoverytracker
 
 import android.content.BroadcastReceiver
@@ -30,10 +30,9 @@ class TriggerReceiver : BroadcastReceiver() {
             }
 
             ACTION_RUN_ROLLUPS, ACTION_RUN_ALL_ROLLUPS -> {
-                UnlockMigrations.run(context)
+                UnlockMigrations.runMigrations(context)
 
                 enqueueOnce<DailySummaryWorker>(context, "DailySummary", "dailySummary")
-                // ACTION_RUN_UNLOCK_SCAN removed - UnlockWorker deleted (ForegroundUnlockService handles unlock_log.csv; daily_unlocks.csv deprecated)
                 enqueueOnce<RedcapUploadWorker>(context, "RedcapUpload", "redcapUpload")
             }
 
@@ -98,7 +97,6 @@ class TriggerReceiver : BroadcastReceiver() {
             }
 
             else -> {
-                // Forward all unknown actions to WorkerTriggerReceiver
                 Log.i("TriggerReceiver", "Forwarding to WorkerTriggerReceiver: $action")
                 WorkerTriggerReceiver().onReceive(context, intent)
             }
@@ -123,7 +121,6 @@ class TriggerReceiver : BroadcastReceiver() {
         const val ACTION_REREGISTER_WORKERS = "com.nick.myrecoverytracker.ACTION_REREGISTER_WORKERS"
         const val ACTION_RUN_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ROLLUPS"
         const val ACTION_RUN_ALL_ROLLUPS = "com.nick.myrecoverytracker.ACTION_RUN_ALL_ROLLUPS"
-        // ACTION_RUN_DISTANCE_DAILY removed - DistanceWorker deleted
         const val ACTION_RUN_DISTANCE_SUMMARY = "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY"
         const val ACTION_RUN_NOTIFICATION_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP"
         const val ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP"
@@ -133,7 +130,6 @@ class TriggerReceiver : BroadcastReceiver() {
         const val ACTION_RUN_LOG_RETENTION = "com.nick.myrecoverytracker.ACTION_RUN_LOG_RETENTION"
         const val ACTION_RUN_MOVEMENT_ROLLUP = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_ROLLUP"
         const val ACTION_RUN_MOVEMENT_INTENSITY = "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY"
-        // ACTION_RUN_UNLOCK_SCAN removed - UnlockWorker deleted (ForegroundUnlockService handles unlock_log.csv; daily_unlocks.csv deprecated)
         const val ACTION_RUN_USAGE_ENTROPY = "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY"
         const val ACTION_RUN_HEALTH_SNAPSHOT = "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT"
         const val ACTION_RUN_UNLOCK_VALIDATION = "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION"

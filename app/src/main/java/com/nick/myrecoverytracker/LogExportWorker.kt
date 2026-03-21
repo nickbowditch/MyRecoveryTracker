@@ -1,4 +1,4 @@
-// app/src/main/java/com/nick/myrecoverytracker/LogExportWorker.kt
+// LogExportWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -22,9 +22,9 @@ class LogExportWorker(
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        val dir = applicationContext.filesDir
-        val zipFile = File(dir, "export_logs.zip")
-        val csvFiles = dir.listFiles { f -> f.isFile && f.name.endsWith(".csv") }?.toList().orEmpty()
+        val dataDir = StorageHelper.getDataDir(applicationContext)
+        val zipFile = File(dataDir, "export_logs.zip")
+        val csvFiles = dataDir.listFiles { f -> f.isFile && f.name.endsWith(".csv") }?.toList().orEmpty()
 
         try {
             // Always (re)create the zip, even if empty
@@ -34,6 +34,7 @@ class LogExportWorker(
                         zip.putNextEntry(ZipEntry(src.name))
                         input.copyTo(zip, 8 * 1024)
                         zip.closeEntry()
+                        Log.d(TAG, "Added to zip: ${src.name}")
                     }
                 }
             }
@@ -44,7 +45,7 @@ class LogExportWorker(
             val status = if (bytes > 0L) "OK" else "EMPTY"
 
             upsertLogCsv(
-                file = File(dir, "log_export.csv"),
+                file = File(dataDir, "log_export.csv"),
                 date = today(),
                 exportFile = "export_logs.zip",
                 count = count,
@@ -80,7 +81,9 @@ class LogExportWorker(
         val body = lines.drop(1).filterNot { it.startsWith("$date,") }.toMutableList()
 
         // Append the fresh row for today
-        body += listOf("$date,$exportFile,$count,$bytes,$status")
+        val newRow = "$date,$exportFile,$count,$bytes,$status"
+        body += newRow
+        Log.d(TAG, "Writing log_export.csv row: $newRow")
 
         file.writeText((sequenceOf(header) + body.asSequence()).joinToString("\n") + "\n")
     }

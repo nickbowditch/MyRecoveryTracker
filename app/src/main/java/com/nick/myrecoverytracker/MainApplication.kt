@@ -1,7 +1,8 @@
-// app/src/main/java/com/nick/myrecoverytracker/MainApplication.kt
 package com.nick.myrecoverytracker
 
 import android.app.Application
+import android.content.IntentFilter
+import android.media.AudioManager
 import android.util.Log
 import androidx.work.*
 import java.time.Duration
@@ -11,10 +12,27 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class MainApplication : Application() {
 
+    // ✅ Dynamic receiver instance — required for Android 8+ ringer change detection
+    private val ringerChangeReceiver = RingerChangeReceiver()
+
     override fun onCreate() {
         super.onCreate()
 
         Log.e("APP_PROBE", "MainApplication.onCreate CALLED")
+
+        // WorkManager is initialised automatically by WorkManagerInitializer
+        // before Application.onCreate() is called. Do NOT call
+        // WorkManager.initialize() manually here — it causes an
+        // IllegalStateException ("WorkManager is already initialized").
+
+        // ✅ Register RingerChangeReceiver dynamically — static manifest receivers
+        // do NOT receive this broadcast on Android 8+. Dynamic registration
+        // via registerReceiver() is the only reliable method.
+        registerReceiver(
+            ringerChangeReceiver,
+            IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION)
+        )
+        Log.i(TAG, "✅ RingerChangeReceiver registered dynamically")
 
         if (!schedulerRan.compareAndSet(false, true)) {
             Log.w(TAG, "Scheduler already ran, skipping")
@@ -27,29 +45,33 @@ class MainApplication : Application() {
             // Call centralized WorkScheduler
             WorkScheduler.registerAllWork(this)
 
-            // Validate REDCap token
-            try {
-                val tokenValid = RedcapApiClient.validateToken(this)
-                if (tokenValid) {
-                    Log.i(TAG, "✅ REDCap token validated successfully")
-                } else {
-                    Log.w(TAG, "⚠️ REDCap token validation failed – check credentials")
+            // Move REDCap validation off main thread
+            Thread {
+                try {
+                    val tokenValid = RedcapApiClient.validateToken(this@MainApplication)
+                    if (tokenValid) {
+                        Log.i(TAG, "✅ REDCap token validated successfully")
+                    } else {
+                        Log.w(TAG, "⚠️ REDCap token validation failed – check credentials")
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "REDCap token validation threw exception", e)
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "REDCap token validation threw exception", e)
-            }
+            }.start()
 
-            // Test REDCap reachability
-            try {
-                val reachable = RedcapApiClient.testReachability(this)
-                if (reachable) {
-                    Log.i(TAG, "✅ REDCap server reachable")
-                } else {
-                    Log.w(TAG, "⚠️ REDCap server unreachable – check network or URL")
+            // Move REDCap reachability test off main thread
+            Thread {
+                try {
+                    val reachable = RedcapApiClient.testReachability(this@MainApplication)
+                    if (reachable) {
+                        Log.i(TAG, "✅ REDCap server reachable")
+                    } else {
+                        Log.w(TAG, "⚠️ REDCap server unreachable – check network or URL")
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "REDCap reachability test threw exception", e)
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "REDCap reachability test threw exception", e)
-            }
+            }.start()
 
             schedulePeriodicWork()
             enqueueImmediateCatchUp()
@@ -90,12 +112,6 @@ class MainApplication : Application() {
             3, TimeUnit.HOURS
         ).addTag(TAG_USAGE_EVENTS).build()
         wm.enqueueUniquePeriodicWork(UNIQUE_USAGE_EVENTS, ExistingPeriodicWorkPolicy.KEEP, usageEventsPeriodic)
-
-        wm.enqueueUniquePeriodicWork(
-            UNIQUE_USAGE_DAILY,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            dailyAt(UsageEventsDailyWorker::class.java, TAG_USAGE_DAILY, 4, 35)
-        )
 
         wm.enqueueUniquePeriodicWork(
             UNIQUE_MOVE_INTENSITY,
@@ -141,12 +157,6 @@ class MainApplication : Application() {
             UNIQUE_USAGE_NOW,
             ExistingWorkPolicy.REPLACE,
             OneTimeWorkRequestBuilder<UsageEventsDumpWorker>().addTag("${TAG_USAGE_EVENTS}_now").build()
-        )
-
-        wm.enqueueUniqueWork(
-            UNIQUE_USAGE_DAILY_NOW,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<UsageEventsDailyWorker>().addTag("${TAG_USAGE_DAILY}_now").build()
         )
 
         wm.enqueueUniqueWork(
@@ -203,10 +213,6 @@ class MainApplication : Application() {
         private const val UNIQUE_USAGE_EVENTS = "periodic_usage_events_dump"
         private const val UNIQUE_USAGE_NOW = "onstart_usage_events_dump"
         private const val TAG_USAGE_EVENTS = "UsageEventsDump"
-
-        private const val UNIQUE_USAGE_DAILY = "periodic_usage_events_daily"
-        private const val UNIQUE_USAGE_DAILY_NOW = "onstart_usage_events_daily"
-        private const val TAG_USAGE_DAILY = "UsageEventsDaily"
 
         private const val UNIQUE_MOVE_INTENSITY = "periodic_movement_intensity"
         private const val UNIQUE_MOVE_INTENSITY_NOW = "onstart_movement_intensity"

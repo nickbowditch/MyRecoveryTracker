@@ -1,7 +1,8 @@
-// app/build.gradle.kts
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -63,6 +64,13 @@ android {
 
     buildFeatures { buildConfig = true }
 
+    packagingOptions {
+        pickFirst("lib/arm64-v8a/libdatastore_shared_counter.so")
+        pickFirst("lib/armeabi-v7a/libdatastore_shared_counter.so")
+        pickFirst("lib/x86/libdatastore_shared_counter.so")
+        pickFirst("lib/x86_64/libdatastore_shared_counter.so")
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -79,6 +87,10 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(libs.firebase.crashlytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

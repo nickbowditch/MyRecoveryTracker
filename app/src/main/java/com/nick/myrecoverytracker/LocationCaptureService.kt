@@ -1,15 +1,10 @@
-// app/src/main/java/com/nick/myrecoverytracker/LocationCaptureService.kt
 package com.nick.myrecoverytracker
 
 import android.Manifest
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ServiceInfo
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -18,10 +13,8 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.SystemClock
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import java.io.File
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -56,7 +49,6 @@ class LocationCaptureService : Service(), LocationListener {
 
         Log.i(TAG, "🔵 onCreate() called")
 
-        // Hard gate: if we don't have foreground + location perms, never crash; just stop.
         val hasFine = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED
         val hasCoarse = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
@@ -77,25 +69,8 @@ class LocationCaptureService : Service(), LocationListener {
             return
         }
 
-        createLocationFgChannelIfNeeded()
-        val notif = buildLocationNotification()
-        try {
-            if (Build.VERSION.SDK_INT >= 29) {
-                startForeground(FG_NOTIF_ID, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
-            } else {
-                @Suppress("DEPRECATION")
-                startForeground(FG_NOTIF_ID, notif)
-            }
-            Log.i(TAG, "✅ Started as foreground service")
-        } catch (e: SecurityException) {
-            Log.e(TAG, "❌ SecurityException during startForeground", e)
-            stopSelf()
-            return
-        }
-
         lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        // Request updates only when allowed
         if (hasLoc) {
             Log.i(TAG, "🔵 Attempting to register location listeners...")
 
@@ -126,7 +101,8 @@ class LocationCaptureService : Service(), LocationListener {
             }
         }
 
-        ensureHeader("location_log.csv", "ts,lat,lon,accuracy")
+        ensureDataDir()
+        ensureHeader("location_log.csv", "ts,lat,lon,acc")
         if (WRITE_RAW_TOO) ensureHeader("location_log_raw.csv", "ts,lat,lon,accuracy,provider")
         Log.i(TAG, "✅ onCreate() complete")
     }
@@ -145,7 +121,7 @@ class LocationCaptureService : Service(), LocationListener {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onLocationChanged(loc: Location) {
-        Log.i(TAG, "📍 onLocationChanged() called! provider=${loc.provider}, accuracy=${loc.accuracy}")
+        Log.i(TAG, "📍 onLocationChanged() called! provider=${loc.provider}, lat=${loc.latitude}, lon=${loc.longitude}, accuracy=${loc.accuracy}")
 
         val ts = tsFmt.format(System.currentTimeMillis())
         val acc = if (loc.hasAccuracy()) loc.accuracy else Float.MAX_VALUE
@@ -220,57 +196,45 @@ class LocationCaptureService : Service(), LocationListener {
 
     private fun nowWall(): Long = System.currentTimeMillis()
 
-    private fun buildLocationNotification(): Notification {
-        return NotificationCompat.Builder(this, FG_CHANNEL_ID)
-            .setContentTitle("My Recovery Assistant")
-            .setContentText("University study")
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setOngoing(true)
-            .setOnlyAlertOnce(true)
-            .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
-            .build()
-    }
-
-    private fun createLocationFgChannelIfNeeded() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-        val nm = getSystemService(NotificationManager::class.java)
-        if (nm.getNotificationChannel(FG_CHANNEL_ID) == null) {
-            val importance = if (BuildConfig.DEBUG)
-                NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT
-            nm.createNotificationChannel(
-                NotificationChannel(FG_CHANNEL_ID, "MyRecovery Tracker (Location)", importance)
-            )
+    private fun ensureDataDir() {
+        try {
+            val dataDir = File(getExternalFilesDir(null), "data")
+            if (!dataDir.exists()) {
+                dataDir.mkdirs()
+                Log.d(TAG, "Created data directory")
+            }
+        } catch (t: Throwable) {
+            Log.e(TAG, "ensureDataDir failed", t)
         }
     }
 
     private fun ensureHeader(name: String, header: String) {
-        val f = File(filesDir, name)
-        if (!f.exists() || f.length() == 0L) {
-            FileOutputStream(f, false).channel.use { ch ->
-                val bb = ("$header\n").toByteArray()
-                ch.write(java.nio.ByteBuffer.wrap(bb)); ch.force(true)
+        try {
+            val f = File(File(getExternalFilesDir(null), "data"), name)
+            if (!f.exists() || f.length() == 0L) {
+                f.writeText("$header\n")
+                Log.d(TAG, "Created $name with header")
             }
+        } catch (t: Throwable) {
+            Log.e(TAG, "ensureHeader failed for $name", t)
         }
     }
 
     private fun appendLine(name: String, line: String) {
-        val f = File(filesDir, name)
-        FileOutputStream(f, true).channel.use { ch ->
-            val bb = line.toByteArray()
-            ch.write(java.nio.ByteBuffer.wrap(bb)); ch.force(true)
+        try {
+            val f = File(File(getExternalFilesDir(null), "data"), name)
+            f.appendText(line)
+        } catch (t: Throwable) {
+            Log.e(TAG, "appendLine failed for $name", t)
         }
     }
 
     companion object {
         private const val TAG = "LocationCaptureService"
-        private const val FG_CHANNEL_ID = "mrt_location_fg_v1"
-        private const val FG_NOTIF_ID = 2001
 
         fun start(ctx: Context) {
             val i = Intent(ctx, LocationCaptureService::class.java)
-            ContextCompat.startForegroundService(ctx, i)
+            ctx.startService(i)
         }
 
         fun stop(ctx: Context) {

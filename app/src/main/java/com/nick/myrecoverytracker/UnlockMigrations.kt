@@ -1,4 +1,4 @@
-// app/src/main/java/com/nick/myrecoverytracker/UnlockMigrations.kt
+// UnlockMigrations.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -8,62 +8,106 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 object UnlockMigrations {
+
     private const val TAG = "UnlockMigrations"
-    private val TS = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-    private const val MAPLOG = "migrations.log"
 
-    // Known legacy → aligned targets for UNLOCKS feature
-    private val LEGACY_FILES: List<Pair<String, String>> = listOf(
-        // examples of plausible old names; harmless if absent
-        "unlock_rollup.csv" to "daily_unlocks.csv",
-        "daily_unlocks_count.csv" to "daily_unlocks.csv",
-        "daily_unlocks_v0.csv" to "daily_unlocks.csv"
-    )
+    fun runMigrations(context: Context) {
+        try {
+            Log.i(TAG, "🔵 Starting unlock migrations")
 
-    fun run(ctx: Context) {
-        val filesDir = ctx.filesDir ?: return
-        for ((legacy, target) in LEGACY_FILES) {
-            val from = File(filesDir, legacy)
-            val to = File(filesDir, target)
-            if (from.exists()) {
-                // if target exists, keep the larger/most recent as winner
-                val winner = chooseWinner(from, to)
-                // ensure target is winner
-                if (winner === from) {
-                    if (to.exists()) to.delete()
-                    val ok = from.renameTo(to)
-                    if (!ok) {
-                        Log.w(TAG, "rename failed: $legacy → $target")
+            val dir = StorageHelper.getDataDir(context)
+            if (!dir.exists()) dir.mkdirs()
+
+            val legacyFiles = listOf(
+                "unlock_rollup.csv",
+                "daily_unlocks_count.csv",
+                "daily_unlocks_v0.csv"
+            )
+
+            val targetFile = File(dir, "daily_unlocks.csv")
+            var winnerFile: File? = null
+            var winnerRows: Long = 0L
+
+            for (legacyName in legacyFiles) {
+                val f = File(dir, legacyName)
+                if (f.exists()) {
+                    val rows = f.readLines().size - 1
+                    Log.i(TAG, "📄 Found legacy file $legacyName with $rows rows")
+                    if (rows > winnerRows) {
+                        winnerFile = f
+                        winnerRows = rows.toLong()
                     }
                 }
-                writeMapping(ctx, "unlocks", legacy, target, safeRowCount(to))
-                // normalize perms
-                try { to.setReadable(true, /*ownerOnly=*/true); to.setWritable(true, /*ownerOnly=*/true) } catch (_: Throwable) {}
             }
+
+            if (winnerFile != null && winnerRows > 0) {
+                Log.i(TAG, "🏆 Winner: ${winnerFile.name} with $winnerRows rows")
+                migrateFromLegacy(winnerFile, targetFile, context)
+                logMigration(context, "daily_unlocks", winnerFile.name, "daily_unlocks.csv", winnerRows)
+                Log.i(TAG, "✅ Migration complete: ${winnerFile.name} -> daily_unlocks.csv")
+            } else {
+                Log.i(TAG, "ℹ️ No legacy files found or all empty")
+                ensureTargetExists(targetFile)
+            }
+        } catch (t: Throwable) {
+            Log.e(TAG, "❌ Migration failed", t)
         }
     }
 
-    private fun chooseWinner(a: File, b: File): File {
-        return when {
-            !b.exists() -> a
-            a.lastModified() > b.lastModified() -> a
-            a.length() > b.length() -> a
-            else -> b
-        }
-    }
-
-    private fun safeRowCount(f: File): Int {
-        return try {
-            f.useLines { seq -> seq.count { it.isNotBlank() } }
-        } catch (_: Throwable) { 0 }
-    }
-
-    private fun writeMapping(ctx: Context, feature: String, from: String, to: String, rows: Int) {
+    private fun migrateFromLegacy(legacyFile: File, targetFile: File, context: Context) {
         try {
-            val f = File(ctx.filesDir, MAPLOG)
-            if (!f.exists()) f.writeText("ts,feature,from,to,rows\n")
-            val ts = TS.format(System.currentTimeMillis())
-            f.appendText("$ts,$feature,$from,$to,$rows\n")
-        } catch (_: Throwable) {}
+            val lines = legacyFile.readLines()
+            if (lines.isEmpty()) {
+                Log.w(TAG, "⚠️ Legacy file is empty")
+                return
+            }
+
+            val header = lines.first()
+            val dataLines = lines.drop(1)
+
+            if (targetFile.exists()) {
+                Log.w(TAG, "⚠️ Target file already exists, overwriting")
+            }
+
+            targetFile.writeText("$header\n")
+            dataLines.forEach { line ->
+                if (line.trim().isNotEmpty()) {
+                    targetFile.appendText("$line\n")
+                }
+            }
+
+            Log.i(TAG, "✅ Migrated ${dataLines.size} rows from ${legacyFile.name}")
+        } catch (t: Throwable) {
+            Log.e(TAG, "❌ Migration from legacy failed", t)
+        }
+    }
+
+    private fun ensureTargetExists(targetFile: File) {
+        try {
+            if (!targetFile.exists()) {
+                targetFile.writeText("date,total_unlocks\n")
+                Log.i(TAG, "📄 Created new daily_unlocks.csv")
+            }
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to ensure target exists", t)
+        }
+    }
+
+    private fun logMigration(context: Context, feature: String, fromFile: String, toFile: String, rows: Long) {
+        try {
+            val dir = StorageHelper.getDataDir(context)
+            val f = File(dir, "migrations.log")
+
+            if (!f.exists()) {
+                f.writeText("ts,feature,from,to,rows\n")
+            }
+
+            val ts = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(System.currentTimeMillis())
+            f.appendText("$ts,$feature,$fromFile,$toFile,$rows\n")
+
+            Log.d(TAG, "✅ Logged migration to migrations.log")
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to log migration", t)
+        }
     }
 }

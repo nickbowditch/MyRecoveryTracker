@@ -1,4 +1,3 @@
-// WorkScheduler.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -16,7 +15,6 @@ object WorkScheduler {
     private const val LATENCY_PERIODIC = "periodic-NotificationLatency"
     private const val MOVE_INTENSITY_PERIODIC = "periodic-MovementIntensityDaily"
     private const val USAGE_ENTROPY_PERIODIC = "periodic-UsageEntropyDaily"
-    private const val USAGE_EVENTS_PERIODIC = "periodic-UsageEventsDaily"
     private const val USAGE_CAPTURE_PERIODIC = "periodic-UsageCaptureDaily"
     private const val LATE_NIGHT_SCREEN_PERIODIC = "periodic-LateNightScreenRollup"
 
@@ -30,7 +28,7 @@ object WorkScheduler {
     private const val REDCAP_UPLOAD_PERIODIC = "periodic-RedcapUpload"
 
     // Infrastructure workers
-    private const val HEARTBEAT_PERIODIC = "periodic-Heartbeat"
+    private const val DAILY_SUMMARY_PERIODIC = "periodic-DailySummary"
     private const val SERVICE_HEALTH_CHECK_PERIODIC = "periodic-ServiceHealthCheck"
 
     private val zone: ZoneId = ZoneId.systemDefault()
@@ -47,7 +45,6 @@ object WorkScheduler {
         scheduleDailyEngagementRollup(context)
         scheduleDailyNotificationLatency(context)
         scheduleDailyUsageEntropy(context)
-        scheduleDailyUsageEvents(context)
         scheduleDailyUsageCapture(context)
         scheduleDailyLateNightScreen(context)
     }
@@ -65,6 +62,7 @@ object WorkScheduler {
 
     private fun registerInfrastructureWorkers(context: Context) {
         scheduleServiceHealthCheck(context)
+        scheduleDailySummary(context)
     }
 
     private fun schedulePeriodicWork(
@@ -166,16 +164,6 @@ object WorkScheduler {
             "UsageEntropyDaily"
         )
 
-    fun scheduleDailyUsageEvents(context: Context) =
-        schedulePeriodicWork(
-            context,
-            UsageEventsDailyWorker::class.java,
-            USAGE_EVENTS_PERIODIC,
-            4,
-            35,
-            "UsageEventsDaily"
-        )
-
     fun scheduleDailyUsageCapture(context: Context) =
         schedulePeriodicWork(
             context,
@@ -257,5 +245,15 @@ object WorkScheduler {
             360,  // 6 hours
             30,
             "ServiceHealthCheck"
+        )
+
+    fun scheduleDailySummary(context: Context) =
+        schedulePeriodicWork(
+            context,
+            DailySummaryWorker::class.java,
+            DAILY_SUMMARY_PERIODIC,
+            5,
+            10,
+            "DailySummary"
         )
 }

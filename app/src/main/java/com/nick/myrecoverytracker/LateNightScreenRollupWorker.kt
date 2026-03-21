@@ -14,10 +14,6 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-/**
- * Late-night = Y if any SCREEN ON/OFF or any UNLOCK between 00:00–05:00 local.
- * Writes for yesterday and today each run.
- */
 class LateNightScreenRollupWorker(
     appContext: Context,
     params: WorkerParameters
@@ -31,14 +27,18 @@ class LateNightScreenRollupWorker(
         Log.e(PROBE, "LATE_NIGHT_PROBE START doWork()")
 
         return try {
-            val dir = applicationContext.filesDir
+            val dir = applicationContext.getExternalFilesDir(null)
+                ?: throw IllegalStateException("External files dir unavailable")
+            val dataDir = File(dir, "data")
+            dataDir.mkdirs()
+
             val out = ensureHeader(
-                File(dir, "daily_late_night_screen_usage.csv"),
-                "date,feature_schema_version,late_night"
+                File(dataDir, "daily_late_night_screen_usage.csv"),
+                HEADER
             )
 
-            val fScreen = File(dir, "screen_log.csv")
-            val fUnlock = File(dir, "unlock_log.csv")
+            val fScreen = File(dataDir, "screen_log.csv")
+            val fUnlock = File(dataDir, "unlock_log.csv")
 
             Log.e(
                 PROBE,
@@ -48,11 +48,14 @@ class LateNightScreenRollupWorker(
 
             val today = LocalDate.now(zone)
             val yesterday = today.minusDays(1)
+            val participantId = ParticipantIdManager.getOrCreate(applicationContext)
 
             listOf(yesterday, today).forEach { d ->
-                val yn = hadNightActivity(d, fScreen, fUnlock)
-                upsert(out, d.format(fmtDate), if (yn) "Y" else "N")
-                Log.i(TAG, "LateNight ${d.format(fmtDate)} -> ${if (yn) "Y" else "N"}")
+                val dateStr = d.format(fmtDate)
+                val (yn, screenHit, unlockHit) = hadNightActivity(d, fScreen, fUnlock)
+                val event = if (yn) "late_night_activity" else "no_late_night_activity"
+                upsert(out, dateStr, participantId, if (yn) "Y" else "N", event)
+                Log.i(TAG, "LateNight ${dateStr} -> ${if (yn) "Y" else "N"} (screen=$screenHit, unlock=$unlockHit) event=$event")
             }
 
             Log.e(PROBE, "LATE_NIGHT_PROBE END success out=${out.absolutePath}")
@@ -63,7 +66,7 @@ class LateNightScreenRollupWorker(
         }
     }
 
-    private fun hadNightActivity(date: LocalDate, screen: File, unlock: File): Boolean {
+    private fun hadNightActivity(date: LocalDate, screen: File, unlock: File): Triple<Boolean, Boolean, Boolean> {
         val startZ = date.atStartOfDay(zone)
         val endZ = date.atTime(5, 0).atZone(zone)
 
@@ -91,7 +94,7 @@ class LateNightScreenRollupWorker(
         val unlockHit = fileHit(unlock) { true }
 
         Log.e(PROBE, "window date=${date.format(fmtDate)} screenHit=$screenHit unlockHit=$unlockHit")
-        return screenHit || unlockHit
+        return Triple(screenHit || unlockHit, screenHit, unlockHit)
     }
 
     private fun extractTs(line: String): String? {
@@ -127,12 +130,13 @@ class LateNightScreenRollupWorker(
         return f
     }
 
-    private fun upsert(file: File, dateStr: String, yn: String) {
+    private fun upsert(file: File, dateStr: String, participantId: String, yn: String, event: String) {
         val existing =
             if (file.exists()) file.readLines().toMutableList() else mutableListOf()
 
         if (existing.isEmpty()) {
-            file.writeText("date,feature_schema_version,late_night\n$dateStr,$FEATURE_SCHEMA_VERSION,$yn\n")
+            val recordId = "${participantId}_${dateStr}"
+            file.writeText("$HEADER\n$recordId,$participantId,$dateStr,$FEATURE_SCHEMA_VERSION,$event,$yn\n")
             return
         }
 
@@ -140,14 +144,19 @@ class LateNightScreenRollupWorker(
         var replaced = false
 
         for (i in 1 until existing.size) {
-            if (existing[i].substringBefore(',') == dateStr) {
-                existing[i] = "$dateStr,$FEATURE_SCHEMA_VERSION,$yn"
+            val cols = existing[i].split(',')
+            if (cols.size > 2 && cols[2] == dateStr) {
+                val recordId = "${participantId}_${dateStr}"
+                existing[i] = "$recordId,$participantId,$dateStr,$FEATURE_SCHEMA_VERSION,$event,$yn"
                 replaced = true
                 break
             }
         }
 
-        if (!replaced) existing.add("$dateStr,$FEATURE_SCHEMA_VERSION,$yn")
+        if (!replaced) {
+            val recordId = "${participantId}_${dateStr}"
+            existing.add("$recordId,$participantId,$dateStr,$FEATURE_SCHEMA_VERSION,$event,$yn")
+        }
         file.writeText((listOf(header) + existing.drop(1)).joinToString("\n") + "\n")
     }
 
@@ -155,5 +164,6 @@ class LateNightScreenRollupWorker(
         private const val TAG = "LateNightScreenRollup"
         private const val PROBE = "LATE_NIGHT_PROBE"
         private const val FEATURE_SCHEMA_VERSION = "v6.0"
+        private const val HEADER = "record_id,participant_id,date,feature_schema_version,event,late_night"
     }
 }

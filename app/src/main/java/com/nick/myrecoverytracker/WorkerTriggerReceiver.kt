@@ -14,22 +14,23 @@ class WorkerTriggerReceiver : BroadcastReceiver() {
         Log.i("WorkerTriggerReceiver", "onReceive action=$action")
 
         val workerMap: Map<String, Class<out ListenableWorker>> = mapOf(
-            TriggerReceiver.ACTION_RUN_NOTIFICATION_ROLLUP to NotificationEngagementWorker::class.java,
-            TriggerReceiver.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP to NotificationEngagementWorker::class.java,
-            TriggerReceiver.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP to NotificationLatencyWorker::class.java,
-            TriggerReceiver.ACTION_RUN_USAGE_DIAG to UsageAccessDiagWorker::class.java,
-            TriggerReceiver.ACTION_RUN_DISTANCE_SUMMARY to DistanceSummaryWorker::class.java,
-            TriggerReceiver.ACTION_RUN_DAILY_SUMMARY to DailySummaryWorker::class.java,
-            TriggerReceiver.ACTION_RUN_LOG_EXPORT to LogExportWorker::class.java,
-            TriggerReceiver.ACTION_RUN_MOVEMENT_INTENSITY to MovementIntensityDailyWorker::class.java,
-            TriggerReceiver.ACTION_RUN_USAGE_ENTROPY to UsageEntropyDailyWorker::class.java,
-            TriggerReceiver.ACTION_RUN_HEALTH_SNAPSHOT to HealthSnapshotWorker::class.java,
-            TriggerReceiver.ACTION_RUN_UNLOCK_VALIDATION to UnlockValidationWorker::class.java,
-            TriggerReceiver.ACTION_RUN_USAGE_CAPTURE to UsageCaptureWorker::class.java,
-            TriggerReceiver.ACTION_RUN_NOTIFICATION_VALIDATION to NotificationValidationWorker::class.java,
-            TriggerReceiver.ACTION_RUN_REDCAP_UPLOAD to RedcapUploadWorker::class.java,
-            TriggerReceiver.ACTION_RUN_LNS_ROLLUP to LateNightScreenRollupWorker::class.java,
-            TriggerReceiver.ACTION_RUN_USAGE_EVENTS_DAILY to UsageEventsDailyWorker::class.java
+            "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP" to NotificationEngagementWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP" to NotificationLatencyWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ACCESS_DIAG_WORKER" to UsageAccessDiagWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY_WORKER" to DistanceSummaryWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_DAILY_SUMMARY" to DailySummaryWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_LOG_EXPORT_WORKER" to LogExportWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY_DAILY_WORKER" to MovementIntensityDailyWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY_DAILY_WORKER" to UsageEntropyDailyWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT" to HealthSnapshotWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION_WORKER" to UnlockValidationWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE_WORKER" to UsageCaptureWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION_WORKER" to NotificationValidationWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_LATE_NIGHT_SCREEN_ROLLUP_WORKER" to LateNightScreenRollupWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DUMP_WORKER" to UsageEventsDumpWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_SERVICE_HEALTH_CHECK_WORKER" to ServiceHealthCheckWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD_WORKER" to RedcapUploadWorker::class.java,
+            "com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD" to RedcapUploadWorker::class.java
         )
 
         workerMap[action]?.let { workerClass ->
@@ -40,6 +41,6 @@ class WorkerTriggerReceiver : BroadcastReceiver() {
             WorkManager.getInstance(context)
                 .enqueueUniqueWork(action, ExistingWorkPolicy.REPLACE, request)
             Log.i("WorkerTriggerReceiver", "Enqueued $action")
-        }
+        } ?: Log.w("WorkerTriggerReceiver", "No worker mapping for action=$action")
     }
 }

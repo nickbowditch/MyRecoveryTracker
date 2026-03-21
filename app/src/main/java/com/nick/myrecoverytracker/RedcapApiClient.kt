@@ -1,4 +1,3 @@
-// app/src/main/java/com/nick/myrecoverytracker/RedcapApiClient.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -11,9 +10,9 @@ import java.io.IOException
 object RedcapApiClient {
     private const val TAG = "RedcapApiClient"
 
-    private fun getConfigString(context: Context, field: String): String? {
+    fun getConfigString(field: String): String? {
         return try {
-            val cls = Class.forName("${context.packageName}.BuildConfig")
+            val cls = Class.forName("com.nick.myrecoverytracker.BuildConfig")
             val f = cls.getDeclaredField(field)
             f.isAccessible = true
             (f.get(null) as? String)?.takeIf { it.isNotBlank() }
@@ -27,17 +26,17 @@ object RedcapApiClient {
      * Returns true if token is valid, false otherwise.
      */
     fun validateToken(context: Context): Boolean {
-        val baseUrl = getConfigString(context, "REDCAP_BASE_URL") ?: run {
+        val baseUrl = getConfigString("REDCAP_BASE_URL") ?: run {
             Log.w(TAG, "REDCAP_BASE_URL not configured")
             return false
         }
 
-        val token = getConfigString(context, "REDCAP_API_TOKEN") ?: run {
+        val token = getConfigString("REDCAP_API_TOKEN") ?: run {
             Log.w(TAG, "REDCAP_API_TOKEN not configured")
             return false
         }
 
-        val projectId = getConfigString(context, "REDCAP_PROJECT_ID") ?: run {
+        val projectId = getConfigString("REDCAP_PROJECT_ID") ?: run {
             Log.w(TAG, "REDCAP_PROJECT_ID not configured")
             return false
         }
@@ -81,7 +80,7 @@ object RedcapApiClient {
      * Returns true if server is reachable, false otherwise.
      */
     fun testReachability(context: Context): Boolean {
-        val baseUrl = getConfigString(context, "REDCAP_BASE_URL") ?: run {
+        val baseUrl = getConfigString("REDCAP_BASE_URL") ?: run {
             Log.w(TAG, "REDCAP_BASE_URL not configured for reachability test")
             return false
         }

@@ -21,17 +21,22 @@ class NotificationLatencyWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val ctx = applicationContext
-        val files = ctx.filesDir
 
-        val inFile = File(files, IN_FILE)
-        val outFile = File(files, OUT_FILE)
+        // ✅ FIXED: was ctx.filesDir (internal). Must match EngagementWorker's read path (external/data/)
+        val baseDir = ctx.getExternalFilesDir(null)
+            ?: return@withContext Result.failure()
+        val dataDir = File(baseDir, "data")
+        dataDir.mkdirs()
+
+        val inFile = File(dataDir, IN_FILE)
+        val outFile = File(dataDir, OUT_FILE)
 
         val zone = ZoneId.systemDefault()
         val today = LocalDate.now(zone).toString()
         val yesterday = LocalDate.now(zone).minusDays(1).toString()
 
         probe("START doWork() today=$today yesterday=$yesterday in_exists=${inFile.exists()} in_size=${if (inFile.exists()) inFile.length() else 0} out_exists=${outFile.exists()} out_size=${if (outFile.exists()) outFile.length() else 0}")
-        heartbeat("START today=$today yesterday=$yesterday")
+        heartbeat(dataDir, "START today=$today yesterday=$yesterday")
 
         val participantId = ParticipantIdManager.getOrCreate(ctx)
         val header = DEFAULT_HEADER
@@ -85,11 +90,11 @@ class NotificationLatencyWorker(
                 parseFailed = true
                 Log.e(TAG, "Failed parsing $IN_FILE (continuing with forced rows)", t)
                 probe("PARSE_FAIL ${t.javaClass.simpleName}: ${t.message}")
-                heartbeat("PARSE_FAIL ${t.javaClass.simpleName}: ${t.message}")
+                heartbeat(dataDir, "PARSE_FAIL ${t.javaClass.simpleName}: ${t.message}")
             }
         } else {
             probe("NO_INPUT_FILE (will still force rows)")
-            heartbeat("NO_INPUT_FILE")
+            heartbeat(dataDir, "NO_INPUT_FILE")
         }
 
         // 🔒 HARD INVARIANT FOR MYRA:
@@ -108,7 +113,7 @@ class NotificationLatencyWorker(
         } catch (t: Throwable) {
             Log.e(TAG, "Failed reading existing $OUT_FILE (will rebuild)", t)
             probe("READ_EXISTING_FAIL ${t.javaClass.simpleName}: ${t.message}")
-            heartbeat("READ_EXISTING_FAIL ${t.javaClass.simpleName}: ${t.message}")
+            heartbeat(dataDir, "READ_EXISTING_FAIL ${t.javaClass.simpleName}: ${t.message}")
             mutableMapOf()
         }
 
@@ -141,7 +146,7 @@ class NotificationLatencyWorker(
         } catch (t: Throwable) {
             Log.e(TAG, "Failed writing $OUT_FILE", t)
             probe("WRITE_FAIL ${t.javaClass.simpleName}: ${t.message}")
-            heartbeat("WRITE_FAIL ${t.javaClass.simpleName}: ${t.message}")
+            heartbeat(dataDir, "WRITE_FAIL ${t.javaClass.simpleName}: ${t.message}")
             return@withContext Result.failure()
         }
 
@@ -154,20 +159,18 @@ class NotificationLatencyWorker(
             probe("END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed out=${outFile.absolutePath} (dump_failed: ${t.message})")
         }
 
-        heartbeat("END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed")
+        heartbeat(dataDir, "END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed")
 
         Result.success()
     }
 
     private fun isValidRow(line: String): Boolean {
-        // Expected format: record_id,participant_id,date,feature_schema_version,notif_latency_median_s,notif_latency_n
         val cols = readCols(line)
         if (cols.size != 6) return false
 
         val date = cols[2].trim()
         val schema = cols[3].trim()
 
-        // Must match current schema version and date format
         return schema == FEATURE_SCHEMA_VERSION && DATE_RE.matches(date)
     }
 
@@ -175,7 +178,7 @@ class NotificationLatencyWorker(
         return try {
             val posted = TS_FMT.parse(postedTs)?.time ?: return -1.0
             val removed = TS_FMT.parse(removedTs)?.time ?: return -1.0
-            (removed - posted) / 1000.0 // Convert ms to seconds
+            (removed - posted) / 1000.0
         } catch (t: Throwable) {
             Log.e(TAG, "Failed to parse timestamps: $postedTs, $removedTs", t)
             -1.0
@@ -252,9 +255,10 @@ class NotificationLatencyWorker(
         Log.e(PROBE, msg)
     }
 
-    private fun heartbeat(msg: String) {
+    // ✅ FIXED: was writing heartbeat to filesDir (internal). Now uses same dataDir as all other files.
+    private fun heartbeat(dataDir: File, msg: String) {
         try {
-            val hb = File(applicationContext.filesDir, HEARTBEAT_FILE)
+            val hb = File(dataDir, HEARTBEAT_FILE)
             if (!hb.exists() || hb.length() == 0L) {
                 hb.parentFile?.mkdirs()
                 hb.writeText("ts,message\n")

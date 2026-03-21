@@ -1,4 +1,4 @@
-// app/src/main/java/com/nick/myrecoverytracker/MovementIntensityDailyWorker.kt
+// MovementIntensityDailyWorker.kt
 package com.nick.myrecoverytracker
 
 import android.content.Context
@@ -21,9 +21,9 @@ class MovementIntensityDailyWorker(
     private val zone = ZoneId.systemDefault()
     private val fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
 
-    private val unlockLog by lazy { File(applicationContext.filesDir, UNLOCK_LOG) }
-    private val outFile by lazy { File(applicationContext.filesDir, OUT_NAME) }
-    private val hbFile by lazy { File(applicationContext.filesDir, HEARTBEAT_FILE) }
+    private val unlockLog by lazy { File(StorageHelper.getDataDir(applicationContext), UNLOCK_LOG) }
+    private val outFile by lazy { File(StorageHelper.getDataDir(applicationContext), OUT_NAME) }
+    private val hbFile by lazy { File(StorageHelper.getDataDir(applicationContext), HEARTBEAT_FILE) }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val today = LocalDate.now(zone)

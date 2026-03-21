@@ -21,24 +21,33 @@ class NotificationEngagementWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val ctx = applicationContext
-        val files = ctx.filesDir
+        val baseDir = ctx.getExternalFilesDir(null)
+            ?: return@withContext Result.failure()
+        val dataDir = File(baseDir, "data")
+        dataDir.mkdirs()
 
-        val inFile = File(files, IN_FILE)
-        val outFile = File(files, OUT_FILE)
-        val latencyFile = File(files, LATENCY_FILE)
+        val inFile = File(dataDir, IN_FILE)
+        val outFile = File(dataDir, OUT_FILE)
+        val heartbeatFile = File(dataDir, HEARTBEAT_FILE)
+        val latencyFile = File(dataDir, LATENCY_FILE)
 
         val zone = ZoneId.systemDefault()
         val today = LocalDate.now(zone).toString()
         val yesterday = LocalDate.now(zone).minusDays(1).toString()
+        val nowTs = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply {
+            timeZone = java.util.TimeZone.getTimeZone("UTC")
+        }.format(Date())
 
         Log.i(TAG, "START doWork() today=$today yesterday=$yesterday")
 
         val participantId = ParticipantIdManager.getOrCreate(ctx)
         val header = DEFAULT_HEADER
         ensureHeader(outFile, header)
+        ensureHeader(heartbeatFile, HEARTBEAT_HEADER)
 
-        // Load latency data by date
-        val latencyByDate = mutableMapOf<String, Pair<Double, Int>>() // date -> (median, count)
+        appendHeartbeat(heartbeatFile, "$nowTs,NotificationEngagementWorker started")
+
+        val latencyByDate = mutableMapOf<String, Pair<Double, Int>>()
         if (latencyFile.exists()) {
             try {
                 latencyFile.forEachLine { raw ->
@@ -46,7 +55,7 @@ class NotificationEngagementWorker(
                     if (line.isEmpty() || isHeaderLike(line)) return@forEachLine
 
                     val cols = readCols(line)
-                    if (cols.size < 5) return@forEachLine
+                    if (cols.size < 6) return@forEachLine // ✅ FIXED: was < 5, needs index 5
 
                     val date = cols[2].trim()
                     val medianStr = cols[4].trim()
@@ -62,7 +71,6 @@ class NotificationEngagementWorker(
             }
         }
 
-        // Map: date -> engagement stats
         val engagementByDate = mutableMapOf<String, EngagementStats>()
         var parseFailed = false
 
@@ -80,17 +88,15 @@ class NotificationEngagementWorker(
                     val rawEvent = cols[4].trim().uppercase(Locale.US)
                     val rawReason = cols[5].trim().uppercase(Locale.US)
 
-                    // Extract date from timestamp
                     val date = if (ts.length >= 10) ts.substring(0, 10) else ""
                     if (!DATE_RE.matches(date)) return@forEachLine
 
                     val stats = engagementByDate.getOrPut(date) { EngagementStats() }
 
-                    // Classification logic
                     when {
                         eventType == "POSTED" || rawEvent == "POSTED" -> stats.posted++
                         eventType == "REMOVED" && rawReason == "CLICK" -> {
-                            stats.posted++ // Also count as delivered
+                            stats.posted++
                             stats.engaged++
                         }
                     }
@@ -101,7 +107,6 @@ class NotificationEngagementWorker(
             }
         }
 
-        // 🔒 HARD INVARIANT: Always materialise yesterday and today
         engagementByDate.putIfAbsent(yesterday, EngagementStats())
         engagementByDate.putIfAbsent(today, EngagementStats())
 
@@ -110,7 +115,10 @@ class NotificationEngagementWorker(
                 .map { it.trimEnd('\r') }
                 .drop(1)
                 .filter { it.isNotBlank() }
-                .associateBy { it.substringBefore(',') }
+                .associateBy {
+                    val cols = readCols(it)
+                    cols.getOrNull(0) ?: ""
+                }
                 .toMutableMap()
         } catch (t: Throwable) {
             Log.e(TAG, "Failed reading existing $OUT_FILE (will rebuild)", t)
@@ -125,10 +133,9 @@ class NotificationEngagementWorker(
                 0.0
             }
 
-            // Get latency from latencyFile
             val (latencyMedian, latencyCount) = latencyByDate[date] ?: Pair(0.0, 0)
 
-            existing[date] = String.format(
+            existing[recordId] = String.format(
                 Locale.US,
                 "%s,%s,%s,%s,%s,%d,%d,%.6f,%.6f,%d",
                 recordId,
@@ -146,8 +153,8 @@ class NotificationEngagementWorker(
 
         val rebuilt = buildString {
             append(header).append('\n')
-            existing.keys.sorted().forEach { d ->
-                append(existing[d]).append('\n')
+            existing.keys.sorted().forEach { k ->
+                append(existing[k]).append('\n')
             }
         }
 
@@ -157,6 +164,8 @@ class NotificationEngagementWorker(
             Log.e(TAG, "Failed writing $OUT_FILE", t)
             return@withContext Result.failure()
         }
+
+        appendHeartbeat(heartbeatFile, "$nowTs,NotificationEngagementWorker completed successfully")
 
         Log.i(TAG, "END success wrote_rows=${existing.size} forced_yesterday=$yesterday forced_today=$today parseFailed=$parseFailed")
 
@@ -178,6 +187,18 @@ class NotificationEngagementWorker(
                     }
                 )
             }
+        }
+    }
+
+    private fun appendHeartbeat(file: File, line: String) {
+        try {
+            if (!file.exists()) {
+                file.writeText("$HEARTBEAT_HEADER\n$line\n")
+            } else {
+                file.appendText("$line\n")
+            }
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to append heartbeat", t)
         }
     }
 
@@ -228,11 +249,13 @@ class NotificationEngagementWorker(
 
         private const val IN_FILE = "notification_log.csv"
         private const val OUT_FILE = "daily_notification_engagement.csv"
+        private const val HEARTBEAT_FILE = "notification_engagement_heartbeat.csv"
         private const val LATENCY_FILE = "daily_notification_latency.csv"
 
         private const val FEATURE_SCHEMA_VERSION = "1"
         private const val DEFAULT_HEADER =
             "record_id,participant_id,date,feature_schema_version,event,notif_posted,notif_engaged,notif_engagement_rate,notif_latency_median_s,notif_latency_n"
+        private const val HEARTBEAT_HEADER = "ts,message"
 
         private val DATE_RE = Regex("""^\d{4}-\d{2}-\d{2}$""")
     }

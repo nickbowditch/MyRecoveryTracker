@@ -1,12 +1,15 @@
 package com.nick.myrecoverytracker
 
-import android.content.Context
-import android.content.IntentFilter
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
@@ -19,29 +22,31 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        Log.i("MainActivity", "POST_NOTIFICATIONS permission result: $isGranted")
+        // Continue with startup regardless
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val filter = IntentFilter().apply {
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_REDCAP_UPLOAD")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_LOG_EXPORT")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_DISTANCE_SUMMARY")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_CAPTURE")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ROLLUP")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_ENGAGEMENT_ROLLUP")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_LATENCY_ROLLUP")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_DAILY_SUMMARY")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_MOVEMENT_INTENSITY")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_ENTROPY")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_HEALTH_SNAPSHOT")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_UNLOCK_VALIDATION")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_NOTIFICATION_VALIDATION")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_LNS_ROLLUP")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_EVENTS_DAILY")
-            addAction("com.nick.myrecoverytracker.ACTION_RUN_USAGE_DIAG")
+        // Lock app to portrait orientation
+        requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Request POST_NOTIFICATIONS permission on Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
-        registerReceiver(WorkerTriggerReceiver(), filter, Context.RECEIVER_EXPORTED)
-        Log.i("MainActivity", "WorkerTriggerReceiver dynamically registered")
+
+        // Do NOT initialize WorkManager here — it's already initialized in MainApplication.onCreate()
 
         val wm = WorkManager.getInstance(this)
 
@@ -140,6 +145,8 @@ class MainActivity : ComponentActivity() {
             ExistingWorkPolicy.REPLACE,
             distanceKick
         )
+
+        finish()
     }
 
     override fun onStart() {

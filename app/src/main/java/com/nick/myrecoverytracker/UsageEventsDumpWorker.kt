@@ -1,3 +1,4 @@
+// UsageEventsDumpWorker.kt
 package com.nick.myrecoverytracker
 
 import android.app.usage.UsageEvents
@@ -10,106 +11,83 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Locale
 
-/**
- * Dumps raw usage events to CSV.
- *
- * Output: files/usage_events.csv
- * Columns: date,time,event_type,package
- *
- * - date: yyyy-MM-dd (local)
- * - time: HH:mm:ss (local)
- * - event_type: FOREGROUND | BACKGROUND
- * - package: package name
- */
-class UsageEventsDumpWorker(
-    appContext: Context,
-    params: WorkerParameters
-) : CoroutineWorker(appContext, params) {
+class UsageEventsDumpWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
 
-    private val dateFmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val timeFmt = SimpleDateFormat("HH:mm:ss", Locale.US)
+    private val zone = ZoneId.systemDefault()
+    private val tsFmt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            if (!UsagePermissionHelper.isGranted(applicationContext)) {
-                Log.w(TAG, "Usage access not granted — skipping dump")
-                return@withContext Result.success()
-            }
+            Log.i(TAG, "Starting UsageEventsDumpWorker")
 
-            val usm = applicationContext.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-            val endTime = System.currentTimeMillis()
-            val cal = Calendar.getInstance().apply {
-                timeInMillis = endTime
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }
-            val startTime = cal.timeInMillis
+            val dir = StorageHelper.getDataDir(applicationContext)
+            if (!dir.exists()) dir.mkdirs()
 
-            val events = usm.queryEvents(startTime, endTime)
-            val e = UsageEvents.Event()
+            val today = LocalDate.now(zone).toString()
+            val outFile = File(dir, "usage_events.csv")
 
-            val outFile = File(applicationContext.filesDir, "usage_events.csv")
             if (!outFile.exists()) {
                 outFile.writeText("date,time,event_type,package\n")
+                Log.d(TAG, "Created usage_events.csv with header")
             }
 
-            val sb = StringBuilder()
-            while (events.hasNextEvent()) {
-                events.getNextEvent(e)
-                val pkg = e.packageName ?: continue
-                when (normalizeEventType(e.eventType)) {
-                    NormalizedEventType.MOVE_TO_FOREGROUND -> {
-                        sb.append(fmtDate(e.timeStamp)).append(',')
-                            .append(fmtTime(e.timeStamp)).append(',')
-                            .append("FOREGROUND,")
-                            .append(pkg).append('\n')
+            val usm = applicationContext.getSystemService(Context.USAGE_STATS_SERVICE)
+                    as UsageStatsManager
+
+            val start = LocalDate.now(zone)
+                .atStartOfDay(zone).toInstant().toEpochMilli()
+            val end = System.currentTimeMillis()
+
+            Log.i(TAG, "Querying usage events from $start to $end")
+
+            val events = usm.queryEvents(start, end)
+            val e = UsageEvents.Event()
+            var eventCount = 0
+
+            @Suppress("DEPRECATION")
+            while (events.getNextEvent(e)) {
+                try {
+                    val pkg = e.packageName ?: "UNKNOWN"
+                    val ts = tsFmt.format(e.timeStamp)
+                    val date = ts.substring(0, 10)
+                    val time = ts.substring(11)
+
+                    @Suppress("DEPRECATION")
+                    val eventType = when (e.eventType) {
+                        UsageEvents.Event.ACTIVITY_RESUMED -> "ACTIVITY_RESUMED"
+                        UsageEvents.Event.ACTIVITY_PAUSED -> "ACTIVITY_PAUSED"
+                        UsageEvents.Event.ACTIVITY_STOPPED -> "ACTIVITY_STOPPED"
+                        UsageEvents.Event.MOVE_TO_FOREGROUND -> "MOVE_TO_FOREGROUND"
+                        UsageEvents.Event.MOVE_TO_BACKGROUND -> "MOVE_TO_BACKGROUND"
+                        UsageEvents.Event.USER_INTERACTION -> "USER_INTERACTION"
+                        UsageEvents.Event.CONFIGURATION_CHANGE -> "CONFIGURATION_CHANGE"
+                        else -> "UNKNOWN_${e.eventType}"
                     }
-                    NormalizedEventType.MOVE_TO_BACKGROUND -> {
-                        sb.append(fmtDate(e.timeStamp)).append(',')
-                            .append(fmtTime(e.timeStamp)).append(',')
-                            .append("BACKGROUND,")
-                            .append(pkg).append('\n')
+
+                    outFile.appendText("$date,$time,$eventType,$pkg\n")
+                    eventCount++
+
+                    if (eventCount % 100 == 0) {
+                        Log.d(TAG, "Processed $eventCount events so far")
                     }
-                    else -> {}
+                } catch (t: Throwable) {
+                    Log.e(TAG, "Error processing event", t)
                 }
             }
 
-            if (sb.isNotEmpty()) {
-                outFile.appendText(sb.toString())
-            }
-
-            Log.i(TAG, "UsageEventsDumpWorker wrote events to ${outFile.name}")
-            Result.success()
+            Log.i(TAG, "UsageEventsDumpWorker completed: wrote $eventCount events for $today")
+            return@withContext Result.success()
         } catch (t: Throwable) {
             Log.e(TAG, "UsageEventsDumpWorker failed", t)
-            Result.retry()
+            return@withContext Result.retry()
         }
     }
-
-    private fun fmtDate(ts: Long): String = dateFmt.format(Date(ts))
-    private fun fmtTime(ts: Long): String = timeFmt.format(Date(ts))
-
-    private fun normalizeEventType(eventType: Int): NormalizedEventType {
-        if (eventType == EVENT_ACTIVITY_RESUMED) return NormalizedEventType.MOVE_TO_FOREGROUND
-        if (eventType == EVENT_ACTIVITY_PAUSED) return NormalizedEventType.MOVE_TO_BACKGROUND
-
-        @Suppress("DEPRECATION")
-        return when (eventType) {
-            UsageEvents.Event.MOVE_TO_FOREGROUND -> NormalizedEventType.MOVE_TO_FOREGROUND
-            UsageEvents.Event.MOVE_TO_BACKGROUND -> NormalizedEventType.MOVE_TO_BACKGROUND
-            else -> NormalizedEventType.IGNORED
-        }
-    }
-
-    enum class NormalizedEventType { MOVE_TO_FOREGROUND, MOVE_TO_BACKGROUND, IGNORED }
 
     companion object {
         private const val TAG = "UsageEventsDumpWorker"
-        private const val EVENT_ACTIVITY_RESUMED = 7
-        private const val EVENT_ACTIVITY_PAUSED = 8
     }
 }

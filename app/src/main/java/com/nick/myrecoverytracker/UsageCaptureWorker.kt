@@ -4,6 +4,7 @@ import android.app.AppOpsManager
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
@@ -25,10 +26,10 @@ class UsageCaptureWorker(
     private val tsFmt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
     private val categories = listOf(
-        "app_min_social","app_min_dating","app_min_productivity","app_min_music_audio",
+        "app_min_total","app_min_social","app_min_dating","app_min_productivity","app_min_music_audio",
         "app_min_image","app_min_maps","app_min_video","app_min_travel_local",
         "app_min_shopping","app_min_news","app_min_game","app_min_health",
-        "app_min_finance","app_min_browser","app_min_comm","app_min_other","app_min_total"
+        "app_min_finance","app_min_browser","app_min_comm","app_min_other"
     )
 
     private val excludedPkgs = setOf(
@@ -38,63 +39,94 @@ class UsageCaptureWorker(
     )
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        try {
+            val today = LocalDate.now(zone).toString()
+            val now = System.currentTimeMillis()
+            Log.i(TAG, "Starting UsageCaptureWorker for $today")
 
-        val today = LocalDate.now(zone).toString()
+            // Always log to usage_capture_log.csv
+            logCapture("START")
 
-        if (!hasUsagePermission()) {
-            logDiag("PERMISSION_DENIED")
-            writeEmpty(today)
-            return@withContext Result.success()
-        }
+            if (!hasUsagePermission()) {
+                logCapture("PERMISSION_DENIED")
+                writeEmpty(today)
+                Log.w(TAG, "Usage permission denied, wrote zeros")
+                logCapture("END")
+                return@withContext Result.success()
+            }
 
-        val usm = applicationContext.getSystemService(Context.USAGE_STATS_SERVICE)
-                as UsageStatsManager
+            logCapture("PERMISSION_GRANTED")
 
-        val start = LocalDate.now(zone)
-            .atStartOfDay(zone).toInstant().toEpochMilli()
-        val end = System.currentTimeMillis()
+            val usm = applicationContext.getSystemService(Context.USAGE_STATS_SERVICE)
+                    as UsageStatsManager
 
-        val events = usm.queryEvents(start, end)
-        var lastPkg: String? = null
-        var lastTs = 0L
-        val e = UsageEvents.Event()
-        val perPkgMillis = hashMapOf<String, Long>()
-        var foundAny = false
+            val start = LocalDate.now(zone)
+                .atStartOfDay(zone).toInstant().toEpochMilli()
+            val end = now
 
-        while (events.getNextEvent(e)) {
-            foundAny = true
-            val pkg = e.packageName ?: continue
+            logCapture("QUERYING_EVENTS")
+            val events = usm.queryEvents(start, end)
+            var lastPkg: String? = null
+            var lastTs = 0L
+            val e = UsageEvents.Event()
+            val perPkgMillis = hashMapOf<String, Long>()
+            var foundAny = false
+            var eventCount = 0
 
-            when (e.eventType) {
-                UsageEvents.Event.ACTIVITY_RESUMED,
-                UsageEvents.Event.MOVE_TO_FOREGROUND -> {
-                    if (lastPkg != null && lastTs > 0) {
-                        val dur = max(0, e.timeStamp - lastTs)
-                        perPkgMillis[lastPkg!!] =
-                            (perPkgMillis[lastPkg!!] ?: 0L) + dur
+            @Suppress("DEPRECATION")
+            while (events.getNextEvent(e)) {
+                foundAny = true
+                eventCount++
+                val pkg = e.packageName ?: continue
+
+                @Suppress("DEPRECATION")
+                when (e.eventType) {
+                    UsageEvents.Event.ACTIVITY_RESUMED,
+                    UsageEvents.Event.MOVE_TO_FOREGROUND -> {
+                        if (lastPkg != null && lastTs > 0) {
+                            val dur = max(0, e.timeStamp - lastTs)
+                            perPkgMillis[lastPkg!!] =
+                                (perPkgMillis[lastPkg!!] ?: 0L) + dur
+                        }
+                        lastPkg = pkg
+                        lastTs = e.timeStamp
                     }
-                    lastPkg = pkg
-                    lastTs = e.timeStamp
-                }
 
-                UsageEvents.Event.ACTIVITY_PAUSED,
-                UsageEvents.Event.ACTIVITY_STOPPED,
-                UsageEvents.Event.MOVE_TO_BACKGROUND -> {
-                    if (lastPkg != null && lastTs > 0) {
-                        val dur = max(0, e.timeStamp - lastTs)
-                        perPkgMillis[lastPkg!!] =
-                            (perPkgMillis[lastPkg!!] ?: 0L) + dur
-                        lastPkg = null
-                        lastTs = 0L
+                    UsageEvents.Event.ACTIVITY_PAUSED,
+                    UsageEvents.Event.ACTIVITY_STOPPED,
+                    UsageEvents.Event.MOVE_TO_BACKGROUND -> {
+                        if (lastPkg != null && lastTs > 0) {
+                            val dur = max(0, e.timeStamp - lastTs)
+                            perPkgMillis[lastPkg!!] =
+                                (perPkgMillis[lastPkg!!] ?: 0L) + dur
+                            lastPkg = null
+                            lastTs = 0L
+                        }
                     }
                 }
             }
+
+            logCapture("EVENT_COUNT:$eventCount")
+
+            if (!foundAny) {
+                logCapture("NO_EVENTS_FOUND")
+                Log.w(TAG, "No usage events found for today")
+            } else {
+                logCapture("FOUND_EVENTS")
+                logCapture("PKG_COUNT:${perPkgMillis.size}")
+            }
+
+            writeCategoryTotals(today, perPkgMillis)
+            logCapture("WRITE_COMPLETE")
+            logCapture("END")
+            Log.i(TAG, "UsageCaptureWorker completed successfully")
+            return@withContext Result.success()
+        } catch (t: Throwable) {
+            Log.e(TAG, "UsageCaptureWorker failed", t)
+            logCapture("ERROR: ${t.message}")
+            t.printStackTrace()
+            return@withContext Result.retry()
         }
-
-        if (!foundAny) logDiag("NO_EVENTS_FOUND")
-
-        writeCategoryTotals(today, perPkgMillis)
-        return@withContext Result.success()
     }
 
     private fun hasUsagePermission(): Boolean {
@@ -108,73 +140,99 @@ class UsageCaptureWorker(
         return mode == AppOpsManager.MODE_ALLOWED
     }
 
-    private fun logDiag(tag: String) {
-        val f = File(applicationContext.filesDir, "usage_capture_log.csv")
-        if (!f.exists()) f.writeText("ts,tag\n")
-        f.appendText("${tsFmt.format(System.currentTimeMillis())},$tag\n")
+    private fun logCapture(tag: String) {
+        try {
+            val dataDir = StorageHelper.getDataDir(applicationContext)
+            val f = File(dataDir, "usage_capture_log.csv")
+            if (!f.exists()) {
+                f.writeText("ts,tag\n")
+            }
+            f.appendText("${tsFmt.format(System.currentTimeMillis())},$tag\n")
+            Log.d(TAG, "Logged capture: $tag")
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to log capture", t)
+            t.printStackTrace()
+        }
     }
 
     private fun writeEmpty(day: String) {
-        val f = File(applicationContext.filesDir, "daily_app_usage_minutes.csv")
-        if (!f.exists()) {
-            f.writeText("date," + categories.joinToString(",") + "\n")
+        try {
+            val f = File(StorageHelper.getDataDir(applicationContext), "daily_app_usage_minutes.csv")
+            if (!f.exists()) {
+                val headerRow = "date," + categories.joinToString(",")
+                f.writeText(headerRow + "\n")
+                Log.d(TAG, "Created CSV header")
+            }
+            val row = buildString {
+                append(day)
+                categories.forEach { append(",0.0") }
+            }
+            upsert(f, day, row)
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to write empty", t)
         }
-        val row = buildString {
-            append(day)
-            categories.forEach { append(",0.0") }
-        }
-        upsert(f, day, row)
     }
 
     private fun writeCategoryTotals(day: String, perPkgMillis: Map<String, Long>) {
-        val f = File(applicationContext.filesDir, "daily_app_usage_minutes.csv")
-        if (!f.exists()) {
-            f.writeText("date," + categories.joinToString(",") + "\n")
-        }
-
-        val buckets = categories.associateWith { 0.0 }.toMutableMap()
-
-        fun add(cat: String, mins: Double) {
-            buckets[cat] = (buckets[cat] ?: 0.0) + mins
-        }
-
-        for ((pkg, ms) in perPkgMillis) {
-            if (ms <= 0 || pkg in excludedPkgs) continue
-            add(mapPackage(pkg), ms / 60000.0)
-        }
-
-        val total = buckets.filterKeys { it != "app_min_total" }
-            .values.sum()
-
-        buckets["app_min_total"] = round(total * 100) / 100.0
-
-        val row = buildString {
-            append(day)
-            categories.forEach {
-                append(",")
-                append(String.format(Locale.US, "%.2f", buckets[it] ?: 0.0))
+        try {
+            val f = File(StorageHelper.getDataDir(applicationContext), "daily_app_usage_minutes.csv")
+            if (!f.exists()) {
+                val headerRow = "date," + categories.joinToString(",")
+                f.writeText(headerRow + "\n")
+                Log.d(TAG, "Created CSV header")
             }
-        }
 
-        upsert(f, day, row)
+            val buckets = categories.associateWith { 0.0 }.toMutableMap()
+
+            fun add(cat: String, mins: Double) {
+                buckets[cat] = (buckets[cat] ?: 0.0) + mins
+            }
+
+            for ((pkg, ms) in perPkgMillis) {
+                if (ms <= 0 || pkg in excludedPkgs) continue
+                add(mapPackage(pkg), ms / 60000.0)
+            }
+
+            val total = buckets.filterKeys { it != "app_min_total" }
+                .values.sum()
+
+            buckets["app_min_total"] = round(total * 100) / 100.0
+
+            val row = buildString {
+                append(day)
+                categories.forEach {
+                    append(",")
+                    append(String.format(Locale.US, "%.2f", buckets[it] ?: 0.0))
+                }
+            }
+
+            upsert(f, day, row)
+            Log.i(TAG, "Wrote category totals for $day")
+        } catch (t: Throwable) {
+            Log.e(TAG, "Failed to write category totals", t)
+        }
     }
 
     private fun upsert(f: File, day: String, row: String) {
-        val lines = if (f.exists()) f.readLines().toMutableList() else mutableListOf()
-        if (lines.isEmpty()) {
-            f.writeText(row + "\n")
-            return
-        }
-        var replaced = false
-        for (i in 1 until lines.size) {
-            if (lines[i].startsWith("$day,")) {
-                lines[i] = row
-                replaced = true
-                break
+        try {
+            val lines = if (f.exists()) f.readLines().toMutableList() else mutableListOf()
+            if (lines.isEmpty()) {
+                f.writeText(row + "\n")
+                return
             }
+            var replaced = false
+            for (i in 1 until lines.size) {
+                if (lines[i].startsWith("$day,")) {
+                    lines[i] = row
+                    replaced = true
+                    break
+                }
+            }
+            if (!replaced) lines.add(row)
+            f.writeText(lines.joinToString("\n") + "\n")
+        } catch (t: Throwable) {
+            Log.e(TAG, "Upsert failed", t)
         }
-        if (!replaced) lines.add(row)
-        f.writeText(lines.joinToString("\n") + "\n")
     }
 
     private fun mapPackage(pkg: String): String {
@@ -225,5 +283,9 @@ class UsageCaptureWorker(
 
             else -> "app_min_other"
         }
+    }
+
+    companion object {
+        private const val TAG = "UsageCaptureWorker"
     }
 }

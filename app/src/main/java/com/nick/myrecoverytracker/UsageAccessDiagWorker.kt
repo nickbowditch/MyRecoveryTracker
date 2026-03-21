@@ -1,3 +1,4 @@
+// UsageAccessDiagWorker.kt
 package com.nick.myrecoverytracker
 
 import android.app.AppOpsManager
@@ -26,7 +27,7 @@ class UsageAccessDiagWorker(
             val aom = applicationContext.getSystemService(Context.APP_OPS_SERVICE)
                     as AppOpsManager
 
-            val mode = aom.unsafeCheckOpNoThrow(
+            val mode = aom.checkOpNoThrow(
                 AppOpsManager.OPSTR_GET_USAGE_STATS,
                 Process.myUid(),
                 applicationContext.packageName
@@ -44,7 +45,7 @@ class UsageAccessDiagWorker(
                 if (mode == AppOpsManager.MODE_ALLOWED) "OK"
                 else "USAGE_PERMISSION_REVOKED"
 
-            val f = File(applicationContext.filesDir, "usage_diag.csv")
+            val f = File(StorageHelper.getDataDir(applicationContext), "usage_diag.csv")
             if (!f.exists() || f.length() == 0L) {
                 f.writeText("date,mode,status\n")
             }
