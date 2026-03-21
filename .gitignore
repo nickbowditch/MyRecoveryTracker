@@ -79,3 +79,9 @@ app/release/
 # Secure credentials - never commit
 gradle.properties
 local.properties
+app/google-services.json
+*.hprof
+apk_extracted/
+backup_data/
+.kotlin/
+export_logs*.zip
