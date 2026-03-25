@@ -21,7 +21,7 @@ class MovementIntensityDailyWorker(
     private val zone = ZoneId.systemDefault()
     private val fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
 
-    private val unlockLog by lazy { File(StorageHelper.getDataDir(applicationContext), UNLOCK_LOG) }
+    private val movementLog by lazy { File(StorageHelper.getDataDir(applicationContext), MOVEMENT_LOG) }
     private val outFile by lazy { File(StorageHelper.getDataDir(applicationContext), OUT_NAME) }
     private val hbFile by lazy { File(StorageHelper.getDataDir(applicationContext), HEARTBEAT_FILE) }
 
@@ -38,7 +38,7 @@ class MovementIntensityDailyWorker(
 
         return@withContext try {
             val participantId = ParticipantIdManager.getOrCreate(applicationContext)
-            val intensity = countUnlocksForDate(today)
+            val intensity = avgMagnitudeForDate(today)
             upsertDailyCsv(dateStr, participantId, intensity)
 
             probe("END success today=$dateStr intensity=$intensity out_size_now=${outFile.length()}")
@@ -52,26 +52,43 @@ class MovementIntensityDailyWorker(
         }
     }
 
-    private fun countUnlocksForDate(day: LocalDate): Int {
-        if (!unlockLog.exists()) return 0
+    // #4 FIX: Read actual accelerometer magnitudes from movement_log.csv.
+    // MovementCaptureService writes rows as: "yyyy-MM-dd HH:mm:ss,<magnitude>"
+    // Step rows are: "yyyy-MM-dd HH:mm:ss,step,<value>" — skip those.
+    // Activity rows (AR) write 0.000000 or 1.000000 — skip those too (non-step numeric but binary).
+    // We only want the continuous magnitude samples from writeMagnitude().
+    private fun avgMagnitudeForDate(day: LocalDate): Double {
+        if (!movementLog.exists()) return 0.0
 
         val wanted = day.format(fmtDate)
-        var count = 0
+        val magnitudes = mutableListOf<Double>()
 
-        unlockLog.forEachLine { line ->
+        movementLog.forEachLine { raw ->
+            val line = raw.trim()
             if (line.length < 10) return@forEachLine
             val datePrefix = line.substring(0, 10)
-            if (datePrefix == wanted && line.contains("UNLOCK")) {
-                count += 1
+            if (datePrefix != wanted) return@forEachLine
+
+            val cols = line.split(",")
+            // Skip step rows: cols[1] == "step"
+            if (cols.size == 3 && cols[1].trim() == "step") return@forEachLine
+            // Magnitude rows: cols.size == 2, cols[1] is a Double > 1.0
+            // AR rows also have cols.size == 2 but value is exactly 0.0 or 1.0 — exclude
+            if (cols.size == 2) {
+                val v = cols[1].trim().toDoubleOrNull() ?: return@forEachLine
+                if (v != 0.0 && v != 1.0) {  // exclude binary AR events
+                    magnitudes.add(v)
+                }
             }
         }
-        return count
+
+        return if (magnitudes.isNotEmpty()) magnitudes.average() else 0.0
     }
 
-    private fun upsertDailyCsv(dateStr: String, participantId: String, intensity: Int) {
+    private fun upsertDailyCsv(dateStr: String, participantId: String, intensity: Double) {
         val header = HEADER
         val recordId = "${participantId}_$dateStr"
-        val line = "$recordId,$participantId,$dateStr,$FEATURE_SCHEMA_VERSION,$EVENT_NAME,$intensity"
+        val line = "$recordId,$participantId,$dateStr,$FEATURE_SCHEMA_VERSION,$EVENT_NAME,${String.format(Locale.US, "%.6f", intensity)}"
 
         val existingLines = if (outFile.exists()) {
             outFile.readLines().map { it.trimEnd('\r') }
@@ -131,7 +148,7 @@ class MovementIntensityDailyWorker(
 
         private const val OUT_NAME = "daily_movement_intensity.csv"
         private const val HEADER = "record_id,participant_id,date,feature_schema_version,event,movement_intensity"
-        private const val UNLOCK_LOG = "unlock_log.csv"
+        private const val MOVEMENT_LOG = "movement_log.csv"
         private const val HEARTBEAT_FILE = "movement_intensity_heartbeat.csv"
         private const val FEATURE_SCHEMA_VERSION = "1"
         private const val EVENT_NAME = "MovementIntensity"

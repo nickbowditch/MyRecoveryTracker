@@ -119,19 +119,27 @@ class NotificationLatencyWorker(
 
         latenciesByDate.forEach { (date, latencies) ->
             val recordId = "${participantId}_$date"
-            val median = if (latencies.isNotEmpty()) calculateMedian(latencies) else 0.0
+            // #1 FIX: Do not zero-fill. If no latency data, write NaN/empty
+            // so SHARON can distinguish "opted-out / no data" from "measured zero".
+            val hasData = latencies.isNotEmpty()
+            val median = if (hasData) calculateMedian(latencies) else Double.NaN
             val count = latencies.size
 
-            existing[date] = String.format(
-                Locale.US,
-                "%s,%s,%s,%s,%.6f,%d",
-                recordId,
-                participantId,
-                date,
-                FEATURE_SCHEMA_VERSION,
-                median,
-                count
-            )
+            existing[date] = if (hasData) {
+                String.format(
+                    Locale.US,
+                    "%s,%s,%s,%s,%.6f,%d",
+                    recordId,
+                    participantId,
+                    date,
+                    FEATURE_SCHEMA_VERSION,
+                    median,
+                    count
+                )
+            } else {
+                // No data — write NaN sentinel so SHARON treats as missing, not zero
+                "$recordId,$participantId,$date,$FEATURE_SCHEMA_VERSION,NaN,0"
+            }
         }
 
         val rebuilt = buildString {
