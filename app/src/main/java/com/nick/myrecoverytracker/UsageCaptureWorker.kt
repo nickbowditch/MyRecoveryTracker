@@ -159,12 +159,14 @@ class UsageCaptureWorker(
         try {
             val f = File(StorageHelper.getDataDir(applicationContext), "daily_app_usage_minutes.csv")
             if (!f.exists()) {
-                val headerRow = "date," + categories.joinToString(",")
+                val headerRow = "record_id,participant_id,date,feature_schema_version," + categories.joinToString(",")
                 f.writeText(headerRow + "\n")
                 Log.d(TAG, "Created CSV header")
             }
+            val participantId = ParticipantIdManager.getOrCreate(applicationContext)
+            val recordId = "${participantId}_$day"
             val row = buildString {
-                append(day)
+                append("$recordId,$participantId,$day,$FEATURE_SCHEMA_VERSION")
                 categories.forEach { append(",0.0") }
             }
             upsert(f, day, row)
@@ -177,11 +179,13 @@ class UsageCaptureWorker(
         try {
             val f = File(StorageHelper.getDataDir(applicationContext), "daily_app_usage_minutes.csv")
             if (!f.exists()) {
-                val headerRow = "date," + categories.joinToString(",")
+                val headerRow = "record_id,participant_id,date,feature_schema_version," + categories.joinToString(",")
                 f.writeText(headerRow + "\n")
                 Log.d(TAG, "Created CSV header")
             }
 
+            val participantId = ParticipantIdManager.getOrCreate(applicationContext)
+            val recordId = "${participantId}_$day"
             val buckets = categories.associateWith { 0.0 }.toMutableMap()
 
             fun add(cat: String, mins: Double) {
@@ -199,7 +203,7 @@ class UsageCaptureWorker(
             buckets["app_min_total"] = round(total * 100) / 100.0
 
             val row = buildString {
-                append(day)
+                append("$recordId,$participantId,$day,$FEATURE_SCHEMA_VERSION")
                 categories.forEach {
                     append(",")
                     append(String.format(Locale.US, "%.2f", buckets[it] ?: 0.0))
@@ -222,7 +226,10 @@ class UsageCaptureWorker(
             }
             var replaced = false
             for (i in 1 until lines.size) {
-                if (lines[i].startsWith("$day,")) {
+                // record_id is participantId_date; date is col index 2
+                val cols = lines[i].split(",")
+                val rowDate = if (cols.size > 2) cols[2].trim() else ""
+                if (rowDate == day) {
                     lines[i] = row
                     replaced = true
                     break
@@ -287,5 +294,6 @@ class UsageCaptureWorker(
 
     companion object {
         private const val TAG = "UsageCaptureWorker"
+        private const val FEATURE_SCHEMA_VERSION = "1"
     }
 }
