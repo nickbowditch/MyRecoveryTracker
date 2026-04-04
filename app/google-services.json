@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "300890189932",
+    "project_id": "recoverytracker-ba81c",
+    "storage_bucket": "recoverytracker-ba81c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300890189932:android:6c19b5f118c14790842849",
+        "android_client_info": {
+          "package_name": "com.nick.myrecoverytracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE1NcaOhMHSUKmOWmVajRxd7JIy3a2gmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300890189932:android:ba627c94bd695940842849",
+        "android_client_info": {
+          "package_name": "com.nick.recoverytracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE1NcaOhMHSUKmOWmVajRxd7JIy3a2gmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
