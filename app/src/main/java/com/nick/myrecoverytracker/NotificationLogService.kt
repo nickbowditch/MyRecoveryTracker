@@ -35,6 +35,11 @@ class NotificationLogService : NotificationListenerService() {
         val id = sbn.id
         val key = notifKey(pkg, id)
 
+        if (pkg in EXCLUDED_PACKAGES) {
+            Log.i(TAG, "Skipped excluded package: $pkg")
+            return
+        }
+
         if (activeOnConnect.remove(key)) {
             Log.i(TAG, "Suppressed reconnect re-fire: $key")
             return
@@ -56,6 +61,11 @@ class NotificationLogService : NotificationListenerService() {
         val pkg = sbn.packageName ?: "unknown"
         val id = sbn.id
         val key = notifKey(pkg, id)
+
+        if (pkg in EXCLUDED_PACKAGES) {
+            Log.i(TAG, "Skipped excluded package (removed): $pkg")
+            return
+        }
 
         activeOnConnect.remove(key)
         lastPostedTime.remove(key)
@@ -106,5 +116,13 @@ class NotificationLogService : NotificationListenerService() {
         private const val BURST_WINDOW_MS = 3_000L
         private const val HEADER = "ts,event_type,package_name,notification_id,raw_event,raw_reason"
         private val TS_FMT = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US)
+
+        // Packages excluded from notification logging — high-noise, no clinical value
+        private val EXCLUDED_PACKAGES = setOf(
+            "com.spotify.music",
+            "au.com.shiftyjelly.pocketcasts",
+            "com.google.android.googlequicksearchbox",  // duplicate pairs
+            "com.android.vending"                        // Play Store update storms
+        )
     }
 }
